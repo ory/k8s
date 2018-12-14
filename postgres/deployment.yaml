@@ -9,6 +9,7 @@ spec:
       labels:
         app: postgres
     spec:
+      restartPolicy: Always
       containers:
         - name: postgres
           image: postgres:10.4
