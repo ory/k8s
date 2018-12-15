@@ -1,0 +1,30 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: oathkeeper-proxy
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: oathkeeper-proxy
+    spec:
+      restartPolicy: Always
+      containers:
+      - name: oathkeeper-proxy
+        image: 'oryd/oathkeeper:v0.14.2_oryOS.10'
+        imagePullPolicy: "IfNotPresent"
+        command: ["oathkeeper"]
+        args:
+          - serve
+          - proxy
+        ports:
+          - containerPort: 4455
+        envFrom:
+          - configMapRef:
+              name: oathkeeper-proxy-config
+        env:
+        - name: PORT
+          value: "4455"
+        - name: ISSUER_URL
+          value: http://oathkeeper-proxy:4455/
