@@ -1,26 +1,41 @@
-# k8s
+# ORY Ecosystem on Kubernetes
 
-An (experimental) collection of kubernetes configuration files for the ORY ecosystem.
+An (experimental) collection of Kubernetes configuration files to install Hydra, Keto and Oathkeeper.
 
-## ORY Oathkeeper
+## Installation
 
-### Simple: API-only with in-memory backend
-
-This deployment example uses a very basic ORY Oathkeeper configuration with the `HS256` ID Token Credentials Issuer
-and `DATABASE_URL=memory`.
-
-Before you create it, you need to create the secret that will be used for `CREDENTIALS_ISSUER_ID_TOKEN_HS256_SECRET`:
-
+### PostgreSQL
 ```
-$ kubectl create secret generic ory-oathkeeper --from-literal=CREDENTIALS_ISSUER_ID_TOKEN_HS256_SECRET=<your-secret>
-# For example:
-# $ kubectl create secret generic ory-oathkeeper --from-literal=CREDENTIALS_ISSUER_ID_TOKEN_HS256_SECRET=dYmTueb6zg8TphfZbOUpOewd0gt7u0SH
+kubectl create -f postgres/configmap.yaml
+kubectl create -f postgres/persistent-volume.yaml
+kubectl create -f postgres/deployment.yaml
+kubectl create -f postgres/service.yaml
 ```
 
-Then, create the `oathkeeper serve api` service and deployment:
-
+### Migrations
+#### Hydra
 ```
-kubectl apply -f yaml/oathkeeper/memory/oathkeeper-api.yaml
+sh ./hydra-migrate/generate_secret.sh
+kubectl create -f hydra-migrate/configmap.yaml
+kubectl create -f hydra-migrate/secret.yaml
+kubectl create -f hydra-migrate/job.yaml
 ```
 
-This example does not include setting up the oathkeeper proxy right now.
+#### Keto
+```
+kubectl create -f keto-migrate/configmap.yaml
+kubectl create -f keto-migrate/job.yaml
+```
+
+#### Oathkeeper
+```
+kubectl create -f oathkeeper-migrate/configmap.yaml
+kubectl create -f oathkeeper-migrate/job.yaml
+```
+
+### Hydra
+```
+kubectl create -f hydra/configmap.yaml
+kubectl create -f hydra/deployment.yaml
+kubectl create -f hydra/service.yaml
+```
