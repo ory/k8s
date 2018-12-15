@@ -11,7 +11,7 @@ spec:
       restartPolicy: Never
       containers:
       - name: keto-migrate
-        image: 'oryd/keto'
+        image: 'oryd/keto:v0.2.2-sandbox_oryOS.10'
         imagePullPolicy: "IfNotPresent"
         command: ["keto"]
         args:
