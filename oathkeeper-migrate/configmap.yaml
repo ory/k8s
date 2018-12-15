@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: oathkeeper-migrate-config
+  labels:
+    app: oathkeeper-migrate-config
+data:
+  LOG_LEVEL: debug
