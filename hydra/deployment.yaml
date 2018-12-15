@@ -1,0 +1,50 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: hydra
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: hydra
+    spec:
+      restartPolicy: Always
+      containers:
+      - name: hydra
+        image: 'oryd/hydra:v1.0.0-rc.5_oryOS.10'
+        imagePullPolicy: "IfNotPresent"
+        command: ["hydra"]
+        args:
+          - serve
+          - all
+          - --dangerous-force-http
+        ports:
+          - containerPort: 4444
+          - containerPort: 4445
+        envFrom:
+          - configMapRef:
+              name: hydra-config
+        env:
+        - name: SYSTEM_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: hydra-system-secret
+              key: HYDRA_SYSTEM_SECRET
+        - name: POSTGRES_DB
+          valueFrom:
+            configMapKeyRef:
+              name: postgres-config
+              key: POSTGRES_DB
+        - name: POSTGRES_USER
+          valueFrom:
+            configMapKeyRef:
+              name: postgres-config
+              key: POSTGRES_USER
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            configMapKeyRef:
+              name: postgres-config
+              key: POSTGRES_PASSWORD
+        - name: DATABASE_URL
+          value: postgres://$(POSTGRES_USER):$(POSTGRES_PASSWORD)@$(POSTGRES_SERVICE_HOST):$(POSTGRES_SERVICE_PORT)/$(POSTGRES_DB)?sslmode=disable

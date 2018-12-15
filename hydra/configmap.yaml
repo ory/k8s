@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: hydra-config
+  labels:
+    app: hydra-config
+data:
+  LOG_LEVEL: debug
+  OAUTH2_CONSENT_URL: http://idp:3000/consent
+  OAUTH2_ISSUER_URL: http://hydra:4444
+  OAUTH2_LOGIN_URL: http://idp:3000/login
+  OAUTH2_SHARE_ERROR_DEBUG: "1"
