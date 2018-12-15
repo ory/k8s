@@ -13,6 +13,7 @@ kubectl create -f postgres/service.yaml
 ```
 
 ### Migrations
+
 #### Hydra
 ```
 sh ./hydra-migrate/generate_secret.sh
