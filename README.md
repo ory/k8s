@@ -13,12 +13,11 @@ $ HYDRA_K8S_DIR=$(pwd)
 ### PostgreSQL
 
 ```
-$ cd postgres
+$ cd $HYDRA_K8S_DIR/postgres
 $ kubectl create -f configmap.yaml
 $ kubectl create -f persistent-volume.yaml
 $ kubectl create -f deployment.yaml
 $ kubectl create -f service.yaml
-$ cd $HYDRA_K8S_DIR
 ```
 
 ### Migrations
@@ -26,35 +25,55 @@ $ cd $HYDRA_K8S_DIR
 #### Hydra
 
 ```
-$ cd hydra-migrate
+$ cd $HYDRA_K8S_DIR/hydra-migrate
 $ sh ./generate_secret.sh
 $ kubectl create -f configmap.yaml
 $ kubectl create -f secret.yaml
 $ kubectl create -f job.yaml
-$ cd $HYDRA_K8S_DIR
 ```
 
 #### Keto
 ```
-$ cd keto-migrate
+$ cd $HYDRA_K8S_DIR/keto-migrate
 $ kubectl create -f configmap.yaml
 $ kubectl create -f job.yaml
-$ cd $HYDRA_K8S_DIR
 ```
 
 #### Oathkeeper
 ```
-$ cd oathkeeper-migrate
+$ cd $HYDRA_K8S_DIR/oathkeeper-migrate
 $ kubectl create -f configmap.yaml
 $ kubectl create -f job.yaml
-$ cd $HYDRA_K8S_DIR
 ```
 
 ### Hydra
 ```
-$ cd hydra
+$ cd $HYDRA_K8S_DIR/hydra
 $ kubectl create -f configmap.yaml
 $ kubectl create -f deployment.yaml
 $ kubectl create -f service.yaml
-$ cd $HYDRA_K8S_DIR
+```
+
+### Keto
+```
+$ cd $HYDRA_K8S_DIR/keto
+$ kubectl create -f configmap.yaml
+$ kubectl create -f deployment.yaml
+$ kubectl create -f service.yaml
+```
+
+### Oathkeeper API
+```
+$ cd $HYDRA_K8S_DIR/oathkeeper-api
+$ kubectl create -f configmap.yaml
+$ kubectl create -f deployment.yaml
+$ kubectl create -f service.yaml
+```
+
+### Oathkeeper Proxy
+```
+$ cd $HYDRA_K8S_DIR/oathkeeper-proxy
+$ kubectl create -f configmap.yaml
+$ kubectl create -f deployment.yaml
+$ kubectl create -f service.yaml
 ```
