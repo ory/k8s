@@ -5,5 +5,4 @@ metadata:
   labels:
     app: hydra-migrate-config
 data:
-  HYDRA_SYSTEM_SECRET: youReallyNeedToChangeThis
   LOG_LEVEL: debug
