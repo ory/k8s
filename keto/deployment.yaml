@@ -1,0 +1,42 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: keto
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: keto
+    spec:
+      restartPolicy: Always
+      containers:
+      - name: keto
+        image: 'oryd/keto:v0.2.2-sandbox_oryOS.10'
+        imagePullPolicy: "IfNotPresent"
+        command: ["keto"]
+        args:
+          - serve
+        ports:
+          - containerPort: 4466
+        envFrom:
+          - configMapRef:
+              name: keto-config
+        env:
+        - name: POSTGRES_DB
+          valueFrom:
+            configMapKeyRef:
+              name: postgres-config
+              key: POSTGRES_DB
+        - name: POSTGRES_USER
+          valueFrom:
+            configMapKeyRef:
+              name: postgres-config
+              key: POSTGRES_USER
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            configMapKeyRef:
+              name: postgres-config
+              key: POSTGRES_PASSWORD
+        - name: DATABASE_URL
+          value: postgres://$(POSTGRES_USER):$(POSTGRES_PASSWORD)@$(POSTGRES_SERVICE_HOST):$(POSTGRES_SERVICE_PORT)/$(POSTGRES_DB)?sslmode=disable

@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: keto-config
+  labels:
+    app: keto-config
+data:
+  LOG_LEVEL: debug
+  AUTHENTICATOR_OAUTH2_CLIENT_CREDENTIALS_TOKEN_URL: http://hydra:4444/oauth2/token
+  AUTHENTICATOR_OAUTH2_INTROSPECTION_URL: http://hydra:4445/oauth2/introspect
