@@ -1,0 +1,47 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: oathkeeper-api
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: oathkeeper-api
+    spec:
+      restartPolicy: Always
+      containers:
+      - name: oathkeeper-api
+        image: 'oryd/oathkeeper:v0.14.2_oryOS.10'
+        imagePullPolicy: "IfNotPresent"
+        command: ["oathkeeper"]
+        args:
+          - serve
+          - api
+        ports:
+          - containerPort: 4456
+        envFrom:
+          - configMapRef:
+              name: oathkeeper-api-config
+        env:
+        - name: PORT
+          value: "4456"
+        - name: CREDENTIALS_ISSUER_ID_TOKEN_ISSUER
+          value: http://oathkeeper-api:4456
+        - name: POSTGRES_DB
+          valueFrom:
+            configMapKeyRef:
+              name: postgres-config
+              key: POSTGRES_DB
+        - name: POSTGRES_USER
+          valueFrom:
+            configMapKeyRef:
+              name: postgres-config
+              key: POSTGRES_USER
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            configMapKeyRef:
+              name: postgres-config
+              key: POSTGRES_PASSWORD
+        - name: DATABASE_URL
+          value: postgres://$(POSTGRES_USER):$(POSTGRES_PASSWORD)@$(POSTGRES_SERVICE_HOST):$(POSTGRES_SERVICE_PORT)/$(POSTGRES_DB)?sslmode=disable

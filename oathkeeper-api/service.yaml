@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: oathkeeper-api
+  labels:
+    app: oathkeeper-api
+spec:
+  type: NodePort
+  ports:
+    - name: "4456"
+      port: 4456
+      targetPort: 4456
+  selector:
+   app: oathkeeper-api
