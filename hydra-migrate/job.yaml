@@ -3,7 +3,9 @@ kind: Job
 metadata:
   name: hydra-migrate
 spec:
-  backoffLimit: 3
+  backoffLimit: 0
+  completions: 1
+  parallelism: 1
   template:
     spec:
       restartPolicy: Never
