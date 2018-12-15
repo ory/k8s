@@ -11,7 +11,7 @@ spec:
       restartPolicy: Never
       containers:
       - name: oathkeeper-migrate
-        image: 'oryd/oathkeeper'
+        image: 'oryd/oathkeeper:v0.14.2_oryOS.10'
         imagePullPolicy: "IfNotPresent"
         command: ["oathkeeper"]
         args:
