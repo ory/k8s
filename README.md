@@ -4,13 +4,21 @@ An (experimental) collection of Kubernetes configuration files to install Hydra,
 
 ## Installation
 
+Let's start with defining working directory.
+
+```
+$ HYDRA_K8S_DIR=$(pwd)
+```
+
 ### PostgreSQL
 
 ```
-$ kubectl create -f postgres/configmap.yaml
-$ kubectl create -f postgres/persistent-volume.yaml
-$ kubectl create -f postgres/deployment.yaml
-$ kubectl create -f postgres/service.yaml
+$ cd postgres
+$ kubectl create -f configmap.yaml
+$ kubectl create -f persistent-volume.yaml
+$ kubectl create -f deployment.yaml
+$ kubectl create -f service.yaml
+$ cd $HYDRA_K8S_DIR
 ```
 
 ### Migrations
@@ -18,27 +26,35 @@ $ kubectl create -f postgres/service.yaml
 #### Hydra
 
 ```
-$ sh ./hydra-migrate/generate_secret.sh
-$ kubectl create -f hydra-migrate/configmap.yaml
-$ kubectl create -f hydra-migrate/secret.yaml
-$ kubectl create -f hydra-migrate/job.yaml
+$ cd hydra-migrate
+$ sh ./generate_secret.sh
+$ kubectl create -f configmap.yaml
+$ kubectl create -f secret.yaml
+$ kubectl create -f job.yaml
+$ cd $HYDRA_K8S_DIR
 ```
 
 #### Keto
 ```
-$ kubectl create -f keto-migrate/configmap.yaml
-$ kubectl create -f keto-migrate/job.yaml
+$ cd keto-migrate
+$ kubectl create -f configmap.yaml
+$ kubectl create -f job.yaml
+$ cd $HYDRA_K8S_DIR
 ```
 
 #### Oathkeeper
 ```
-$ kubectl create -f oathkeeper-migrate/configmap.yaml
-$ kubectl create -f oathkeeper-migrate/job.yaml
+$ cd oathkeeper-migrate
+$ kubectl create -f configmap.yaml
+$ kubectl create -f job.yaml
+$ cd $HYDRA_K8S_DIR
 ```
 
 ### Hydra
 ```
-$ kubectl create -f hydra/configmap.yaml
-$ kubectl create -f hydra/deployment.yaml
-$ kubectl create -f hydra/service.yaml
+$ cd hydra
+$ kubectl create -f configmap.yaml
+$ kubectl create -f deployment.yaml
+$ kubectl create -f service.yaml
+$ cd $HYDRA_K8S_DIR
 ```
