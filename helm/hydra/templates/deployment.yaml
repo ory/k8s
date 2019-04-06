@@ -1,0 +1,96 @@
+{{- $connectionString := "postgres://$(DB_USERNAME):$(DB_PASSWORD)@$(DB_HOST):$(DB_PORT)/$(DB_NAME)" -}}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "hydra.fullname" . }}
+  labels:
+    app.kubernetes.io/name: {{ include "hydra.name" . }}
+    helm.sh/chart: {{ include "hydra.chart" . }}
+    app.kubernetes.io/version: {{ .Chart.Version }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ include "hydra.name" . }}
+      app.kubernetes.io/instance: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: {{ include "hydra.name" . }}
+        app.kubernetes.io/instance: {{ .Release.Name }}
+    spec:
+      {{- if .Values.strategy.autoMigrate }}
+      initContainers:
+        - name: hydra-migrate
+          image: {{ include "hydra.image" . }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          command: ["hydra"]
+          args: [
+              "migrate",
+              "sql",
+              {{ $connectionString | quote }}
+            ]
+          envFrom:
+            - configMapRef:
+                name: {{ printf "%s-env" .Release.Name | quote }}
+          env:
+          {{- include "hydra.secrets" . | nindent 12 }}
+      {{- end }}
+      containers:
+      {{- if .Values.singleton -}}
+        - name: {{ include "hydra.name" . }}
+          image: {{ include "hydra.image" . }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          command: ["hydra"]
+          args: ["serve", "both"]
+          envFrom:
+          - configMapRef:
+              name: {{- include "hydra.env" . -}}
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+          {{- include "hydra.health" . | nindent 10 }}
+          ports:
+            - name: "http"
+              containerPort: {{ include "hydra.ports.public" . }}
+              protocol: TCP
+          env:
+          {{- include "hydra.secrets" . | nindent 12 }}
+
+      {{- else }}
+        - name: {{ printf "%s-public" (include "hydra.name" .) | quote }}
+          image: {{ include "hydra.image" . }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          command: ["hydra"]
+          args: ["serve", "public"]
+          {{- include "hydra.health" . | nindent 10 }}
+          ports:
+            - name: "http-public"
+              containerPort: {{ include "hydra.ports.public" . }}
+              protocol: TCP
+          envFrom:
+            - configMapRef:
+                name: {{ include "hydra.env" . }}
+          env:
+          {{- include "hydra.secrets" . | nindent 12 }}
+
+        - name: {{ printf "%s-admin" (include "hydra.name" .) | quote }}
+          image: {{ include "hydra.image" . }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          command: ["hydra"]
+          args: ["serve", "admin"]
+          {{- include "hydra.health" . | nindent 10 }}
+          ports:
+            - name: "http-admin"
+              containerPort: {{ include "hydra.ports.admin" . }}
+              protocol: TCP
+          envFrom:
+            - configMapRef:
+                name: {{ include "hydra.env" . }}
+          env:
+          {{- include "hydra.secrets" . | nindent 12 }}
+
+      {{- end -}}

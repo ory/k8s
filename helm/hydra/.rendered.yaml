@@ -1,0 +1,153 @@
+---
+# Source: hydra/templates/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app.kubernetes.io/name: hydra
+    helm.sh/chart: hydra-0.0.1
+    app.kubernetes.io/managed-by: Tiller
+    app.kubernetes.io/instance: hydra
+  name: hydra
+spec:
+# Provides options for the service so chart users have the full choice
+  type: "ClusterIP"
+  ports:
+    - name: http
+      port: 80
+      protocol: TCP
+      targetPort: 4444
+  selector:
+    app.kubernetes.io/name: hydra
+    app.kubernetes.io/instance: hydra
+
+---
+# Source: hydra/templates/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hydra
+  labels:
+    app.kubernetes.io/name: hydra
+    helm.sh/chart: hydra-0.0.1
+    app.kubernetes.io/version: 0.0.1
+    app.kubernetes.io/instance: hydra
+    app.kubernetes.io/managed-by: Tiller
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: hydra
+      app.kubernetes.io/instance: hydra
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: hydra
+        app.kubernetes.io/instance: hydra
+    spec:
+      initContainers:
+        - name: hydra-migrate
+          image: "oryd/hydra:v1.0.0-rc.8_oryOS.10"
+          imagePullPolicy: IfNotPresent
+          command: ["hydra"]
+          args: [
+              "migrate",
+              "sql",
+              "postgres://$(DB_USERNAME):$(DB_PASSWORD)@$(DB_HOST):$(DB_PORT)/$(DB_NAME)"
+            ]
+          envFrom:
+            - configMapRef:
+                name: "hydra-env"
+          env:
+            - name: DB_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: hydra-db-secrets
+                  key: username
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: hydra-db-secrets
+                  key: password
+            - name: SYSTEM_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: hydra-secret
+                  key: system
+      containers:
+        - name: "hydra-public"
+          image: "oryd/hydra:v1.0.0-rc.8_oryOS.10"
+          imagePullPolicy: IfNotPresent
+          command: ["hydra"]
+          args: ["serve", "public"]
+          livenessProbe:
+            httpGet:
+              path: "/health/alive"
+              port: "http"
+          readinessProbe:
+            httpGet:
+              path: "/health/ready"
+              port: "http"
+          ports:
+            - name: "http-public"
+              containerPort: 4444
+              protocol: TCP
+          envFrom:
+            - configMapRef:
+                name: "hydra-env"
+          env:
+            - name: DB_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: hydra-db-secrets
+                  key: username
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: hydra-db-secrets
+                  key: password
+            - name: SYSTEM_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: hydra-secret
+                  key: system
+
+        - name: "hydra-admin"
+          image: "oryd/hydra:v1.0.0-rc.8_oryOS.10"
+          imagePullPolicy: IfNotPresent
+          command: ["hydra"]
+          args: ["serve", "admin"]
+          livenessProbe:
+            httpGet:
+              path: "/health/alive"
+              port: "http"
+          readinessProbe:
+            httpGet:
+              path: "/health/ready"
+              port: "http"
+          ports:
+            - name: "http-admin"
+              containerPort: 4445
+              protocol: TCP
+          envFrom:
+            - configMapRef:
+                name: "hydra-env"
+          env:
+            - name: DB_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: hydra-db-secrets
+                  key: username
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: hydra-db-secrets
+                  key: password
+            - name: SYSTEM_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: hydra-secret
+                  key: system#
+    #
+    #
+

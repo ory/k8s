@@ -1,0 +1,53 @@
+# Default values for hydra.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 1
+
+image: # always specify using an FQN notation with optional "oryOS" key
+  repository: oryd/hydra
+  tag: v1.0.0-rc.8
+  oryOS: 10
+  pullPolicy: IfNotPresent
+
+db:
+  # host: # DB system hostname, defaults to "data"
+  # port: # DB system port, defaults to 3000
+  # name: # name of the Database, defaults to "hydra"
+  secretName: "hydra-db-secrets" # must be a Kubernetes secret in Hydra namespace wuth "username" & "password" keys
+
+systemSecret: "hydra-system-secrets" # must be a Kubernetes secret in Hydra namespace with a "system" key
+
+strategy:
+  autoMigrate: true
+  singleton: true
+
+# adminPort: # hydra default 4444
+# publicPort: # hydra default 4445
+
+nameOverride: ""
+fullnameOverride: ""
+
+service:
+  type: ClusterIP
+  port: 80
+
+# resources: {}
+
+
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  # limits:
+  #  cpu: 100m
+  #  memory: 128Mi
+  # requests:
+  #  cpu: 100m
+  #  memory: 128Mi
+
+# nodeSelector: {}
+
+# tolerations: []
+
+# affinity: {}
