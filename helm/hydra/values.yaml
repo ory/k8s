@@ -7,7 +7,7 @@ replicaCount: 1
 image: # always specify using an FQN notation with optional "oryOS" key
   repository: oryd/hydra
   tag: v1.0.0-rc.8
-  oryOS: 10
+  oryOS: 10 # optional: specify OS version for Ory ecosystem; this is advised for is using this chart to deploy Oathkeeper or Keto
   pullPolicy: IfNotPresent
 
 db:
@@ -20,7 +20,6 @@ db:
 
 strategy:
   autoMigrate: true
-  singleton: true
 
 # adminPort: # hydra default 4444
 # publicPort: # hydra default 4445

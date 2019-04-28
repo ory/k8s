@@ -39,12 +39,11 @@ spec:
           {{- include "hydra.secrets" . | nindent 12 }}
       {{- end }}
       containers:
-      {{- if .Values.singleton -}}
         - name: {{ include "hydra.name" . }}
           image: {{ include "hydra.image" . }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           command: ["hydra"]
-          args: ["serve", "both"]
+          args: ["serve", "all"]
           envFrom:
           - configMapRef:
               name: {{- include "hydra.env" . -}}
@@ -59,38 +58,3 @@ spec:
               protocol: TCP
           env:
           {{- include "hydra.secrets" . | nindent 12 }}
-
-      {{- else }}
-        - name: {{ printf "%s-public" (include "hydra.name" .) | quote }}
-          image: {{ include "hydra.image" . }}
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
-          command: ["hydra"]
-          args: ["serve", "public"]
-          {{- include "hydra.health" . | nindent 10 }}
-          ports:
-            - name: "http-public"
-              containerPort: {{ include "hydra.ports.public" . }}
-              protocol: TCP
-          envFrom:
-            - configMapRef:
-                name: {{ include "hydra.env" . }}
-          env:
-          {{- include "hydra.secrets" . | nindent 12 }}
-
-        - name: {{ printf "%s-admin" (include "hydra.name" .) | quote }}
-          image: {{ include "hydra.image" . }}
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
-          command: ["hydra"]
-          args: ["serve", "admin"]
-          {{- include "hydra.health" . | nindent 10 }}
-          ports:
-            - name: "http-admin"
-              containerPort: {{ include "hydra.ports.admin" . }}
-              protocol: TCP
-          envFrom:
-            - configMapRef:
-                name: {{ include "hydra.env" . }}
-          env:
-          {{- include "hydra.secrets" . | nindent 12 }}
-
-      {{- end -}}
