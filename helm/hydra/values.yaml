@@ -16,7 +16,7 @@ db:
   # name: # name of the Database, defaults to "hydra"
   secretName: "hydra-db-secrets" # must be a Kubernetes secret in Hydra namespace wuth "username" & "password" keys
 
-systemSecret: "hydra-system-secrets" # must be a Kubernetes secret in Hydra namespace with a "system" key
+# systemSecretName: # name of the k8s Secret resource in Hydra's target namespace with a "system" key containing the secret
 
 strategy:
   autoMigrate: true

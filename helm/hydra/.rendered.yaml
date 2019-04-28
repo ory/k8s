@@ -72,7 +72,7 @@ spec:
             - name: SYSTEM_SECRET
               valueFrom:
                 secretKeyRef:
-                  name: hydra-secret
+                  name: hydra-system-secret
                   key: system
       containers:
         - name: "hydra-public"
@@ -109,7 +109,7 @@ spec:
             - name: SYSTEM_SECRET
               valueFrom:
                 secretKeyRef:
-                  name: hydra-secret
+                  name: hydra-system-secret
                   key: system
 
         - name: "hydra-admin"
@@ -146,7 +146,7 @@ spec:
             - name: SYSTEM_SECRET
               valueFrom:
                 secretKeyRef:
-                  name: hydra-secret
+                  name: hydra-system-secret
                   key: system#
     #
     #

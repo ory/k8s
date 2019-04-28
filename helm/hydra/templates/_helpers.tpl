@@ -71,7 +71,7 @@ readinessProbe:
 - name: SYSTEM_SECRET
   valueFrom:
     secretKeyRef:
-      name: hydra-secret
+      name: {{ required "Hydra Helm chart requires `systemSecretName` to be specifed and persisted in Kubernetes. See README for more information" .Values.systemSecretName }}
       key: system
 {{- end -}}
 
