@@ -20,6 +20,5 @@ oathkeeper:
       id_token:
         enabled: true
         issuer_url: http://{{ include "ory-oathkeeper.fullname" . }}/
-        jwks_url: /etc/secrets/mutator.id_token.jwks.json
       noop:
         enabled: true
