@@ -14,7 +14,7 @@ The ORY Oathkeeper HTTP Reverse Proxy is available via:
 {{- else if contains "LoadBalancer" .Values.service.proxy.type }}
      NOTE: It may take a few minutes for the LoadBalancer IP to be available.
            You can watch the status of by running 'kubectl get --namespace {{ .Release.Namespace }} svc -w {{ include "ory-oathkeeper.fullname" . }}'
-  export SERVICE_IP=$(kubectl get svc --namespace {{ .Release.Namespace }} {{ include "ory-oathkeeper.fullname" . }} -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
+  export SERVICE_IP=$(kubectl get svc --namespace {{ .Release.Namespace }} {{ include "ory-oathkeeper.fullname" . }}-proxy -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
   echo http://$SERVICE_IP:{{ .Values.service.proxy.port }}
   curl -X GET http://$SERVICE_IP:{{ .Values.service.proxy.port }}/authenticator/noop/authorizer/allow/mutator/noop
   curl -X GET http://$SERVICE_IP:{{ .Values.service.proxy.port }}/authenticator/anonymous/authorizer/allow/mutator/header
@@ -47,7 +47,7 @@ The ORY Oathkeeper HTTP API is available via:
 {{- else if contains "LoadBalancer" .Values.service.api.type }}
      NOTE: It may take a few minutes for the LoadBalancer IP to be available.
            You can watch the status of by running 'kubectl get --namespace {{ .Release.Namespace }} svc -w {{ include "ory-oathkeeper.fullname" . }}'
-  export SERVICE_IP=$(kubectl get svc --namespace {{ .Release.Namespace }} {{ include "ory-oathkeeper.fullname" . }} -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
+  export SERVICE_IP=$(kubectl get svc --namespace {{ .Release.Namespace }} {{ include "ory-oathkeeper.fullname" . }}-api -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
   echo http://$SERVICE_IP:{{ .Values.service.api.port }}
   curl -X GET http://$SERVICE_IP:{{ .Values.service.api.port }}/health/alive
   curl -X GET http://$SERVICE_IP:{{ .Values.service.api.port }}/rules
