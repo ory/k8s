@@ -27,11 +27,6 @@ spec:
         - name: {{ include "ory-oathkeeper.name" . }}-secrets-volume
           secret:
             secretName: {{ include "ory-oathkeeper.fullname" . }}
-            items:
-              {{- if .Values.oathkeeper.mutatorIdTokenJWKs }}
-              - key: jwks
-                path: mutator.id_token.jwks.json
-              {{- end }}
       containers:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
@@ -40,13 +35,19 @@ spec:
           env:
             {{- if .Values.oathkeeper.mutatorIdTokenJWKs }}
             - name: MUTATORS_ID_TOKEN_JWKS_URL
-              value: "/etc/secrets/mutator.id_token.jwks.json"
+              value: "file:///etc/secrets/mutator.id_token.jwks.json"
+            {{- end }}
+            {{- if .Values.oathkeeper.accessRules }}
+            - name: ACCESS_RULES_REPOSITORIES
+              value: "file:///etc/config/access-rules.json"
             {{- end }}
           volumeMounts:
             - name: {{ include "ory-oathkeeper.name" . }}-config-volume
               mountPath: /etc/config
+              readOnly: true
             - name: {{ include "ory-oathkeeper.name" . }}-secrets-volume
               mountPath: /etc/secrets
+              readOnly: true
           ports:
             - name: http-api
               containerPort: {{ .Values.oathkeeper.config.serve.api.port }}

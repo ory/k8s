@@ -85,6 +85,8 @@ oathkeeper:
         port: 4456
 #  If set, uses the given JSON Web Key Set as the signing key for the ID Token Mutator.
 #  mutatorIdTokenJWKs: {}
+#  If set, uses the given access rules.
+#  accessRules: {}
 
 resources: {}
 #  We usually recommend not to specify default resources and to leave this as a conscious
