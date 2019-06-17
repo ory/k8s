@@ -6,5 +6,4 @@ init:
 
 .PHONY: commit-charts
 commit-charts:
-		cd .charts
-		git status
+		cd .charts; git status
