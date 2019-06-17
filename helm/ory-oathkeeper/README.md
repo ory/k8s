@@ -67,5 +67,18 @@ $ helm install \
     ory-oathkeeper
 ```
 
-Please note that any configuration values set for `oathkeeper.mutatorIdTokenJWKs` using e.g.
+Please note that any configuration values set for `oathkeeper.config.mutator.id_token.jwks_url` using e.g.
+a configuration file will be overwritten by this setting.
+
+### Access Rules
+
+Instead of fetching access rules from remote locations, you can set your access rules directly with `--set-file`:
+
+```bash
+$ helm install \
+    --set-file oathkeeper.accessRules=./path/to/access-rules.json \
+    ory-oathkeeper
+```
+
+Please note that any configuration values set for `oathkeeper.config.access_rules.repositories` using e.g.
 a configuration file will be overwritten by this setting.
