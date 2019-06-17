@@ -11,6 +11,7 @@ The ORY Oathkeeper HTTP Reverse Proxy is available via:
   echo http://$NODE_IP:$NODE_PORT
   curl -X GET http://$NODE_IP:$NODE_PORT/authenticator/noop/authorizer/allow/mutator/noop
   curl -X GET http://$NODE_IP:$NODE_PORT/authenticator/anonymous/authorizer/allow/mutator/header
+  curl -X GET http://$NODE_IP:$NODE_PORT/authenticator/anonymous/authorizer/allow/mutator/id_token
 {{- else if contains "LoadBalancer" .Values.service.proxy.type }}
      NOTE: It may take a few minutes for the LoadBalancer IP to be available.
            You can watch the status of by running 'kubectl get --namespace {{ .Release.Namespace }} svc -w {{ include "ory-oathkeeper.fullname" . }}'
@@ -18,6 +19,7 @@ The ORY Oathkeeper HTTP Reverse Proxy is available via:
   echo http://$SERVICE_IP:{{ .Values.service.proxy.port }}
   curl -X GET http://$SERVICE_IP:{{ .Values.service.proxy.port }}/authenticator/noop/authorizer/allow/mutator/noop
   curl -X GET http://$SERVICE_IP:{{ .Values.service.proxy.port }}/authenticator/anonymous/authorizer/allow/mutator/header
+  curl -X GET http://$SERVICE_IP:{{ .Values.service.proxy.port }}/authenticator/anonymous/authorizer/allow/mutator/id_token
 {{- else if contains "ClusterIP" .Values.service.proxy.type }}
   export POD_NAME=$(kubectl get pods --namespace {{ .Release.Namespace }} -l "app.kubernetes.io/name={{ include "ory-oathkeeper.name" . }},app.kubernetes.io/instance={{ .Release.Name }}" -o jsonpath="{.items[0].metadata.name}")
   echo "Visit http://127.0.0.1:{{ .Values.service.proxy.port }} to use your application"
@@ -25,6 +27,7 @@ The ORY Oathkeeper HTTP Reverse Proxy is available via:
   {{- if .Values.demo }}
   curl -X GET http://127.0.0.1:{{ .Values.service.proxy.port }}/authenticator/noop/authorizer/allow/mutator/noop
   curl -X GET http://127.0.0.1:{{ .Values.service.proxy.port }}/authenticator/anonymous/authorizer/allow/mutator/header
+  curl -X GET http://127.0.0.1:{{ .Values.service.proxy.port }}/authenticator/anonymous/authorizer/allow/mutator/id_token
   {{- else }}
   # The following request will probably fail with a 404. If you have rules configured, append them to the path:
   curl -X GET http://127.0.0.1:{{ .Values.service.proxy.port }}/

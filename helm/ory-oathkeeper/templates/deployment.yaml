@@ -24,6 +24,14 @@ spec:
         - name: {{ include "ory-oathkeeper.name" . }}-config-volume
           configMap:
             name: {{ include "ory-oathkeeper.fullname" . }}
+        - name: {{ include "ory-oathkeeper.name" . }}-secrets-volume
+          secret:
+            secretName: {{ include "ory-oathkeeper.fullname" . }}
+            items:
+              {{- if .Values.oathkeeper.mutatorIdTokenJWKs }}
+              - key: jwks
+                path: mutator.id_token.jwks.json
+              {{- end }}
       containers:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
@@ -32,6 +40,8 @@ spec:
           volumeMounts:
             - name: {{ include "ory-oathkeeper.name" . }}-config-volume
               mountPath: /etc/config
+            - name: {{ include "ory-oathkeeper.name" . }}-secrets-volume
+              mountPath: /etc/secrets
           ports:
             - name: http-api
               containerPort: {{ .Values.oathkeeper.config.serve.api.port }}
