@@ -20,10 +20,18 @@ spec:
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
     {{- end }}
+      volumes:
+        - name: {{ include "ory-oathkeeper.name" . }}-config-volume
+          configMap:
+            name: {{ include "ory-oathkeeper.fullname" . }}
       containers:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          command: [ "oathkeeper", "serve", "--config", "/etc/config/config.yaml" ]
+          volumeMounts:
+            - name: {{ include "ory-oathkeeper.name" . }}-config-volume
+              mountPath: /etc/config
           ports:
             - name: http-api
               containerPort: {{ .Values.oathkeeper.config.serve.api.port }}

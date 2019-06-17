@@ -1,15 +1,14 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: {{ include "ory-oathkeeper.fullname" . }}
-  labels:
-{{ include "ory-oathkeeper.labels" . | indent 4 }}
-data:
-  "config.yaml": |
-{{- if .Values.demo }}
+oathkeeper:
+  config:
+    serve:
+      proxy:
+        port: 3455
+      api:
+        port: 3456
+
     access_rules:
       repositories:
-      - "https://raw.githubusercontent.com/ory/k8s/feat-oathkeeper-helm/helm/ory-oathkeeper/demo/access-rules.json"
+        - "https://raw.githubusercontent.com/ory/k8s/feat-oathkeeper-helm/helm/ory-oathkeeper/demo/access-rules.json"
 
     authenticators:
       anonymous:
@@ -20,13 +19,9 @@ data:
           - "https://raw.githubusercontent.com/ory/k8s/feat-oathkeeper-helm/helm/ory-oathkeeper/demo/authenticator.jwt.jwks.json"
       noop:
         enabled: true
-      unauthorized:
-        enabled: true
 
     authorizers:
       allow:
-        enabled: true
-      deny:
         enabled: true
 
     mutators:
@@ -41,15 +36,8 @@ data:
       noop:
         enabled: true
 
-    serve:
-      proxy:
-        cors:
-          enabled: true
-      api:
-        cors:
-          enabled: true
-{{- else -}}
-{{- with .Values.oathkeeper.config -}}
-  {{- toYaml . | nindent 4 }}
-{{- end -}}
-{{- end -}}
+service:
+  proxy:
+    port: 4455
+  api:
+    port: 4456

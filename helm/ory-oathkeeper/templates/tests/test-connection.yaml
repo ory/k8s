@@ -8,8 +8,12 @@ metadata:
     "helm.sh/hook": test-success
 spec:
   containers:
-    - name: wget
+    - name: liveliness-probe
       image: busybox
       command: ['wget']
-      args:  ['{{ include "ory-oathkeeper.fullname" . }}:{{ .Values.service.port }}']
+      args:  ['http://{{ include "ory-oathkeeper.fullname" . }}-api:{{ .Values.service.api.port }}/health/alive']
+    - name: readyness-probe
+      image: busybox
+      command: ['wget']
+      args:  ['http://{{ include "ory-oathkeeper.fullname" . }}-api:{{ .Values.service.api.port }}/health/ready']
   restartPolicy: Never
