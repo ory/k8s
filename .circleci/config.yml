@@ -1,0 +1,29 @@
+version: 2.1
+
+orbs:
+  helm: circleci/helm@0.1.2
+
+jobs:
+  lint:
+    docker:
+      - image: debian:stretch
+    steps:
+      - checkout
+      - helm lint
+
+  release:
+    docker:
+      - image: debian:stretch
+    steps:
+      - checkout
+
+workflows:
+  lint:
+    jobs:
+      - lint
+  release:
+    jobs:
+      - release
+    requires:
+      - lint
+      -
