@@ -12,7 +12,7 @@ spec:
       image: busybox
       command: ['wget']
       args:  ['http://{{ include "ory-oathkeeper.fullname" . }}-api:{{ .Values.service.api.port }}/health/alive']
-    - name: readyness-probe
+    - name: readiness-probe
       image: busybox
       command: ['wget']
       args:  ['http://{{ include "ory-oathkeeper.fullname" . }}-api:{{ .Values.service.api.port }}/health/ready']
