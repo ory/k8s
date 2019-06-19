@@ -16,6 +16,11 @@ jobs:
       - run: curl -L https://git.io/get_helm.sh | bash
       - run: helm package -d docs/ ./helm/charts/ory-oathkeeper/ --version `echo $CIRCLE_TAG | sed s/v//g`
       - run: helm repo index docs/
+      - run: git config --global user.email "hi@ory.sh"
+      - run: git config --global user.name "ORY Continuous Integration"
+      - run: git checkout make-release
+      - run: git commit -a -m "Release $CIRCLE_TAG"
+      - run: git push origin HEAD:feat-oathkeeper-helm
 
 workflows:
   version: 2
@@ -28,6 +33,6 @@ workflows:
       - release:
           requires:
             - lint
-          filters:
-            tags:
-              only: /.*/
+#          filters:
+#            tags:
+#              only: /.*/
