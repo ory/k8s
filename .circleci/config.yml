@@ -9,7 +9,7 @@ jobs:
       - image: debian:stretch
     steps:
       - checkout
-      - helm lint
+      - helm lint ./helm/charts/ory-oathkeeper/
 
   release:
     docker:
