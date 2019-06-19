@@ -21,7 +21,7 @@ jobs:
       - run: helm repo index docs/
       - run: git config --global user.email "hi@ory.sh"
       - run: git config --global user.name "ORY Continuous Integration"
-      - run: git checkout make-release
+      - run: git checkout -b make-release HEAD
       - run: git commit -a -m "Release $CIRCLE_TAG"
       - run: git push origin HEAD:feat-oathkeeper-helm
 
