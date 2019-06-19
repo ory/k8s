@@ -16,7 +16,7 @@ The ORY Oathkeeper Helm Chart helps you deploy ORY Oathkeeper on Kubernetes usin
 Installing ORY Oathkeeper using Helm with
 
 ```bash
-$ helm install ory-oathkeeper
+$ helm install ory/oathkeeper
 ```
 
 which sets up a very basic configuration with no access rules and no enabled authenticators, authorizers, or
@@ -30,7 +30,7 @@ This Helm Chart supports a demo mode which deploys access rules for urls
 that point to [httpbin.org](https://httpbin.org). To install ORY Oathkeeper in demo-mode, run:
 
 ```bash
-$ helm install --set demo=true ory-oathkeeper
+$ helm install --set demo=true ory/oathkeeper
 ```
 
 Be aware that this mode uses JSON Web Keys and other secrets that are publicly accessible via GitHub.
@@ -57,7 +57,7 @@ oathkeeper:
 and passing that as a value override to helm:
 
 ```bash
-$ helm install -f ./path/to/config.yaml ory-oathkeeper
+$ helm install -f ./path/to/config.yaml ory/oathkeeper
 ```
 
 Values such as the proxy / api port will be automatically propagated to the service and ingress definitions.
@@ -73,7 +73,7 @@ from disk and deploying it as a Kubernetes Secret:
 ```bash
 $ helm install \
     --set-file oathkeeper.mutatorIdTokenJWKs=./path/to/jwks.json \
-    ory-oathkeeper
+    ory/oathkeeper
 ```
 
 Please note that any configuration values set for `oathkeeper.config.mutator.id_token.jwks_url` using e.g.
@@ -86,7 +86,7 @@ Instead of fetching access rules from remote locations, you can set your access 
 ```bash
 $ helm install \
     --set-file oathkeeper.accessRules=./path/to/access-rules.json \
-    ory-oathkeeper
+    ory/oathkeeper
 ```
 
 Please note that any configuration values set for `oathkeeper.config.access_rules.repositories` using e.g.

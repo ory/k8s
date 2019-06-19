@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "ory-oathkeeper.fullname" . }}
+  name: {{ include "oathkeeper.fullname" . }}
   labels:
-{{ include "ory-oathkeeper.labels" . | indent 4 }}
+{{ include "oathkeeper.labels" . | indent 4 }}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      app.kubernetes.io/name: {{ include "ory-oathkeeper.name" . }}
+      app.kubernetes.io/name: {{ include "oathkeeper.name" . }}
       app.kubernetes.io/instance: {{ .Release.Name }}
   template:
     metadata:
       labels:
-        app.kubernetes.io/name: {{ include "ory-oathkeeper.name" . }}
+        app.kubernetes.io/name: {{ include "oathkeeper.name" . }}
         app.kubernetes.io/instance: {{ .Release.Name }}
     spec:
     {{- with .Values.imagePullSecrets }}
@@ -21,12 +21,12 @@ spec:
         {{- toYaml . | nindent 8 }}
     {{- end }}
       volumes:
-        - name: {{ include "ory-oathkeeper.name" . }}-config-volume
+        - name: {{ include "oathkeeper.name" . }}-config-volume
           configMap:
-            name: {{ include "ory-oathkeeper.fullname" . }}
-        - name: {{ include "ory-oathkeeper.name" . }}-secrets-volume
+            name: {{ include "oathkeeper.fullname" . }}
+        - name: {{ include "oathkeeper.name" . }}-secrets-volume
           secret:
-            secretName: {{ include "ory-oathkeeper.fullname" . }}
+            secretName: {{ include "oathkeeper.fullname" . }}
       containers:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
@@ -42,10 +42,10 @@ spec:
               value: "file:///etc/config/access-rules.json"
             {{- end }}
           volumeMounts:
-            - name: {{ include "ory-oathkeeper.name" . }}-config-volume
+            - name: {{ include "oathkeeper.name" . }}-config-volume
               mountPath: /etc/config
               readOnly: true
-            - name: {{ include "ory-oathkeeper.name" . }}-secrets-volume
+            - name: {{ include "oathkeeper.name" . }}-secrets-volume
               mountPath: /etc/secrets
               readOnly: true
           ports:
