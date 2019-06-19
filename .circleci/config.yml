@@ -2,7 +2,7 @@ version: 2.1
 jobs:
   lint:
     docker:
-      - image: debian:stretch
+      - image: circleci/golang:1.12
     steps:
       - checkout
       - run: curl -L https://git.io/get_helm.sh | bash
@@ -10,7 +10,7 @@ jobs:
 
   release:
     docker:
-      - image: debian:stretch
+      - image: circleci/golang:1.12
     steps:
       - checkout
       - run: curl -L https://git.io/get_helm.sh | bash
