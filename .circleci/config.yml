@@ -17,7 +17,7 @@ jobs:
       - checkout
       - run: curl -L https://git.io/get_helm.sh | bash
       - run: helm init --client-only
-      - run: helm package -d docs/ ./helm/charts/ory-oathkeeper/ --version `CIRCLE_TAG=1.2.3 echo $CIRCLE_TAG | sed s/v//g`
+      - run: helm package -d docs/ ./helm/charts/ory-oathkeeper/ --version `echo $CIRCLE_TAG | sed s/v//g`
       - run: helm repo index docs/
       - run: git config --global user.email "hi@ory.sh"
       - run: git config --global user.name "ORY Continuous Integration"
