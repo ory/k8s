@@ -16,6 +16,8 @@ jobs:
       - image: debian:stretch
     steps:
       - checkout
+      - helm package -d docs/ ./helm/charts/ory-oathkeeper/ --version `echo $CIRCLE_TAG | sed s/v//g`
+      - helm repo index docs/
 
 workflows:
   lint:
@@ -26,4 +28,6 @@ workflows:
       - release
     requires:
       - lint
-      -
+    filters:
+      tags:
+        only: /.*/
