@@ -21,15 +21,15 @@ jobs:
 
 workflows:
   version: 2
-  release-lint:
-    - lint:
-      jobs:
-        - lint
-    - release:
-      jobs:
-        - release
-      requires:
-        - lint
-      filters:
-        tags:
-          only: /.*/
+  ci:
+    jobs:
+      - lint:
+          filters:
+            tags:
+              only: /.*/
+      - release:
+          requires:
+            - lint
+          filters:
+            tags:
+              only: /.*/
