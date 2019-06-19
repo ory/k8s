@@ -37,6 +37,6 @@ workflows:
       - release:
           requires:
             - lint
-#          filters:
-#            tags:
-#              only: /.*/
+          filters:
+            tags:
+              only: /.*/
