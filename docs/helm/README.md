@@ -25,8 +25,8 @@ credentials issuers.
 
 This Helm Chart supports a demo mode which deploys access rules for urls
 
-- http://<oathkeeper-reverse-proxy-host>/authenticator/noop/authorizer/allow/mutator/noop
-- http://<oathkeeper-reverse-proxy-host>//authenticator/anonymous/authorizer/allow/mutator/header
+- `http://<oathkeeper-reverse-proxy-host>/authenticator/noop/authorizer/allow/mutator/noop`
+- `http://<oathkeeper-reverse-proxy-host>//authenticator/anonymous/authorizer/allow/mutator/header`
 
 that point to [httpbin.org](https://httpbin.org). To install ORY Oathkeeper in demo-mode, run:
 
