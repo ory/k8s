@@ -9,15 +9,15 @@ jobs:
       - image: debian:stretch
     steps:
       - checkout
-      - helm lint ./helm/charts/ory-oathkeeper/
+      - run: helm lint ./helm/charts/ory-oathkeeper/
 
   release:
     docker:
       - image: debian:stretch
     steps:
       - checkout
-      - helm package -d docs/ ./helm/charts/ory-oathkeeper/ --version `echo $CIRCLE_TAG | sed s/v//g`
-      - helm repo index docs/
+      - run: helm package -d docs/ ./helm/charts/ory-oathkeeper/ --version `echo $CIRCLE_TAG | sed s/v//g`
+      - run: helm repo index docs/
 
 workflows:
   lint:
