@@ -24,7 +24,7 @@ jobs:
       - run: git checkout -b make-release HEAD
       - run: git add -A
       - run: git commit -a -m "Release $CIRCLE_TAG"
-      - run: git push origin HEAD:feat-oathkeeper-helm
+      - run: git push origin HEAD:master
 
 workflows:
   version: 2
