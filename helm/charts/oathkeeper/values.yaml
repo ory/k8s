@@ -49,11 +49,11 @@ ingress:
 #     kubernetes.io/ingress.class: nginx
 #     kubernetes.io/tls-acme: "true"
 #    hosts:
-#      - host: proxy.ory-oathkeeper.local
+#      - host: proxy.oathkeeper.local
 #        paths: ["/"]
 #    tls: []
 #        hosts:
-#          - proxy.ory-oathkeeper.local
+#          - proxy.oathkeeper.local
 #      - secretName: oathkeeper-proxy-example-tls
 
   api:
@@ -66,11 +66,11 @@ ingress:
 #      kubernetes.io/ingress.class: nginx
 #      kubernetes.io/tls-acme: "true"
 #    hosts:
-#      - host: api.ory-oathkeeper.local
+#      - host: api.oathkeeper.local
 #        paths: ["/"]
 #    tls: []
 #      hosts:
-#        - api.ory-oathkeeper.local
+#        - api.oathkeeper.local
 #      - secretName: oathkeeper-api-example-tls
 
 # Configure ORY Oathkeeper itself

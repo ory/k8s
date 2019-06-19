@@ -2,9 +2,9 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "ory-oathkeeper.fullname" . }}-api
+  name: {{ include "oathkeeper.fullname" . }}-api
   labels:
-{{ include "ory-oathkeeper.labels" . | indent 4 }}
+{{ include "oathkeeper.labels" . | indent 4 }}
 spec:
   type: {{ .Values.service.api.type }}
   ports:
@@ -13,6 +13,6 @@ spec:
       protocol: TCP
       name: http-api
   selector:
-    app.kubernetes.io/name: {{ include "ory-oathkeeper.name" . }}
+    app.kubernetes.io/name: {{ include "oathkeeper.name" . }}
     app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}

@@ -1,11 +1,11 @@
 {{- if .Values.ingress.api.enabled -}}
-{{- $fullName := include "ory-oathkeeper.fullname" . -}}
+{{- $fullName := include "oathkeeper.fullname" . -}}
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
   name: {{ $fullName }}
   labels:
-{{ include "ory-oathkeeper.labels" . | indent 4 }}
+{{ include "oathkeeper.labels" . | indent 4 }}
   {{- with .Values.ingress.api.annotations }}
   annotations:
     {{- toYaml . | nindent 4 }}
