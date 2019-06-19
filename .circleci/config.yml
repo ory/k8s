@@ -3,6 +3,7 @@ jobs:
   lint:
     docker:
       - image: circleci/golang:1.12
+    working_directory: /go/src/github.com/ory/k8s
     steps:
       - checkout
       - run: curl -L https://git.io/get_helm.sh | bash
@@ -11,6 +12,7 @@ jobs:
   release:
     docker:
       - image: circleci/golang:1.12
+    working_directory: /go/src/github.com/ory/k8s
     steps:
       - checkout
       - run: curl -L https://git.io/get_helm.sh | bash
