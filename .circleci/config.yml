@@ -20,14 +20,16 @@ jobs:
       - run: helm repo index docs/
 
 workflows:
-  lint:
-    jobs:
-      - lint
-  release:
-    jobs:
-      - release
-    requires:
-      - lint
-    filters:
-      tags:
-        only: /.*/
+  version: 2
+  release-lint:
+    - lint:
+      jobs:
+        - lint
+    - release:
+      jobs:
+        - release
+      requires:
+        - lint
+      filters:
+        tags:
+          only: /.*/
