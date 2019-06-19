@@ -1,8 +1,18 @@
-# ORY Oathkeeper Helm Chart
+# ORY Helm Charts
+
+Add this repository using:
+
+```bash
+$ helm repo add ory https://k8s.ory.sh/helm/charts
+$ helm repo update
+
+```
+
+## ORY Oathkeeper Helm Chart
 
 The ORY Oathkeeper Helm Chart helps you deploy ORY Oathkeeper on Kubernetes using Helm.
 
-## Installation
+### Installation
 
 Installing ORY Oathkeeper using Helm with
 
@@ -28,7 +38,7 @@ Be aware that this mode uses JSON Web Keys and other secrets that are publicly a
 These secrets are publicly known and should never be used anywhere. **Do not use demo-mode for anything
 other than experimenting**.
 
-## Configuration
+### Configuration
 
 You can pass your [ORY Oathkeeper configuration file](https://github.com/ory/oathkeeper/blob/master/docs/config.yaml)
 by creating a yaml file with key `oathkeeper.config`
@@ -56,7 +66,7 @@ The following table lists the configurable parameters of the ORY Oathkeeper char
 
 For a detailed list of configuration items
 
-### JSON Web Key Set for Mutator `id_token`
+#### JSON Web Key Set for Mutator `id_token`
 
 The `id_token` mutator requires a secret JSON Web Key Set. This helm chart supports loading the JSON Web Key Set
 from disk and deploying it as a Kubernetes Secret:
@@ -70,7 +80,7 @@ $ helm install \
 Please note that any configuration values set for `oathkeeper.config.mutator.id_token.jwks_url` using e.g.
 a configuration file will be overwritten by this setting.
 
-### Access Rules
+#### Access Rules
 
 Instead of fetching access rules from remote locations, you can set your access rules directly with `--set-file`:
 
