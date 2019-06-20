@@ -3,7 +3,7 @@
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: {{ $fullName }}
+  name: {{ $fullName }}-api
   labels:
 {{ include "oathkeeper.labels" . | indent 4 }}
   {{- with .Values.ingress.api.annotations }}
@@ -29,7 +29,7 @@ spec:
         {{- range .paths }}
           - path: {{ . }}
             backend:
-              serviceName: {{ $fullName }}
+              serviceName: {{ $fullName }}-api
               servicePort: http-api
         {{- end }}
   {{- end }}

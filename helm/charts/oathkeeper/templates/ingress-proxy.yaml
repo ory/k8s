@@ -3,7 +3,7 @@
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: {{ $fullName }}
+  name: {{ $fullName }}-proxy
   labels:
 {{ include "oathkeeper.labels" . | indent 4 }}
   {{- with .Values.ingress.proxy.annotations }}
@@ -29,8 +29,8 @@ spec:
         {{- range .paths }}
           - path: {{ . }}
             backend:
-              serviceName: {{ $fullName }}
-              servicePort: http-api
+              serviceName: {{ $fullName }}-proxy
+              servicePort: http-proxy
         {{- end }}
   {{- end }}
 {{- end }}
