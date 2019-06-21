@@ -7,6 +7,107 @@ $ helm repo add ory https://k8s.ory.sh/helm/charts
 $ helm repo update
 ```
 
+## ORY Hydra Helm Chart
+
+### Installation
+
+This chart supports a demo flag which, if set, sets up a demo environment. No further configuration is needed for this.
+Be aware that the demo environment is *highly insecure* and must not be used for anything other than testing:
+
+```bash
+$ helm install --set demo=true ory/hydra
+```
+
+To install ORY Hydra, the following values must be set
+([documentation](https://github.com/ory/hydra/blob/master/docs/config.yaml)):
+
+* `hydra.config.dsn`
+* `hydra.config.urls.self.issuer`
+* `hydra.config.urls.login`
+* `hydra.config.urls.consent`
+* `hydra.config.secrets.system`
+
+If you wish to install ORY Hydra with an in-memory database, a cryptographically strong secret, a Login and Consent
+provider located at `https://my-idp/` run:
+
+```bash
+$ helm install \
+    --set hydra.config.secrets.system=$(LC_ALL=C tr -dc 'A-Za-z0-9' < /dev/urandom | base64 | head -c 32) \
+    --set hydra.config.dsn=memory \
+    --set hydra.config.urls.self.issuer=https://my-hydra/ \
+    --set hydra.config.login=https://my-idp/login \
+    --set hydra.config.consent=https://my-idp/consent \
+    ory/hydra
+```
+
+You can optionally also set the cookie secrets:
+
+```bash
+$ helm install \
+    ...
+    hydra.config.secrets.cookie=$(LC_ALL=C tr -dc 'A-Za-z0-9' < /dev/urandom | base64 | head -c 32) \
+    ...
+    ory/hydra
+```
+
+#### With SQL Database
+
+To run ORY Hydra against a SQL database, set the connection string. For example:
+
+```bash
+$ helm install \
+    ...
+    --set dsn=postgres://foo:bar@baz:1234/db \
+    ory/hydra
+```
+
+This chart does not require MySQL, PostgreSQL, or CockroachDB as dependencies because we strongly encourage
+you not to run a database in Kubernetes but instead recommend to rely on a managed SQL database such as Google
+Cloud SQL or AWS Aurora.
+
+#### With Google Cloud SQL
+
+To connect to Google Cloud SQL, you could use
+the [`gcloud-sqlproxy`](https://github.com/rimusz/charts/tree/master/stable/gcloud-sqlproxy) chart:
+
+```bash
+$ helm upgrade pg-sqlproxy rimusz/gcloud-sqlproxy --namespace sqlproxy \
+    --set serviceAccountKey="$(cat service-account.json | base64 | tr -d '\n')" \
+    ...
+```
+
+When bringing up ORY Hydra, set the host to `pg-sqlproxy-gcloud-sqlproxy` as documented
+[here](https://github.com/rimusz/charts/tree/master/stable/gcloud-sqlproxy#installing-the-chart):
+
+```bash
+$ helm install \
+    ...
+    --set dsn=postgres://foo:bar@pg-sqlproxy-gcloud-sqlproxy:5432/db \
+    ory/hydra
+```
+
+### Configuration
+
+You can pass your [ORY Hydra configuration file](https://github.com/ory/hydra/blob/master/docs/config.yaml)
+by creating a yaml file with key `hydra.config`
+
+```yaml
+# hydra-config.yaml
+
+oathkeeper:
+  config:
+    # e.g.:
+    ttl:
+      access_token: 1h
+   # ...
+```
+
+and passing that as a value override to helm:
+
+```bash
+$ helm install -f ./path/to/hydra-config.yaml ory/hydra
+```
+
 ## ORY Oathkeeper Helm Chart
 
 The ORY Oathkeeper Helm Chart helps you deploy ORY Oathkeeper on Kubernetes using Helm.
@@ -57,7 +158,7 @@ oathkeeper:
 and passing that as a value override to helm:
 
 ```bash
-$ helm install -f ./path/to/config.yaml ory/oathkeeper
+$ helm install -f ./path/to/oathkeeper-config.yaml ory/oathkeeper
 ```
 
 Values such as the proxy / api port will be automatically propagated to the service and ingress definitions.

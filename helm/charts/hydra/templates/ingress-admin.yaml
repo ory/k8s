@@ -1,19 +1,19 @@
-{{- if .Values.ingress.api.enabled -}}
-{{- $fullName := include "oathkeeper.fullname" . "-api" -}}
-apiVersion: extensions/v1beta1
+{{- if .Values.ingress.admin.enabled -}}
+{{- $fullName := include "hydra.fullname" . "-admin" -}}
+adminVersion: extensions/v1beta1
 kind: Ingress
 metadata:
   name: {{ $fullName }}
   labels:
-{{ include "oathkeeper.labels" . | indent 4 }}
-  {{- with .Values.ingress.api.annotations }}
+{{ include "hydra.labels" . | indent 4 }}
+  {{- with .Values.ingress.admin.annotations }}
   annotations:
     {{- toYaml . | nindent 4 }}
   {{- end }}
 spec:
-{{- if .Values.ingress.api.tls }}
+{{- if .Values.ingress.admin.tls }}
   tls:
-  {{- range .Values.ingress.api.tls }}
+  {{- range .Values.ingress.admin.tls }}
     - hosts:
       {{- range .hosts }}
         - {{ . | quote }}
@@ -22,7 +22,7 @@ spec:
   {{- end }}
 {{- end }}
   rules:
-  {{- range .Values.ingress.api.hosts }}
+  {{- range .Values.ingress.admin.hosts }}
     - host: {{ .host | quote }}
       http:
         paths:
@@ -30,7 +30,7 @@ spec:
           - path: {{ . }}
             backend:
               serviceName: {{ $fullName }}
-              servicePort: http-api
+              servicePort: http-admin
         {{- end }}
   {{- end }}
 {{- end }}

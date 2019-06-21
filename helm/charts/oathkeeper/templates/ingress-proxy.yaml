@@ -1,9 +1,9 @@
 {{- if .Values.ingress.proxy.enabled -}}
-{{- $fullName := include "oathkeeper.fullname" . -}}
+{{- $fullName := include "oathkeeper.fullname" . "-proxy" -}}
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: {{ $fullName }}-proxy
+  name: {{ $fullName }}
   labels:
 {{ include "oathkeeper.labels" . | indent 4 }}
   {{- with .Values.ingress.proxy.annotations }}
@@ -29,7 +29,7 @@ spec:
         {{- range .paths }}
           - path: {{ . }}
             backend:
-              serviceName: {{ $fullName }}-proxy
+              serviceName: {{ $fullName }}
               servicePort: http-proxy
         {{- end }}
   {{- end }}

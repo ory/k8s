@@ -1,20 +1,19 @@
 apiVersion: v1
 appVersion: "v1.0.0-rc.14+oryOS.12"
 description: A Helm chart for deployoing ORY Oathkeeper in Kubernetes
-name: oathkeeper
+name: hydra
 version: 0.0.1
 keywords:
-  - zero-trust
-  - beyond-corp
-  - access-control
-  - reverse-proxy
-  - nginx
-  - envoy
-  - ambassador
-  - auth-filter
+  - oauth2
+  - openid-connect
+  - openid
+  - oidc
+  - op
+  - api-security
+  - security
 home: https://www.ory.sh/
 sources:
-  - https://github.com/ory/oathkeeper
+  - https://github.com/ory/hydra
   - https://github.com/ory/k8s
 maintainers: # (optional)
   - name: ORY Team

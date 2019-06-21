@@ -1,0 +1,18 @@
+{{- if .Values.service.admin.enabled -}}
+adminVersion: v1
+kind: Service
+metadata:
+  name: {{ include "hydra.fullname" . }}-admin
+  labels:
+{{ include "hydra.labels" . | indent 4 }}
+spec:
+  type: {{ .Values.service.admin.type }}
+  ports:
+    - port: {{ .Values.service.admin.port }}
+      targetPort: http-admin
+      protocol: TCP
+      name: http-admin
+  selector:
+    app.kubernetes.io/name: {{ include "hydra.name" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+{{- end }}
