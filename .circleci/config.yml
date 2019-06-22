@@ -8,6 +8,8 @@ jobs:
       - checkout
       - run: curl -L https://git.io/get_helm.sh | bash
       - run: helm lint ./helm/charts/oathkeeper/
+      - run: helm lint ./helm/charts/hydra/
+      - run: helm lint ./helm/charts/example-idp/
 
   release:
     docker:
