@@ -10,6 +10,12 @@ To test a chart locally without applying it to kubernetes, do:
 $ helm install --debug --dry-run .
 ```
 
+```sh
+$ name=<name>
+$ helm install --name $name .
+$ helm upgrade $name .
+```
+
 ### Ingress
 
 If you wish to test ingress, run:

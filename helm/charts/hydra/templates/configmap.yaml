@@ -5,14 +5,8 @@ metadata:
   labels:
 {{ include "hydra.labels" . | indent 4 }}
 data:
-{{- if .Values.hydra.accessRules}}
-  "access-rules.json": |
-    {{- .Values.hydra.accessRules | nindent 4 }}
-{{- end}}
   "config.yaml": |
-{{- if .Values.demo }}
-{{- else -}}
-{{- with .Values.hydra.config -}}
-  {{- toYaml . | nindent 4 }}
-{{- end -}}
-{{- end -}}
+  {{- with .Values.hydra.config -}}
+    {{- toYaml . | nindent 4 }}
+  {{- end -}}
+

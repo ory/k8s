@@ -60,7 +60,7 @@ Generate the secrets.system value
 */}}
 {{- define "hydra.secrets.system" -}}
 {{- if .Values.hydra.config.secrets.system -}}
-{{- required "Value secrets.system can not be empty!" .Values.hydra.config.secrets.system }}
+{{- .Values.hydra.config.secrets.system }}
 {{- else if .Values.demo -}}
 a-very-insecure-secret-for-checking-out-the-demo
 {{- end -}}
@@ -73,6 +73,20 @@ Generate the secrets.cookie value
 {{- if .Values.hydra.config.secrets.cookie -}}
 {{- .Values.hydra.config.secrets.cookie }}
 {{- else -}}
-{{- .Values.hydra.config.secrets.system }}
+{{- include "hydra.secrets.system" . }}
+{{- end -}}
+{{- end -}}
+
+{{/*
+Generate the urls.issuer value
+*/}}
+{{- define "hydra.config.urls.issuer" -}}
+{{- if .Values.hydra.config.urls.self.issuer -}}
+{{- .Values.hydra.config.urls.self.issuer }}
+{{- else if .Values.ingress.public.enabled -}}
+{{- $host := index .Values.ingress.public.hosts 0 -}}
+http{{ if $.Values.ingress.public.tls }}s{{ end }}://{{ $host.host }}
+{{- else if contains "ClusterIP" .Values.service.public.type }}
+http://127.0.0.1:{{ .Values.service.public.port }}/
 {{- end -}}
 {{- end -}}

@@ -16,9 +16,6 @@ nameOverride: ""
 # Full chart name override
 fullnameOverride: ""
 
-# If enabled, a demo deployment will be generated.
-demo: false
-
 # Configures the Kubernetes service
 service:
   # Configures the Kubernetes service for the proxy port.
@@ -91,6 +88,8 @@ hydra:
     secrets: {}
 
   autoMigrate: false
+  dangerousForceHttp: false
+  dangerousAllowInsecureRedirectUrls: false
 
 resources: {}
 #  We usually recommend not to specify default resources and to leave this as a conscious

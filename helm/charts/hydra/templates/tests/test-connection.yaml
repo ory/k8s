@@ -8,8 +8,8 @@ metadata:
     "helm.sh/hook": test-success
 spec:
   containers:
-    - name: wget
+    - name: healthcheck-ready
       image: busybox
       command: ['wget']
-      args:  ['{{ include "hydra.fullname" . }}:{{ .Values.service.port }}']
+      args:  ['{{ include "hydra.fullname" . }}-admin:{{ .Values.service.admin.port }}/health/ready']
   restartPolicy: Never

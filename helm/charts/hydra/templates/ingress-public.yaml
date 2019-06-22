@@ -1,9 +1,9 @@
-{{- if .Values.ingress.public.enabled -}}
-{{- $fullName := include "hydra.fullname" . "-public" -}}
+{{- if or .Values.ingress.public.enabled .Values.demo -}}
+{{- $fullName := include "hydra.fullname" . -}}
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: {{ $fullName }}
+  name: {{ $fullName }}-public
   labels:
 {{ include "hydra.labels" . | indent 4 }}
   {{- with .Values.ingress.public.annotations }}
@@ -29,8 +29,8 @@ spec:
         {{- range .paths }}
           - path: {{ . }}
             backend:
-              serviceName: {{ $fullName }}
-              servicePort: http-public
+              serviceName: {{ $fullName }}-public
+              servicePort: http
         {{- end }}
   {{- end }}
 {{- end }}

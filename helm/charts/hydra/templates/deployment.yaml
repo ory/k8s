@@ -20,25 +20,20 @@ spec:
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
     {{- end }}
-      {{- if .Values.hydra.autoMigrate }}
+    {{- if .Values.hydra.autoMigrate }}
       initContainers:
         - name: {{ .Chart.Name }}-automigrate
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           command: ["hydra"]
-          args: [
-            "migrate",
-            "sql",
-            "-e",
-            {{- include "hydra.dsn" . | quote }},
-          ]
+          args: ["migrate", "sql", "-e"]
           env:
             - name: DSN
               valueFrom:
                 secretKeyRef:
                   name: {{ include "hydra.fullname" . }}
                   key: dsn
-      {{- end}}
+    {{- end}}
       volumes:
         - name: {{ include "hydra.name" . }}-config-volume
           configMap:
@@ -48,17 +43,22 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           command: ["hydra"]
-            volumeMounts:
-              - name: {{ include "hydra.name" . }}-config-volume
-                mountPath: /etc/config
-                readOnly: true
+          volumeMounts:
+            - name: {{ include "hydra.name" . }}-config-volume
+              mountPath: /etc/config
+              readOnly: true
           args: [
             "serve",
             "all",
-            {{- if .Values.demo }}
+            {{- if .Values.hydra.dangerousForceHttp }}
             "--dangerous-force-http",
             {{- end}}
-            "-c",
+            {{- if .Values.hydra.dangerousAllowInsecureRedirectUrls }}
+            "--dangerous-allow-insecure-redirect-urls",
+            {{- range .Values.hydra.dangerousAllowInsecureRedirectUrls }}
+            {{- . | quote | indent 12 }}
+            {{- end}}
+            "--config",
             "/etc/config/config.yaml"
           ]
           ports:
@@ -70,13 +70,19 @@ spec:
               protocol: TCP
           livenessProbe:
             httpGet:
-              path: /
+              path: /health/alive
               port: http-admin
           readinessProbe:
             httpGet:
-              path: /
+              path: /health/rady
               port: http-admin
           env:
+            - name: URLS_SELF_ISSUER
+              {{- if .Values.hydra.dangerousForceHttp }}
+              value: {{ incude "hydra.config.urls.issuer" . | quote }}
+              {{- else }}
+              value: {{ incude "hydra.config.urls.issuer" . | quote }}
+              {{}}
             - name: DSN
               valueFrom:
                 secretKeyRef:
@@ -99,10 +105,10 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
     {{- with .Values.affinity }}
-      affinity:
-        {{- toYaml . | nindent 8 }}
+    affinity:
+      {{- toYaml . | nindent 8 }}
     {{- end }}
     {{- with .Values.tolerations }}
-      tolerations:
-        {{- toYaml . | nindent 8 }}
+    tolerations:
+      {{- toYaml . | nindent 8 }}
     {{- end }}

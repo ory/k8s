@@ -25,15 +25,6 @@ The ORY Hydra HTTP Public API is available via:
   echo "Visit http://127.0.0.1:{{ .Values.service.public.port }} to use your application"
   kubectl port-forward $POD_NAME {{ .Values.service.public.port }}:{{ .Values.hydra.config.serve.public.port }}
   export HYDRA_PUBLIC_URL=http://127.0.0.1:{{ .Values.service.public.port }}/
-  {{- if .Values.demo }}
-
-  TO DO
-
-  {{- else }}
-
-  TO DO
-
-  {{- end }}
 {{- end }}
 
 The ORY Hydra HTTP Admin API is available via:
@@ -65,5 +56,22 @@ The ORY Hydra HTTP Admin API is available via:
   export HYDRA_ADMIN_URL=http://127.0.0.1:{{ .Values.service.admin.port }}/
 
   TO DO
+
+{{- end }}
+
+{{- if .Values.demo }}
+The exemplary
+
+export IDP_POD_NAME=$(kubectl get pods --namespace {{ .Release.Namespace }} -l "app.kubernetes.io/name={{ include "demo-idp.name" . }},app.kubernetes.io/instance={{ .Release.Name }}" -o jsonpath="{.items[0].metadata.name}")
+echo "Visit http://127.0.0.1:{{ .Values.service.public.port }} to use your application"
+kubectl port-forward $POD_NAME {{ .Values.service.public.port }}:{{ .Values.hydra.config.serve.public.port }}
+export HYDRA_PUBLIC_URL=http://127.0.0.1:{{ .Values.service.public.port }}/
+
+
+TO DO
+
+{{- else }}
+
+TO DO
 
 {{- end }}
