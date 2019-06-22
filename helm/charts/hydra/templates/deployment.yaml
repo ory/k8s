@@ -58,6 +58,7 @@ spec:
             {{- range .Values.hydra.dangerousAllowInsecureRedirectUrls }}
             {{- . | quote | indent 12 }}
             {{- end}}
+            {{- end}}
             "--config",
             "/etc/config/config.yaml"
           ]
@@ -74,15 +75,14 @@ spec:
               port: http-admin
           readinessProbe:
             httpGet:
-              path: /health/rady
+              path: /health/ready
               port: http-admin
           env:
+            {{- $issuer := include "hydra.config.urls.issuer" . -}}
+            {{- if $issuer }}
             - name: URLS_SELF_ISSUER
-              {{- if .Values.hydra.dangerousForceHttp }}
-              value: {{ incude "hydra.config.urls.issuer" . | quote }}
-              {{- else }}
-              value: {{ incude "hydra.config.urls.issuer" . | quote }}
-              {{}}
+              value: {{ $issuer | quote }}
+            {{- end }}
             - name: DSN
               valueFrom:
                 secretKeyRef:

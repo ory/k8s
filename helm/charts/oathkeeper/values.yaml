@@ -50,7 +50,7 @@ ingress:
 #     kubernetes.io/tls-acme: "true"
     hosts:
       - host: proxy.oathkeeper.localhost
-        paths: ["/.*"]
+        paths: ["/"]
 #    tls: []
 #        hosts:
 #          - proxy.oathkeeper.local
@@ -67,7 +67,7 @@ ingress:
 #      kubernetes.io/tls-acme: "true"
     hosts:
       - host: api.oathkeeper.localhost
-        paths: ["/.*"]
+        paths: ["/"]
 #    tls: []
 #      hosts:
 #        - api.oathkeeper.local

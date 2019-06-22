@@ -5,7 +5,7 @@ image:
   # ORY Hydra image
   repository: oryd/hydra
   # ORY Hydra version
-  tag: v1.0.0-rc.14
+  tag: v1.0.0-rc.16
   # Image pull policy
   pullPolicy: IfNotPresent
 
@@ -46,7 +46,7 @@ ingress:
     #     kubernetes.io/tls-acme: "true"
     hosts:
       - host: public.hydra.localhost
-        paths: ["/.*"]
+        paths: ["/"]
   #    tls: []
   #        hosts:
   #          - proxy.hydra.local
@@ -63,7 +63,7 @@ ingress:
     #      kubernetes.io/tls-acme: "true"
     hosts:
       - host: admin.hydra.localhost
-        paths: ["/.*"]
+        paths: ["/"]
 #    tls: []
 #      hosts:
 #        - api.hydra.local
@@ -86,6 +86,8 @@ hydra:
           - 172.16.0.0/12
           - 192.168.0.0/16
     secrets: {}
+    urls:
+      self: {}
 
   autoMigrate: false
   dangerousForceHttp: false

@@ -9,22 +9,43 @@ The ORY Hydra HTTP Public API is available via:
   export NODE_PORT=$(kubectl get --namespace {{ .Release.Namespace }} -o jsonpath="{.spec.ports[0].nodePort}" services {{ include "hydra.fullname" . }})
   export NODE_IP=$(kubectl get nodes --namespace {{ .Release.Namespace }} -o jsonpath="{.items[0].status.addresses[0].address}")
   export HYDRA_PUBLIC_URL=http://$NODE_IP:$NODE_PORT
+  curl $HYDRA_PUBLIC_URL/.well-known/openid-configuration
 
-  TO DO
+If you have the ORY Hydra CLI installed locally, you can run commands
+against this endpoint:
+
+  hydra token client \
+    --endpoint $HYDRA_PUBLIC_URL \
+    # ...
 
 {{- else if contains "LoadBalancer" .Values.service.public.type }}
      NOTE: It may take a few minutes for the LoadBalancer IP to be available.
            You can watch the status of by running 'kubectl get --namespace {{ .Release.Namespace }} svc -w {{ include "hydra.fullname" . }}'
   export SERVICE_IP=$(kubectl get svc --namespace {{ .Release.Namespace }} {{ include "hydra.fullname" . }}-public -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
   export HYDRA_PUBLIC_URL=http://$SERVICE_IP:{{ .Values.service.public.port }}
+  curl $HYDRA_PUBLIC_URL/.well-known/openid-configuration
 
-  TO DO
+If you have the ORY Hydra CLI installed locally, you can run commands
+against this endpoint:
+
+  hydra token client \
+    --endpoint $HYDRA_PUBLIC_URL \
+    # ...
 
 {{- else if contains "ClusterIP" .Values.service.public.type }}
   export POD_NAME=$(kubectl get pods --namespace {{ .Release.Namespace }} -l "app.kubernetes.io/name={{ include "hydra.name" . }},app.kubernetes.io/instance={{ .Release.Name }}" -o jsonpath="{.items[0].metadata.name}")
   echo "Visit http://127.0.0.1:{{ .Values.service.public.port }} to use your application"
   kubectl port-forward $POD_NAME {{ .Values.service.public.port }}:{{ .Values.hydra.config.serve.public.port }}
   export HYDRA_PUBLIC_URL=http://127.0.0.1:{{ .Values.service.public.port }}/
+  curl $HYDRA_PUBLIC_URL/.well-known/openid-configuration
+
+If you have the ORY Hydra CLI installed locally, you can run commands
+against this endpoint:
+
+  hydra token client \
+    --endpoint $HYDRA_PUBLIC_URL \
+    # ...
+
 {{- end }}
 
 The ORY Hydra HTTP Admin API is available via:
@@ -38,40 +59,38 @@ The ORY Hydra HTTP Admin API is available via:
   export NODE_PORT=$(kubectl get --namespace {{ .Release.Namespace }} -o jsonpath="{.spec.ports[0].nodePort}" services {{ include "hydra.fullname" . }})
   export NODE_IP=$(kubectl get nodes --namespace {{ .Release.Namespace }} -o jsonpath="{.items[0].status.addresses[0].address}")
   export HYDRA_ADMIN_URL=http://$NODE_IP:$NODE_PORT
+  curl $HYDRA_ADMIN_URL/clients
 
-  TO DO
+If you have the ORY Hydra CLI installed locally, you can run commands
+against this endpoint:
+
+  hydra clients list \
+    --endpoint $HYDRA_ADMIN_URL
 
 {{- else if contains "LoadBalancer" .Values.service.admin.type }}
      NOTE: It may take a few minutes for the LoadBalancer IP to be available.
            You can watch the status of by running 'kubectl get --namespace {{ .Release.Namespace }} svc -w {{ include "hydra.fullname" . }}'
   export SERVICE_IP=$(kubectl get svc --namespace {{ .Release.Namespace }} {{ include "hydra.fullname" . }}-admin -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
   export HYDRA_ADMIN_URL=http://$SERVICE_IP:{{ .Values.service.admin.port }}
+  curl $HYDRA_ADMIN_URL/clients
 
-  TO DO
+If you have the ORY Hydra CLI installed locally, you can run commands
+against this endpoint:
+
+  hydra clients list \
+    --endpoint $HYDRA_ADMIN_URL
 
 {{- else if contains "ClusterIP" .Values.service.admin.type }}
   export POD_NAME=$(kubectl get pods --namespace {{ .Release.Namespace }} -l "app.kubernetes.io/name={{ include "hydra.name" . }},app.kubernetes.io/instance={{ .Release.Name }}" -o jsonpath="{.items[0].metadata.name}")
   echo "Visit http://127.0.0.1:{{ .Values.service.admin.port }} to use your application"
   kubectl port-forward $POD_NAME {{ .Values.service.admin.port }}:{{ .Values.hydra.config.serve.admin.port }}
   export HYDRA_ADMIN_URL=http://127.0.0.1:{{ .Values.service.admin.port }}/
+  curl $HYDRA_ADMIN_URL/clients
 
-  TO DO
+If you have the ORY Hydra CLI installed locally, you can run commands
+against this endpoint:
 
-{{- end }}
-
-{{- if .Values.demo }}
-The exemplary
-
-export IDP_POD_NAME=$(kubectl get pods --namespace {{ .Release.Namespace }} -l "app.kubernetes.io/name={{ include "demo-idp.name" . }},app.kubernetes.io/instance={{ .Release.Name }}" -o jsonpath="{.items[0].metadata.name}")
-echo "Visit http://127.0.0.1:{{ .Values.service.public.port }} to use your application"
-kubectl port-forward $POD_NAME {{ .Values.service.public.port }}:{{ .Values.hydra.config.serve.public.port }}
-export HYDRA_PUBLIC_URL=http://127.0.0.1:{{ .Values.service.public.port }}/
-
-
-TO DO
-
-{{- else }}
-
-TO DO
+  hydra clients list \
+    --endpoint $HYDRA_ADMIN_URL
 
 {{- end }}

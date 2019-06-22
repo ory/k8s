@@ -1,9 +1,9 @@
 {{- if .Values.ingress.admin.enabled -}}
-{{- $fullName := include "hydra.fullname" . "-admin" -}}
+{{- $fullName := include "hydra.fullname" . -}}
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: {{ $fullName }}
+  name: {{ $fullName }}-admin
   labels:
 {{ include "hydra.labels" . | indent 4 }}
   {{- with .Values.ingress.admin.annotations }}
@@ -29,7 +29,7 @@ spec:
         {{- range .paths }}
           - path: {{ . }}
             backend:
-              serviceName: {{ $fullName }}
+              serviceName: {{ $fullName }}-admin
               servicePort: http
         {{- end }}
   {{- end }}
