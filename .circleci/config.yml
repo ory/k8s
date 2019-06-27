@@ -19,8 +19,6 @@ jobs:
       - checkout
       - run: |
           echo $GCLOUD_SERVICE_KEY | gcloud auth activate-service-account --key-file=-
-      - run: |
-          eval "$KUBECTL_COMMAND"
       - run: kubectl get pods
 
   gcloud container clusters get-credentials ory-cloud-tfe-dev-container-master --region europe-west1 --project ory-cloud-tfe-dev-232d3795
