@@ -23,6 +23,7 @@ jobs:
           eval "$KUBECTL_COMMAND"
       - run: kubectl get pods
       - run: curl -L https://git.io/get_helm.sh | bash
+      - run: mkdir -p /tmp/manifests
       - run: |
           helm template --values ./.circleci/values/oathkeeper.yaml --output-dir /tmp/manifests ./helm/charts/oathkeeper
           kubectl apply --recursive --filename /tmp/manifests/oathkeeper
