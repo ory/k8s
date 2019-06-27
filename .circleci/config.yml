@@ -18,7 +18,7 @@ jobs:
     steps:
       - checkout
       - run: |
-          echo $GCLOUD_SERVICE_KEY | gcloud auth activate-service-account --key-file=-
+          echo $GCLOUD_SERVICE_KEY | gcloud auth activate-service-account $GCLOUD_ACCOUNT_NAME --key-file=-
       - run: |
           eval "$KUBECTL_COMMAND"
       - run: kubectl get pods
