@@ -25,8 +25,11 @@ jobs:
       - run: curl -L https://git.io/get_helm.sh | bash
       - run: mkdir -p /tmp/manifests
       - run: |
-          helm template --values ./.circleci/values/oathkeeper.yaml --output-dir /tmp/manifests ./helm/charts/oathkeeper
-          kubectl apply --recursive --filename /tmp/manifests/oathkeeper
+          helm template --namespace helm-ci -f .circleci/values/oathkeeper.yaml --output-dir ./helm/dist ./helm/charts/oathkeeper
+      - run: |
+          kubectl apply --recursive --filename ./helm/dist/oathkeeper
+      - run: |
+          kubectl delete daemonsets,replicasets,services,deployments,pods,rc --all --namespace=helm-ci
 
   release:
     docker:
