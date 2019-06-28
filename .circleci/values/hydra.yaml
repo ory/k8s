@@ -1,0 +1,6 @@
+hydra:
+  dangerousForceHttp: true
+  config:
+    dsn: memory
+    secrets:
+      system: OG5XbmxXa3dYeGplQXpQanYxeEFuRUFa
