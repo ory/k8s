@@ -14,7 +14,7 @@ helm install --tiller-namespace helm-ci --namespace helm-ci -f .circleci/values/
 
 n=0
 until [[ $n -ge 5 ]]; do
-  helm test --cleanup --tiller-namespace helm-ci ${release} && break  # substitute your command here
+  helm test --timeout 15 --cleanup --tiller-namespace helm-ci ${release} && break  # substitute your command here
   n=$[$n+1]
   sleep 5
 done
