@@ -23,13 +23,8 @@ jobs:
           eval "$KUBECTL_COMMAND"
       - run: kubectl get pods
       - run: curl -L https://git.io/get_helm.sh | bash
-      - run: mkdir -p /tmp/manifests
-      - run: |
-          helm template --namespace helm-ci -f .circleci/values/oathkeeper.yaml --output-dir ./helm/dist ./helm/charts/oathkeeper
-      - run: |
-          kubectl apply --recursive --filename ./helm/dist/oathkeeper
-      - run: |
-          kubectl delete daemonsets,replicasets,services,deployments,pods,rc --all --namespace=helm-ci
+      - run: .circleci/helm-test.sh oathkeeper
+      - run: .circleci/helm-test.sh hydra
 
   release:
     docker:
