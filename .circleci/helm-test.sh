@@ -14,7 +14,7 @@ helm install --tiller-namespace helm-ci --namespace helm-ci -f .circleci/values/
 
 n=0
 until [[ $n -ge 5 ]]; do
-  helm test --timeout 25 --cleanup --tiller-namespace helm-ci ${release} && exit 0  # substitute your command here
+  helm test --timeout 60 --cleanup --tiller-namespace helm-ci ${release} && exit 0  # substitute your command here
   kubectl delete pods/${release}-test-connection --namespace helm-ci
   n=$[$n+1]
   sleep 5
