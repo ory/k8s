@@ -86,7 +86,7 @@ Generate the urls.issuer value
 {{- else if .Values.ingress.public.enabled -}}
 {{- $host := index .Values.ingress.public.hosts 0 -}}
 http{{ if $.Values.ingress.public.tls }}s{{ end }}://{{ $host.host }}
-{{- else if contains "ClusterIP" .Values.service.public.type }}
+{{- else if contains "ClusterIP" .Values.service.public.type -}}
 http://127.0.0.1:{{ .Values.service.public.port }}/
 {{- end -}}
 {{- end -}}
