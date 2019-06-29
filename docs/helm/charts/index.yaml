@@ -3,7 +3,32 @@ entries:
   hydra:
   - apiVersion: v1
     appVersion: v1.0.0-rc.14_oryOS.12
-    created: "2019-06-29T15:25:18.375342474Z"
+    created: "2019-06-29T15:31:40.162909057Z"
+    description: A Helm chart for deployoing ORY Hydra in Kubernetes
+    digest: 3d809930bf1364cc3e2d06efa698623051a727778bc4b634ab3cec6a5dc8df7c
+    home: https://www.ory.sh/
+    keywords:
+    - oauth2
+    - openid-connect
+    - openid
+    - oidc
+    - op
+    - api-security
+    - security
+    maintainers:
+    - email: hi@ory.sh
+      name: ORY Team
+      url: https://www.ory.sh/
+    name: hydra
+    sources:
+    - https://github.com/ory/hydra
+    - https://github.com/ory/k8s
+    urls:
+    - hydra-0.0.10.tgz
+    version: 0.0.10
+  - apiVersion: v1
+    appVersion: v1.0.0-rc.14_oryOS.12
+    created: "2019-06-29T15:31:40.163697617Z"
     description: A Helm chart for deployoing ORY Hydra in Kubernetes
     digest: 05192b60af761b738d722d4fbb45f87f4872c26dd45da5c14b4e91142c9eadd8
     home: https://www.ory.sh/
@@ -28,7 +53,7 @@ entries:
     version: 0.0.9
   - apiVersion: v1
     appVersion: v1.0.0-rc.14_oryOS.12
-    created: "2019-06-29T15:25:18.374969196Z"
+    created: "2019-06-29T15:31:40.163320339Z"
     description: A Helm chart for deployoing ORY Hydra in Kubernetes
     digest: dd49cbd4002a13ceae1b47eafd820fc3890caba00b79d96e5e3a95e6710c3136
     home: https://www.ory.sh/
@@ -54,7 +79,33 @@ entries:
   oathkeeper:
   - apiVersion: v1
     appVersion: v0.16.0-beta.4_oryOS.12
-    created: "2019-06-29T15:25:18.37850078Z"
+    created: "2019-06-29T15:31:40.164206098Z"
+    description: A Helm chart for deployoing ORY Oathkeeper in Kubernetes
+    digest: cfeb9b742abf1c96d06b2f987964365c84f608e132893b5a3ca40562dc05c15f
+    home: https://www.ory.sh/
+    keywords:
+    - zero-trust
+    - beyond-corp
+    - access-control
+    - reverse-proxy
+    - nginx
+    - envoy
+    - ambassador
+    - auth-filter
+    maintainers:
+    - email: hi@ory.sh
+      name: ORY Team
+      url: https://www.ory.sh/
+    name: oathkeeper
+    sources:
+    - https://github.com/ory/oathkeeper
+    - https://github.com/ory/k8s
+    urls:
+    - oathkeeper-0.0.10.tgz
+    version: 0.0.10
+  - apiVersion: v1
+    appVersion: v0.16.0-beta.4_oryOS.12
+    created: "2019-06-29T15:31:40.167404483Z"
     description: A Helm chart for deployoing ORY Oathkeeper in Kubernetes
     digest: f0618c4f62c97374a7df4eb3630cf80e5ffba15b65b564b3771c09f4d0838241
     home: https://www.ory.sh/
@@ -80,7 +131,7 @@ entries:
     version: 0.0.9
   - apiVersion: v1
     appVersion: v0.16.0-beta.4_oryOS.12
-    created: "2019-06-29T15:25:18.377954165Z"
+    created: "2019-06-29T15:31:40.166931716Z"
     description: A Helm chart for deployoing ORY Oathkeeper in Kubernetes
     digest: 38ff6ea7aff43eaf9cdb31ae6d1c0c49a6de5c261e89e9989a8d86a181e720c9
     home: https://www.ory.sh/
@@ -106,7 +157,7 @@ entries:
     version: 0.0.8
   - apiVersion: v1
     appVersion: v0.16.0-beta.4_oryOS.12
-    created: "2019-06-29T15:25:18.377469034Z"
+    created: "2019-06-29T15:31:40.166433481Z"
     description: A Helm chart for deployoing ORY Oathkeeper in Kubernetes
     digest: fe65f11483660a165d6699d46207d6ab2df7e24e712603dba75bb681ab9e7d9e
     home: https://www.ory.sh/
@@ -132,7 +183,7 @@ entries:
     version: 0.0.7
   - apiVersion: v1
     appVersion: v0.16.0-beta.4_oryOS.12
-    created: "2019-06-29T15:25:18.376352162Z"
+    created: "2019-06-29T15:31:40.165929822Z"
     description: A Helm chart for deployoing ORY Oathkeeper in Kubernetes
     digest: 56bdbdaaabf1ec25598fa4aa7e58e8a0627052cba280b76787dec009529fe7d9
     home: https://www.ory.sh/
@@ -158,7 +209,7 @@ entries:
     version: 0.0.6
   - apiVersion: v1
     appVersion: v0.16.0-beta.4
-    created: "2019-06-29T15:25:18.375878898Z"
+    created: "2019-06-29T15:31:40.165403035Z"
     description: A Helm chart for deployoing ORY Oathkeeper in Kubernetes
     digest: 49a9449435aade826fd38683373930863fe895a1a5b39fb0472c56d8c1a5ea7a
     home: https://www.ory.sh/
@@ -182,4 +233,4 @@ entries:
     urls:
     - oathkeeper-0.0.5.tgz
     version: 0.0.5
-generated: "2019-06-29T15:25:18.374404628Z"
+generated: "2019-06-29T15:31:40.162365026Z"
