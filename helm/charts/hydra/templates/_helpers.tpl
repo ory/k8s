@@ -32,16 +32,27 @@ Create chart name and version as used by the chart label.
 {{- end -}}
 
 {{/*
+Ensure there is always a way to track down source of the deployment.
+It is unlikely AppVersion will be missing, but we will fallback on the
+chart's version in that case.
+*/}}
+{{- define "hydra.version" -}}
+{{- if .Chart.AppVersion }}
+{{- .Chart.AppVersion -}}
+{{- else -}}
+{{- printf "v%s" .Chart.Version -}}
+{{- end -}}
+{{- end -}}
+
+{{/*
 Common labels
 */}}
 {{- define "hydra.labels" -}}
-app.kubernetes.io/name: {{ include "hydra.name" . }}
-helm.sh/chart: {{ include "hydra.chart" . }}
-app.kubernetes.io/instance: {{ .Release.Name }}
-{{- if .Chart.AppVersion }}
-app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
-{{- end }}
-app.kubernetes.io/managed-by: {{ .Release.Service }}
+"app.kubernetes.io/name": {{ include "hydra.name" . | quote }}
+"app.kubernetes.io/instance": {{ .Release.Name | quote }}
+"app.kubernetes.io/version": {{ include "hydra.version" . | quote }}
+"app.kubernetes.io/managed-by": {{ .Release.Service | quote }}
+"helm.sh/chart": {{ include "hydra.chart" . | quote }}
 {{- end -}}
 
 {{/*
