@@ -29,7 +29,7 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           command: ["hydra"]
-          args: ["migrate", "sql", "-e"]
+          args: ["migrate", "sql", "-e", "--yes"]
           env:
             - name: DSN
               valueFrom:
