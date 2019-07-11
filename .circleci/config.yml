@@ -24,7 +24,7 @@ jobs:
       - run: kubectl get pods
       - run: curl -L https://git.io/get_helm.sh | bash
       - run: |
-          helm init --service-account $TILLER_SERVICE_ACCOUNT --tiller-namespace $TILLER_MNAMESPACE
+          helm init --service-account $TILLER_SERVICE_ACCOUNT --tiller-namespace $TILLER_NAMESPACE
       - run: .circleci/helm-test.sh oathkeeper
       - run: .circleci/helm-test.sh hydra
 
