@@ -10,7 +10,7 @@ function cleanup {
 }
 trap cleanup EXIT
 
-helm install --tiller-namespace ${TILLER_NAMESPACE} --namespace helm-ci -f .circleci/values/$1.yaml -n ${release} ./helm/charts/$1
+helm install --tiller-namespace ${TILLER_NAMESPACE} --namespace ${TILLER_NAMESPACE} -f .circleci/values/$1.yaml -n ${release} ./helm/charts/$1
 
 n=0
 until [[ $n -ge 5 ]]; do
