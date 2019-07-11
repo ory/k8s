@@ -14,7 +14,7 @@ spec:
     - port: {{ .Values.service.proxy.port }}
       targetPort: http-proxy
       protocol: TCP
-      name: http-proxy
+      name: http
   selector:
     app.kubernetes.io/name: {{ include "oathkeeper.name" . }}
     app.kubernetes.io/instance: {{ .Release.Name }}
