@@ -1,6 +1,6 @@
 [
   {
-    "id": "jwt-rule",
+    "id": "rule-1",
     "upstream": {
       "url": "https://httpbin.org/anything"
     },
@@ -27,7 +27,7 @@
     }
   },
   {
-    "id": "jwt-rule",
+    "id": "rule-2",
     "upstream": {
       "url": "https://httpbin.org/anything"
     },
@@ -54,7 +54,7 @@
     }
   },
   {
-    "id": "jwt-rule",
+    "id": "rule-3",
     "upstream": {
       "url": "https://httpbin.org/anything"
     },
