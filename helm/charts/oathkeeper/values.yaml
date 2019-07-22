@@ -111,3 +111,19 @@ tolerations: []
 
 # Configure node affinity
 affinity: {}
+
+# Extra config files that will be put to the volume at "/etc/config".
+# For example, you can define multiple additional access rules files.
+extraConfigFiles: []
+  # Example:
+  # - name: access-rules.yaml
+  #   contents: |
+  #     - id: management-api
+  #       authenticators:
+  #         - handler: noop
+
+# Extra environment variables that will be passed to the container.
+extraEnv: []
+  # Example:
+  # - name: ACCESS_RULES_REPOSITORIES
+  #   value: file:///etc/config/access-rules.yaml

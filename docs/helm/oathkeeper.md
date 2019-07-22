@@ -82,3 +82,20 @@ $ helm install \
 
 Please note that any configuration values set for `oathkeeper.config.access_rules.repositories` using e.g.
 a configuration file will be overwritten by this setting.
+
+### Additional configuration files and environment variables
+
+If you need more flexibility with configuration files (e.g. multiple access rules, access rules in YAML format, etc),
+you can use `extraConfigFiles` to pass additional configs via values-file or helm flags.
+
+You can also provide additional environment variables using `extraEnv`.
+
+Example:
+
+```bash
+$ helm install ory/oathkeeper \
+    --set "extraConfigFiles[0].name=more-access-rules.yaml" \
+    --set-file "extraConfigFiles[0].contents=additional_access_rules.yaml" \
+    --set "extraEnv[0].name=ACCESS_RULES_REPOSITORIES" \
+    --set "extraEnv[0].value=file:///etc/config/access-rules.json,file:///etc/config/more-access-rules.yaml"
+```

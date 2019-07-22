@@ -44,6 +44,9 @@ spec:
             - name: ACCESS_RULES_REPOSITORIES
               value: "file:///etc/config/access-rules.json"
             {{- end }}
+            {{- if .Values.extraEnv }}
+            {{- toYaml .Values.extraEnv | nindent 12 }}
+            {{- end }}
           volumeMounts:
             - name: {{ include "oathkeeper.name" . }}-config-volume
               mountPath: /etc/config
