@@ -110,8 +110,7 @@ deployment:
   # Configure node tolerations.
   tolerations: []
 
-  # Configure node affinity
-  affinity: {}
-
   # Annotations
   annotations: {}
+# Configure node affinity
+affinity: {}
