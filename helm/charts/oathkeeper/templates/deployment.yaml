@@ -19,7 +19,7 @@ spec:
       labels:
         app.kubernetes.io/name: {{ include "oathkeeper.name" . }}
         app.kubernetes.io/instance: {{ .Release.Name }}
-      {{- with .Values.annotations }}
+      {{- with .Values.deployment.annotations }}
       annotations:
         {{- toYaml . | nindent 8 }}
     {{- end }}
@@ -86,16 +86,16 @@ spec:
               path: /health/ready
               port: http-api
           resources:
-            {{- toYaml .Values.resources | nindent 12 }}
-      {{- with .Values.nodeSelector }}
+            {{- toYaml .Values.deployment.resources | nindent 12 }}
+      {{- with .Values.deployment.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-    {{- with .Values.affinity }}
+    {{- with .Values.deployment.affinity }}
       affinity:
         {{- toYaml . | nindent 8 }}
     {{- end }}
-    {{- with .Values.tolerations }}
+    {{- with .Values.deployment.tolerations }}
       tolerations:
         {{- toYaml . | nindent 8 }}
     {{- end }}
