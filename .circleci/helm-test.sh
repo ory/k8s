@@ -10,6 +10,8 @@ function cleanup {
 }
 trap cleanup EXIT
 
+export KUBECONFIG="$(kind get kubeconfig-path --name="kind")"
+
 helm install -f .circleci/values/$1.yaml -n ${release} ./helm/charts/$1
 
 n=0
