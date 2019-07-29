@@ -19,7 +19,7 @@ jobs:
       - checkout
       - run: curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
       - run: chmod +x ./kubectl
-      - run: mv kubectl /usr/bin/kubectl
+      - run: mv kubectl /go/bin/kubectl
       - run: curl -L https://git.io/get_helm.sh | bash
       - run: make kind-start
       - run:
