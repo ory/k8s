@@ -36,6 +36,8 @@ jobs:
       - run:
           name: "Setup kind"
           command: |
+            echo $PATH
+            cat $BASH_ENV
             make kind-start
             echo 'export KUBECONFIG="$(kind get kubeconfig-path)"' >> $BASH_ENV
       - run: helm init --service-account default
