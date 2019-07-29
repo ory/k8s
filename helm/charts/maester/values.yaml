@@ -1,7 +1,8 @@
 replicaCount: 1
 
 configMapName: ory-oathkeeper-rules
-rulesConfigmapNamespace: true
+# rulesConfigmapNamespace: some-namespace
+# rulesFileName: access_rules.json
 
 image:
   # ORY Oathkeeper Rule Controller image
