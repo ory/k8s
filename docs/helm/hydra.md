@@ -21,8 +21,8 @@ $ helm install \
     --set hydra.config.secrets.system=$(LC_ALL=C tr -dc 'A-Za-z0-9' < /dev/urandom | base64 | head -c 32) \
     --set hydra.config.dsn=memory \
     --set hydra.config.urls.self.issuer=https://my-hydra/ \
-    --set hydra.config.login=https://my-idp/login \
-    --set hydra.config.consent=https://my-idp/consent \
+    --set hydra.config.urls.login=https://my-idp/login \
+    --set hydra.config.urls.consent=https://my-idp/consent \
     ory/hydra
 ```
 
