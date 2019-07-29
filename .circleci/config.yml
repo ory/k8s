@@ -28,18 +28,16 @@ jobs:
           name: "Install Golang"
           command: |
             bash < <(curl -s -S -L https://raw.githubusercontent.com/moovweb/gvm/master/binscripts/gvm-installer)
+            source /home/circleci/.gvm/scripts/gvm
             gvm intall -B go1.12
             gvm use go 1.12
-      - run: curl -L https://git.io/get_helm.sh | bash
-      - run: make kind-start
-      - run:
-          name: "Setup custom environment variables"
-          command: |
-            echo 'export KUBECONFIG="$(kind get kubeconfig-path)"' >> $BASH_ENV
             echo 'export PATH="$PATH:$(go env GOPATH)/bin"' >> $BASH_ENV
-      - run: echo $KUBECONFIG
-      - run: kubectl config current-context
-      - run: cat $(kind get kubeconfig-path)
+      - run: curl -L https://git.io/get_helm.sh | bash
+      - run:
+          name: "Setup kind"
+          command: |
+            make kind-start
+            echo 'export KUBECONFIG="$(kind get kubeconfig-path)"' >> $BASH_ENV
       - run: helm init --service-account default
       - run: .circleci/helm-test.sh oathkeeper
       - run: .circleci/helm-test.sh hydra
