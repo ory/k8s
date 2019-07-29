@@ -34,14 +34,14 @@ jobs:
             gvm install go1.12 -B
             gvm use go 1.12 --default
 
-            export GOBIN="$(go env GOPATH)/bin"
+            export GOBIN=$(go env GOPATH)/bin
             export PATH=$PATH:$GOBIN
             echo 'export PATH=$PATH:$GOBIN' >> $BASH_ENV
 
             make kind-start
 
             export KUBECONFIG=$(kind get kubeconfig-path)
-            echo 'export KUBECONFIG="$KUBECONFIG"' >> $BASH_ENV
+            echo 'export KUBECONFIG=$KUBECONFIG' >> $BASH_ENV
 
             curl -L https://git.io/get_helm.sh | bash
 
