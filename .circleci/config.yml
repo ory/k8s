@@ -24,17 +24,17 @@ jobs:
             chmod +x ./kubectl
             sudo mv kubectl /usr/bin/kubectl
       - run:
-          name: "Set up kind"
+          name: "Set up kind and helm"
           command: |
             bash < <(curl -s -S -L https://raw.githubusercontent.com/moovweb/gvm/master/binscripts/gvm-installer)
             source /home/circleci/.gvm/scripts/gvm
             gvm install go1.12 -B
             gvm use go 1.12 --default
-            echo 'export PATH="$PATH:$(go env GOPATH)/bin"' >> $BASH_ENV
+            export PATH=$PATH:$(go env GOPATH)/bin
             make kind-start
-            echo 'export KUBECONFIG="$(kind get kubeconfig-path)"' >> $BASH_ENV
-      - run: curl -L https://git.io/get_helm.sh | bash
-      - run: helm init --service-account default
+            export KUBECONFIG=$(kind get kubeconfig-path)
+            curl -L https://git.io/get_helm.sh | bash
+            helm init --service-account default
       - run: .circleci/helm-test.sh oathkeeper
       - run: .circleci/helm-test.sh hydra
 
