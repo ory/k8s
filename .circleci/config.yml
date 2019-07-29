@@ -27,8 +27,9 @@ jobs:
           name: "Setup custom environment variables"
           command: |
             echo 'export KUBECONFIG="$(kind get kubeconfig-path)"' >> $BASH_ENV # Redirect MY_ENV_VAR into $BASH_ENV
-      - run: echo KUBECONFIG
+      - run: echo $KUBECONFIG
       - run: kubectl config current-context
+      - run: cat $(kind get kubeconfig-path)
       - run: helm init
       - run: .circleci/helm-test.sh oathkeeper
       - run: .circleci/helm-test.sh hydra
