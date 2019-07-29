@@ -111,3 +111,6 @@ tolerations: []
 
 # Configure node affinity
 affinity: {}
+
+# Annotations
+annotations: {}
