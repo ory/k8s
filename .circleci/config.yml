@@ -27,7 +27,9 @@ jobs:
           name: "Install Golang"
           command: |
             sudo add-apt-repository ppa:longsleep/golang-backports
+            sleep 1
             sudo apt-get update
+            sleep 1
             sudo apt-get install golang-go
       - run: curl -L https://git.io/get_helm.sh | bash
       - run: make kind-start
