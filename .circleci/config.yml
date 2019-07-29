@@ -12,15 +12,24 @@ jobs:
       - run: helm lint ./helm/charts/example-idp/
 
   test:
-    docker:
-      - image: circleci/golang:1.12
+    machine:
+      image: ubuntu-1604:201903-01
+      docker_layer_caching: true
     working_directory: /go/src/github.com/ory/k8s
     steps:
       - checkout
-      - setup_remote_docker
-      - run: curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
-      - run: chmod +x ./kubectl
-      - run: mv kubectl /go/bin/kubectl
+      - run:
+          name: "Install kubectl"
+          command: |
+            curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
+            chmod +x ./kubectl
+            mv kubectl /go/bin/kubectl
+      - run:
+          name: "Install Golang"
+          command: |
+            sudo add-apt-repository ppa:longsleep/golang-backports
+            sudo apt-get update
+            sudo apt-get install golang-go
       - run: curl -L https://git.io/get_helm.sh | bash
       - run: make kind-start
       - run:
@@ -30,7 +39,7 @@ jobs:
       - run: echo $KUBECONFIG
       - run: kubectl config current-context
       - run: cat $(kind get kubeconfig-path)
-      - run: helm init  --service-account default
+      - run: helm init --service-account default
       - run: .circleci/helm-test.sh oathkeeper
       - run: .circleci/helm-test.sh hydra
 
