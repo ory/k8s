@@ -3,14 +3,15 @@
 set -Eeuxo pipefail
 cd "$( dirname "${BASH_SOURCE[0]}" )/.."
 
+export PATH=$PATH:$(go env GOPATH)/bin
+export KUBECONFIG="$(kind get kubeconfig-path --name="kind")"
+
 release=$(echo cci-$(date +%s)-$1-${CIRCLE_SHA1}| cut -c 1-50)
 
 function cleanup {
     helm del --purge ${release} || true
 }
 trap cleanup EXIT
-
-export KUBECONFIG="$(kind get kubeconfig-path --name="kind")"
 
 helm install -f .circleci/values/$1.yaml -n ${release} ./helm/charts/$1
 
