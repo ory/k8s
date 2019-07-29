@@ -17,6 +17,7 @@ jobs:
     working_directory: /go/src/github.com/ory/k8s
     steps:
       - checkout
+      - setup_remote_docker
       - run: curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
       - run: chmod +x ./kubectl
       - run: mv kubectl /go/bin/kubectl
