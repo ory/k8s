@@ -17,12 +17,12 @@ jobs:
     working_directory: /go/src/github.com/ory/k8s
     steps:
       - checkout
-      - run: |
-          echo $GCLOUD_SERVICE_KEY | base64 -d | gcloud auth activate-service-account --key-file=-
-      - run: |
-          eval "$KUBECTL_COMMAND"
-      - run: kubectl get pods
       - run: curl -L https://git.io/get_helm.sh | bash
+      - run: make kind-start
+      - run:
+          name: "Setup custom environment variables"
+          command: |
+            echo 'export KUBECONFIG="$(kind get kubeconfig-path)"' >> $BASH_ENV # Redirect MY_ENV_VAR into $BASH_ENV
       - run: |
           helm init --service-account $TILLER_SERVICE_ACCOUNT --tiller-namespace $TILLER_NAMESPACE
       - run: .circleci/helm-test.sh oathkeeper
