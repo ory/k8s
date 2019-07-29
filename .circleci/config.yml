@@ -30,7 +30,7 @@ jobs:
       - run: echo $KUBECONFIG
       - run: kubectl config current-context
       - run: cat $(kind get kubeconfig-path)
-      - run: helm init
+      - run: helm init  --service-account default
       - run: .circleci/helm-test.sh oathkeeper
       - run: .circleci/helm-test.sh hydra
 
