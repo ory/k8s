@@ -3,6 +3,9 @@
 set -Eeuxo pipefail
 cd "$( dirname "${BASH_SOURCE[0]}" )/.."
 
+source /home/circleci/.gvm/scripts/gvm
+gvm use go 1.12 --default
+
 export PATH=$PATH:$(go env GOPATH)/bin
 export KUBECONFIG="$(kind get kubeconfig-path --name="kind")"
 
