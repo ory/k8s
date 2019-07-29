@@ -29,7 +29,7 @@ You can set the values in `values.yaml` file or using `--set` syntax of Helm dur
 ORY Maester introduces it's own Custom Resource Definition of type `rules.oathkeeper.ory.sh/v1alpha1`.
 Each custom resource instance describes a single Oathkeeper rule.
 
-The syntax of the Custom Resource `Spec` reflects Oathkeeper Rule syntax, with the following differences:
+The syntax of the Custom Resource `Spec` reflects Oathkeeper [Access Rule syntax](https://www.ory.sh/docs/next/oathkeeper/api-access-rules), with the following differences:
 - the `id` field is auto-generated
 - the `upstream.preserveHost` property is camelCased.
 - the `upstream.stripPath` property is camelCased.
