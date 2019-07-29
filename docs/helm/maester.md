@@ -34,7 +34,7 @@ The syntax of the Custom Resource `Spec` reflects Oathkeeper [Access Rule syntax
 - the `upstream.preserveHost` property is camelCased.
 - the `upstream.stripPath` property is camelCased.
 
-The CRD Json Schema validation provides definitions for all available attributes.
+The JSON Schema specified in the Custom Resource Definition provides definitions for all available attributes.
 Notice that all handlers (authenticators, authorizer, mutator) are passed verbatim without any changes to the Rule list.
 
 The controller provides following defaults for each Rule it creates:
@@ -42,3 +42,4 @@ The controller provides following defaults for each Rule it creates:
 - If `authorizer` is not defined, it defaults to a `deny` handler
 - If `mutator` is not defined, it defaults to a `noop` handler
 
+These defaults implement "disabled by default" policy for increased security.
