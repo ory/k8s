@@ -39,7 +39,7 @@ jobs:
 
             curl -L https://git.io/get_helm.sh | bash
 
-            helm init --service-account default --wait
+            helm init --wait
       - run: .circleci/helm-test.sh oathkeeper
       - run: .circleci/helm-test.sh hydra
 
