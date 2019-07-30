@@ -32,7 +32,7 @@ jobs:
             sudo microk8s.kubectl get all --all-namespaces
       - run: 
           name: Install Helm
-          command:
+          command: |
             curl -L https://git.io/get_helm.sh | bash
             helm init --service-account default
       - run: .circleci/helm-test.sh oathkeeper
