@@ -60,11 +60,11 @@ spec:
               {{- end }}
           volumeMounts:
             - name: {{ include "oathkeeper.name" . }}-config-volume
-              mountPath: /etc/config/config.yaml
+              mountPath: /etc/config
               readOnly: true
               subPath: config.yaml
             - name: {{ include "oathkeeper.name" . }}-rules-volume
-              mountPath: /etc/config/access-rules.json
+              mountPath: /etc/config
               readOnly: true
               subPath: access-rules.json
             - name: {{ include "oathkeeper.name" . }}-secrets-volume
