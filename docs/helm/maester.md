@@ -1,7 +1,5 @@
 # ORY Maester Helm Chart
 
-The ORY Maester Helm Chart helps you deploy ORY Maester on Kubernetes using Helm.
-
 ORY Maester is a Kubernetes controller that watches for instances of `rules.oathkeeper.ory.sh/v1alpha1` custom resource (CR) and creates or updates the Oathkeeper ConfigMap with Access Rules found in the CRs. The controller passes the Access Rules as an array in a format recognized by the Oathkeeper.
 By mounting the ConfigMap to the Oathkeeper Pod, you can manage the list of Oathkeeper Rules through `rules.oathkeeper.ory.sh/v1alpha1` CR instances. 
 
