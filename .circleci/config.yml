@@ -12,19 +12,28 @@ jobs:
       - run: helm lint ./helm/charts/example-idp/
 
   test:
-    docker:
-      - image: google/cloud-sdk
-    working_directory: /go/src/github.com/ory/k8s
+    machine:
+      image: ubuntu-1604:201903-01
+      docker_layer_caching: true
     steps:
       - checkout
-      - run: |
-          echo $GCLOUD_SERVICE_KEY | base64 -d | gcloud auth activate-service-account --key-file=-
-      - run: |
-          eval "$KUBECTL_COMMAND"
-      - run: kubectl get pods
-      - run: curl -L https://git.io/get_helm.sh | bash
-      - run: |
-          helm init --service-account $TILLER_SERVICE_ACCOUNT --tiller-namespace $TILLER_NAMESPACE
+      - run:
+          name: Install microk8s
+          command: |
+            sudo apt-get update 
+            sudo apt-get -y install snapd
+            sudo snap install microk8s --classic
+            snap info microk8s
+      - run:
+          name: "Start microk8s"
+          command: |
+            sudo microk8s.start
+            microk8s.kubectl get all --all-namespaces
+      - run: 
+          name: Install Helm
+          command:
+            curl -L https://git.io/get_helm.sh | bash
+            helm init --service-account default
       - run: .circleci/helm-test.sh oathkeeper
       - run: .circleci/helm-test.sh hydra
 
