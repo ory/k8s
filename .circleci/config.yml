@@ -20,14 +20,15 @@ jobs:
       - run:
           name: Install microk8s
           command: |
-            sudo apt-get update 
-            sudo apt-get -y install snapd
-            sudo snap install microk8s --classic
+            apt-get update 
+            apt-get -y install snapd
+            snap install microk8s --classic
             snap info microk8s
       - run:
           name: "Start microk8s"
           command: |
-            sudo microk8s.start
+            microk8s.start
+            microk8s.status
             microk8s.kubectl get all --all-namespaces
       - run: 
           name: Install Helm
