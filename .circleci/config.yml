@@ -39,7 +39,8 @@ jobs:
 
             curl -L https://git.io/get_helm.sh | bash
 
-            helm init --wait
+            kubectl create -f .cricleci/rbac-config.yaml
+            helm init --wait --service-account tiller
       - run: .circleci/helm-test.sh oathkeeper
       - run: .circleci/helm-test.sh hydra
 
