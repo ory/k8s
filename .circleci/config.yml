@@ -15,8 +15,6 @@ jobs:
     machine:
       image: ubuntu-1604:201903-01
       docker_layer_caching: true
-    environment:
-      BASH_ENV: ~/.bashrc
     steps:
       - checkout
       - run:
@@ -27,7 +25,11 @@ jobs:
             sudo snap install microk8s --classic
             sudo snap install kubectl --classic
             snap info microk8s
-      - run: echo 'export PATH=/snap/bin:$PATH' >> $BASH_ENV 
+      - run:
+          name: Update PATH
+          command: |
+            echo 'export PATH=/snap/bin:$PATH' >> $BASH_ENV
+            source $BASH_ENV
       - run:
           name: "Start microk8s"
           command: |
