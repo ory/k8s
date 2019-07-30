@@ -24,6 +24,8 @@ jobs:
             sudo apt-get -y install snapd
             sudo snap install microk8s --classic
             snap info microk8s
+            sudo whereis microk8s
+            sudo which microk8s
       - run:
           name: "Start microk8s"
           command: |
