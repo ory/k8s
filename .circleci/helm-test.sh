@@ -3,8 +3,6 @@
 set -Eeuxo pipefail
 cd "$( dirname "${BASH_SOURCE[0]}" )/.."
 
-export KUBECONFIG=$(kind get kubeconfig-path)
-
 release=$(echo cci-$(date +%s)-$1-${CIRCLE_SHA1}| cut -c 1-50)
 
 function cleanup {
