@@ -6,10 +6,9 @@ configMapName: ory-oathkeeper-rules
 
 image:
   # ORY Oathkeeper Rule Controller image
-  # TODO wait for the official one
   repository: oryd/oathkeeper-k8s-controller
   # ORY Oathkeeper Rule Controller version
-  tag: 0.0.1
+  tag: "v0.0.1"
   # Image pull policy
   pullPolicy: IfNotPresent
 
