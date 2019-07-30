@@ -28,15 +28,9 @@ jobs:
           command: |
             bash < <(curl -s -S -L https://raw.githubusercontent.com/moovweb/gvm/master/binscripts/gvm-installer)
 
-            source /home/circleci/.gvm/scripts/gvm
-            echo 'source /home/circleci/.gvm/scripts/gvm' >> $BASH_ENV
-
-            gvm install go1.12 -B
-            gvm use go 1.12 --default
-
-            export GOBIN=$(go env GOPATH)/bin
-            export PATH=$PATH:$GOBIN
-            echo 'export PATH=$PATH:$GOBIN' >> $BASH_ENV
+            curl -Lo ./kind https://github.com/kubernetes-sigs/kind/releases/download/v0.4.0/kind-linux-amd64
+            chmod +x ./kind
+            sudo mv ./kind /usr/local/bin/kind
 
             make kind-start
 
