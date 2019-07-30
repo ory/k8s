@@ -32,7 +32,7 @@ jobs:
             chmod +x ./kind
             sudo mv ./kind /usr/local/bin/kind
 
-            make kind-start
+            kind --loglevel=debug create cluster
 
             export KUBECONFIG=$(kind get kubeconfig-path)
             echo 'export KUBECONFIG=$KUBECONFIG' >> $BASH_ENV
