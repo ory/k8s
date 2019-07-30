@@ -15,10 +15,10 @@ helm install -f .circleci/values/$1.yaml -n ${release} ./helm/charts/$1
 n=0
 until [[ $n -ge 5 ]]; do
   helm test --timeout 90 --cleanup ${release} && exit 0  # substitute your command here
-  kubectl get pods --all-namespaces
-  # kubectl delete pods/${release}-test-connection
+  kubectl logs ${release}
+  kubectl delete pod ${release}-test-connection
   n=$[$n+1]
-  sleep 5
+  sleep 10
 done
 
 exit 1
