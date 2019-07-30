@@ -3,7 +3,7 @@
 set -Eeuxo pipefail
 cd "$( dirname "${BASH_SOURCE[0]}" )/.."
 
-release=$(echo cci-$(date +%s)-$1-${CIRCLE_SHA1}| cut -c 1-50)
+release=$(echo cci-$(date +%s)-$1-${CIRCLE_SHA1}| cut -c 1-20)
 
 function cleanup {
     helm del --purge ${release} || true
