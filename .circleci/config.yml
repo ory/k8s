@@ -24,6 +24,7 @@ jobs:
             sudo apt-get -y install snapd
             sudo snap install microk8s --classic
             snap info microk8s
+            ln -s /snap/bin/microk8s.kubectl /usr/bin/kubectl
       - run:
           name: "Start microk8s"
           command: |
@@ -35,8 +36,7 @@ jobs:
           name: Install Helm
           command: |
             curl -L https://git.io/get_helm.sh | bash
-            helm init --service-account default
-            sleep 30s
+            helm init --service-account default --wait
       - run: .circleci/helm-test.sh oathkeeper
       - run: .circleci/helm-test.sh hydra
 
