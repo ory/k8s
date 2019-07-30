@@ -1,12 +1,12 @@
 # ORY Maester Helm Chart
 
 ORY Maester is a Kubernetes controller that watches for instances of `rules.oathkeeper.ory.sh/v1alpha1` custom resource (CR) and creates or updates the Oathkeeper ConfigMap with Access Rules found in the CRs. The controller passes the Access Rules as an array in a format recognized by the Oathkeeper.
-By mounting the ConfigMap to the Oathkeeper Pod, you can manage the list of Oathkeeper Rules through `rules.oathkeeper.ory.sh/v1alpha1` CR instances. 
+By mounting the ConfigMap to the Oathkeeper Pod, you can manage the list of Oathkeeper Rules through `rules.oathkeeper.ory.sh/v1alpha1` CR instances.
 
 
 ## Installation
 
-To install ORY Maester with Helm, run: 
+To install ORY Maester with Helm, run:
 
 ```bash
 $ helm install ory/maester
@@ -18,7 +18,7 @@ These are the most important configuration values used to control ConfigMap crea
 
 - `configMapName` defines the name of the ConfigMap used to store the list of Access Rules. Defaults to `oathkeeper-rules`
 - `rulesConfigmapNamespace` defines the Namespace in which the ConfigMap is stored. Defaults to the same Namespace as the ORY Maester Helm release.
-- `rulesFileName` defines the name of the single root-level ConfigMap key used to store the entire array of Access Rules. When the ConfigMap is mounted in the Oathkeeper Pod, this becomes also the filename of the "rules file" to the Oathkeeper process. Defaults to `access_rules.json`.
+- `rulesFileName` defines the name of the single root-level ConfigMap key used to store the entire array of Access Rules. When the ConfigMap is mounted in the Oathkeeper Pod, this becomes also the filename of the "rules file" to the Oathkeeper process. Defaults to `access-rules.json`.
 
 You can set the values in `values.yaml` file or using `--set` syntax of Helm during chart installation.
 
@@ -33,7 +33,7 @@ The syntax of the CR **Spec** field reflects the Oathkeeper [Access Rule syntax]
 - The `upstream.stripPath` property is camel cased.
 
 The JSON schema specified in the CRD provides definitions for all available attributes.
-All handlers such as authenticators, the authorizer, and the mutator are passed verbatim without any changes to the Access Rules list.
+All handlers such as authenticators, the authorizer, and the mutator are passed verbatim without any changes to the target Access Rules list.
 
 The controller provides the following defaults for each Access Rule it creates:
 - If `authenticators` are not defined, it defaults to a single `unauthorized` handler.
