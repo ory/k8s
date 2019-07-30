@@ -18,13 +18,13 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Install microk8s
+          name: "Install microk8s & kubectl"
           command: |
             sudo apt-get update 
             sudo apt-get -y install snapd
             sudo snap install microk8s --classic
+            sudo snap install kubectl --classic
             snap info microk8s
-            sudo ln -s /snap/bin/microk8s.kubectl /usr/bin/kubectl
       - run:
           name: "Start microk8s"
           command: |
