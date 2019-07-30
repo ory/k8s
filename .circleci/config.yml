@@ -24,7 +24,7 @@ jobs:
             sudo apt-get -y install snapd
             sudo snap install microk8s --classic
             snap info microk8s
-            ln -s /snap/bin/microk8s.kubectl /usr/bin/kubectl
+            sudo ln -s /snap/bin/microk8s.kubectl /usr/bin/kubectl
       - run:
           name: "Start microk8s"
           command: |
