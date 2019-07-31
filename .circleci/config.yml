@@ -9,6 +9,7 @@ jobs:
       - run: curl -L https://git.io/get_helm.sh | bash
       - run: helm lint ./helm/charts/oathkeeper/
       - run: helm lint ./helm/charts/hydra/
+      - run: helm lint ./helm/charts/maester/
       - run: helm lint ./helm/charts/example-idp/
 
   test:
@@ -57,6 +58,7 @@ jobs:
       - run: helm init --client-only
       - run: helm package -d docs/helm/charts/ ./helm/charts/oathkeeper/ --version `echo $CIRCLE_TAG | sed s/v//g`
       - run: helm package -d docs/helm/charts/ ./helm/charts/hydra/ --version `echo $CIRCLE_TAG | sed s/v//g`
+      - run: helm package -d docs/helm/charts/ ./helm/charts/maester/ --version `echo $CIRCLE_TAG | sed s/v//g`
       - run: helm package -d docs/helm/charts/ ./helm/charts/example-idp/ --version `echo $CIRCLE_TAG | sed s/v//g`
       - run: helm repo index docs/helm/charts/
       - run: git config --global user.email "hi@ory.sh"
