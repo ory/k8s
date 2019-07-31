@@ -45,6 +45,7 @@ jobs:
             helm init --service-account default --wait
       - run: .circleci/helm-test.sh oathkeeper
       - run: .circleci/helm-test.sh hydra
+      # - run: .circleci/helm-test.sh maester
 
   release:
     docker:

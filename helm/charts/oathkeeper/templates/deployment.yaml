@@ -1,3 +1,4 @@
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -18,6 +19,10 @@ spec:
       labels:
         app.kubernetes.io/name: {{ include "oathkeeper.name" . }}
         app.kubernetes.io/instance: {{ .Release.Name }}
+      {{- with .Values.deployment.annotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
     spec:
     {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
@@ -26,7 +31,14 @@ spec:
       volumes:
         - name: {{ include "oathkeeper.name" . }}-config-volume
           configMap:
-            name: {{ include "oathkeeper.fullname" . }}
+            {{- if .Values.demo }}
+            name: {{ include "oathkeeper.fullname" . }}-config-demo
+            {{- else }}
+            name: {{ include "oathkeeper.fullname" . }}-config
+            {{- end }}
+        - name: {{ include "oathkeeper.name" . }}-rules-volume
+          configMap:
+            name: {{ include "oathkeeper.fullname" . }}-rules
         - name: {{ include "oathkeeper.name" . }}-secrets-volume
           secret:
             secretName: {{ include "oathkeeper.fullname" . }}
@@ -40,13 +52,16 @@ spec:
             - name: MUTATORS_ID_TOKEN_JWKS_URL
               value: "file:///etc/secrets/mutator.id_token.jwks.json"
             {{- end }}
-            {{- if .Values.oathkeeper.accessRules }}
+            {{- if not .Values.demo }}
             - name: ACCESS_RULES_REPOSITORIES
-              value: "file:///etc/config/access-rules.json"
+              value: "file:///etc/rules/access-rules.json"
             {{- end }}
           volumeMounts:
             - name: {{ include "oathkeeper.name" . }}-config-volume
               mountPath: /etc/config
+              readOnly: true
+            - name: {{ include "oathkeeper.name" . }}-rules-volume
+              mountPath: /etc/rules
               readOnly: true
             - name: {{ include "oathkeeper.name" . }}-secrets-volume
               mountPath: /etc/secrets
@@ -67,8 +82,8 @@ spec:
               path: /health/ready
               port: http-api
           resources:
-            {{- toYaml .Values.resources | nindent 12 }}
-      {{- with .Values.nodeSelector }}
+            {{- toYaml .Values.deployment.resources | nindent 12 }}
+      {{- with .Values.deployment.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
       {{- end }}
@@ -76,7 +91,7 @@ spec:
       affinity:
         {{- toYaml . | nindent 8 }}
     {{- end }}
-    {{- with .Values.tolerations }}
+    {{- with .Values.deployment.tolerations }}
       tolerations:
         {{- toYaml . | nindent 8 }}
     {{- end }}

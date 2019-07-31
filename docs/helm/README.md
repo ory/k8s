@@ -11,3 +11,4 @@ Documentation on each individual chart can be found for
 
 - [ORY Hydra Helm Chart](./hydra)
 - [ORY Oathkeeper Helm Chart](./oathkeeper)
+- [ORY Maester Helm Chart](./maester)
