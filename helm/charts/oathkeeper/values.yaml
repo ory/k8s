@@ -118,4 +118,3 @@ affinity: {}
 # Configures controller setup
 oathkeeper-maester:
   enabled: true
-  # configMapName: {{ include "oathkeeper.fullname" . }}-rules
