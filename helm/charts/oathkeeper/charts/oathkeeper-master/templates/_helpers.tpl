@@ -43,3 +43,16 @@ app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{- end -}}
+
+{{/*
+Get Oathkeeper rules configmap
+*/}}
+{{- define "oathkeeper-maester.getCM" -}}
+{{- $fullName := include "oathkeeper-maester.fullname" . -}}
+{{- $nameParts := split "-" $fullName }}
+{{- if eq $nameParts._0 $nameParts._1 -}}
+{{- printf "%s-rules" $nameParts._0 | trimSuffix "-" -}}
+{{- else -}}
+{{- printf "%s-%s-rules" $nameParts._0 $nameParts._1 | trimSuffix "-" -}}
+{{- end -}}
+{{- end -}}
