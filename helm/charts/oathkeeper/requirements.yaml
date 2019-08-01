@@ -1,4 +1,4 @@
 dependencies:
   - name: oathkeeper-maester
-    version: 0.1.0
-    condition: controller.enabled
+    version: 0.0.1
+    condition: oathkeeper-maester.enabled
