@@ -88,6 +88,6 @@ This chart includes a helper chart in the form of [Oathkeeper-maester](https://g
 
 ```bash
 $ helm install \
-    --set 'oathkeeper-maester.enabled=false' \
+    --set 'maester.enabled=false' \
     ory/oathkeeper
 ```
