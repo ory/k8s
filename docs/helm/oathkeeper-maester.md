@@ -1,22 +1,15 @@
-# ORY Maester Helm Chart
+# ORY Oathkeeper-maester Helm Chart
 
-ORY Maester is a Kubernetes controller that watches for instances of `rules.oathkeeper.ory.sh/v1alpha1` custom resource (CR) and creates or updates the Oathkeeper ConfigMap with Access Rules found in the CRs. The controller passes the Access Rules as an array in a format recognized by the Oathkeeper.
+ORY Oathkeeper-maester is a Kubernetes controller that watches for instances of `rules.oathkeeper.ory.sh/v1alpha1` custom resource (CR) and creates or updates the Oathkeeper ConfigMap with Access Rules found in the CRs. The controller passes the Access Rules as an array in a format recognized by the Oathkeeper.
 By mounting the ConfigMap to the Oathkeeper Pod, you can manage the list of Oathkeeper Rules through `rules.oathkeeper.ory.sh/v1alpha1` CR instances.
 
-
 ## Installation
-
-To install ORY Maester with Helm, run:
-
-```bash
-$ helm install ory/maester
-```
+Oathkeeper-maester is a part of the Oathkeeper chart, and it is installed together with it. 
 
 ## Configuration
 
 These are the most important configuration values used to control ConfigMap creation:
 
-- `configMapName` defines the name of the ConfigMap used to store the list of Access Rules. Defaults to `oathkeeper-rules`
 - `rulesConfigmapNamespace` defines the Namespace in which the ConfigMap is stored. Defaults to the same Namespace as the ORY Maester Helm release.
 - `rulesFileName` defines the name of the single root-level ConfigMap key used to store the entire array of Access Rules. When the ConfigMap is mounted in the Oathkeeper Pod, this becomes also the filename of the "rules file" to the Oathkeeper process. Defaults to `access-rules.json`.
 

@@ -21,7 +21,7 @@ This Helm Chart supports a demo mode which deploys access rules for urls
 that point to [httpbin.org](https://httpbin.org). To install ORY Oathkeeper in demo-mode, run:
 
 ```bash
-$ helm install --set demo=true ory/oathkeeper
+$ helm install --set 'demo=true' ory/oathkeeper
 ```
 
 Be aware that this mode uses JSON Web Keys and other secrets that are publicly accessible via GitHub.
@@ -63,7 +63,7 @@ from disk and deploying it as a Kubernetes Secret:
 
 ```bash
 $ helm install \
-    --set-file oathkeeper.mutatorIdTokenJWKs=./path/to/jwks.json \
+    --set-file 'oathkeeper.mutatorIdTokenJWKs=./path/to/jwks.json' \
     ory/oathkeeper
 ```
 
@@ -76,9 +76,18 @@ Instead of fetching access rules from remote locations, you can set your access 
 
 ```bash
 $ helm install \
-    --set-file oathkeeper.accessRules=./path/to/access-rules.json \
+    --set-file 'oathkeeper.accessRules=./path/to/access-rules.json' \
     ory/oathkeeper
 ```
 
 Please note that any configuration values set for `oathkeeper.config.access_rules.repositories` using e.g.
 a configuration file will be overwritten by this setting.
+
+### Oathkeeper-maester
+This chart includes a helper chart in the form of [Oathkeeper-maester](https://github.com/ory/k8s/blob/master/docs/helm/oathkeeper-maester.md), a k8s controller, which translates access rules object into a kubernetes native [CustomResource](https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/). This component is enabled by default, and installed together with Oathkeeper, however it can be disabled by setting the proper flag:
+
+```bash
+$ helm install \
+    --set 'oathkeeper-maester.enabled=false' \
+    ory/oathkeeper
+```
