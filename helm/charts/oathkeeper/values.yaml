@@ -5,7 +5,7 @@ image:
   # ORY Oathkeeper image
   repository: oryd/oathkeeper
   # ORY Oathkeeper version
-  tag: v0.17.1-beta.1
+  tag: v0.17.2
   # Image pull policy
   pullPolicy: IfNotPresent
 
@@ -116,5 +116,5 @@ deployment:
 affinity: {}
 
 # Configures controller setup
-oathkeeper-maester:
+maester:
   enabled: true
