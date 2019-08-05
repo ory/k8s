@@ -13,16 +13,18 @@ To install ORY Hydra, the following values must be set
 * `hydra.config.urls.consent`
 * `hydra.config.secrets.system`
 
+> **NOTE:** If no `hydra.config.secrets.system` secrets are not supplied, a secret is generated automatically. The generated secret is cryptographically secure, and 32 signs long.
+
 If you wish to install ORY Hydra with an in-memory database, a cryptographically strong secret, a Login and Consent
 provider located at `https://my-idp/` run:
 
 ```bash
 $ helm install \
-    --set hydra.config.secrets.system=$(LC_ALL=C tr -dc 'A-Za-z0-9' < /dev/urandom | base64 | head -c 32) \
-    --set hydra.config.dsn=memory \
-    --set hydra.config.urls.self.issuer=https://my-hydra/ \
-    --set hydra.config.urls.login=https://my-idp/login \
-    --set hydra.config.urls.consent=https://my-idp/consent \
+    --set 'hydra.config.secrets.system=$(LC_ALL=C tr -dc 'A-Za-z0-9' < /dev/urandom | base64 | head -c 32)' \
+    --set 'hydra.config.dsn=memory' \
+    --set 'hydra.config.urls.self.issuer=https://my-hydra/' \
+    --set 'hydra.config.urls.login=https://my-idp/login' \
+    --set 'hydra.config.urls.consent=https://my-idp/consent' \
     ory/hydra
 ```
 
@@ -31,7 +33,7 @@ You can optionally also set the cookie secrets:
 ```bash
 $ helm install \
     ...
-    hydra.config.secrets.cookie=$(LC_ALL=C tr -dc 'A-Za-z0-9' < /dev/urandom | base64 | head -c 32) \
+    'hydra.config.secrets.cookie=$(LC_ALL=C tr -dc 'A-Za-z0-9' < /dev/urandom | base64 | head -c 32)' \
     ...
     ory/hydra
 ```
@@ -43,7 +45,7 @@ To run ORY Hydra against a SQL database, set the connection string. For example:
 ```bash
 $ helm install \
     ...
-    --set dsn=postgres://foo:bar@baz:1234/db \
+    --set 'dsn=postgres://foo:bar@baz:1234/db' \
     ory/hydra
 ```
 
@@ -58,7 +60,7 @@ the [`gcloud-sqlproxy`](https://github.com/rimusz/charts/tree/master/stable/gclo
 
 ```bash
 $ helm upgrade pg-sqlproxy rimusz/gcloud-sqlproxy --namespace sqlproxy \
-    --set serviceAccountKey="$(cat service-account.json | base64 | tr -d '\n')" \
+    --set 'serviceAccountKey="$(cat service-account.json | base64 | tr -d '\n')"' \
     ...
 ```
 
@@ -68,7 +70,7 @@ When bringing up ORY Hydra, set the host to `pg-sqlproxy-gcloud-sqlproxy` as doc
 ```bash
 $ helm install \
     ...
-    --set dsn=postgres://foo:bar@pg-sqlproxy-gcloud-sqlproxy:5432/db \
+    --set 'dsn=postgres://foo:bar@pg-sqlproxy-gcloud-sqlproxy:5432/db' \
     ory/hydra
 ```
 
@@ -111,9 +113,9 @@ Let's install the Login and Consent App first
 
 ```bash
 $ helm install \
-    --set hydraAdminUrl=http://hydra-example-admin:4445/ \
-    --set hydraPublicUrl=http://public.hydra.localhost/ \
-    --set ingress.enabled=true \
+    --set 'hydraAdminUrl=http://hydra-example-admin:4445/' \
+    --set 'hydraPublicUrl=http://public.hydra.localhost/' \
+    --set 'ingress.enabled=true' \
     --name hydra-example-idp \
     ory/example-idp
 ```
@@ -131,15 +133,15 @@ for testing and demonstration purposes. Install the ORY Hydra Helm Chart
 
 ```bash
 $ helm install \
-    --set hydra.config.secrets.system=$(LC_ALL=C tr -dc 'A-Za-z0-9' < /dev/urandom | base64 | head -c 32) \
-    --set hydra.config.dsn=memory \
-    --set hydra.config.urls.self.issuer=http://public.hydra.localhost/ \
-    --set hydra.config.urls.login=http://example-idp.localhost/login \
-    --set hydra.config.urls.consent=http://example-idp.localhost/consent \
-    --set hydra.config.urls.logout=http://example-idp.localhost/logout \
-    --set ingress.public.enabled=true \
-    --set ingress.admin.enabled=true \
-    --set hydra.dangerousForceHttp=true \
+    --set 'hydra.config.secrets.system=$(LC_ALL=C tr -dc 'A-Za-z0-9' < /dev/urandom | base64 | head -c 32)' \
+    --set 'hydra.config.dsn=memory' \
+    --set 'hydra.config.urls.self.issuer=http://public.hydra.localhost/' \
+    --set 'hydra.config.urls.login=http://example-idp.localhost/login' \
+    --set 'hydra.config.urls.consent=http://example-idp.localhost/consent' \
+    --set 'hydra.config.urls.logout=http://example-idp.localhost/logout' \
+    --set 'ingress.public.enabled=true' \
+    --set 'ingress.admin.enabled=true' \
+    --set 'hydra.dangerousForceHttp=true' \
     --name hydra-example \
     ory/hydra
 ```
