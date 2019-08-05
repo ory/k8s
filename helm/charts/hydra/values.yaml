@@ -106,6 +106,12 @@ deployment:
   #    cpu: 100m
   #  memory: 128Mi
 
+  annotations: {}
+  #      If you do want to specify annotations, uncomment the following
+  #      lines, adjust them as necessary, and remove the curly braces after 'annotations:'.
+  #      e.g.  sidecar.istio.io/rewriteAppHTTPProbers: "true"
+
+
   # Node labels for pod assignment.
   nodeSelector: {}
   # If you do want to specify node labels, uncomment the following
