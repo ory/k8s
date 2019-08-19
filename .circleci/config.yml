@@ -45,7 +45,6 @@ jobs:
             helm init --service-account default --wait
       - run: .circleci/helm-test.sh oathkeeper
       - run: .circleci/helm-test.sh hydra
-      # - run: .circleci/helm-test.sh maester
 
   release:
     docker:
@@ -57,7 +56,6 @@ jobs:
       - run: helm init --client-only
       - run: helm package -d docs/helm/charts/ ./helm/charts/oathkeeper/ --version `echo $CIRCLE_TAG | sed s/v//g`
       - run: helm package -d docs/helm/charts/ ./helm/charts/hydra/ --version `echo $CIRCLE_TAG | sed s/v//g`
-      - run: helm package -d docs/helm/charts/ ./helm/charts/maester/ --version `echo $CIRCLE_TAG | sed s/v//g`
       - run: helm package -d docs/helm/charts/ ./helm/charts/example-idp/ --version `echo $CIRCLE_TAG | sed s/v//g`
       - run: helm repo index docs/helm/charts/
       - run: git config --global user.email "hi@ory.sh"
