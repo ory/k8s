@@ -78,6 +78,9 @@ oathkeeper:
   # The ORY Oathkeeper configuration. For a full list of available settings, check:
   #   https://github.com/ory/oathkeeper/blob/master/docs/config.yaml
   config:
+    access_rules:
+      repositories:
+        - file:///etc/rules/access-rules.json
     serve:
       proxy:
         port: 4455
