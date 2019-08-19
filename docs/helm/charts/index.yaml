@@ -3,7 +3,17 @@ entries:
   example-idp:
   - apiVersion: v1
     appVersion: 1.0.0-rc.14
-    created: "2019-08-19T16:28:45.070388052Z"
+    created: "2019-08-19T16:31:29.195599142Z"
+    description: A Helm chart for deploying the reference implementation for the User
+      Login and Consent Flow in Kuberenetes
+    digest: ab3e0927c6bd7c1640b652d5f6a84000ad0dabed64f8f73fa0e05d3bbb0ed4c9
+    name: example-idp
+    urls:
+    - example-idp-0.0.21.tgz
+    version: 0.0.21
+  - apiVersion: v1
+    appVersion: 1.0.0-rc.14
+    created: "2019-08-19T16:31:29.195361938Z"
     description: A Helm chart for deploying the reference implementation for the User
       Login and Consent Flow in Kuberenetes
     digest: 8c13e93541f6f03d0bda83d3384aa4c5a353b84ffa6c85aacb32e810a9d67781
@@ -13,7 +23,7 @@ entries:
     version: 0.0.20
   - apiVersion: v1
     appVersion: 1.0.0-rc.14
-    created: "2019-08-19T16:28:45.070143091Z"
+    created: "2019-08-19T16:31:29.195126219Z"
     description: A Helm chart for deploying the reference implementation for the User
       Login and Consent Flow in Kuberenetes
     digest: d9092a7c901b9d5fb59d83534bdbdc3532323628ff4e38ee2d4c0d7e9ae19e71
@@ -23,7 +33,7 @@ entries:
     version: 0.0.17
   - apiVersion: v1
     appVersion: 1.0.0-rc.14
-    created: "2019-08-19T16:28:45.069552903Z"
+    created: "2019-08-19T16:31:29.194864044Z"
     description: A Helm chart for deploying the reference implementation for the User
       Login and Consent Flow in Kuberenetes
     digest: 518f405511e93ed01e9d4f5678ddfb52d93193a752ad70b9e850669f28bbc662
@@ -33,7 +43,7 @@ entries:
     version: 0.0.16
   - apiVersion: v1
     appVersion: 1.0.0-rc.14
-    created: "2019-08-19T16:28:45.068998635Z"
+    created: "2019-08-19T16:31:29.19394801Z"
     description: A Helm chart for deploying the reference implementation for the User
       Login and Consent Flow in Kuberenetes
     digest: 49a3db8beca58ff4a7e767a5488b8ff73e9035945fc82215ef00565f948a53da
@@ -43,7 +53,7 @@ entries:
     version: 0.0.15
   - apiVersion: v1
     appVersion: 1.0.0-rc.14
-    created: "2019-08-19T16:28:45.068737336Z"
+    created: "2019-08-19T16:31:29.19371917Z"
     description: A Helm chart for deploying the reference implementation for the User
       Login and Consent Flow in Kuberenetes
     digest: ffbe8d9c2bdb1d74a5ad90ad2bb9e12aea8f7823f4e8c5affd185e458eb3aebc
@@ -53,7 +63,7 @@ entries:
     version: 0.0.14
   - apiVersion: v1
     appVersion: 1.0.0-rc.14
-    created: "2019-08-19T16:28:45.068508479Z"
+    created: "2019-08-19T16:31:29.193477501Z"
     description: A Helm chart for deploying the reference implementation for the User
       Login and Consent Flow in Kuberenetes
     digest: cbf15e07ee1b27c9a73848b3936961515615955c20dc52004fc328bbd2aaa87b
@@ -63,7 +73,7 @@ entries:
     version: 0.0.13
   - apiVersion: v1
     appVersion: 1.0.0-rc.14
-    created: "2019-08-19T16:28:45.068286587Z"
+    created: "2019-08-19T16:31:29.193218875Z"
     description: A Helm chart for deploying the reference implementation for the User
       Login and Consent Flow in Kuberenetes
     digest: 0bec26ee5e27c40bd551326fa39c47ffa33cb72abee4dff99421a733c62ee296
@@ -73,7 +83,7 @@ entries:
     version: 0.0.12
   - apiVersion: v1
     appVersion: 1.0.0-rc.14
-    created: "2019-08-19T16:28:45.068044038Z"
+    created: "2019-08-19T16:31:29.192950428Z"
     description: A Helm chart for deploying the reference implementation for the User
       Login and Consent Flow in Kuberenetes
     digest: 1bc2bc16e7efcc84438e3fb3d62c31d0a6680a019bb5bcc1ccaa358f2b83dc99
@@ -84,7 +94,32 @@ entries:
   hydra:
   - apiVersion: v1
     appVersion: v1.0.0-rc.14_oryOS.12
-    created: "2019-08-19T16:28:45.074247613Z"
+    created: "2019-08-19T16:31:29.199624591Z"
+    description: A Helm chart for deployoing ORY Hydra in Kubernetes
+    digest: f0f2639698fb2bda97fd481d1980b7fb700df678725c78ba28e29f6e35be67c3
+    home: https://www.ory.sh/
+    keywords:
+    - oauth2
+    - openid-connect
+    - openid
+    - oidc
+    - op
+    - api-security
+    - security
+    maintainers:
+    - email: hi@ory.sh
+      name: ORY Team
+      url: https://www.ory.sh/
+    name: hydra
+    sources:
+    - https://github.com/ory/hydra
+    - https://github.com/ory/k8s
+    urls:
+    - hydra-0.0.21.tgz
+    version: 0.0.21
+  - apiVersion: v1
+    appVersion: v1.0.0-rc.14_oryOS.12
+    created: "2019-08-19T16:31:29.199211014Z"
     description: A Helm chart for deployoing ORY Hydra in Kubernetes
     digest: ae739381e123d16feab53b309f4bc57dc66f4843870a9e6ab344baa920aa0518
     home: https://www.ory.sh/
@@ -109,7 +144,7 @@ entries:
     version: 0.0.20
   - apiVersion: v1
     appVersion: v1.0.0-rc.14_oryOS.12
-    created: "2019-08-19T16:28:45.073811102Z"
+    created: "2019-08-19T16:31:29.198789441Z"
     description: A Helm chart for deployoing ORY Hydra in Kubernetes
     digest: 1a0edc9fb45662ddafe3ae459768e4ebff945eff5f9bdb7100db6299c2a7440d
     home: https://www.ory.sh/
@@ -134,7 +169,7 @@ entries:
     version: 0.0.17
   - apiVersion: v1
     appVersion: v1.0.0-rc.14_oryOS.12
-    created: "2019-08-19T16:28:45.073345784Z"
+    created: "2019-08-19T16:31:29.198299169Z"
     description: A Helm chart for deployoing ORY Hydra in Kubernetes
     digest: a873582d2feb4235fff4dd2c55138611561ba3489820280cccd5f26124f3bd32
     home: https://www.ory.sh/
@@ -159,7 +194,7 @@ entries:
     version: 0.0.16
   - apiVersion: v1
     appVersion: v1.0.0-rc.14_oryOS.12
-    created: "2019-08-19T16:28:45.072932268Z"
+    created: "2019-08-19T16:31:29.197917944Z"
     description: A Helm chart for deployoing ORY Hydra in Kubernetes
     digest: 7e44b4a426e178a635dfb547f1891e9dabec86393248dd3d129fe1389e2d778a
     home: https://www.ory.sh/
@@ -184,7 +219,7 @@ entries:
     version: 0.0.15
   - apiVersion: v1
     appVersion: v1.0.0-rc.14_oryOS.12
-    created: "2019-08-19T16:28:45.072576148Z"
+    created: "2019-08-19T16:31:29.197551747Z"
     description: A Helm chart for deployoing ORY Hydra in Kubernetes
     digest: 4731889e0936ed9e699f42a02f993fb6c56520eb4cc146ed846f7fb2d281cb86
     home: https://www.ory.sh/
@@ -209,7 +244,7 @@ entries:
     version: 0.0.14
   - apiVersion: v1
     appVersion: v1.0.0-rc.14_oryOS.12
-    created: "2019-08-19T16:28:45.07221213Z"
+    created: "2019-08-19T16:31:29.197155159Z"
     description: A Helm chart for deployoing ORY Hydra in Kubernetes
     digest: 02bfbcd73b54504696503903fd1e57179c0c7d02d543fdbcf6e251652c33f8c7
     home: https://www.ory.sh/
@@ -234,7 +269,7 @@ entries:
     version: 0.0.13
   - apiVersion: v1
     appVersion: v1.0.0-rc.14_oryOS.12
-    created: "2019-08-19T16:28:45.071697929Z"
+    created: "2019-08-19T16:31:29.196784764Z"
     description: A Helm chart for deployoing ORY Hydra in Kubernetes
     digest: af327c82056d90a268389b5892d517ba0f6bbab2df3ec8aa07ee7aa47dd78da2
     home: https://www.ory.sh/
@@ -259,7 +294,7 @@ entries:
     version: 0.0.12
   - apiVersion: v1
     appVersion: v1.0.0-rc.14_oryOS.12
-    created: "2019-08-19T16:28:45.071117754Z"
+    created: "2019-08-19T16:31:29.196411942Z"
     description: A Helm chart for deployoing ORY Hydra in Kubernetes
     digest: d2e7b3b2d2c3a0833e4467d6f59799e5a355403cbfd137070cf7c1f9a1d68e4d
     home: https://www.ory.sh/
@@ -284,7 +319,7 @@ entries:
     version: 0.0.11
   - apiVersion: v1
     appVersion: v1.0.0-rc.14_oryOS.12
-    created: "2019-08-19T16:28:45.070765121Z"
+    created: "2019-08-19T16:31:29.196024193Z"
     description: A Helm chart for deployoing ORY Hydra in Kubernetes
     digest: 3d809930bf1364cc3e2d06efa698623051a727778bc4b634ab3cec6a5dc8df7c
     home: https://www.ory.sh/
@@ -309,7 +344,7 @@ entries:
     version: 0.0.10
   - apiVersion: v1
     appVersion: v1.0.0-rc.14_oryOS.12
-    created: "2019-08-19T16:28:45.075063467Z"
+    created: "2019-08-19T16:31:29.200459171Z"
     description: A Helm chart for deployoing ORY Hydra in Kubernetes
     digest: 05192b60af761b738d722d4fbb45f87f4872c26dd45da5c14b4e91142c9eadd8
     home: https://www.ory.sh/
@@ -334,7 +369,7 @@ entries:
     version: 0.0.9
   - apiVersion: v1
     appVersion: v1.0.0-rc.14_oryOS.12
-    created: "2019-08-19T16:28:45.074641728Z"
+    created: "2019-08-19T16:31:29.200019855Z"
     description: A Helm chart for deployoing ORY Hydra in Kubernetes
     digest: dd49cbd4002a13ceae1b47eafd820fc3890caba00b79d96e5e3a95e6710c3136
     home: https://www.ory.sh/
@@ -360,7 +395,7 @@ entries:
   maester:
   - apiVersion: v1
     appVersion: v0.0.1
-    created: "2019-08-19T16:28:45.076115888Z"
+    created: "2019-08-19T16:31:29.201530204Z"
     description: A Helm chart for deployoing ORY Oathkeeper Rule Controller in Kubernetes
     digest: 65ee23a8850dbce8dfebafa5fada0e746b135c2ebd66d801b68c5fc4e589f430
     home: https://www.ory.sh/
@@ -386,7 +421,7 @@ entries:
     version: 0.0.17
   - apiVersion: v1
     appVersion: v0.0.1
-    created: "2019-08-19T16:28:45.075597805Z"
+    created: "2019-08-19T16:31:29.20098529Z"
     description: A Helm chart for deployoing ORY Oathkeeper Rule Controller in Kubernetes
     digest: 80bfd42e02dff8a98049bca13e6a70c7dc619f1fae92810c01967562b1a05fcc
     home: https://www.ory.sh/
@@ -413,7 +448,33 @@ entries:
   oathkeeper:
   - apiVersion: v1
     appVersion: v0.16.0-beta.4_oryOS.12
-    created: "2019-08-19T16:28:45.082040285Z"
+    created: "2019-08-19T16:31:29.208864868Z"
+    description: A Helm chart for deployoing ORY Oathkeeper in Kubernetes
+    digest: 955263cccbb2c3926924ff9e990511179cfd7e314f859d1e00b21feaacd5acc5
+    home: https://www.ory.sh/
+    keywords:
+    - zero-trust
+    - beyond-corp
+    - access-control
+    - reverse-proxy
+    - nginx
+    - envoy
+    - ambassador
+    - auth-filter
+    maintainers:
+    - email: hi@ory.sh
+      name: ORY Team
+      url: https://www.ory.sh/
+    name: oathkeeper
+    sources:
+    - https://github.com/ory/oathkeeper
+    - https://github.com/ory/k8s
+    urls:
+    - oathkeeper-0.0.21.tgz
+    version: 0.0.21
+  - apiVersion: v1
+    appVersion: v0.16.0-beta.4_oryOS.12
+    created: "2019-08-19T16:31:29.207355904Z"
     description: A Helm chart for deployoing ORY Oathkeeper in Kubernetes
     digest: 98a81bfd16d25d24ddec295ecd6806745b7a12e05d55367ac51a684d0c1f31c2
     home: https://www.ory.sh/
@@ -439,7 +500,7 @@ entries:
     version: 0.0.20
   - apiVersion: v1
     appVersion: v0.16.0-beta.4_oryOS.12
-    created: "2019-08-19T16:28:45.08110768Z"
+    created: "2019-08-19T16:31:29.20633751Z"
     description: A Helm chart for deployoing ORY Oathkeeper in Kubernetes
     digest: a6db2a7b4608f94a817a58854a3b09e59af18707fd45fe03b823812ce256f1d8
     home: https://www.ory.sh/
@@ -465,7 +526,7 @@ entries:
     version: 0.0.17
   - apiVersion: v1
     appVersion: v0.16.0-beta.4_oryOS.12
-    created: "2019-08-19T16:28:45.080577955Z"
+    created: "2019-08-19T16:31:29.205812991Z"
     description: A Helm chart for deployoing ORY Oathkeeper in Kubernetes
     digest: 6a4b541bcaecfce82585c88da9f5819630a6b014aa8a213d63c7628d3a7e29d5
     home: https://www.ory.sh/
@@ -491,7 +552,7 @@ entries:
     version: 0.0.16
   - apiVersion: v1
     appVersion: v0.16.0-beta.4_oryOS.12
-    created: "2019-08-19T16:28:45.080078349Z"
+    created: "2019-08-19T16:31:29.205279318Z"
     description: A Helm chart for deployoing ORY Oathkeeper in Kubernetes
     digest: ed9e1cd99fd4882097385e4f4b0d46c50d62c803b66ebec4cfdc751a27da3ba3
     home: https://www.ory.sh/
@@ -517,7 +578,7 @@ entries:
     version: 0.0.15
   - apiVersion: v1
     appVersion: v0.16.0-beta.4_oryOS.12
-    created: "2019-08-19T16:28:45.079556896Z"
+    created: "2019-08-19T16:31:29.2047686Z"
     description: A Helm chart for deployoing ORY Oathkeeper in Kubernetes
     digest: ca07e8eb538cefbdae75d398cd12bc44ca0b644c4f4e0398616e45d554119a90
     home: https://www.ory.sh/
@@ -543,7 +604,7 @@ entries:
     version: 0.0.14
   - apiVersion: v1
     appVersion: v0.16.0-beta.4_oryOS.12
-    created: "2019-08-19T16:28:45.078886185Z"
+    created: "2019-08-19T16:31:29.204277074Z"
     description: A Helm chart for deployoing ORY Oathkeeper in Kubernetes
     digest: 909f77b1cdb624cbe3c34bb485feb2450dc9f0ba396759ebbac112f703109d9f
     home: https://www.ory.sh/
@@ -569,7 +630,7 @@ entries:
     version: 0.0.13
   - apiVersion: v1
     appVersion: v0.16.0-beta.4_oryOS.12
-    created: "2019-08-19T16:28:45.078386737Z"
+    created: "2019-08-19T16:31:29.203792576Z"
     description: A Helm chart for deployoing ORY Oathkeeper in Kubernetes
     digest: a7e239b332fc8205e38fc1b7b10cc228c1d03f9c81f8a2d60f7b736007bf1086
     home: https://www.ory.sh/
@@ -595,7 +656,7 @@ entries:
     version: 0.0.12
   - apiVersion: v1
     appVersion: v0.16.0-beta.4_oryOS.12
-    created: "2019-08-19T16:28:45.077196941Z"
+    created: "2019-08-19T16:31:29.203297416Z"
     description: A Helm chart for deployoing ORY Oathkeeper in Kubernetes
     digest: e1f7d7e0e3146aaf733fa4aeb97658bc000caf1f7b70f47f09ad86e809760bf9
     home: https://www.ory.sh/
@@ -621,7 +682,7 @@ entries:
     version: 0.0.11
   - apiVersion: v1
     appVersion: v0.16.0-beta.4_oryOS.12
-    created: "2019-08-19T16:28:45.076661919Z"
+    created: "2019-08-19T16:31:29.20277777Z"
     description: A Helm chart for deployoing ORY Oathkeeper in Kubernetes
     digest: cfeb9b742abf1c96d06b2f987964365c84f608e132893b5a3ca40562dc05c15f
     home: https://www.ory.sh/
@@ -647,7 +708,7 @@ entries:
     version: 0.0.10
   - apiVersion: v1
     appVersion: v0.16.0-beta.4_oryOS.12
-    created: "2019-08-19T16:28:45.084676086Z"
+    created: "2019-08-19T16:31:29.213086733Z"
     description: A Helm chart for deployoing ORY Oathkeeper in Kubernetes
     digest: f0618c4f62c97374a7df4eb3630cf80e5ffba15b65b564b3771c09f4d0838241
     home: https://www.ory.sh/
@@ -673,7 +734,7 @@ entries:
     version: 0.0.9
   - apiVersion: v1
     appVersion: v0.16.0-beta.4_oryOS.12
-    created: "2019-08-19T16:28:45.084180102Z"
+    created: "2019-08-19T16:31:29.21228234Z"
     description: A Helm chart for deployoing ORY Oathkeeper in Kubernetes
     digest: 38ff6ea7aff43eaf9cdb31ae6d1c0c49a6de5c261e89e9989a8d86a181e720c9
     home: https://www.ory.sh/
@@ -699,7 +760,7 @@ entries:
     version: 0.0.8
   - apiVersion: v1
     appVersion: v0.16.0-beta.4_oryOS.12
-    created: "2019-08-19T16:28:45.083683638Z"
+    created: "2019-08-19T16:31:29.211475686Z"
     description: A Helm chart for deployoing ORY Oathkeeper in Kubernetes
     digest: fe65f11483660a165d6699d46207d6ab2df7e24e712603dba75bb681ab9e7d9e
     home: https://www.ory.sh/
@@ -725,7 +786,7 @@ entries:
     version: 0.0.7
   - apiVersion: v1
     appVersion: v0.16.0-beta.4_oryOS.12
-    created: "2019-08-19T16:28:45.083113368Z"
+    created: "2019-08-19T16:31:29.21059841Z"
     description: A Helm chart for deployoing ORY Oathkeeper in Kubernetes
     digest: 56bdbdaaabf1ec25598fa4aa7e58e8a0627052cba280b76787dec009529fe7d9
     home: https://www.ory.sh/
@@ -751,7 +812,7 @@ entries:
     version: 0.0.6
   - apiVersion: v1
     appVersion: v0.16.0-beta.4
-    created: "2019-08-19T16:28:45.082600332Z"
+    created: "2019-08-19T16:31:29.209749623Z"
     description: A Helm chart for deployoing ORY Oathkeeper in Kubernetes
     digest: 49a9449435aade826fd38683373930863fe895a1a5b39fb0472c56d8c1a5ea7a
     home: https://www.ory.sh/
@@ -775,4 +836,4 @@ entries:
     urls:
     - oathkeeper-0.0.5.tgz
     version: 0.0.5
-generated: "2019-08-19T16:28:45.067630092Z"
+generated: "2019-08-19T16:31:29.192494625Z"
