@@ -58,6 +58,7 @@ jobs:
       - run: helm package -d docs/helm/charts/ ./helm/charts/oathkeeper/ --version `echo $CIRCLE_TAG | sed s/v//g`
       - run: helm package -d docs/helm/charts/ ./helm/charts/hydra/ --version `echo $CIRCLE_TAG | sed s/v//g`
       - run: helm package -d docs/helm/charts/ ./helm/charts/example-idp/ --version `echo $CIRCLE_TAG | sed s/v//g`
+      - run: helm package -d docs/helm/charts/ ./helm/charts/hive/ --version `echo $CIRCLE_TAG | sed s/v//g`
       - run: helm repo index docs/helm/charts/
       - run: git config --global user.email "hi@ory.sh"
       - run: git config --global user.name "ORY Continuous Integration"
