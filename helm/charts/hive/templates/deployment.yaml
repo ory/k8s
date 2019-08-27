@@ -1,0 +1,92 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "hive.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+{{ include "hive.labels" . | indent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ include "hive.name" . }}
+      app.kubernetes.io/instance: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: {{ include "hive.name" . }}
+        app.kubernetes.io/instance: {{ .Release.Name }}
+    spec:
+    {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+    {{- if .Values.hive.autoMigrate }}
+      initContainers:
+        -
+          name: {{ .Chart.Name }}-automigrate
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          command: ["hive"]
+          args: ["migrate", "sql", "-e", "--yes"]
+          env:
+            -
+              name: DSN
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "hive.fullname" . }}
+                  key: dsn
+    {{- end}}
+      volumes:
+        -
+          name: {{ include "hive.name" . }}-config-volume
+          configMap:
+            name: {{ include "hive.fullname" . }}-config
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          command: ["hive"]
+          args: [
+            "serve",
+            "all",
+            {{- if .Values.hive.development }}
+            "--dev",
+            {{- end}}
+            "--config",
+            "/etc/config/config.yaml"
+          ]
+          volumeMounts:
+            -
+              name: {{ include "hive.name" . }}-config-volume
+              mountPath: /etc/config
+              readOnly: true
+          ports:
+            - name: http-admin
+              containerPort: {{ .Values.hive.config.serve.admin.port }}
+              protocol: TCP
+            - name: http-public
+              containerPort: {{ .Values.hive.config.serve.public.port }}
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /health/alive
+              port: http-admin
+          readinessProbe:
+            httpGet:
+              path: /health/ready
+              port: http-admin
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+    {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+    {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
