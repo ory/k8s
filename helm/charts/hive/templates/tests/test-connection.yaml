@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "{{ include "hive.fullname" . }}-test-connection"
+  labels:
+{{ include "hive.labels" . | indent 4 }}
+  annotations:
+    "helm.sh/hook": test-success
+spec:
+  containers:
+    - name: wget
+      image: busybox
+      command: ['wget']
+      args:  ['{{ include "hive.fullname" . }}:{{ .Values.service.admin.port }}/health/ready']
+  restartPolicy: Never

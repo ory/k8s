@@ -1,0 +1,93 @@
+# Default values for hive.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 1
+
+image:
+  repository: oryd/hive
+  tag: v0.0.1
+  pullPolicy: IfNotPresent
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+service:
+  admin:
+    enabled: true
+    type: ClusterIP
+    port: 80
+  public:
+    enabled: true
+    type: ClusterIP
+    port: 80
+
+ingress:
+  admin:
+    enabled: false
+    annotations: {}
+      # kubernetes.io/ingress.class: nginx
+      # kubernetes.io/tls-acme: "true"
+    hosts:
+      - host: chart-example.local
+        paths: []
+
+    tls: []
+    #  - secretName: chart-example-tls
+    #    hosts:
+    #      - chart-example.local
+  public:
+    enabled: false
+    annotations: {}
+    # kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
+    hosts:
+      -
+        host: chart-example.local
+        paths: []
+
+    tls: []
+    #  - secretName: chart-example-tls
+    #    hosts:
+    #      - chart-example.local
+
+hive:
+  development: false
+  autoMigrate: false
+  config:
+    dsn: memory
+    serve:
+      admin:
+        port: 8081
+      public:
+        port: 8080
+
+deployment:
+  resources: {}
+  #  We usually recommend not to specify default resources and to leave this as a conscious
+  #  choice for the user. This also increases chances charts run on environments with little
+  #  resources, such as Minikube. If you do want to specify resources, uncomment the following
+  #  lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  #  limits:
+  #    cpu: 100m
+  #    memory: 128Mi
+  #  requests:
+  #    cpu: 100m
+  #  memory: 128Mi
+
+  # Node labels for pod assignment.
+  nodeSelector: {}
+  # If you do want to specify node labels, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'annotations:'.
+  #   foo: bar
+
+  # Configure node tolerations.
+  tolerations: []
+
+  # Annotations
+  annotations: {}
+
+# Configure node affinity
+affinity: {}
+
