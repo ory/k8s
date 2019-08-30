@@ -229,3 +229,12 @@ $ hydra token client \
     --client-id my-client \
     --client-secret secret
 ```
+
+### Hydra Maester
+This chart includes a helper chart in the form of [Hydra Maester](https://github.com/ory/k8s/blob/master/docs/helm/hydra-maester.md), a Kubernetes controller, which manages OAuth2 clients using the `oauth2clients.hydra.ory.sh` custom resource. By default, this component is enabled and installed together with Hydra. However, it can be disabled by setting the proper flag:
+
+```bash
+$ helm install \
+    --set 'maester.enabled=false' \
+    ory/hydra
+```
