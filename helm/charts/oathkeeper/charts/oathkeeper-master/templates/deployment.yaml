@@ -26,7 +26,7 @@ spec:
         control-plane: controller-manager
         app.kubernetes.io/name: {{ include "oathkeeper-maester.name" . }}
         app.kubernetes.io/instance: {{ .Release.Name }}
-      {{- with .Values.annotations }}
+      {{- with .Values.deployment.annotations }}
       annotations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
