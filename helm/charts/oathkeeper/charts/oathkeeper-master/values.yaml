@@ -7,7 +7,7 @@ image:
   # ORY Oathkeeper Rule Controller image
   repository: oryd/oathkeeper-maester
   # ORY Oathkeeper Rule Controller version
-  tag: "v0.0.1"
+  tag: "v0.0.2-beta.1"
   # Image pull policy
   pullPolicy: IfNotPresent
 
@@ -32,7 +32,12 @@ deployment:
 
   # Configure node tolerations.
   tolerations: []
+
+  # Configure annotations.
   annotations: {}
+
+  # Configure environment variables.
+  envs: {}
 
 # Configure node affinity
 affinity: {}
