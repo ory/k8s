@@ -1,15 +1,15 @@
 # ORY Hydra-maester Helm Chart
 
-ORY Hydra-maester is a Kubernetes controller that watches for instances of `oauth2clients.hydra.ory.sh/v1alpha1` custom resource (CR) and creates, updates, or deletes corresponding OAuth2 clients by communicating with ORY Hydra's API. Apart from managing OAuth2 clients, the controller saves credentials granted by the OAuth2 server as a Kubernetes Secret. As a result, client ID and password stored in the Secret can be used to interact with corresponding OAuth2 client registered by ORY Hydra.
+ORY Hydra Maester is a Kubernetes controller that watches for instances of `oauth2clients.hydra.ory.sh/v1alpha1` custom resource (CR) and creates, updates, or deletes corresponding OAuth2 clients by communicating with ORY Hydra's API. Apart from managing OAuth2 clients, the controller saves the credentials of the registered clients as Kubernetes Secrets. As a result, the client ID and password stored in the Secret can be used to interact with the corresponding OAuth2 client registered by ORY Hydra.
 
 ## Installation
 
-Hydra-maester is a part of the Hydra chart and is installed together with it.
+Hydra Maester is a part of the Hydra chart and is installed together with it.
 
 ## Configuration
 
 - `URL` defines the fully qualified domain name of ORY Hydra's service running on your Kubernetes cluster.
-- `port` defines the port that exposes ORY Hydra's API
+- `port` defines the port that exposes ORY Hydra's API.
 - `enabled_namespaces` defines the namespaces in which instances of `oauth2clients.hydra.ory.sh/v1alpha1` CR can be created. By default, users are allowed to create CR instances only in the controller's native namespace.
 
 You can set the values in values.yaml file or using --set syntax of Helm during chart installation.
