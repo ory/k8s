@@ -32,7 +32,12 @@ deployment:
 
   # Configure node tolerations.
   tolerations: []
+
+  # Configure annotations.
   annotations: {}
+
+  # Configure environment variables.
+  envs: {}
 
 # Configure node affinity
 affinity: {}
