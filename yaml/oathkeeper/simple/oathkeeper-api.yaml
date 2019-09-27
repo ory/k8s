@@ -30,7 +30,7 @@ spec:
     spec:
       containers:
       - name: ory-oathkeeper
-        image: oryd/oathkeeper:latest
+        image: oryd/oathkeeper:v0.13.8_oryOS.8
         imagePullPolicy: Always
         command: ["oathkeeper", "serve", "api"]
         env:
