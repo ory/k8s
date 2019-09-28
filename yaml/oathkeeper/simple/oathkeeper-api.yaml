@@ -12,12 +12,15 @@ spec:
     name: http-ory-oathkeeper
     targetPort: http-api
 ---
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ory-oathkeeper
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      app: ory-oathkeeper
   strategy:
     type: RollingUpdate
   template:
