@@ -82,7 +82,7 @@ by creating a yaml file with key `hydra.config`
 ```yaml
 # hydra-config.yaml
 
-oathkeeper:
+hydra:
   config:
     # e.g.:
     ttl:
