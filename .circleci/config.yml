@@ -26,6 +26,7 @@ jobs:
             sudo snap install microk8s --classic
             sudo snap install kubectl --classic
             snap info microk8s
+            sudo usermod -a -G microk8s circleci
       - run:
           name: "System setup"
           command: |
