@@ -26,7 +26,6 @@ jobs:
             sudo snap install microk8s --classic
             sudo snap install kubectl --classic
             snap info microk8s
-            sudo usermod -a -G microk8s circleci
       - run:
           name: "System setup"
           command: |
@@ -36,10 +35,10 @@ jobs:
       - run:
           name: "Start microk8s"
           command: |
-            microk8s.start
-            microk8s.status
-            microk8s.enable dns
-            kubectl get all --all-namespaces
+            sudo microk8s.start
+            sudo microk8s.status
+            sudo microk8s.enable dns
+            sudo kubectl get all --all-namespaces
       - run: 
           name: "Install Helm"
           command: |
