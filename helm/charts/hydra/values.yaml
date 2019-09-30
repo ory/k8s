@@ -26,6 +26,11 @@ service:
     type: ClusterIP
     # The service port
     port: 4444
+    # If you do want to specify annotations, uncomment the following
+    # lines, adjust them as necessary, and remove the curly braces after 'annotations:'.
+    annotations: {}
+    # kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
   # Configures the Kubernetes service for the api port.
   admin:
     # En-/disable the service
@@ -34,6 +39,11 @@ service:
     type: ClusterIP
     # The service port
     port: 4445
+    # If you do want to specify annotations, uncomment the following
+    # lines, adjust them as necessary, and remove the curly braces after 'annotations:'.
+    annotations: {}
+    # kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
 
 # Configure ingress
 ingress:
