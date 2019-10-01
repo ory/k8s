@@ -41,7 +41,7 @@ jobs:
             sed -i -e '$a\' /var/snap/microk8s/current/args/kube-apiserver
             echo '--authorization-mode=RBAC' >> /var/snap/microk8s/current/args/kube-apiserver
             systemctl restart snap.microk8s.daemon-apiserver            
-            kubectl apply -f - <<EOF
+            kubectl apply -f - \<<EOF
             apiVersion: rbac.authorization.k8s.io/v1
             kind: ClusterRoleBinding
             metadata:
