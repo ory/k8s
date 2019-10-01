@@ -44,8 +44,9 @@ jobs:
           command: |
             curl -L https://git.io/get_helm.sh | bash
             sudo helm init --service-account default --wait
-      - run: sudo .circleci/helm-test.sh oathkeeper
-      - run: sudo .circleci/helm-test.sh hydra
+            sudo chown circleci:circleci -R /home/circleci/.helm
+      - run: .circleci/helm-test.sh oathkeeper
+      - run: .circleci/helm-test.sh hydra
 
   release:
     docker:
