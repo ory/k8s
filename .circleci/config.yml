@@ -39,8 +39,8 @@ jobs:
             sudo microk8s.status
             sudo microk8s.enable dns
             sudo kubectl get all --all-namespaces
-            mkdir -p .kube
-            cp /root/.kube/config /home/circleci/.kube/config
+            mkdir -p /home/circleci/.kube/
+            sudo cp /root/.kube/config /home/circleci/.kube/config
             sudo chmod 777 /home/circleci/.kube/config
       - run: 
           name: "Install Helm"
