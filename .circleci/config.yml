@@ -35,13 +35,10 @@ jobs:
       - run:
           name: "Start microk8s"
           command: |
-            sudo microk8s.start
-            sudo microk8s.status
-            sudo microk8s.enable dns
-            sudo kubectl get all --all-namespaces
-            mkdir -p /home/circleci/.kube/
-            sudo cp /root/.kube/config /home/circleci/.kube/config
-            sudo chmod 777 /home/circleci/.kube/config
+            microk8s.start
+            microk8s.status
+            microk8s.enable dns
+            kubectl get all --all-namespaces
       - run: 
           name: "Install Helm"
           command: |
