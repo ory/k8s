@@ -23,7 +23,7 @@ jobs:
           command: |
             sudo apt-get update 
             sudo apt-get -y install snapd
-            sudo snap install microk8s --classic
+            sudo snap install microk8s --channel=1.14/edge --classic
             sudo snap install kubectl --classic
             snap info microk8s
       - run:
