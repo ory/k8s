@@ -23,12 +23,9 @@ jobs:
           command: |
             sudo apt-get update 
             sudo apt-get -y install snapd
-            sudo snap install microk8s --channel=1.14/edge --classic
+            sudo snap install microk8s --channel=1.13/stable --classic
             sudo snap alias microk8s.kubectl kubectl
             snap info microk8s
-            sudo mkdir -p /home/circleci/.kube
-            sudo microk8s.kubectl config view --raw > /home/circleci/.kube/config
-            sudo chown -R circleci:circleci /home/circleci/.kube
       - run:
           name: "System setup"
           command: |
@@ -41,13 +38,12 @@ jobs:
             sudo microk8s.start
             sudo microk8s.status --wait-ready
             sudo microk8s.enable dns
-            sudo kubectl get all --all-namespaces
+            kubectl get all --all-namespaces
       - run: 
           name: "Install Helm"
           command: |
             curl -L https://git.io/get_helm.sh | bash
-            sudo helm init --service-account default --wait
-            sudo chown circleci:circleci -R /home/circleci/.helm
+            helm init --service-account default --wait
       - run: .circleci/helm-test.sh oathkeeper
       - run: .circleci/helm-test.sh hydra
 
