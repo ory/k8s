@@ -37,8 +37,7 @@ jobs:
           command: |
             microk8s.start
             microk8s.status --wait-ready
-            microk8s.enable dns
-            microk8s.enable rbac
+            microk8s.enable dns rbac
             kubectl get all --all-namespaces
       - run: 
           name: "Install Helm"
