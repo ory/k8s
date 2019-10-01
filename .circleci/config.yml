@@ -26,6 +26,9 @@ jobs:
             sudo snap install microk8s --channel=1.14/edge --classic
             sudo snap alias microk8s.kubectl kubectl
             snap info microk8s
+            sudo mkdir -p /home/circleci/.kube
+            sudo microk8s.kubectl config view --raw > /home/circleci/.kube/config
+            sudo chown -R circleci:circleci /home/circleci/.kube
       - run:
           name: "System setup"
           command: |
