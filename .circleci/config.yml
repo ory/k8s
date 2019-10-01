@@ -39,7 +39,7 @@ jobs:
             microk8s.status --wait-ready
             microk8s.enable dns
             sudo sed -i -e '$a\' /var/snap/microk8s/current/args/kube-apiserver
-            echo '--authorization-mode=RBAC' >> /var/snap/microk8s/current/args/kube-apiserver
+            sudo echo '--authorization-mode=RBAC' >> /var/snap/microk8s/current/args/kube-apiserver
             systemctl restart snap.microk8s.daemon-apiserver            
             kubectl apply -f - \<<EOF
             apiVersion: rbac.authorization.k8s.io/v1
