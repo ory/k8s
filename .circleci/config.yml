@@ -38,15 +38,14 @@ jobs:
             microk8s.start
             microk8s.status
             microk8s.enable dns
-            newgrp microk8s
-            kubectl get all --all-namespaces
+            sudo kubectl get all --all-namespaces
       - run: 
           name: "Install Helm"
           command: |
             curl -L https://git.io/get_helm.sh | bash
-            helm init --service-account default --wait
-      - run: .circleci/helm-test.sh oathkeeper
-      - run: .circleci/helm-test.sh hydra
+            sudo helm init --service-account default --wait
+      - run: sudo .circleci/helm-test.sh oathkeeper
+      - run: sudo .circleci/helm-test.sh hydra
 
   release:
     docker:
