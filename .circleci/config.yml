@@ -38,6 +38,7 @@ jobs:
             microk8s.start
             microk8s.status
             microk8s.enable dns
+            newgrp microk8s
             kubectl get all --all-namespaces
       - run: 
           name: "Install Helm"
