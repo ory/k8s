@@ -4,6 +4,10 @@ metadata:
   name: {{ include "example-idp.fullname" . }}
   labels:
 {{ include "example-idp.labels" . | indent 4 }}
+  {{- with .Values.service.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
 spec:
   type: {{ .Values.service.type }}
   ports:
