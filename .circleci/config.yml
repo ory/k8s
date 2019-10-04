@@ -23,7 +23,7 @@ jobs:
           command: |
             sudo apt-get update 
             sudo apt-get -y install snapd
-            sudo snap install microk8s --channel=1.13/stable --classic
+            sudo snap install microk8s --channel=1.15/stable --classic
             sudo snap alias microk8s.kubectl kubectl
             snap info microk8s
       - run:
@@ -34,28 +34,11 @@ jobs:
             sudo iptables -P FORWARD ACCEPT
       - run:
           name: "Start microk8s"
-          command: |            
+          command: |
+            sudo -E            
             microk8s.start
             microk8s.status --wait-ready
-            microk8s.enable dns
-            sudo chown -R $USER:$USER  /var/snap/microk8s/current/args/kube-apiserver
-            sudo sed -i -e '$a\' /var/snap/microk8s/current/args/kube-apiserver
-            sudo echo '--authorization-mode=RBAC' >> /var/snap/microk8s/current/args/kube-apiserver
-            systemctl restart snap.microk8s.daemon-apiserver            
-            kubectl apply -f - \<<EOF
-            apiVersion: rbac.authorization.k8s.io/v1
-            kind: ClusterRoleBinding
-            metadata:
-              name: microk8s-rbac
-            roleRef:
-              apiGroup: rbac.authorization.k8s.io
-              kind: ClusterRole
-              name: cluster-admin
-            subjects:
-            - kind: ServiceAccount
-              name: default
-              namespace: kube-system
-            EOF  
+            microk8s.enable dns rbac
             kubectl get all --all-namespaces
       - run: 
           name: "Install Helm"
