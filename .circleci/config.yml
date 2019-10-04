@@ -35,11 +35,7 @@ jobs:
       - run:
           name: "Start microk8s"
           command: |
-            sudo -H -s -E           
-            microk8s.start
-            microk8s.status --wait-ready
-            microk8s.enable dns rbac
-            kubectl get all --all-namespaces
+            (echo "microk8s.start; microk8s.status --wait-ready; microk8s.enable dns rbac ") | sudo -H -s -E  
       - run: 
           name: "Install Helm"
           command: |
