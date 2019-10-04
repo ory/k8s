@@ -35,7 +35,7 @@ jobs:
       - run:
           name: "Start microk8s"
           command: |
-            sudo -E            
+            sudo -H -s -E           
             microk8s.start
             microk8s.status --wait-ready
             microk8s.enable dns rbac
