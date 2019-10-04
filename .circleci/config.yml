@@ -41,7 +41,8 @@ jobs:
           command: |
             curl -L https://git.io/get_helm.sh | bash
             helm init --service-account tiller --wait
-            kubectl create clusterrolebinding tiller-cluster-rule --clusterrole=cluster-admin --serviceaccount=kube-system:tiller
+            
+      - run: kubectl create clusterrolebinding tiller-cluster-rule --clusterrole=cluster-admin --serviceaccount=kube-system:tiller
       - run: .circleci/helm-test.sh oathkeeper
       - run: .circleci/helm-test.sh hydra
 
