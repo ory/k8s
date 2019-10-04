@@ -40,7 +40,7 @@ jobs:
           name: "Install Helm"
           command: |            
             curl -L https://git.io/get_helm.sh | bash
-            sudo kubectl create serviceaccount --namespace kube-system tiller; kubectl create clusterrolebinding tiller-cluster-rule --clusterrole=cluster-admin --serviceaccount=kube-system:tiller
+            (echo "kubectl create serviceaccount --namespace kube-system tiller; kubectl create clusterrolebinding tiller-cluster-rule --clusterrole=cluster-admin --serviceaccount=kube-system:tiller") | sudo -H -s -E
             helm init --service-account tiller --wait
                   
       - run: .circleci/helm-test.sh oathkeeper
