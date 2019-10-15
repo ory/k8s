@@ -29,6 +29,11 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           command: ["hive"]
           args: ["migrate", "sql", "-e", "--yes", "--config", "/etc/config/config.yaml"]
+          volumeMounts:
+            -
+              name: {{ include "hive.name" . }}-config-volume
+              mountPath: /etc/config
+              readOnly: true
           env:
             -
               name: DSN
