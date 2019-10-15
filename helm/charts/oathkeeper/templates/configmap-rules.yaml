@@ -9,5 +9,4 @@ metadata:
   labels:
 {{ include "oathkeeper.labels" . | indent 4 }}
 data:
-  "access-rules.json": |
-    {{ .Values.oathkeeper.accessRules | default "[]" | indent 4 }}
+  "access-rules.json": {{ .Values.oathkeeper.accessRules | default "[]" | toJson | quote }}
