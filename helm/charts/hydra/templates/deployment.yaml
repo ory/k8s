@@ -78,19 +78,29 @@ spec:
               containerPort: 4445
               protocol: TCP
           livenessProbe:
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            failureThreshold: 5
+            {{- if eq .Values.livenessProbe "tcpSocket" }}
+            tcpSocket:
+              port: http-admin
+            {{- else }}
             httpGet:
               path: /health/alive
               port: http-admin
-            initialDelaySeconds: 30
-            periodSeconds: 10
-            failureThreshold: 5
+            {{- end }}
           readinessProbe:
-            httpGet:
-              path: /health/ready
-              port: http-admin
             initialDelaySeconds: 30
             periodSeconds: 10
             failureThreshold: 5
+            {{- if eq .Values.readinessProbe "tcpSocket" }}
+            tcpSocket:
+              port: http-admin
+            {{- else }}
+            httpGet:
+              path: /health/alive
+              port: http-admin
+            {{- end }}
           env:
             {{- $issuer := include "hydra.config.urls.issuer" . -}}
             {{- if $issuer }}

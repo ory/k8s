@@ -130,6 +130,9 @@ deployment:
   # Configure node tolerations.
   tolerations: []
 
+  livenessProbe: "httpGet"
+  readinessProbe: "httpGet"
+
 # Configure node affinity
 affinity: {}
 
