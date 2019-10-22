@@ -9,9 +9,6 @@ metadata:
   labels:
 {{ include "oathkeeper.labels" . | indent 4 }}
   {{- with .Values.deployment.annotations }}
-  annotations:
-    {{- toYaml . | nindent 4 }}
-  {{- end }}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
