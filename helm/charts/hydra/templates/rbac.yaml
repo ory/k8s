@@ -12,8 +12,11 @@ metadata:
   namespace:  {{ .Release.Namespace }}
 rules:
   - apiGroups: ["*"]
-    resources: ["pods", "deployments", "services", "configmaps", "serviceaccounts"]
-    verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+    resources: ["pods", "deployments"]
+    verbs: ["get", "list", "watch", "create", "update"]
+  - apiGroups: ["*"]
+    resources: ["serviceaccounts"]
+    verbs: ["get", "list", "watch"]
 ---
 kind: RoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
@@ -29,4 +32,3 @@ subjects:
   - kind: ServiceAccount
     name: {{ include "hydra.fullname" . }}
     namespace:  {{ .Release.Namespace }}
----
