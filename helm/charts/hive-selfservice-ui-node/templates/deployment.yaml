@@ -28,6 +28,9 @@ spec:
           -
             name: HIVE_PUBLIC_URL
             value: {{ .Values.hivePublicUrl | quote }}
+          -
+            name: HIVE_BROWSER_URL
+            value: {{ .Values.hiveBrowserUrl | quote }}
           ports:
             - name: http
               containerPort: 3000

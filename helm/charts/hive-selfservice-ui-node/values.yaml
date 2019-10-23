@@ -6,7 +6,7 @@ replicaCount: 1
 
 image:
   repository: oryd/hive-selfservice-ui-node
-  tag: v0.0.1
+  tag: v0.0.4
   pullPolicy: IfNotPresent
 
 imagePullSecrets: []
@@ -51,3 +51,6 @@ affinity: {}
 
 # Set this to ORY Hive's public URL
 # hivePublicUrl: ""
+
+# Set this to ORY Hive's public URL accessible from the outside world.
+# hiveBrowserUrl: ""
