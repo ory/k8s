@@ -30,7 +30,7 @@ spec:
       http:
         paths:
         {{- range .paths }}
-          - path: {{ . }}
+          - path: {{ . | quote }}
             backend:
               serviceName: {{ $fullName }}-proxy
               servicePort: http
