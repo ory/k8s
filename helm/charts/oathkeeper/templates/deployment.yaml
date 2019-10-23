@@ -8,7 +8,6 @@ metadata:
   {{- end }}
   labels:
 {{ include "oathkeeper.labels" . | indent 4 }}
-  {{- with .Values.deployment.annotations }}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
