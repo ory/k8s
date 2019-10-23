@@ -30,15 +30,15 @@ spec:
             value: {{ .Values.hivePublicUrl | quote }}
           ports:
             - name: http
-              containerPort: 80
+              containerPort: 3000
               protocol: TCP
           livenessProbe:
             httpGet:
-              path: /
+              path: /auth/login
               port: http
           readinessProbe:
             httpGet:
-              path: /
+              path: /auth/login
               port: http
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
