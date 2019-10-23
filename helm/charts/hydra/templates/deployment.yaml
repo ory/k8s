@@ -47,7 +47,9 @@ spec:
         - name: {{ include "hydra.name" . }}-config-volume
           configMap:
             name: {{ include "hydra.fullname" . }}
-      serviceAccountName: {{ include "hydra.fullname" . }}
+      {{- if .Values.deployment.serviceAccountName  }}
+      serviceAccountName: {{ .Values.deployment.serviceAccountName }}
+      {{- end }}
       containers:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"

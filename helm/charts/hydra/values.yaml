@@ -130,6 +130,12 @@ deployment:
   # Configure node tolerations.
   tolerations: []
 
+  ## Specify the serviceAccountName value.
+  ## In some situations it is needed to provides specific permissions to Hydra deployments
+  ## Like for example installing Hydra on a cluster with a PosSecurityPolicy and Istio.
+  ## Uncoment if it is needed to provide a ServiceAccount for the Hydra deployment.
+  # serviceAccountName:
+
 # Configure node affinity
 affinity: {}
 
