@@ -50,10 +50,13 @@ tolerations: []
 affinity: {}
 
 # Set this to ORY Hive's public URL
-# hivePublicUrl: ""
+hivePublicUrl: ""
 
 # Set this to ORY Hive's public URL accessible from the outside world.
-# hiveBrowserUrl: ""
+hiveBrowserUrl: ""
 
-# The baseurl
-# baseUrl: ""
+# The baseUrl
+baseUrl: ""
+
+# The jwksUrl
+jwksUrl: ""
