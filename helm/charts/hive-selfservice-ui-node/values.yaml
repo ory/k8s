@@ -54,3 +54,6 @@ affinity: {}
 
 # Set this to ORY Hive's public URL accessible from the outside world.
 # hiveBrowserUrl: ""
+
+# The baseurl
+# baseUrl: ""
