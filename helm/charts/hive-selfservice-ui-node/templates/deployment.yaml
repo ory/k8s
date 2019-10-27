@@ -32,6 +32,9 @@ spec:
             name: HIVE_BROWSER_URL
             value: {{ .Values.hiveBrowserUrl | quote }}
           -
+            name: PROJECT_NAME
+            value: {{ .Values.projectName | quote }}
+          -
             name: BASE_URL
             value: {{ .Values.baseUrl | quote }}
           -

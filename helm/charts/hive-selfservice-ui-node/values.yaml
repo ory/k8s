@@ -60,3 +60,5 @@ baseUrl: ""
 
 # The jwksUrl
 jwksUrl: ""
+
+projectName: "SecureApp"
