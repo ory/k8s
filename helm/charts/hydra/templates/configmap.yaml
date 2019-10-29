@@ -8,4 +8,5 @@ metadata:
 data:
   "config.yaml": |
   {{- $config := set .Values.hydra.config "dsn" "redacted" -}}
+  {{- $config := set .Values.hydra.config "secrets" "redacted" -}}
   {{- toYaml $config | nindent 4 }}
