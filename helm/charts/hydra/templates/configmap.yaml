@@ -7,6 +7,5 @@ metadata:
 {{ include "hydra.labels" . | indent 4 }}
 data:
   "config.yaml": |
-  {{- with .Values.hydra.config -}}
-    {{- toYaml . | nindent 4 }}
-  {{- end -}}
+  {{- $config := set .Values.hydra.config "dsn" "redacted" -}}
+  {{- toYaml $config | nindent 4 }}
