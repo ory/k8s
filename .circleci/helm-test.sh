@@ -12,7 +12,7 @@ function cleanup {
 }
 trap cleanup EXIT
 
-helm install -f .circleci/values/$1.yaml -n ${release} ./helm/charts/$1 --wait
+helm install -f .circleci/values/$1.yaml -n ${release} ./helm/charts/$1 --wait --debug
 
 n=0
 until [[ $n -ge 5 ]]; do
