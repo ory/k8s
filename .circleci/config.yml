@@ -36,7 +36,7 @@ jobs:
       - run:
           name: "Start microk8s"
           command: |
-            (echo "microk8s.start; microk8s.status --wait-ready; microk8s.enable dns rbac ") | sudo -H -s -E  
+            (echo "microk8s.start; microk8s.status --wait-ready; microk8s.enable dns rbac; microk8s.status --wait-ready") | sudo -H -s -E  
       - run: 
           name: "Install Helm"
           command: |
