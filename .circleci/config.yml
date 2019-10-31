@@ -44,8 +44,8 @@ jobs:
             (echo "kubectl create serviceaccount --namespace kube-system tiller; kubectl create clusterrolebinding tiller-cluster-rule --clusterrole=cluster-admin --serviceaccount=kube-system:tiller") | sudo -H -s -E
             helm init --service-account tiller --wait
                   
-      - run: .circleci/helm-test.sh oathkeeper
-      - run: .circleci/helm-test.sh hydra
+      - run: sudo bash .circleci/helm-test.sh oathkeeper
+      - run: sudo bash .circleci/helm-test.sh hydra
 
   release:
     docker:
