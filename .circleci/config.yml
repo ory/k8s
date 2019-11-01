@@ -23,7 +23,8 @@ jobs:
           name: "Install kind & kubectl"
           command: |
             sudo apt-get update 
-            sudo apt-get -y install kubectl
+            sudo apt-get -y install snapd
+            sudo snap install kubectl
             curl -Lo ./kind https://github.com/kubernetes-sigs/kind/releases/download/v0.5.1/kind-$(uname)-amd64
             chmod +x ./kind
       - run:
