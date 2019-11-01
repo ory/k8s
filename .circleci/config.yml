@@ -46,13 +46,13 @@ jobs:
                   
       - run:
           command: |
-            echo "sudo bash .circleci/helm-test.sh oathkeeper" | sudo -H -s -E
+            echo ".circleci/helm-test.sh oathkeeper" | sudo -H -s -E
       - run:
           command: |
-            echo "sudo bash .circleci/helm-test.sh hydra" | sudo -H -s -E
+            echo ".circleci/helm-test.sh hydra" | sudo -H -s -E
       - run:
           command: |
-            echo "sudo bash .circleci/helm-test.sh hive" | sudo -H -s -E
+            echo ".circleci/helm-test.sh hive" | sudo -H -s -E
         
   release:
     docker:
