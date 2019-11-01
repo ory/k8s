@@ -89,6 +89,15 @@ Generate the secrets.cookie value
 {{- end -}}
 
 {{/*
+Generate the configmap data, redacting secrets
+*/}}
+{{- define "hydra.configmap" -}}
+{{- $config := unset .Values.hydra.config "dsn" -}}
+{{- $config := unset $config "secrets" -}}
+{{- toYaml $config -}}
+{{- end -}}
+
+{{/*
 Generate the urls.issuer value
 */}}
 {{- define "hydra.config.urls.issuer" -}}
