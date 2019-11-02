@@ -34,8 +34,14 @@ data:
     mutators:
       cookie:
         enabled: true
+        config:
+          cookies:
+            user: "{{ print .Subject }}"
       header:
         enabled: true
+        config:
+          headers:
+            X-User: "{{ print .Subject }}"
       id_token:
         enabled: true
         config:
