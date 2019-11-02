@@ -20,33 +20,41 @@ jobs:
     steps:
       - checkout
       - run:
-          name: "Install microk8s & kubectl"
+          name: "Install kind & kubectl"
           command: |
-            sudo apt-get update 
-            sudo apt-get -y install snapd
-            sudo snap install microk8s --channel=1.15/stable --classic
-            sudo snap alias microk8s.kubectl kubectl
-            snap info microk8s
+            curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
+            curl -Lo ./kind https://github.com/kubernetes-sigs/kind/releases/download/v0.5.1/kind-$(uname)-amd64
+            chmod +x ./kubectl
+            chmod +x ./kind
+            sudo mv ./kubectl /usr/local/bin/kubectl
+            sudo mv ./kind /usr/local/bin/kind
       - run:
-          name: "System setup"
+          name: "Create cluster"
           command: |
-            echo 'export PATH=/snap/bin:$PATH' >> $BASH_ENV
-            source $BASH_ENV
-            sudo iptables -P FORWARD ACCEPT
-      - run:
-          name: "Start microk8s"
-          command: |
-            (echo "microk8s.start; microk8s.status --wait-ready; microk8s.enable dns rbac ") | sudo -H -s -E  
+            kind create cluster --wait 2m
       - run: 
           name: "Install Helm"
           command: |
             curl -L https://git.io/get_helm.sh | bash
-            (echo "kubectl create serviceaccount --namespace kube-system tiller; kubectl create clusterrolebinding tiller-cluster-rule --clusterrole=cluster-admin --serviceaccount=kube-system:tiller") | sudo -H -s -E
-            helm init --service-account tiller --wait
-                  
-      - run: .circleci/helm-test.sh oathkeeper
-      - run: .circleci/helm-test.sh hydra
-
+            export KUBECONFIG="$(kind get kubeconfig-path)"
+            kubectl create serviceaccount --namespace kube-system tiller
+            kubectl create clusterrolebinding tiller-cluster-rule --clusterrole=cluster-admin --serviceaccount=kube-system:tiller
+            helm init --service-account tiller --wait      
+      - run:
+          command: |
+            export KUBECONFIG="$(kind get kubeconfig-path)"
+            .circleci/helm-test.sh oathkeeper
+      - run:
+          command: |
+            export KUBECONFIG="$(kind get kubeconfig-path)"
+            .circleci/helm-test.sh hydra
+      # Enable hive tests at a later stage
+      # 
+      # - run:
+      #     command: |
+      #       export KUBECONFIG="$(kind get kubeconfig-path)"
+      #       .circleci/helm-test.sh hive
+        
   release:
     docker:
       - image: circleci/golang:1.12
