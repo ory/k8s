@@ -48,10 +48,12 @@ jobs:
           command: |
             export KUBECONFIG="$(kind get kubeconfig-path)"
             .circleci/helm-test.sh hydra
-      - run:
-          command: |
-            export KUBECONFIG="$(kind get kubeconfig-path)"
-            .circleci/helm-test.sh hive
+      # Enable hive tests at a later stage
+      # 
+      # - run:
+      #     command: |
+      #       export KUBECONFIG="$(kind get kubeconfig-path)"
+      #       .circleci/helm-test.sh hive
         
   release:
     docker:
