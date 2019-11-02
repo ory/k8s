@@ -3,7 +3,7 @@
 set -Eeuxo pipefail
 cd "$( dirname "${BASH_SOURCE[0]}" )/.."
 
-release=$(echo cci-$(date +%s)-$1-${CIRCLE_SHA1}| cut -c 1-20)
+release=$(echo cci-$(date +%s)-$1-${CIRCLE_SHA1} | cut -c 1-15)r
 
 function cleanup {
     kubectl describe pods -A -l "app.kubernetes.io/instance=${release}" || true
