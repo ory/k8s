@@ -24,7 +24,7 @@ spec:
   template:
     metadata:
       labels:
-        {{ include "hive-selfservice-ui-node.labels" . | indent 8 }}
+        {{ include "oathkeeper.labels" . | indent 8 }}
         {{- with .Values.deployment.labels }}
           {{- toYaml . | nindent 8 }}
         {{- end }}

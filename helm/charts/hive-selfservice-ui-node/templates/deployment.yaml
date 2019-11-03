@@ -6,7 +6,6 @@ metadata:
   namespace: {{ .Release.Namespace }}
   {{- end }}
   labels:
-    {{ include "hive-selfservice-ui-node.labels" . | indent 4 }}
     {{ include "oathkeeper.labels" . | indent 4 }}
     {{- with .Values.deployment.labels }}
       {{- toYaml . | nindent 4 }}
