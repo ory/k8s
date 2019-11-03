@@ -6,7 +6,7 @@ metadata:
   namespace: {{ .Release.Namespace }}
   {{- end }}
   labels:
-    {{- include "hive.labels" . | indent 4 }}
+{{ include "hive.labels" . | indent 4 }}
     {{- with .Values.deployment.labels }}
       {{- toYaml . | nindent 4 }}
     {{- end }}
@@ -23,7 +23,7 @@ spec:
   template:
     metadata:
       labels:
-        {{- include "hive.labels" . | indent 8 }}
+{{ include "hive.labels" . | indent 8 }}
         {{- with .Values.deployment.labels }}
           {{- toYaml . | nindent 8 }}
         {{- end }}
