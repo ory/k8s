@@ -8,6 +8,4 @@ metadata:
 {{ include "hive.labels" . | indent 4 }}
 data:
   "config.yaml": |
-{{- with .Values.hive.config -}}  
-  {{- toYaml . | nindent 4 }} 
-{{- end -}}
+{{ include "hive.configmap" . | nindent 4 }}

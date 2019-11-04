@@ -31,6 +31,25 @@ Create chart name and version as used by the chart label.
 {{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
+
+{{/*
+Generate the secrets.system value
+*/}}
+{{- define "hive.secrets.session" -}}
+{{- if .Values.hive.config.secrets.session -}}
+{{- .Values.hive.config.secrets.session }}
+{{- end -}}
+{{- end -}}
+
+{{/*
+Generate the configmap data, redacting secrets
+*/}}
+{{- define "hive.configmap" -}}
+{{- $config := unset .Values.hive.config "dsn" -}}
+{{- $config := unset $config "secrets" -}}
+{{- toYaml $config -}}
+{{- end -}}
+
 {{/*
 Common labels
 */}}
