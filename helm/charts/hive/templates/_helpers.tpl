@@ -33,7 +33,7 @@ Create chart name and version as used by the chart label.
 
 
 {{/*
-Generate the secrets.system value
+Generate the secrets.session value
 */}}
 {{- define "hive.secrets.session" -}}
 {{- if .Values.hive.config.secrets.session -}}
