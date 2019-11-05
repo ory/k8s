@@ -1,6 +1,6 @@
 # Kubernetes Helm Charts for ORY
 
-[![CircleCI](https://circleci.com/gh/ory/k8s.svg?style=svg)](https://circleci.com/gh/ory/k8s)
+[![CircleCI](https://circleci.com/gh/ory/k8s.svg?style=shield)](https://circleci.com/gh/ory/k8s)
 
 This repository contains helm charts for Kubernetes. All charts are in incubation phase and use is at your own risk.
 
