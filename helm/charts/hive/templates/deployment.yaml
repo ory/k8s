@@ -56,6 +56,12 @@ spec:
                 secretKeyRef:
                   name: {{ include "hive.fullname" . }}
                   key: dsn
+            -
+              name: SECRETS_SESSION
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "hive.fullname" . }}
+                  key: secretsSession
     {{- end}}
       volumes:
         -

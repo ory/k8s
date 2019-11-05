@@ -68,6 +68,8 @@ hive:
   autoMigrate: false
   config:
     dsn: memory
+    secrets:
+      session: []
     serve:
       admin:
         port: 8081
