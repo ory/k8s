@@ -87,6 +87,19 @@ spec:
               name: {{ include "hive.name" . }}-config-volume
               mountPath: /etc/config
               readOnly: true
+          env:
+            -
+              name: DSN
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "hive.fullname" . }}
+                  key: dsn
+            -
+              name: SECRETS_SESSION
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "hive.fullname" . }}
+                  key: secretsSession
           ports:
             - name: http-admin
               containerPort: {{ .Values.hive.config.serve.admin.port }}
