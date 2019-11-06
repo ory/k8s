@@ -22,6 +22,7 @@ The syntax of the CR **Spec** fields is a simplified representation of the the O
 |-------------------|----------|----------|-------------|-----------------|
 | **GrantTypes**    | [string] | yes      | Array of grant types the client is allowed to use. | *client_credentials*, *authorization_code*, *implicit*, *refresh_token*
 | **ResponseTypes** | [string] | no       | Array of the OAuth 2.0 response type strings that the client can use at the authorization endpoint. | *id_token*, *code*, *token*
+| **RedirectURIs**  | [string] | no       | Array of the redirect URIs allowed for the client. | array of strings matching the regular expression `\w+:/?/?[^\s]+`
 | **Scope**         | string   | yes      | String containing a space-separated list of scope values (as described in Section 3.3 of OAuth 2.0 [RFC6749]) that the client can use when requesting access tokens. | any string |
 | **SecretName**    | string   | yes      | Name of a Kubernetes Secret which stores the OAuth2 client credentials. See the **Credentials** section for more details. | any string that meets the Kubernetes [naming requirements](https://kubernetes.io/docs/concepts/overview/working-with-objects/names/)
 
