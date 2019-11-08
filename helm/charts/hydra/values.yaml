@@ -1,14 +1,6 @@
 # Number of ORY Hydra members
 replicaCount: 1
 
-image:
-  # ORY Hydra image
-  repository: oryd/hydra
-  # ORY Hydra version
-  tag: v1.0.0
-  # Image pull policy
-  pullPolicy: IfNotPresent
-
 # Image pull secrets
 imagePullSecrets: []
 # Chart name override
@@ -16,6 +8,67 @@ nameOverride: ""
 # Full chart name override
 fullnameOverride: ""
 
+# Configure ORY Hydra itself
+hydra:
+  image:
+    # ORY Hydra image
+    repository: oryd/hydra
+    # ORY Hydra version
+    tag: v1.0.9
+    # Image pull policy
+    pullPolicy: IfNotPresent
+
+  deployment:
+    resources: {}
+    annotations: {}
+    nodeSelector: {}
+    tolerations: []
+
+  # Configure node affinity
+  affinity: {}
+
+  # The ORY Hydra configuration. For a full list of available settings, check:
+  #   https://github.com/ory/hydra/blob/master/docs/config.yaml
+  config:
+    serve:
+      public:
+        port: 4444
+      admin:
+        port: 4445
+      tls:
+        allow_termination_from:
+          - 10.0.0.0/8
+          - 172.16.0.0/12
+          - 192.168.0.0/16
+    secrets: {}
+    urls:
+      self: {}
+
+  autoMigrate: false
+  dangerousForceHttp: false
+  dangerousAllowInsecureRedirectUrls: false
+
+# Configures controller setup
+maester:
+  enabled: true
+  image:
+    repository: dangersalad/hydra-maester
+    tag: 0.0.5-alpha8
+    # Image pull policy
+    pullPolicy: IfNotPresent
+
+  forwardedProto: ""
+  adminProto: "http"
+  deployment:
+    resources: {}
+    annotations: {}
+    nodeSelector: {}
+    tolerations: []
+
+  # Configure node affinity
+  affinity: {}
+
+  
 # Configures the Kubernetes service
 service:
   # Configures the Kubernetes service for the proxy port.
@@ -80,82 +133,3 @@ ingress:
 #      - secretName: hydra-api-example-tls
 
 
-# Configure ORY Hydra itself
-hydra:
-  # The ORY Hydra configuration. For a full list of available settings, check:
-  #   https://github.com/ory/hydra/blob/master/docs/config.yaml
-  config:
-    serve:
-      public:
-        port: 4444
-      admin:
-        port: 4445
-      tls:
-        allow_termination_from:
-          - 10.0.0.0/8
-          - 172.16.0.0/12
-          - 192.168.0.0/16
-    secrets: {}
-    urls:
-      self: {}
-
-  autoMigrate: false
-  dangerousForceHttp: false
-  dangerousAllowInsecureRedirectUrls: false
-
-deployment:
-  resources: {}
-  #  We usually recommend not to specify default resources and to leave this as a conscious
-  #  choice for the user. This also increases chances charts run on environments with little
-  #  resources, such as Minikube. If you do want to specify resources, uncomment the following
-  #  lines, adjust them as necessary, and remove the curly braces after 'resources:'.
-  #  limits:
-  #    cpu: 100m
-  #    memory: 128Mi
-  #  requests:
-  #    cpu: 100m
-  #  memory: 128Mi
-
-  labels: {}
-  #      If you do want to specify additional labels, uncomment the following
-  #      lines, adjust them as necessary, and remove the curly braces after 'labels:'.
-  #      e.g.  type: app
-
-  annotations: {}
-  #      If you do want to specify annotations, uncomment the following
-  #      lines, adjust them as necessary, and remove the curly braces after 'annotations:'.
-  #      e.g.  sidecar.istio.io/rewriteAppHTTPProbers: "true"
-
-  # Node labels for pod assignment.
-  nodeSelector: {}
-  # If you do want to specify node labels, uncomment the following
-  # lines, adjust them as necessary, and remove the curly braces after 'nodeSelector:'.
-  #   foo: bar
-
-  # Configure node tolerations.
-  tolerations: []
-
-  ## Specify the serviceAccountName value.
-  ## In some situations it is needed to provides specific permissions to Hydra deployments
-  ## Like for example installing Hydra on a cluster with a PosSecurityPolicy and Istio.
-  ## Uncoment if it is needed to provide a ServiceAccount for the Hydra deployment.
-  # serviceAccountName:
-
-# Configure node affinity
-affinity: {}
-
-# Configures controller setup
-maester:
-  enabled: true
-
-# Values for the hydra-maester chart
-hydra-maester:
-  # Values for the hydra admin service arguments to hydra-maester
-  adminService:
-    # The service name value may need to be set if you use
-    # `fullnameOverride` for the parent chart
-    name:
-    # You only need to set this port if you change the value for
-    # `service.admin.port` in the parent chart
-    port:
-  

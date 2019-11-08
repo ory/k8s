@@ -2,18 +2,9 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ include "hydra.fullname" . }}
-  {{- if .Release.Namespace }}
   namespace: {{ .Release.Namespace }}
-  {{- end }}
   labels:
 {{ include "hydra.labels" . | indent 4 }}
-    {{- with .Values.deployment.labels }}
-      {{- toYaml . | nindent 4 }}
-    {{- end }}
-  annotations:
-    {{- with .Values.deployment.annotations }}
-      {{- toYaml . | nindent 4 }}
-    {{- end }}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
@@ -23,14 +14,12 @@ spec:
   template:
     metadata:
       labels:
-{{ include "hydra.labels" . | indent 8 }}
-        {{- with .Values.deployment.labels }}
-          {{- toYaml . | nindent 8 }}
-        {{- end }}
+        app.kubernetes.io/name: {{ include "hydra.name" . }}
+        app.kubernetes.io/instance: {{ .Release.Name }}
+      {{- with .Values.hydra.deployment.annotations }}
       annotations:
-        {{- with .Values.deployment.annotations }}
-          {{- toYaml . | nindent 8 }}
-        {{- end }}
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
     spec:
     {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
@@ -39,8 +28,8 @@ spec:
     {{- if .Values.hydra.autoMigrate }}
       initContainers:
         - name: {{ .Chart.Name }}-automigrate
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          image: "{{ .Values.hydra.image.repository }}:{{ .Values.hydra.image.tag }}"
+          imagePullPolicy: {{ .Values.hydra.image.pullPolicy }}
           command: ["hydra"]
           args: ["migrate", "sql", "-e", "--yes", "--config", "/etc/config/config.yaml"]
           volumeMounts:
@@ -58,13 +47,13 @@ spec:
         - name: {{ include "hydra.name" . }}-config-volume
           configMap:
             name: {{ include "hydra.fullname" . }}
-      {{- if .Values.deployment.serviceAccountName  }}
-      serviceAccountName: {{ .Values.deployment.serviceAccountName }}
+      {{- if .Values.hydra.deployment.serviceAccountName  }}
+      serviceAccountName: {{ .Values.hydra.deployment.serviceAccountName }}
       {{- end }}
       containers:
         - name: {{ .Chart.Name }}
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          image: "{{ .Values.hydra.image.repository }}:{{ .Values.hydra.image.tag }}"
+          imagePullPolicy: {{ .Values.hydra.image.pullPolicy }}
           command: ["hydra"]
           volumeMounts:
             - name: {{ include "hydra.name" . }}-config-volume
@@ -126,16 +115,16 @@ spec:
                   name: {{ include "hydra.fullname" . }}
                   key: secretsCookie
           resources:
-            {{- toYaml .Values.deployment.resources | nindent 12 }}
-      {{- with .Values.deployment.nodeSelector }}
+            {{- toYaml .Values.hydra.deployment.resources | nindent 12 }}
+      {{- with .Values.hydra.deployment.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-    {{- with .Values.affinity }}
+    {{- with .Values.hydra.affinity }}
     affinity:
       {{- toYaml . | nindent 8 }}
     {{- end }}
-    {{- with .Values.deployment.tolerations }}
+    {{- with .Values.hydra.deployment.tolerations }}
     tolerations:
       {{- toYaml . | nindent 8 }}
     {{- end }}

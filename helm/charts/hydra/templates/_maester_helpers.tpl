@@ -3,7 +3,7 @@
 Expand the name of the chart.
 */}}
 {{- define "hydra-maester.name" -}}
-{{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" -}}
+{{- default .Chart.Name .Values.nameOverride | trunc 55 | trimSuffix "-" -}}-maester
 {{- end -}}
 
 {{/*
@@ -13,13 +13,13 @@ If release name contains chart name it will be used as a full name.
 */}}
 {{- define "hydra-maester.fullname" -}}
 {{- if .Values.fullnameOverride -}}
-{{- .Values.fullnameOverride | trunc 63 | trimSuffix "-" -}}
+{{- .Values.fullnameOverride | trunc 55 | trimSuffix "-" -}}-maester
 {{- else -}}
 {{- $name := default .Chart.Name .Values.nameOverride -}}
 {{- if contains $name .Release.Name -}}
-{{- .Release.Name | trunc 63 | trimSuffix "-" -}}
+{{- .Release.Name | trunc 55 | trimSuffix "-" -}}-maester
 {{- else -}}
-{{- printf "%s-%s" .Release.Name $name | trunc 63 | trimSuffix "-" -}}
+{{- printf "%s-%s" .Release.Name $name | trunc 55 | trimSuffix "-" -}}-maester
 {{- end -}}
 {{- end -}}
 {{- end -}}
@@ -42,22 +42,4 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
-{{- end -}}
-
-
-{{/*
-Get Hydra admin service name
-*/}}
-{{- define "hydra-maester.adminService" -}}
-{{- if .Values.adminService.name -}}
-{{- printf "%s" .Values.adminService.name -}}
-{{- else -}}
-{{- $fullName := include "hydra-maester.fullname" . -}}
-{{- $nameParts := split "-" $fullName -}}
-{{- if eq $nameParts._0 $nameParts._1 -}}
-{{- printf "%s-admin" $nameParts._0 | trimSuffix "-" -}}
-{{- else -}}
-{{- printf "%s-%s-admin" $nameParts._0 $nameParts._1 | trimSuffix "-" -}}
-{{- end -}}
-{{- end -}}
 {{- end -}}
