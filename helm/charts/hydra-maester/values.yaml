@@ -10,7 +10,7 @@ enabledNamespaces: []
 
 image:
   repository: dangersalad/hydra-maester
-  tag: v0.0.5-alpha10
+  tag: v0.0.5-alpha11
   # Image pull policy
   pullPolicy: IfNotPresent
 
