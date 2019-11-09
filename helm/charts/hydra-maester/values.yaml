@@ -9,8 +9,8 @@ rbacJob:
 enabledNamespaces: []
 
 image:
-  repository: oryd/hydra-maester
-  tag: v0.0.3
+  repository: dangersalad/hydra-maester
+  tag: v0.0.5-alpha10
   # Image pull policy
   pullPolicy: IfNotPresent
 
