@@ -400,6 +400,31 @@ spec:
               maxItems: 4
               minItems: 1
               type: array
+            hydraEndpoint:
+              description: HydraEndpoint is the endpoint for the hydra instance on
+                which to set up the client. This value will override the value provided
+                to `--endpoint` (defaults to `"/clients"` in the application)
+              pattern: (^$|^/.*)
+              type: string
+            hydraForwardedProto:
+              description: HydraForwardedProto overrides the `--forwarded-proto` flag.
+                The value "off" will force this to be off even if `--forwarded-proto`
+                is specified
+              pattern: (^$|https?|off)
+              type: string
+            hydraPort:
+              description: HydraPort is the port for the hydra instance on which to
+                set up the client. This value will override the value provided to
+                `--hydra-port`
+              maximum: 65535
+              type: integer
+            hydraURL:
+              description: HydraURL is the URL for the hydra instance on which to
+                set up the client. This value will override the value provided to
+                `--hydra-url`
+              maxLength: 64
+              pattern: (^$|^https?://.*)
+              type: string
             redirectUris:
               description: RedirectURIs is an array of the redirect URIs allowed for
                 the application
@@ -436,6 +461,10 @@ spec:
           - grantTypes
           - scope
           - secretName
+          - hydraURL
+          - hydraPort
+          - hydraEndpoint
+          - hydraForwardedProto
           type: object
         status:
           properties:
@@ -457,7 +486,7 @@ spec:
           type: object
       type: object
   versions:
-  - name: v1alpha1
+  - name: v1alpha3
     served: true
     storage: true
 status:
