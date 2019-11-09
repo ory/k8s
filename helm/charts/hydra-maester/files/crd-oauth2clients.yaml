@@ -429,11 +429,6 @@ spec:
                   maxLength: 64
                   pattern: (^$|^https?://.*)
                   type: string
-              required:
-              - url
-              - port
-              - endpoint
-              - forwardedProto
               type: object
             redirectUris:
               description: RedirectURIs is an array of the redirect URIs allowed for
