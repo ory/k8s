@@ -17,6 +17,8 @@ image:
 adminService:
   name:
   port:
+
+forwardedProto:
     
 deployment:
   resources: {}
