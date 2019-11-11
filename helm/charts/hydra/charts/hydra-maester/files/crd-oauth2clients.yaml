@@ -400,6 +400,13 @@ spec:
               maxItems: 4
               minItems: 1
               type: array
+            redirectUris:
+              description: RedirectURIs is an array of the redirect URIs allowed for
+                the application
+              items:
+                pattern: \w+:/?/?[^\s]+
+                type: string
+              type: array
             responseTypes:
               description: ResponseTypes is an array of the OAuth 2.0 response type
                 strings that the client can use at the authorization endpoint.
@@ -418,24 +425,35 @@ spec:
                 that the client can use when requesting access tokens.
               pattern: ([a-zA-Z0-9\.\*]+\s?)+
               type: string
+            secretName:
+              description: SecretName points to the K8s secret that contains this
+                client's ID and password
+              maxLength: 253
+              minLength: 1
+              pattern: '[a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*'
+              type: string
           required:
           - grantTypes
           - scope
+          - secretName
           type: object
         status:
           properties:
-            clientID:
-              description: ClientID is the id for this client.
-              type: string
             observedGeneration:
               description: ObservedGeneration represents the most recent generation
                 observed by the daemon set controller.
               format: int64
               type: integer
-            secret:
-              description: Secret points to the K8s secret that contains this client's
-                id and password
-              type: string
+            reconciliationError:
+              properties:
+                description:
+                  description: Description is the description of the reconciliation
+                    error
+                  type: string
+                statusCode:
+                  description: Code is the status code of the reconciliation error
+                  type: string
+              type: object
           type: object
       type: object
   versions:
