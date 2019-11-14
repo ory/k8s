@@ -85,6 +85,7 @@ ingress:
 
 # Configure ORY Oathkeeper itself
 oathkeeper:
+  configMapName:
   # The ORY Oathkeeper configuration. For a full list of available settings, check:
   #   https://github.com/ory/oathkeeper/blob/master/docs/config.yaml
   config:

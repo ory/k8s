@@ -1,4 +1,4 @@
 dependencies:
-  - name: oathkeeper-maester
+  - name: ory.sh/oathkeeper-maester
     version: 0.0.1
     condition: maester.enabled

@@ -43,3 +43,13 @@ app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{- end -}}
+
+{{/*
+Get name for ConfigMap resource
+*/}}
+{{- define "oathkeeper.getCM" -}}
+{{- if .Values.oathkeeper.configMapName -}}
+{{- printf "%s" .Values.oathkeeper.configMapName -}}
+{{- else -}}
+{{- printf "%s" (include "oathkeeper.fullname" .) -}}
+{{- end -}}

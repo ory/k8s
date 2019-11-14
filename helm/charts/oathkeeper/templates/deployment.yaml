@@ -47,7 +47,7 @@ spec:
             {{- end }}
         - name: {{ include "oathkeeper.name" . }}-rules-volume
           configMap:
-            name: {{ include "oathkeeper.fullname" . }}-rules
+            name: {{ include "oathkeeper.getCM" . }}
         - name: {{ include "oathkeeper.name" . }}-secrets-volume
           secret:
             secretName: {{ include "oathkeeper.fullname" . }}

@@ -3,11 +3,13 @@ replicaCount: 1
 # rulesConfigmapNamespace: some-namespace
 # rulesFileName: access-rules.json
 
+defaultConfigMapName:
+
 image:
   # ORY Oathkeeper Rule Controller image
-  repository: oryd/oathkeeper-maester
+  repository: dangersalad/oathkeeper-maester
   # ORY Oathkeeper Rule Controller version
-  tag: "v0.0.2-beta.1"
+  tag: "v0.0.3-alpha3"
   # Image pull policy
   pullPolicy: IfNotPresent
 
