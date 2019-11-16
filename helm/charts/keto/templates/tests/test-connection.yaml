@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "{{ include "keto.fullname" . }}-test-connection"
+  {{- if .Release.Namespace }}
+  namespace: {{ .Release.Namespace }}
+  {{- end }}
+  labels:
+{{ include "keto.labels" . | indent 4 }}
+  annotations:
+    "helm.sh/hook": test-success
+spec:
+  containers:
+    - name: healthcheck-ready
+      image: busybox
+      command: ['wget']
+      args:  ['{{ include "keto.fullname" . }}:{{ .Values.service.port }}/health/ready']
+  restartPolicy: Never

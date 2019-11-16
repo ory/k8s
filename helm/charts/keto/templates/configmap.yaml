@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "keto.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+{{ include "keto.labels" . | indent 4 }}
+data:
+  "config.yaml": |
+{{ include "keto.configmap" . | nindent 4 }}
