@@ -1,0 +1,44 @@
+replicaCount: 1
+
+ketoService:
+  name:
+  port:
+
+image:
+  # ORY Keto Controller image
+  repository: dangersalad/keto-maester
+  # ORY Keto Controller version
+  tag: "v0.0.1-alpha1"
+  # Image pull policy
+  pullPolicy: IfNotPresent
+
+deployment:
+  resources: {}
+    #  We usually recommend not to specify default resources and to leave this as a conscious
+    #  choice for the user. This also increases chances charts run on environments with little
+    #  resources, such as Minikube. If you do want to specify resources, uncomment the following
+    #  lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+    # limits:
+    #   cpu: 100m
+    #   memory: 30Mi
+    # requests:
+    #   cpu: 100m
+    #   memory: 20Mi
+
+  # Node labels for pod assignment.
+  nodeSelector: {}
+  # If you do want to specify node labels, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'annotations:'.
+  #   foo: bar
+
+  # Configure node tolerations.
+  tolerations: []
+
+  # Configure annotations.
+  annotations: {}
+
+  # Configure environment variables.
+  envs: {}
+
+# Configure node affinity
+affinity: {}
