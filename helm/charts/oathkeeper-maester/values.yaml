@@ -9,7 +9,7 @@ image:
   # ORY Oathkeeper Rule Controller image
   repository: dangersalad/oathkeeper-maester
   # ORY Oathkeeper Rule Controller version
-  tag: "v0.0.3-alpha3"
+  tag: "v0.0.3-alpha4"
   # Image pull policy
   pullPolicy: IfNotPresent
 
