@@ -53,11 +53,6 @@ Get Hydra admin service name
 {{- printf "%s" .Values.adminService.name -}}
 {{- else -}}
 {{- $fullName := include "hydra-maester.fullname" . -}}
-{{- $nameParts := split "-" $fullName -}}
-{{- if eq $nameParts._0 $nameParts._1 -}}
-{{- printf "%s-admin" $nameParts._0 | trimSuffix "-" -}}
-{{- else -}}
-{{- printf "%s-%s-admin" $nameParts._0 $nameParts._1 | trimSuffix "-" -}}
-{{- end -}}
+{{- printf "%s" $fullName -}}
 {{- end -}}
 {{- end -}}
