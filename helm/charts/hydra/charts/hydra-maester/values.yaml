@@ -10,10 +10,16 @@ enabledNamespaces: []
 
 image:
   repository: oryd/hydra-maester
-  tag: v0.0.3
+  tag: v0.0.5
   # Image pull policy
   pullPolicy: IfNotPresent
 
+adminService:
+  name:
+  port:
+
+forwardedProto:
+    
 deployment:
   resources: {}
     #  We usually recommend not to specify default resources and to leave this as a conscious
