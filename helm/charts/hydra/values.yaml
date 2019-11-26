@@ -147,3 +147,12 @@ affinity: {}
 # Configures controller setup
 maester:
   enabled: true
+  # Values for the hydra admin service arguments to hydra-maester
+  adminService:
+    # The service name value may need to be set if you use
+    # `fullnameOverride` for the parent chart
+    name:
+    # You only need to set this port if you change the value for
+    # `service.admin.port` in the parent chart
+    port:
+  

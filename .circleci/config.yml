@@ -9,6 +9,7 @@ jobs:
       - run: curl -L https://git.io/get_helm.sh | bash
       - run: helm lint ./helm/charts/oathkeeper/
       - run: helm lint ./helm/charts/hydra/
+      - run: helm lint ./helm/charts/hydra-maester/
       - run: helm lint ./helm/charts/hive/
       - run: helm lint ./helm/charts/example-idp/
       - run: helm lint ./helm/charts/hive-selfservice-ui-node/
@@ -48,6 +49,10 @@ jobs:
           command: |
             export KUBECONFIG="$(kind get kubeconfig-path)"
             .circleci/helm-test.sh hydra
+      - run:
+          command: |
+            export KUBECONFIG="$(kind get kubeconfig-path)"
+            .circleci/helm-test.sh hydra-maester
       # Enable hive tests at a later stage
       # 
       # - run:
@@ -65,6 +70,7 @@ jobs:
       - run: helm init --client-only
       - run: helm package -d docs/helm/charts/ ./helm/charts/oathkeeper/ --version `echo $CIRCLE_TAG | sed s/v//g`
       - run: helm package -d docs/helm/charts/ ./helm/charts/hydra/ --version `echo $CIRCLE_TAG | sed s/v//g`
+      - run: helm package -d docs/helm/charts/ ./helm/charts/hydra-maester/ --version `echo $CIRCLE_TAG | sed s/v//g`
       - run: helm package -d docs/helm/charts/ ./helm/charts/example-idp/ --version `echo $CIRCLE_TAG | sed s/v//g`
       - run: helm package -d docs/helm/charts/ ./helm/charts/hive/ --version `echo $CIRCLE_TAG | sed s/v//g`
       - run: helm package -d docs/helm/charts/ ./helm/charts/hive-selfservice-ui-node/ --version `echo $CIRCLE_TAG | sed s/v//g`
