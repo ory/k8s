@@ -1,5 +1,5 @@
 dependencies:
-  - name: ory.sh/hydra-maester
+  - name: hydra-maester
     version: 0.0.5-beta10
     condition: maester.enabled
     alias: maester
