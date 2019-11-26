@@ -52,7 +52,7 @@ jobs:
       - run:
           command: |
             export KUBECONFIG="$(kind get kubeconfig-path)"
-            .circleci/helm-test.sh hydra-maester
+            .circleci/helm-test.sh hydra/charts/hydra-maester
       # Enable hive tests at a later stage
       # 
       # - run:
