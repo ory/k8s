@@ -49,10 +49,11 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 Get Hydra admin service name
 */}}
 {{- define "hydra-maester.adminService" -}}
-{{- if .Values.adminService.name -}}
-{{- printf "%s" .Values.adminService.name -}}
+{{- if .Values.hydraFullnameOverride -}}
+{{- printf "%s-admin"  .Values.hydraFullnameOverride -}}
+{{- else if contains "hydra" .Release.Name -}}
+{{- printf "%s-admin" .Release.Name -}}
 {{- else -}}
-{{- $fullName := include "hydra-maester.fullname" . -}}
-{{- printf "%s" $fullName -}}
+{{- printf "%s-%s-admin" .Release.Name "hydra" -}}
 {{- end -}}
 {{- end -}}
