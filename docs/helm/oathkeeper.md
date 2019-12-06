@@ -91,3 +91,15 @@ $ helm install \
     --set 'maester.enabled=false' \
     ory/oathkeeper
 ```
+
+#### Operation modes
+The Maester controller is now available in two modes: 
+- global controller
+- dedicated sidecar
+
+**Controller mode**
+In this mode, the controller is a dedicated deployment, and scales separately of the oathkeeper application. All communication with oathkeeper is based on a configMap object, which stores the translated oathkeeper configuration. 
+This mode requires elevated privileges for the maester controller in order to operate on the configmaps. 
+
+**Sidecar mode**
+In this mode the controller is an extra container running in the oathkeeper pod. All communication is done on local files, and the controller is scaled together with oathkeeper. 
