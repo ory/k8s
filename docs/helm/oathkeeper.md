@@ -98,8 +98,8 @@ The Maester controller is now available in two modes:
 - dedicated sidecar
 
 **Controller mode**
-In this mode, the controller is a dedicated deployment, and scales separately of the oathkeeper application. All communication with oathkeeper is based on a configMap object, which stores the translated oathkeeper configuration. 
-This mode requires elevated privileges for the maester controller in order to operate on the configmaps. 
+In this mode, the controller is a dedicated deployment and scales independently from the Oathkeeper application. All communication with Oathkeeper is based on a configMap object, which stores the translated Oathkeeper configuration. 
+This mode requires giving elevated privileges to the Hydra Maester controller to allow operations on the configMaps. 
 
 **Sidecar mode**
-In this mode the controller is an extra container running in the oathkeeper pod. All communication is done on local files, and the controller is scaled together with oathkeeper. 
+In this mode, the Hydra Maester controller runs as an additional container in the Oathkeeper application Pod. All communication is done on local files, and the controller is scaled together with the Oathkeeper application. 
