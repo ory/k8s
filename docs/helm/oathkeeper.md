@@ -93,11 +93,11 @@ $ helm install \
 ```
 
 #### Operation modes
-The Maester controller is now available in two modes: 
+The Oathkeeper Maester works in either of these two modes: 
 
 **Controller mode**
-In this mode, the controller is a dedicated deployment and scales independently from the Oathkeeper application. All communication with Oathkeeper is based on a configMap object, which stores the Oathkeeper configuration that has been constructed from Oathkeeper-maesters Custom Resource. 
-This mode requires giving elevated privileges to the Oathkeeper-maester controller to allow operations on the configMaps. 
+In this mode, the controller is a dedicated deployment and scales independently from the Oathkeeper application. All communication with Oathkeeper is based on a configMap object, which stores the Oathkeeper configuration created based on the Rule custom resource. 
+This mode requires giving elevated privileges to the Oathkeeper Maestercontroller to allow operations on the configMaps. 
 
 **Sidecar mode**
-In this mode, the Hydra Maester controller runs as an additional container in the Oathkeeper application Pod. All communication is done on the local filesystem (which can be a shared tempfs, mounted directory or persistent volume), and the controller is scaled together with the Oathkeeper application. 
+In this mode, the Hydra Maester controller runs as an additional container in the Oathkeeper application Pod. All communication is done on the local filesystem, which can be a shared `tempfs`, mounted directory or a persistent volume, and the controller is scaled together with the Oathkeeper application. 
