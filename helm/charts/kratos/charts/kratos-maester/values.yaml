@@ -4,11 +4,16 @@ kratosService:
   name:
   port:
 
+rbacJob:
+  image:
+    repository: eu.gcr.io/kyma-project/test-infra/alpine-kubectl
+    tag: "v20190325-ff66a3a"
+    
 image:
   # ORY Kratos Controller image
-  repository: dangersalad/kratos-maester
+  repository: oryd/kratos-maester
   # ORY Kratos Controller version
-  tag: "v0.0.1-alpha1"
+  tag: "v0.0.1"
   # Image pull policy
   pullPolicy: IfNotPresent
 
