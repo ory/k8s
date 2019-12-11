@@ -1,0 +1,23 @@
+{{- if .Values.service.enabled -}}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "kratos.fullname" . }}-api
+  namespace: {{ .Release.Namespace }}
+  labels:
+{{ include "kratos.labels" . | indent 4 }}
+  {{- with .Values.service.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: http-proxy
+      protocol: TCP
+      name: http
+  selector:
+    app.kubernetes.io/name: {{ include "kratos.name" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+{{- end }}

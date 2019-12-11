@@ -1,0 +1,103 @@
+# Number of ORY Kratos members
+replicaCount: 1
+
+image:
+  # ORY Kratos image
+  repository: oryd/kratos
+  # ORY Kratos version
+  tag: v0.3.6
+  # Image pull policy
+  pullPolicy: IfNotPresent
+
+# Image pull secrets
+imagePullSecrets: []
+# Chart name override
+nameOverride: ""
+# Full chart name override
+fullnameOverride: ""
+
+# Configures the Kubernetes service
+service:
+  # Configures the Kubernetes service for the proxy port.
+  # En-/disable the service
+  enabled: true
+  # The service type
+  type: ClusterIP
+  # The service port
+  port: 4446
+  # If you do want to specify annotations, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'annotations:'.
+  annotations: {}
+  # kubernetes.io/ingress.class: nginx
+  # kubernetes.io/tls-acme: "true"
+
+# Configure ingress
+ingress:
+  # En-/Disable the api ingress.
+  enabled: false
+
+  annotations: {}
+  #      If you do want to specify annotations, uncomment the following
+  #      lines, adjust them as necessary, and remove the curly braces after 'annotations:'.
+  #      kubernetes.io/ingress.class: nginx
+  #      kubernetes.io/tls-acme: "true"
+  hosts:
+    - host: kratos.localhost
+      paths: ["/"]
+#  tls: []
+#    hosts:
+#      - api.kratos.local
+#    - secretName: kratos-api-example-tls
+
+
+# Configure ORY Kratos itself
+kratos:
+  # The ORY Kratos configuration. For a full list of available settings, check:
+  #   https://github.com/ory/kratos/blob/master/docs/config.yaml
+  config:
+    serve:
+      port: 4446
+      # tls:
+
+  autoMigrate: false
+
+deployment:
+  resources: {}
+  #  We usually recommend not to specify default resources and to leave this as a conscious
+  #  choice for the user. This also increases chances charts run on environments with little
+  #  resources, such as Minikube. If you do want to specify resources, uncomment the following
+  #  lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  #  limits:
+  #    cpu: 100m
+  #    memory: 128Mi
+  #  requests:
+  #    cpu: 100m
+  #  memory: 128Mi
+
+  labels: {}
+  #      If you do want to specify additional labels, uncomment the following
+  #      lines, adjust them as necessary, and remove the curly braces after 'labels:'.
+  #      e.g.  type: app
+
+  annotations: {}
+  #      If you do want to specify annotations, uncomment the following
+  #      lines, adjust them as necessary, and remove the curly braces after 'annotations:'.
+  #      e.g.  sidecar.istio.io/rewriteAppHTTPProbers: "true"
+
+  # Node labels for pod assignment.
+  nodeSelector: {}
+  # If you do want to specify node labels, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'nodeSelector:'.
+  #   foo: bar
+
+  # Configure node tolerations.
+  tolerations: []
+
+  ## Specify the serviceAccountName value.
+  ## In some situations it is needed to provides specific permissions to Kratos deployments
+  ## Like for example installing Kratos on a cluster with a PosSecurityPolicy and Istio.
+  ## Uncoment if it is needed to provide a ServiceAccount for the Kratos deployment.
+  # serviceAccountName:
+
+# Configure node affinity
+affinity: {}

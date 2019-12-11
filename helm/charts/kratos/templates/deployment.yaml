@@ -1,0 +1,115 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "kratos.fullname" . }}
+  {{- if .Release.Namespace }}
+  namespace: {{ .Release.Namespace }}
+  {{- end }}
+  labels:
+{{ include "kratos.labels" . | indent 4 }}
+    {{- with .Values.deployment.labels }}
+      {{- toYaml . | nindent 4 }}
+    {{- end }}
+  annotations:
+    {{- with .Values.deployment.annotations }}
+      {{- toYaml . | nindent 4 }}
+    {{- end }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ include "kratos.name" . }}
+      app.kubernetes.io/instance: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+{{ include "kratos.labels" . | indent 8 }}
+        {{- with .Values.deployment.labels }}
+          {{- toYaml . | nindent 8 }}
+        {{- end }}
+      annotations:
+        {{- with .Values.deployment.annotations }}
+          {{- toYaml . | nindent 8 }}
+        {{- end }}
+    spec:
+    {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+    {{- if .Values.kratos.autoMigrate }}
+      initContainers:
+        - name: {{ .Chart.Name }}-automigrate
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          command: ["kratos"]
+          args: ["migrate", "sql", "-e", "--config", "/etc/config/config.yaml"]
+          volumeMounts:
+            - name: {{ include "kratos.name" . }}-config-volume
+              mountPath: /etc/config
+              readOnly: true
+          env:
+            - name: DSN
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "kratos.fullname" . }}
+                  key: dsn
+    {{- end}}
+      volumes:
+        - name: {{ include "kratos.name" . }}-config-volume
+          configMap:
+            name: {{ include "kratos.fullname" . }}
+      {{- if .Values.deployment.serviceAccountName  }}
+      serviceAccountName: {{ .Values.deployment.serviceAccountName }}
+      {{- end }}
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          command: ["kratos"]
+          volumeMounts:
+            - name: {{ include "kratos.name" . }}-config-volume
+              mountPath: /etc/config
+              readOnly: true
+          args: [
+            "serve",
+            "--config",
+            "/etc/config/config.yaml"
+          ]
+          ports:
+            - name: http-proxy
+              containerPort: 4444
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /health/alive
+              port: http-proxy
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            failureThreshold: 5
+          readinessProbe:
+            httpGet:
+              path: /health/ready
+              port: http-proxy
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            failureThreshold: 5
+          env:
+            - name: DSN
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "kratos.fullname" . }}
+                  key: dsn
+          resources:
+            {{- toYaml .Values.deployment.resources | nindent 12 }}
+      {{- with .Values.deployment.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+    {{- with .Values.affinity }}
+    affinity:
+      {{- toYaml . | nindent 8 }}
+    {{- end }}
+    {{- with .Values.deployment.tolerations }}
+    tolerations:
+      {{- toYaml . | nindent 8 }}
+    {{- end }}
