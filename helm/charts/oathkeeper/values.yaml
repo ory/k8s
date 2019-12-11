@@ -21,8 +21,8 @@ image:
 # TODO: change image after merge
 sidecar:
   image:
-    repository: demonsthere/oathkeeper-maester
-    tag: 2
+    repository: oryd/oathkeeper-maester
+    tag: v0.0.4
   envs: {}
 
 # Image pull secrets
