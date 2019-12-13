@@ -22,7 +22,7 @@ image:
 sidecar:
   image:
     repository: oryd/oathkeeper-maester
-    tag: v0.0.4
+    tag: v0.0.5
   envs: {}
 
 # Image pull secrets
