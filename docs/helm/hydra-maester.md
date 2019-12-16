@@ -62,7 +62,7 @@ To create a client with your own credentials, follow these steps:
 
 If you don't need a specific client ID and password, use Hydra-generated credentials. Create an instance of the`oauth2clients.hydra.ory.sh/v1alpha1` CR with the **SecretName** property set to a string of your choice. The property is used by Hydra Maester to create a Kubernetes Secret that will store the credentials of the registered client.
 
-> **NOTE:** Secrets created by Hydra Maester have `OwnerReference` set. It means that they will be removed when `oauth2client` CR is removed. Secrets created by a user will not have `OwnerReference` set.
+> **NOTE:** Secrets created by Hydra Maester have `OwnerReference` set. It means that they will be removed when an appropriate `oauth2client` CR is removed. Secrets created by a user will not have `OwnerReference` set.
 
 ### Update the OAuth2 client secret
  
