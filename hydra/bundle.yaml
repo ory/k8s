@@ -1,0 +1,110 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app.kubernetes.io/name: hydra
+  name: hydra-admin
+  namespace: auth
+spec:
+  ports:
+  - name: http
+    port: 4445
+    protocol: TCP
+    targetPort: http-admin
+  selector:
+    app.kubernetes.io/name: hydra
+  type: ClusterIP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app.kubernetes.io/name: hydra
+  name: hydra-public
+  namespace: auth
+spec:
+  ports:
+    - name: http
+      port: 4444
+      protocol: TCP
+      targetPort: http-public
+  selector:
+    app.kubernetes.io/instance: hydra
+    app.kubernetes.io/name: hydra
+  type: ClusterIP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app.kubernetes.io/name: hydra
+  name: hydra
+  namespace: auth
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: hydra
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: hydra
+    spec:
+      containers:
+        - args:
+            - serve
+            - all
+            - --config
+            - /etc/config/config.yaml
+          command:
+            - hydra
+          env:
+            - name: URLS_SELF_ISSUER
+              value: http://127.0.0.1:4444/
+            - name: DSN
+              valueFrom:
+                secretKeyRef:
+                  key: dsn
+                  name: hydra
+            - name: SECRETS_SYSTEM
+              valueFrom:
+                secretKeyRef:
+                  key: secretsSystem
+                  name: hydra
+            - name: SECRETS_COOKIE
+              valueFrom:
+                secretKeyRef:
+                  key: secretsCookie
+                  name: hydra
+          image: oryd/hydra:v1.0.0
+          imagePullPolicy: IfNotPresent
+          livenessProbe:
+            failureThreshold: 5
+            httpGet:
+              path: /health/alive
+              port: http-admin
+            initialDelaySeconds: 30
+            periodSeconds: 10
+          name: hydra
+          ports:
+            - containerPort: 4444
+              name: http-public
+              protocol: TCP
+            - containerPort: 4445
+              name: http-admin
+              protocol: TCP
+          readinessProbe:
+            failureThreshold: 5
+            httpGet:
+              path: /health/ready
+              port: http-admin
+            initialDelaySeconds: 30
+            periodSeconds: 10
+          volumeMounts:
+            - mountPath: /etc/config
+              name: hydra-config-volume
+              readOnly: true
+      volumes:
+        - configMap:
+            name: hydra
+          name: hydra-config-volume

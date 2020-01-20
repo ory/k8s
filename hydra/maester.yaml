@@ -1,0 +1,110 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: hydra-maester-account
+  namespace: auth
+---
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: ClusterRole
+metadata:
+  name: hydra-maester-role
+  namespace: auth
+rules:
+  - apiGroups:
+      - hydra.ory.sh
+    resources:
+      - oauth2clients
+      - oauth2clients/status
+    verbs:
+      - get
+      - list
+      - watch
+      - create
+      - update
+      - patch
+      - delete
+  - apiGroups:
+      - ""
+    resources:
+      - secrets
+    verbs:
+      - list
+      - watch
+      - create
+---
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: ClusterRoleBinding
+metadata:
+  name: hydra-maester-role-binding
+  namespace: auth
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: hydra-maester-role
+subjects:
+  - kind: ServiceAccount
+    name: hydra-maester-account
+    namespace: auth
+---
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: Role
+metadata:
+  name: hydra-maester-role-default
+  namespace: auth
+rules:
+  - apiGroups:
+      - ""
+    resources:
+      - secrets
+    verbs:
+      - get
+      - list
+      - watch
+      - create
+---
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: RoleBinding
+metadata:
+  name: hydra-maester-role-binding-default
+  namespace: auth
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: hydra-maester-role-default
+subjects:
+  - kind: ServiceAccount
+    name: hydra-maester-account
+    namespace: auth
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app.kubernetes.io/name: hydra-maester
+  name: hydra-hydra-maester
+spec:
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: hydra-maester
+      control-plane: controller-manager
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: hydra-maester
+        control-plane: controller-manager
+    spec:
+      containers:
+      - args:
+        - --metrics-addr=127.0.0.1:8080
+        - --hydra-url=http://hydra-admin
+        - --hydra-port=4445
+        command:
+        - /manager
+        image: oryd/hydra-maester:v0.0.5
+        imagePullPolicy: IfNotPresent
+        name: hydra-maester
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+      serviceAccountName: hydra-maester-account

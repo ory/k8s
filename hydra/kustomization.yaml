@@ -1,0 +1,29 @@
+commonLabels:
+  app.kubernetes.io/instance: hydra
+
+configMapGenerator:
+- files:
+  - oauth2clients.yaml
+  name: hydra-crd-oauth2clients
+- files:
+  - config.yaml
+  name: hydra
+
+images:
+- name: oryd/hydra-maester
+  newTag: v0.0.9
+- name: oryd/hydra
+  newTag: v1.1.1
+
+bases:
+  - bundle.yaml
+  - crd.yaml
+  - maester.yaml
+
+secretGenerator:
+- literals:
+  - dsn=memory
+  - secretsCookie=qhfDlYXul0BFW2jofV6gdv1pPairaRjM
+  - secretsSystem=qIzMhCHr6DJIzbOuhz9omm31bmevpK1q
+  name: hydra
+  type: Opaque

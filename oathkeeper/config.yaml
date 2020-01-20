@@ -1,0 +1,8 @@
+access_rules:
+  repositories:
+  - file:///etc/rules/access-rules.json
+serve:
+  api:
+    port: 4456
+  proxy:
+    port: 4455

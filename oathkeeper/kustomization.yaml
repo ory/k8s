@@ -1,0 +1,28 @@
+commonLabels:
+  app.kubernetes.io/instance: oathkeeper
+
+configMapGenerator:
+- name: oathkeeper-rules
+- files:
+  - config.yaml
+  name: oathkeeper-config
+- files:
+  - rules.yaml
+  name: oathkeeper-crd-rules
+
+images:
+- name: oryd/oathkeeper-maester
+  newTag: v0.0.7
+- name: oryd/oathkeeper
+  newTag: v0.34.0-beta.1
+
+bases:
+  - bundle.yaml
+  - crd.yaml
+  - maester.yaml
+
+secretGenerator:
+- literals:
+    - dsn=memory
+  name: oathkeeper
+  type: Opaque
