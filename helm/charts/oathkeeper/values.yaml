@@ -1,3 +1,11 @@
+# Mode for oathkeeper controller
+# Two possible modes are: controller or sidecar
+global:
+  ory:
+    oathkeeper:
+      maester:
+        mode: controller
+
 # Number of ORY Oathkeeper members
 replicaCount: 1
 
@@ -8,6 +16,14 @@ image:
   tag: v0.32.0-beta.1
   # Image pull policy
   pullPolicy: IfNotPresent
+
+# Options for the sidecar
+# TODO: change image after merge
+sidecar:
+  image:
+    repository: oryd/oathkeeper-maester
+    tag: v0.0.5
+  envs: {}
 
 # Image pull secrets
 imagePullSecrets: []

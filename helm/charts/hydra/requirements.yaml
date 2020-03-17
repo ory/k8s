@@ -1,4 +1,5 @@
 dependencies:
   - name: hydra-maester
-    version: 0.0.1
+    version: 0.0.6
     condition: maester.enabled
+    alias: maester
