@@ -79,7 +79,6 @@ ingress:
 #        - api.hydra.local
 #      - secretName: hydra-api-example-tls
 
-
 # Configure ORY Hydra itself
 hydra:
   # The ORY Hydra configuration. For a full list of available settings, check:
@@ -96,6 +95,8 @@ hydra:
           - 172.16.0.0/12
           - 192.168.0.0/16
     secrets: {}
+    # Use a pre-existing secret (see secret.yaml for required fields)
+    # existingSecret: my-preexisting-secret
     urls:
       self: {}
 

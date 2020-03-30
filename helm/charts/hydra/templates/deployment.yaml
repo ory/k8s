@@ -113,17 +113,17 @@ spec:
             - name: DSN
               valueFrom:
                 secretKeyRef:
-                  name: {{ include "hydra.fullname" . }}
+                  name: {{ include "hydra.secretname" . }}
                   key: dsn
             - name: SECRETS_SYSTEM
               valueFrom:
                 secretKeyRef:
-                  name: {{ include "hydra.fullname" . }}
+                  name: {{ include "hydra.secretname" . }}
                   key: secretsSystem
             - name: SECRETS_COOKIE
               valueFrom:
                 secretKeyRef:
-                  name: {{ include "hydra.fullname" . }}
+                  name: {{ include "hydra.secretname" . }}
                   key: secretsCookie
           resources:
             {{- toYaml .Values.deployment.resources | nindent 12 }}

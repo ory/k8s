@@ -13,7 +13,7 @@ To install ORY Hydra, the following values must be set
 * `hydra.config.urls.consent`
 * `hydra.config.secrets.system`
 
-> **NOTE:** If no `hydra.config.secrets.system` secrets are not supplied, a secret is generated automatically. The generated secret is cryptographically secure, and 32 signs long.
+> **NOTE:** If no `hydra.config.secrets.system` secrets is supplied and `hydra.existingSecret` is empty, a secret is generated automatically. The generated secret is cryptographically secure, and 32 signs long.
 
 If you wish to install ORY Hydra with an in-memory database, a cryptographically strong secret, a Login and Consent
 provider located at `https://my-idp/` run:
@@ -34,6 +34,21 @@ You can optionally also set the cookie secrets:
 $ helm install \
     ...
     'hydra.config.secrets.cookie=$(LC_ALL=C tr -dc 'A-Za-z0-9' < /dev/urandom | base64 | head -c 32)' \
+    ...
+    ory/hydra
+```
+
+Alternatively, you can use an existing kubernetes secret:
+
+```bash
+
+$ kubectl create secret generic my-secure-secret --from-literal=dsn=postgres://foo:bar@baz:1234/db \
+    --from-literal=secretsCookie=$(LC_ALL=C tr -dc 'A-Za-z0-9' < /dev/urandom | base64 | head -c 32) \
+    --from-literal=secretsSystem=$(LC_ALL=C tr -dc 'A-Za-z0-9' < /dev/urandom | base64 | head -c 32)
+
+$ helm install \
+    ...
+    'hydra.existingSecret=my-secure-secret' \
     ...
     ory/hydra
 ```
