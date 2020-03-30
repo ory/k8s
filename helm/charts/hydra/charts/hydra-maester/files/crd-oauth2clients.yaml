@@ -436,6 +436,11 @@ spec:
                 pattern: \w+:/?/?[^\s]+
                 type: string
               type: array
+            audience:
+              description: Audience is a whitelist defining the audiences this client is allowed to request tokens for
+              items:
+                type: string
+              type: array
             responseTypes:
               description: ResponseTypes is an array of the OAuth 2.0 response type
                 strings that the client can use at the authorization endpoint.
@@ -448,6 +453,17 @@ spec:
               maxItems: 3
               minItems: 1
               type: array
+            tokenEndpointAuthMethod:
+              description: Indication which authentication method shoud be used for the token endpoint.
+              type: string
+              enum:
+              - client_secret_basic
+              - client_secret_post
+              - private_key_jwt
+              - none
+            metadata:
+              description: Metadata is arbitrary data. This JSON will be stored into client and can be used to hold custom properties
+              type: object
             scope:
               description: Scope is a string containing a space-separated list of
                 scope values (as described in Section 3.3 of OAuth 2.0 [RFC6749])
