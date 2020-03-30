@@ -67,6 +67,17 @@ memory
 {{- end -}}
 
 {{/*
+Generate the name of the secret resource containing secrets
+*/}}
+{{- define "hydra.secretname" -}}
+{{- if .Values.hydra.existingSecret -}}
+{{- .Values.hydra.existingSecret -}}
+{{- else -}}
+{{ include "hydra.fullname" . }}
+{{- end -}}
+{{- end -}}
+
+{{/*
 Generate the secrets.system value
 */}}
 {{- define "hydra.secrets.system" -}}
