@@ -43,3 +43,16 @@ app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{- end -}}
+
+{{/*
+Check overrides consistency
+*/}}
+{{- define "oathkeeper.check.override.consistency" -}}
+{{- if and .Values.maester.enabled .Values.fullnameOverride -}}
+{{- if not .Values.maester.oathkeeperFullnameOverride -}}
+{{ fail "oathkeeper fullname has been overridden, but the new value has not been provided to maester. Set maester.oathkeeperFullnameOverride" }}
+{{- else if not (eq .Values.maester.oathkeeperFullnameOverride .Values.fullnameOverride) -}}
+{{ fail (tpl "oathkeeper fullname has been overridden, but a different value was provided to maester. {{ .Values.maester.oathkeeperFullnameOverride }} different of {{ .Values.fullnameOverride }}" . ) }}
+{{- end -}}
+{{- end -}}
+{{- end -}}
