@@ -408,6 +408,13 @@ spec:
               required:
               - handler
               type: object
+            configMapName:
+              description: ConfigMapName points to the K8s ConfigMap that contains
+                these rules
+              maxLength: 253
+              minLength: 1
+              pattern: '[a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*'
+              type: string
             match:
               properties:
                 methods:
@@ -424,18 +431,20 @@ spec:
               - url
               - methods
               type: object
-            mutator:
-              properties:
-                config:
-                  description: Config configures the handler. Configuration keys vary
-                    per handler.
-                  type: object
-                handler:
-                  description: Name is the name of a handler
-                  type: string
-              required:
-              - handler
-              type: object
+            mutators:
+              items:
+                properties:
+                  config:
+                    description: Config configures the handler. Configuration keys
+                      vary per handler.
+                    type: object
+                  handler:
+                    description: Name is the name of a handler
+                    type: string
+                required:
+                - handler
+                type: object
+              type: array
             upstream:
               properties:
                 preserveHost:
