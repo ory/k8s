@@ -8,6 +8,8 @@ global:
 
 replicaCount: 1
 
+# oathkeeperFullnameOverride: oathkeeper
+
 # rulesConfigmapNamespace: some-namespace
 # rulesFileName: access-rules.json
 

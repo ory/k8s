@@ -2,3 +2,5 @@ dependencies:
   - name: oathkeeper-maester
     version: 0.0.1
     condition: maester.enabled
+    alias: maester
+    repository: file://../oathkeeper-maester

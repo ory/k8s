@@ -253,3 +253,11 @@ $ helm install \
     --set 'maester.enabled=false' \
     ory/hydra
 ```
+
+#### Using fullnameOverride
+
+If you use need to override the name of the hydra resources such as the deployment or services, the traditional `fullnameOverride` value is available.
+
+If you use it and deploy maester as part of hydra, make sure you also set `maester.hydraFullnameOverride` with the same value, so that the admin service name used by maester is properly computed with the new value.
+
+Should you forget, helm will fail and remind you to.

@@ -122,6 +122,19 @@ http://127.0.0.1:{{ .Values.service.public.port }}/
 {{- end -}}
 {{- end -}}
 
+{{/*
+Check overrides consistency
+*/}}
+{{- define "hydra.check.override.consistency" -}}
+{{- if and .Values.maester.enabled .Values.fullnameOverride -}}
+{{- if not .Values.maester.hydraFullnameOverride -}}
+{{ fail "hydra fullname has been overridden, but the new value has not been provided to maester. Set maester.hydraFullnameOverride" }}
+{{- else if not (eq .Values.maester.hydraFullnameOverride .Values.fullnameOverride) -}}
+{{ fail (tpl "hydra fullname has been overridden, but a different value was provided to maester. {{ .Values.maester.hydraFullnameOverride }} different of {{ .Values.fullnameOverride }}" . ) }}
+{{- end -}}
+{{- end -}}
+{{- end -}}
+
 {{- define "hydra.utils.joinListWithComma" -}}
 {{- $local := dict "first" true -}}
 {{- range $k, $v := . -}}{{- if not $local.first -}},{{- end -}}{{- $v -}}{{- $_ := set $local "first" false -}}{{- end -}}
