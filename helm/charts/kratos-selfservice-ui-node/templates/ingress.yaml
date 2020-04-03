@@ -1,20 +1,19 @@
-{{- if or .Values.ingress.public.enabled .Values.demo -}}
-{{- $fullName := include "hive.fullname" . -}}
+{{- if .Values.ingress.enabled -}}
+{{- $fullName := include "kratos-selfservice-ui-node.fullname" . -}}
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: {{ $fullName }}-public
-  namespace: {{ .Release.Namespace }}
+  name: {{ $fullName }}
   labels:
-{{ include "hive.labels" . | indent 4 }}
-  {{- with .Values.ingress.public.annotations }}
+{{ include "kratos-selfservice-ui-node.labels" . | indent 4 }}
+  {{- with .Values.ingress.annotations }}
   annotations:
     {{- toYaml . | nindent 4 }}
   {{- end }}
 spec:
-{{- if .Values.ingress.public.tls }}
+{{- if .Values.ingress.tls }}
   tls:
-  {{- range .Values.ingress.public.tls }}
+  {{- range .Values.ingress.tls }}
     - hosts:
       {{- range .hosts }}
         - {{ . | quote }}
@@ -23,14 +22,14 @@ spec:
   {{- end }}
 {{- end }}
   rules:
-  {{- range .Values.ingress.public.hosts }}
+  {{- range .Values.ingress.hosts }}
     - host: {{ .host | quote }}
       http:
         paths:
         {{- range .paths }}
           - path: {{ . }}
             backend:
-              serviceName: {{ $fullName }}-public
+              serviceName: {{ $fullName }}
               servicePort: http
         {{- end }}
   {{- end }}

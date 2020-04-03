@@ -1,0 +1,206 @@
+# Default values for kratos.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 1
+
+image:
+  repository:  oryd/kratos
+  tag: latest-sqlite
+  pullPolicy: IfNotPresent
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+service:
+  admin:
+    enabled: true
+    type: ClusterIP
+    port: 80
+    # If you do want to specify annotations, uncomment the following
+    # lines, adjust them as necessary, and remove the curly braces after 'annotations:'.
+    annotations: {}
+    # kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
+  public:
+    enabled: true
+    type: ClusterIP
+    port: 80
+    # If you do want to specify annotations, uncomment the following
+    # lines, adjust them as necessary, and remove the curly braces after 'annotations:'.
+    annotations: {}
+    # kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
+
+
+ingress:
+  admin:
+    enabled: false
+    annotations: {}
+      # kubernetes.io/ingress.class: nginx
+      # kubernetes.io/tls-acme: "true"
+    hosts:
+      - host: kratos.admin.local.com
+        paths:
+          - path: /
+            backend:
+              servicePort: 80
+
+    tls: []
+    #  - secretName: chart-example-tls
+    #    hosts:
+    #      - chart-example.local
+  public:
+    enabled: false
+    annotations: {}
+    # kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
+    hosts:
+      -
+        host: kratos.public.local.com
+        paths:
+          - path: /
+            backend:
+              servicePort: 80
+
+    tls: []
+    #  - secretName: chart-example-tls
+    #    hosts:
+    #      - chart-example.local
+
+kratos:
+  development: false
+  autoMigrate: false
+
+  config:
+    serve:
+      admin:
+        port: 8081
+      public:
+        port: 8080
+
+    dsn: postgresql://postgres:123456@kratos-postgresql/kratos?sslmode=disable
+    selfservice:
+      strategies:
+        password:
+          enabled: true
+
+      verify:
+        return_to: http://127.0.0.1:4455/
+
+      logout:
+        redirect_to: http://127.0.0.1:4455/auth/login
+
+      login:
+        request_lifespan: 10m
+        after:
+          password:
+            -
+              job: session
+            -
+              job: redirect
+              config:
+                default_redirect_url: http://127.0.0.1:4455/
+                allow_user_defined_redirect: true
+
+      registration:
+        request_lifespan: 10m
+        after:
+          password:
+            -
+              job: verify
+            -
+              job: session
+            -
+              job: redirect
+              config:
+                default_redirect_url: http://127.0.0.1:4455/
+                allow_user_defined_redirect: true
+
+    log:
+      level: debug
+
+    secrets:
+      session:
+        - PLEASE-CHANGE-ME-I-AM-VERY-INSECURE
+
+    urls:
+      login_ui: http://127.0.0.1:4455/auth/login
+      registration_ui: http://127.0.0.1:4455/auth/registration
+      error_ui: http://127.0.0.1:4455/error
+      profile_ui: http://127.0.0.1:4455/profile
+      verify_ui: http://127.0.0.1:4455/verify
+
+    # These are undefined because not available in this demo
+      mfa_ui: http://127.0.0.1:4455/
+
+      self:
+        public: http://127.0.0.1:4455/.ory/kratos/public/
+        admin: http://kratos:4434/
+      default_return_to: http://127.0.0.1:4455/
+      whitelisted_return_to_domains:
+        - http://127.0.0.1:4455
+
+    hashers:
+      argon2:
+        parallelism: 1
+        memory: 131072
+        iterations: 2
+        salt_length: 16
+        key_length: 16
+
+    identity:
+      traits:
+        default_schema_url: file:///etc/config/kratos/identity.traits.schema.json
+
+    courier:
+      smtp:
+        connection_uri: smtps://test:test@mailslurper:1025/?skip_ssl_verify=true
+
+deployment:
+  resources: {}
+  #  We usually recommend not to specify default resources and to leave this as a conscious
+  #  choice for the user. This also increases chances charts run on environments with little
+  #  resources, such as Minikube. If you do want to specify resources, uncomment the following
+  #  lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  #  limits:
+  #    cpu: 100m
+  #    memory: 128Mi
+  #  requests:
+  #    cpu: 100m
+  #  memory: 128Mi
+
+  # Node labels for pod assignment.
+  nodeSelector: {}
+  # If you do want to specify node labels, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'annotations:'.
+  #   foo: bar
+
+  # Configure node tolerations.
+  tolerations: []
+
+  labels: {}
+  #      If you do want to specify additional labels, uncomment the following
+  #      lines, adjust them as necessary, and remove the curly braces after 'labels:'.
+  #      e.g.  type: app
+
+  annotations: {}
+  #      If you do want to specify annotations, uncomment the following
+  #      lines, adjust them as necessary, and remove the curly braces after 'annotations:'.
+  #      e.g.  sidecar.istio.io/rewriteAppHTTPProbers: "true"
+
+
+# Configure node affinity
+affinity: {}
+
+# Postgresql confgiuration
+postgresql:
+  global:
+    postgresql:
+      postgresqlPassword: ""
+      postgresqlDatabase: ""
+
+  persistence:
+    enabled: true
+    size: 100Mi
