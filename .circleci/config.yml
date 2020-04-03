@@ -10,7 +10,7 @@ jobs:
       - run: helm lint ./helm/charts/oathkeeper/
       - run: helm lint ./helm/charts/oathkeeper-maester/
       - run: helm lint ./helm/charts/hydra/
-      - run: helm lint ./helm/charts/hydra/charts/hydra-maester/
+      - run: helm lint ./helm/charts/hydra-maester/
       - run: helm lint ./helm/charts/kratos/
       - run: helm lint ./helm/charts/example-idp/
       - run: helm lint ./helm/charts/kratos-selfservice-ui-node/
@@ -53,7 +53,7 @@ jobs:
       - run:
           command: |
             export KUBECONFIG="$(kind get kubeconfig-path)"
-            .circleci/helm-test.sh hydra/charts/hydra-maester
+            .circleci/helm-test.sh hydra-maester
       # Enable kratos tests at a later stage
       # 
       # - run:
