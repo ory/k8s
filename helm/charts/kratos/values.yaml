@@ -195,12 +195,12 @@ deployment:
 affinity: {}
 
 # Postgresql confgiuration
-postgresql:
-  global:
-    postgresql:
-      postgresqlPassword: ""
-      postgresqlDatabase: ""
-
-  persistence:
-    enabled: true
-    size: 100Mi
+# postgresql:
+#   global:
+#     postgresql:
+#       postgresqlPassword: ""
+#       postgresqlDatabase: ""
+# 
+#   persistence:
+#     enabled: true
+#     size: 100Mi
