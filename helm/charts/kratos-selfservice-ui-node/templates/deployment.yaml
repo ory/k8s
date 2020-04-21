@@ -1,12 +1,12 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "hive-selfservice-ui-node.fullname" . }}
+  name: {{ include "kratos-selfservice-ui-node.fullname" . }}
   {{- if .Release.Namespace }}
   namespace: {{ .Release.Namespace }}
   {{- end }}
   labels:
-{{ include "hive-selfservice-ui-node.labels" . | indent 4 }}
+{{ include "kratos-selfservice-ui-node.labels" . | indent 4 }}
     {{- with .Values.deployment.labels }}
       {{- toYaml . | nindent 4 }}
     {{- end }}
@@ -18,12 +18,12 @@ spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      app.kubernetes.io/name: {{ include "hive-selfservice-ui-node.name" . }}
+      app.kubernetes.io/name: {{ include "kratos-selfservice-ui-node.name" . }}
       app.kubernetes.io/instance: {{ .Release.Name }}
   template:
     metadata:
       labels:
-{{ include "hive-selfservice-ui-node.labels" . | indent 8 }}
+{{ include "kratos-selfservice-ui-node.labels" . | indent 8 }}
         {{- with .Values.deployment.labels }}
           {{- toYaml . | nindent 8 }}
         {{- end }}
@@ -42,11 +42,14 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
           -
-            name: HIVE_PUBLIC_URL
-            value: {{ .Values.hivePublicUrl | quote }}
+            name: KRATOS_PUBLIC_URL
+            value: {{ .Values.kratosPublicUrl | quote }}
           -
-            name: HIVE_BROWSER_URL
-            value: {{ .Values.hiveBrowserUrl | quote }}
+            name: KRATOS_BROWSER_URL
+            value: {{ .Values.kratosBrowserUrl | quote }}
+          -
+            name: PROJECT_NAME
+            value: {{ .Values.projectName | quote }}
           -
             name: PROJECT_NAME
             value: {{ .Values.projectName | quote }}
@@ -56,6 +59,12 @@ spec:
           -
             name: JWKS_URL
             value: {{ .Values.jwksUrl | quote }}
+          -
+            name: ADMIN_URL
+            value: {{ .Values.kratosAdminUrl | quote }}
+          -
+            name: SECURITY_MODE
+            value: {{ .Values.securityMode | quote }}
           ports:
             - name: http
               containerPort: 3000

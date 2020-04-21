@@ -1,0 +1,128 @@
+# Default values for kratos.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 1
+
+image:
+  repository:  oryd/kratos
+  tag: v0.1.1-alpha.1-sqlite
+  pullPolicy: IfNotPresent
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+service:
+  admin:
+    enabled: true
+    type: ClusterIP
+    port: 80
+    # If you do want to specify annotations, uncomment the following
+    # lines, adjust them as necessary, and remove the curly braces after 'annotations:'.
+    annotations: {}
+    # kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
+  public:
+    enabled: true
+    type: ClusterIP
+    port: 80
+    # If you do want to specify annotations, uncomment the following
+    # lines, adjust them as necessary, and remove the curly braces after 'annotations:'.
+    annotations: {}
+    # kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
+
+ingress:
+  admin:
+    enabled: false
+    annotations: {}
+      # kubernetes.io/ingress.class: nginx
+      # kubernetes.io/tls-acme: "true"
+    hosts:
+      - host: kratos.admin.local.com
+        paths:
+          - path: /
+            backend:
+              servicePort: 80
+
+    tls: []
+    #  - secretName: chart-example-tls
+    #    hosts:
+    #      - chart-example.local
+  public:
+    enabled: false
+    annotations: {}
+    # kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
+    hosts:
+      -
+        host: kratos.public.local.com
+        paths:
+          - path: /
+            backend:
+              servicePort: 80
+
+    tls: []
+    #  - secretName: chart-example-tls
+    #    hosts:
+    #      - chart-example.local
+
+kratos:
+  development: false
+  autoMigrate: false
+
+  config:
+    serve:
+      admin: {}
+      public: {}
+
+    secrets:
+      session: []
+
+deployment:
+  resources: {}
+  #  We usually recommend not to specify default resources and to leave this as a conscious
+  #  choice for the user. This also increases chances charts run on environments with little
+  #  resources, such as Minikube. If you do want to specify resources, uncomment the following
+  #  lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  #  limits:
+  #    cpu: 100m
+  #    memory: 128Mi
+  #  requests:
+  #    cpu: 100m
+  #  memory: 128Mi
+
+  # Node labels for pod assignment.
+  nodeSelector: {}
+  # If you do want to specify node labels, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'annotations:'.
+  #   foo: bar
+
+  # Configure node tolerations.
+  tolerations: []
+
+  labels: {}
+  #      If you do want to specify additional labels, uncomment the following
+  #      lines, adjust them as necessary, and remove the curly braces after 'labels:'.
+  #      e.g.  type: app
+
+  annotations: {}
+  #      If you do want to specify annotations, uncomment the following
+  #      lines, adjust them as necessary, and remove the curly braces after 'annotations:'.
+  #      e.g.  sidecar.istio.io/rewriteAppHTTPProbers: "true"
+
+
+# Configure node affinity
+affinity: {}
+
+# Postgresql confgiuration
+# postgresql:
+#   global:
+#     postgresql:
+#       postgresqlPassword: ""
+#       postgresqlDatabase: ""
+# 
+#   persistence:
+#     enabled: true
+#     size: 100Mi
