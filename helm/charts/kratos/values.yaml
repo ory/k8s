@@ -74,8 +74,11 @@ kratos:
 
   config:
     serve:
-      admin: {}
-      public: {}
+      serve:
+        public:
+          port: 4433
+        admin:
+          port: 4434
 
     secrets:
       session: []
