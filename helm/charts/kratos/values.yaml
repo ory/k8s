@@ -33,7 +33,6 @@ service:
     # kubernetes.io/ingress.class: nginx
     # kubernetes.io/tls-acme: "true"
 
-
 ingress:
   admin:
     enabled: false
@@ -75,10 +74,11 @@ kratos:
 
   config:
     serve:
-      admin:
-        port: 8081
-      public:
-        port: 8080
+      admin: {}
+      public: {}
+
+    secrets:
+      session: []
 
 deployment:
   resources: {}

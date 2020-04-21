@@ -66,13 +66,13 @@ deployment:
 
 affinity: {}
 
-# Set this to ORY Hive's Admin URL
+# Set this to ORY Kratos's Admin URL
 kratosAdminUrl: "http://kratos-admin"
 
-# Set this to ORY Hive's public URL
+# Set this to ORY Kratos's public URL
 kratosPublicUrl: "http://kratos-public"
 
-# Set this to ORY Hive's public URL accessible from the outside world.
+# Set this to ORY Kratos's public URL accessible from the outside world.
 kratosBrowserUrl: "http://kratos-browserui"
 
 # The baseUrl

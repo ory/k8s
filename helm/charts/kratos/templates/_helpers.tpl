@@ -31,6 +31,12 @@ Create chart name and version as used by the chart label.
 {{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
+{{/*
+Generate the dsn value
+*/}}
+{{- define "kratos.dsn" -}}
+{{- .Values.kratos.config.dsn }}
+{{- end -}}
 
 {{/*
 Generate the secrets.session value

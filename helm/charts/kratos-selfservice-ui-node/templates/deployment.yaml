@@ -42,11 +42,14 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
           -
-            name: HIVE_PUBLIC_URL
+            name: KRATOS_PUBLIC_URL
             value: {{ .Values.kratosPublicUrl | quote }}
           -
-            name: HIVE_BROWSER_URL
+            name: KRATOS_BROWSER_URL
             value: {{ .Values.kratosBrowserUrl | quote }}
+          -
+            name: PROJECT_NAME
+            value: {{ .Values.projectName | quote }}
           -
             name: PROJECT_NAME
             value: {{ .Values.projectName | quote }}
@@ -59,6 +62,9 @@ spec:
           -
             name: ADMIN_URL
             value: {{ .Values.kratosAdminUrl | quote }}
+          -
+            name: SECURITY_MODE
+            value: {{ .Values.securityMode | quote }}
           ports:
             - name: http
               containerPort: 3000
