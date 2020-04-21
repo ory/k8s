@@ -2,7 +2,7 @@ version: 2.1
 jobs:
   lint:
     docker:
-      - image: circleci/golang:1.12
+      - image: circleci/golang:1.14
     working_directory: /go/src/github.com/ory/k8s
     steps:
       - checkout
@@ -25,7 +25,7 @@ jobs:
           name: "Install kind & kubectl"
           command: |
             curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
-            curl -Lo ./kind https://github.com/kubernetes-sigs/kind/releases/download/v0.5.1/kind-$(uname)-amd64
+            curl -Lo ./kind https://github.com/kubernetes-sigs/kind/releases/download/v0.7.0/kind-$(uname)-amd64
             chmod +x ./kubectl
             chmod +x ./kind
             sudo mv ./kubectl /usr/local/bin/kubectl
@@ -37,11 +37,8 @@ jobs:
       - run: 
           name: "Install Helm"
           command: |
-            curl -L https://git.io/get_helm.sh | bash
+            curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
             export KUBECONFIG="$(kind get kubeconfig-path)"
-            kubectl create serviceaccount --namespace kube-system tiller
-            kubectl create clusterrolebinding tiller-cluster-rule --clusterrole=cluster-admin --serviceaccount=kube-system:tiller
-            helm init --service-account tiller --wait      
       - run:
           command: |
             export KUBECONFIG="$(kind get kubeconfig-path)"
@@ -63,12 +60,11 @@ jobs:
         
   release:
     docker:
-      - image: circleci/golang:1.12
+      - image: circleci/golang:1.14
     working_directory: /go/src/github.com/ory/k8s
     steps:
       - checkout
-      - run: curl -L https://git.io/get_helm.sh | bash
-      - run: helm init --client-only
+      - run: curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
       - run: helm dep update ./helm/charts/oathkeeper/
       - run: helm package -d docs/helm/charts/ ./helm/charts/oathkeeper/ --version `echo $CIRCLE_TAG | sed s/v//g`
       - run: helm package -d docs/helm/charts/ ./helm/charts/oathkeeper-maester/ --version `echo $CIRCLE_TAG | sed s/v//g`
