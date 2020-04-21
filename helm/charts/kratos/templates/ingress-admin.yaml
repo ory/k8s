@@ -1,19 +1,20 @@
-{{- if .Values.ingress.enabled -}}
-{{- $fullName := include "hive-selfservice-ui-node.fullname" . -}}
+{{- if .Values.ingress.admin.enabled -}}
+{{- $fullName := include "kratos.fullname" . -}}
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: {{ $fullName }}
+  name: {{ $fullName }}-admin
+  namespace: {{ .Release.Namespace }}
   labels:
-{{ include "hive-selfservice-ui-node.labels" . | indent 4 }}
-  {{- with .Values.ingress.annotations }}
+{{ include "kratos.labels" . | indent 4 }}
+  {{- with .Values.ingress.admin.annotations }}
   annotations:
     {{- toYaml . | nindent 4 }}
   {{- end }}
 spec:
-{{- if .Values.ingress.tls }}
+{{- if .Values.ingress.admin.tls }}
   tls:
-  {{- range .Values.ingress.tls }}
+  {{- range .Values.ingress.admin.tls }}
     - hosts:
       {{- range .hosts }}
         - {{ . | quote }}
@@ -22,14 +23,14 @@ spec:
   {{- end }}
 {{- end }}
   rules:
-  {{- range .Values.ingress.hosts }}
+  {{- range .Values.ingress.admin.hosts }}
     - host: {{ .host | quote }}
       http:
         paths:
         {{- range .paths }}
           - path: {{ . }}
             backend:
-              serviceName: {{ $fullName }}
+              serviceName: {{ $fullName }}-admin
               servicePort: http
         {{- end }}
   {{- end }}

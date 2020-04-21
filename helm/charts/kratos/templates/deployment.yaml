@@ -1,12 +1,12 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "hive.fullname" . }}
+  name: {{ include "kratos.fullname" . }}
   {{- if .Release.Namespace }}
   namespace: {{ .Release.Namespace }}
   {{- end }}
   labels:
-{{ include "hive.labels" . | indent 4 }}
+{{ include "kratos.labels" . | indent 4 }}
     {{- with .Values.deployment.labels }}
       {{- toYaml . | nindent 4 }}
     {{- end }}
@@ -18,12 +18,12 @@ spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      app.kubernetes.io/name: {{ include "hive.name" . }}
+      app.kubernetes.io/name: {{ include "kratos.name" . }}
       app.kubernetes.io/instance: {{ .Release.Name }}
   template:
     metadata:
       labels:
-{{ include "hive.labels" . | indent 8 }}
+{{ include "kratos.labels" . | indent 8 }}
         {{- with .Values.deployment.labels }}
           {{- toYaml . | nindent 8 }}
         {{- end }}
@@ -36,17 +36,17 @@ spec:
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
     {{- end }}
-    {{- if .Values.hive.autoMigrate }}
+    {{- if .Values.kratos.autoMigrate }}
       initContainers:
         -
           name: {{ .Chart.Name }}-automigrate
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
-          command: ["hive"]
+          command: ["kratos"]
           args: ["migrate", "sql", "-e", "--yes", "--config", "/etc/config/config.yaml"]
           volumeMounts:
             -
-              name: {{ include "hive.name" . }}-config-volume
+              name: {{ include "kratos.name" . }}-config-volume
               mountPath: /etc/config
               readOnly: true
           env:
@@ -54,29 +54,29 @@ spec:
               name: DSN
               valueFrom:
                 secretKeyRef:
-                  name: {{ include "hive.fullname" . }}
+                  name: {{ include "kratos.fullname" . }}
                   key: dsn
             -
               name: SECRETS_SESSION
               valueFrom:
                 secretKeyRef:
-                  name: {{ include "hive.fullname" . }}
+                  name: {{ include "kratos.fullname" . }}
                   key: secretsSession
     {{- end}}
       volumes:
         -
-          name: {{ include "hive.name" . }}-config-volume
+          name: {{ include "kratos.name" . }}-config-volume
           configMap:
-            name: {{ include "hive.fullname" . }}-config
+            name: {{ include "kratos.fullname" . }}-config
       containers:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
-          command: ["hive"]
+          command: ["kratos"]
           args: [
             "serve",
             "all",
-            {{- if .Values.hive.development }}
+            {{- if .Values.kratos.development }}
             "--dev",
             {{- end}}
             "--config",
@@ -84,7 +84,7 @@ spec:
           ]
           volumeMounts:
             -
-              name: {{ include "hive.name" . }}-config-volume
+              name: {{ include "kratos.name" . }}-config-volume
               mountPath: /etc/config
               readOnly: true
           env:
@@ -92,20 +92,20 @@ spec:
               name: DSN
               valueFrom:
                 secretKeyRef:
-                  name: {{ include "hive.fullname" . }}
+                  name: {{ include "kratos.fullname" . }}
                   key: dsn
             -
               name: SECRETS_SESSION
               valueFrom:
                 secretKeyRef:
-                  name: {{ include "hive.fullname" . }}
+                  name: {{ include "kratos.fullname" . }}
                   key: secretsSession
           ports:
             - name: http-admin
-              containerPort: {{ .Values.hive.config.serve.admin.port }}
+              containerPort: {{ .Values.kratos.config.serve.admin.port }}
               protocol: TCP
             - name: http-public
-              containerPort: {{ .Values.hive.config.serve.public.port }}
+              containerPort: {{ .Values.kratos.config.serve.public.port }}
               protocol: TCP
           livenessProbe:
             httpGet:
