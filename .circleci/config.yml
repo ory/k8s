@@ -97,9 +97,9 @@ jobs:
       -
         run: helm repo index docs/helm/charts/
       -
-        run: git config --global user.email "hi@ory.sh"
+        run: git config --global user.email "aeneas@ory.sh"
       -
-        run: git config --global user.name "ORY Continuous Integration"
+        run: git config --global user.name "aeneasr"
       -
         run: git checkout -b make-release HEAD
       -
