@@ -21,3 +21,9 @@ maintainers: # (optional)
     email: office@ory.sh
     url: https://www.ory.sh/
 type: application
+dependencies:
+  - name: oathkeeper-maester
+    version: 0.0.1
+    condition: maester.enabled
+    alias: maester
+    repository: file://../oathkeeper-maester
