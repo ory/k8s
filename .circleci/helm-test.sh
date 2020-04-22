@@ -13,7 +13,7 @@ function cleanup {
 trap cleanup EXIT
 
 helm dep update ./helm/charts/$1
-helm install -f .circleci/values/$1.yaml -n ${release} ./helm/charts/$1 --wait --debug 
+helm install -f .circleci/values/$1.yaml ${release} ./helm/charts/$1 --wait --debug
 
 n=0
 until [[ $n -ge 5 ]]; do
