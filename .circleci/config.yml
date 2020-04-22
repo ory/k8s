@@ -50,26 +50,21 @@ jobs:
           name: "Install Helm"
           command: |
             curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
-            export KUBECONFIG="$(kind get kubeconfig-path)"
       -
         run:
           command: |
-            export KUBECONFIG="$(kind get kubeconfig-path)"
             .circleci/helm-test.sh oathkeeper
       -
         run:
           command: |
-            export KUBECONFIG="$(kind get kubeconfig-path)"
             .circleci/helm-test.sh hydra
       -
         run:
           command: |
-            export KUBECONFIG="$(kind get kubeconfig-path)"
             .circleci/helm-test.sh hydra-maester
       -
         run:
           command: |
-            export KUBECONFIG="$(kind get kubeconfig-path)"
             .circleci/helm-test.sh kratos
 
   release:
