@@ -8,7 +8,7 @@ release=$(echo cci-$(date +%s)-$1-${CIRCLE_SHA1} | cut -c 1-15)r
 function cleanup {
     kubectl describe pods -A -l "app.kubernetes.io/instance=${release}" || true
     kubectl logs --all-containers=true -l "app.kubernetes.io/instance=${release}" || true
-    helm del --purge ${release} || true
+    helm del ${release} || true
 }
 trap cleanup EXIT
 
