@@ -4,7 +4,7 @@
 
 image:
   repository: oryd/hydra-login-consent-node
-  tag: v1.0.0
+  tag: v1.4.6
   pullPolicy: IfNotPresent
 
 imagePullSecrets: []

@@ -1,4 +1,0 @@
-dependencies:
-  - name: postgresql
-    version: 8.6.10
-    repository: "@bitnami"

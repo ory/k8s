@@ -1,6 +1,0 @@
-dependencies:
-  - name: hydra-maester
-    version: 0.0.5-alpha10
-    condition: maester.enabled
-    alias: maester
-    repository: file://../hydra-maester

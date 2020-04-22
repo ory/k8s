@@ -74,8 +74,10 @@ kratos:
 
   config:
     serve:
-      admin: {}
-      public: {}
+      public:
+        port: 4433
+      admin:
+        port: 4434
 
     secrets:
       session: []
@@ -115,14 +117,3 @@ deployment:
 
 # Configure node affinity
 affinity: {}
-
-# Postgresql confgiuration
-# postgresql:
-#   global:
-#     postgresql:
-#       postgresqlPassword: ""
-#       postgresqlDatabase: ""
-# 
-#   persistence:
-#     enabled: true
-#     size: 100Mi
