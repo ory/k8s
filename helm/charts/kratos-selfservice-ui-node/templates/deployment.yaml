@@ -51,16 +51,13 @@ spec:
             name: PROJECT_NAME
             value: {{ .Values.projectName | quote }}
           -
-            name: PROJECT_NAME
-            value: {{ .Values.projectName | quote }}
-          -
             name: BASE_URL
             value: {{ .Values.baseUrl | quote }}
           -
             name: JWKS_URL
             value: {{ .Values.jwksUrl | quote }}
           -
-            name: ADMIN_URL
+            name: KRATOS_ADMIN_URL
             value: {{ .Values.kratosAdminUrl | quote }}
           -
             name: SECURITY_MODE
