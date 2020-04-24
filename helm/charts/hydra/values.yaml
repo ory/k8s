@@ -149,7 +149,7 @@ affinity: {}
 maester:
   enabled: true
   # Values for the hydra admin service arguments to hydra-maester
-  adminService:
+  adminService: {}
     # The service name value may need to be set if you use
     # `fullnameOverride` for the parent chart
     # name:
