@@ -115,7 +115,7 @@ spec:
             - name: {{ include "oathkeeper.name" . }}-rules-volume
               mountPath: /etc/rules
               readOnly: false
-      serviceAccountName: {{ include "oathkeeper-maester.name" . }}-maester-account
+      serviceAccountName: {{ default "maester" .Values.maester.nameOverride }}-account
       {{- with .Values.deployment.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
