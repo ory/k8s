@@ -9,7 +9,7 @@ spec:
   names:
     kind: OAuth2Client
     plural: oauth2clients
-  scope: ""
+  scope: Namespaced
   subresources:
     status: {}
   validation:
