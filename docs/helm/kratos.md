@@ -33,7 +33,7 @@ $ helm install \
 
 ## Configuration
 
-You can pass your [ORY Hydra configuration file](https://www.ory.sh/kratos/docs/reference/configuration)
+You can pass your [ORY Kratos configuration file](https://www.ory.sh/kratos/docs/reference/configuration)
 by creating a yaml file with key `kratos.config`
 
 ```yaml
