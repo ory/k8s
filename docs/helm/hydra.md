@@ -33,12 +33,12 @@ You can optionally also set the cookie secrets:
 ```bash
 $ helm install \
     ...
-    'hydra.config.secrets.cookie=$(LC_ALL=C tr -dc 'A-Za-z0-9' < /dev/urandom | base64 | head -c 32)' \
+    --set 'hydra.config.secrets.cookie=$(LC_ALL=C tr -dc 'A-Za-z0-9' < /dev/urandom | base64 | head -c 32)' \
     ...
     ory/hydra
 ```
 
-Alternatively, you can use an existing kubernetes secret:
+Alternatively, you can use an existing [Kubernetes Secret](https://kubernetes.io/docs/concepts/configuration/secret/) instead of letting the Helm Chart create one for you:
 
 ```bash
 
@@ -48,7 +48,7 @@ $ kubectl create secret generic my-secure-secret --from-literal=dsn=postgres://f
 
 $ helm install \
     ...
-    'hydra.existingSecret=my-secure-secret' \
+    --set 'hydra.existingSecret=my-secure-secret' \
     ...
     ory/hydra
 ```
