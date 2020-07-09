@@ -41,9 +41,9 @@ Generate the dsn value
 {{/*
 Generate the secrets.session value
 */}}
-{{- define "kratos.secrets.session" -}}
-{{- if .Values.kratos.config.secrets.session -}}
-{{- .Values.kratos.config.secrets.session }}
+{{- define "kratos.secrets.cookie" -}}
+{{- if .Values.kratos.config.secrets.cookie -}}
+{{- .Values.kratos.config.secrets.cookie }}
 {{- end -}}
 {{- end -}}
 
