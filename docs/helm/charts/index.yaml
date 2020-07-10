@@ -3,7 +3,18 @@ entries:
   example-idp:
   - apiVersion: v2
     appVersion: 1.4.6
-    created: "2020-06-30T09:14:11.846987668Z"
+    created: "2020-07-10T11:06:22.90351845Z"
+    description: A Helm chart for deploying the reference implementation for the User
+      Login and Consent Flow in Kuberenetes
+    digest: 1418a774e02959e98c7e6da824069ee923dfe3fee87ef29b89f5f9d17b3f1d2f
+    name: example-idp
+    type: application
+    urls:
+    - example-idp-0.4.0.tgz
+    version: 0.4.0
+  - apiVersion: v2
+    appVersion: 1.4.6
+    created: "2020-07-10T11:06:22.903154596Z"
     description: A Helm chart for deploying the reference implementation for the User
       Login and Consent Flow in Kuberenetes
     digest: 8edd1446a32caa3e8d2550d5f255bb33e6ad2f34c640ca8e3e950055c485a07b
@@ -14,7 +25,7 @@ entries:
     version: 0.3.5
   - apiVersion: v2
     appVersion: 1.4.6
-    created: "2020-06-30T09:14:11.846600339Z"
+    created: "2020-07-10T11:06:22.902792288Z"
     description: A Helm chart for deploying the reference implementation for the User
       Login and Consent Flow in Kuberenetes
     digest: 53ce9cf1fa1d3a5b08fb9f6938c7a81fe59ec6ec50531389d3f6dacfb5d5a70f
@@ -25,7 +36,7 @@ entries:
     version: 0.3.4
   - apiVersion: v2
     appVersion: 1.4.6
-    created: "2020-06-30T09:14:11.846225284Z"
+    created: "2020-07-10T11:06:22.902397145Z"
     description: A Helm chart for deploying the reference implementation for the User
       Login and Consent Flow in Kuberenetes
     digest: 6b2f999bc7d53d3c49e871f8dabb8cf7b2e5e7249e6276b68d1fe7fcf41399cc
@@ -36,7 +47,7 @@ entries:
     version: 0.3.3
   - apiVersion: v2
     appVersion: 1.4.6
-    created: "2020-06-30T09:14:11.845824105Z"
+    created: "2020-07-10T11:06:22.901995417Z"
     description: A Helm chart for deploying the reference implementation for the User
       Login and Consent Flow in Kuberenetes
     digest: 9620795ab163cfdc878dd4dedc89613f7ded72c3609cadbaba71b28901f8a117
@@ -47,7 +58,7 @@ entries:
     version: 0.3.2
   - apiVersion: v2
     appVersion: 1.4.6
-    created: "2020-06-30T09:14:11.845471117Z"
+    created: "2020-07-10T11:06:22.901602068Z"
     description: A Helm chart for deploying the reference implementation for the User
       Login and Consent Flow in Kuberenetes
     digest: 6f9a8d272b14d3a339e3ea9e10d400a5a3f76147e21942f94bafdac1929b7097
@@ -58,7 +69,7 @@ entries:
     version: 0.3.1
   - apiVersion: v1
     appVersion: 1.0.0-rc.14
-    created: "2020-06-30T09:14:11.845109491Z"
+    created: "2020-07-10T11:06:22.901210205Z"
     description: A Helm chart for deploying the reference implementation for the User
       Login and Consent Flow in Kuberenetes
     digest: 45a49239def926ef5b280b5af28b61f85632b069461159e1e459a8b3172c4556
@@ -68,7 +79,7 @@ entries:
     version: 0.2.0
   - apiVersion: v1
     appVersion: 1.0.0-rc.14
-    created: "2020-06-30T09:14:11.844748745Z"
+    created: "2020-07-10T11:06:22.900830404Z"
     description: A Helm chart for deploying the reference implementation for the User
       Login and Consent Flow in Kuberenetes
     digest: 670383472956b752202fda666626c6020b61645182c4bf912a6179abc1947ff9
@@ -78,7 +89,7 @@ entries:
     version: 0.1.0
   - apiVersion: v1
     appVersion: 1.0.0-rc.14
-    created: "2020-06-30T09:14:11.84434289Z"
+    created: "2020-07-10T11:06:22.900463133Z"
     description: A Helm chart for deploying the reference implementation for the User
       Login and Consent Flow in Kuberenetes
     digest: 8bc31f3bcce97e3ec22a9ae4db4ae3869168f88ab6b8e318ca795bd243550c15
@@ -88,7 +99,7 @@ entries:
     version: 0.0.48
   - apiVersion: v1
     appVersion: 1.0.0-rc.14
-    created: "2020-06-30T09:14:11.843116076Z"
+    created: "2020-07-10T11:06:22.900093301Z"
     description: A Helm chart for deploying the reference implementation for the User
       Login and Consent Flow in Kuberenetes
     digest: 275f6b49c611212be42dad7d4ccd0d881a9e8833e5dbd1d9326852fd0d820139
@@ -98,7 +109,7 @@ entries:
     version: 0.0.47
   - apiVersion: v1
     appVersion: 1.0.0-rc.14
-    created: "2020-06-30T09:14:11.842694161Z"
+    created: "2020-07-10T11:06:22.899736551Z"
     description: A Helm chart for deploying the reference implementation for the User
       Login and Consent Flow in Kuberenetes
     digest: 7673ddb21a59797f3ac7cd06969befc84e6099e2d3a9419ae795e624926de35e
@@ -108,7 +119,7 @@ entries:
     version: 0.0.46
   - apiVersion: v1
     appVersion: 1.0.0-rc.14
-    created: "2020-06-30T09:14:11.842288245Z"
+    created: "2020-07-10T11:06:22.899394486Z"
     description: A Helm chart for deploying the reference implementation for the User
       Login and Consent Flow in Kuberenetes
     digest: 0265245abf68da045b576dca4c031b54e51c548fd760a955a04d2e3692a555d7
@@ -118,7 +129,7 @@ entries:
     version: 0.0.45
   - apiVersion: v1
     appVersion: 1.0.0-rc.14
-    created: "2020-06-30T09:14:11.841832292Z"
+    created: "2020-07-10T11:06:22.899050724Z"
     description: A Helm chart for deploying the reference implementation for the User
       Login and Consent Flow in Kuberenetes
     digest: 7996825b5d8e0cb27f85535a39f334d4ab5635ef26ba43c763557c782106d812
@@ -128,7 +139,7 @@ entries:
     version: 0.0.43
   - apiVersion: v1
     appVersion: 1.0.0-rc.14
-    created: "2020-06-30T09:14:11.841443016Z"
+    created: "2020-07-10T11:06:22.898700259Z"
     description: A Helm chart for deploying the reference implementation for the User
       Login and Consent Flow in Kuberenetes
     digest: 2ceb9fbd56940f2a6841e5157467e1f36d02e2f65c8278f3bb9d2ea6a921c0f1
@@ -138,7 +149,7 @@ entries:
     version: 0.0.42
   - apiVersion: v1
     appVersion: 1.0.0-rc.14
-    created: "2020-06-30T09:14:11.841068323Z"
+    created: "2020-07-10T11:06:22.898347972Z"
     description: A Helm chart for deploying the reference implementation for the User
       Login and Consent Flow in Kuberenetes
     digest: f53c03d96f8a71c78c331b7d81b9bbcbb911dfb1c3b1ff205b873cea3f42d643
@@ -148,7 +159,7 @@ entries:
     version: 0.0.41
   - apiVersion: v1
     appVersion: 1.0.0-rc.14
-    created: "2020-06-30T09:14:11.840646971Z"
+    created: "2020-07-10T11:06:22.897973496Z"
     description: A Helm chart for deploying the reference implementation for the User
       Login and Consent Flow in Kuberenetes
     digest: 4f2117e43aa5db2039dbdfcf8279d48480622ada3ca3f77341f12ebe1849be65
@@ -158,7 +169,7 @@ entries:
     version: 0.0.40
   - apiVersion: v1
     appVersion: 1.0.0-rc.14
-    created: "2020-06-30T09:14:11.840256321Z"
+    created: "2020-07-10T11:06:22.897621553Z"
     description: A Helm chart for deploying the reference implementation for the User
       Login and Consent Flow in Kuberenetes
     digest: 9cf32db6733f881823b1db54e581782fe6c1edc319fccd1cf8bef51c29a259be
@@ -168,7 +179,7 @@ entries:
     version: 0.0.38
   - apiVersion: v1
     appVersion: 1.0.0-rc.14
-    created: "2020-06-30T09:14:11.839881429Z"
+    created: "2020-07-10T11:06:22.897264939Z"
     description: A Helm chart for deploying the reference implementation for the User
       Login and Consent Flow in Kuberenetes
     digest: cd11edf0eedcc98d96a74edede349cdf03e723d6d0de5f70657cff899367d8a0
@@ -178,7 +189,7 @@ entries:
     version: 0.0.37
   - apiVersion: v1
     appVersion: 1.0.0-rc.14
-    created: "2020-06-30T09:14:11.839511196Z"
+    created: "2020-07-10T11:06:22.896865297Z"
     description: A Helm chart for deploying the reference implementation for the User
       Login and Consent Flow in Kuberenetes
     digest: 02168abe1d099c4efc40cce5b24dbb25a0aca4a5209c7e977895cf3da5bbf1a3
@@ -188,7 +199,7 @@ entries:
     version: 0.0.36
   - apiVersion: v1
     appVersion: 1.0.0-rc.14
-    created: "2020-06-30T09:14:11.839132721Z"
+    created: "2020-07-10T11:06:22.895748122Z"
     description: A Helm chart for deploying the reference implementation for the User
       Login and Consent Flow in Kuberenetes
     digest: 2fd1aededaa4d600329452b4df6003e34275513f93f0e2cbd839bc211c7551ab
@@ -198,7 +209,7 @@ entries:
     version: 0.0.35
   - apiVersion: v1
     appVersion: 1.0.0-rc.14
-    created: "2020-06-30T09:14:11.838759413Z"
+    created: "2020-07-10T11:06:22.895346519Z"
     description: A Helm chart for deploying the reference implementation for the User
       Login and Consent Flow in Kuberenetes
     digest: 408dd14db8bece56ebeb0a26e0d552f60bc4c0d8a0545718b3f2586ed14feb37
@@ -208,7 +219,7 @@ entries:
     version: 0.0.34
   - apiVersion: v1
     appVersion: 1.0.0-rc.14
-    created: "2020-06-30T09:14:11.838369779Z"
+    created: "2020-07-10T11:06:22.894955082Z"
     description: A Helm chart for deploying the reference implementation for the User
       Login and Consent Flow in Kuberenetes
     digest: f621c59cb89322ee7e1ffbbc77761e7fe8568c2afc8e02e53cc5b345690787b9
@@ -218,7 +229,7 @@ entries:
     version: 0.0.33
   - apiVersion: v1
     appVersion: 1.0.0-rc.14
-    created: "2020-06-30T09:14:11.837901742Z"
+    created: "2020-07-10T11:06:22.894559405Z"
     description: A Helm chart for deploying the reference implementation for the User
       Login and Consent Flow in Kuberenetes
     digest: 6e9498e9a8164559d09d232da9db5c9b83f38699ad6c476f9d9077109a1dd2d5
@@ -228,7 +239,7 @@ entries:
     version: 0.0.32
   - apiVersion: v1
     appVersion: 1.0.0-rc.14
-    created: "2020-06-30T09:14:11.83751674Z"
+    created: "2020-07-10T11:06:22.894141666Z"
     description: A Helm chart for deploying the reference implementation for the User
       Login and Consent Flow in Kuberenetes
     digest: 221463900771aba671a23bd016491abf42b130fc34825ed762bca8061d665205
@@ -238,7 +249,7 @@ entries:
     version: 0.0.31
   - apiVersion: v1
     appVersion: 1.0.0-rc.14
-    created: "2020-06-30T09:14:11.837105067Z"
+    created: "2020-07-10T11:06:22.893756544Z"
     description: A Helm chart for deploying the reference implementation for the User
       Login and Consent Flow in Kuberenetes
     digest: 018954296319f56b58aad4c2601fc1aa83cbece4d24cf37035845c2cbba908d2
@@ -248,7 +259,7 @@ entries:
     version: 0.0.30
   - apiVersion: v1
     appVersion: 1.0.0-rc.14
-    created: "2020-06-30T09:14:11.836744511Z"
+    created: "2020-07-10T11:06:22.893374866Z"
     description: A Helm chart for deploying the reference implementation for the User
       Login and Consent Flow in Kuberenetes
     digest: 3104a088346749fc07098a9f52e777ae6b3b614c92f8ed615dff70e7b2f1be0f
@@ -258,7 +269,7 @@ entries:
     version: 0.0.29
   - apiVersion: v1
     appVersion: 1.0.0-rc.14
-    created: "2020-06-30T09:14:11.836381714Z"
+    created: "2020-07-10T11:06:22.892981798Z"
     description: A Helm chart for deploying the reference implementation for the User
       Login and Consent Flow in Kuberenetes
     digest: 486a6bbdefbf581d2ec0174d7605773a24a3e433b6d49ccd8d414f050962f6cd
@@ -268,7 +279,7 @@ entries:
     version: 0.0.28
   - apiVersion: v1
     appVersion: 1.0.0-rc.14
-    created: "2020-06-30T09:14:11.836021256Z"
+    created: "2020-07-10T11:06:22.892596196Z"
     description: A Helm chart for deploying the reference implementation for the User
       Login and Consent Flow in Kuberenetes
     digest: 6f2e46181296ba714ad6d5e24d9192732fb288995a6d4f69299f5baf6af518a0
@@ -278,7 +289,7 @@ entries:
     version: 0.0.27
   - apiVersion: v1
     appVersion: 1.0.0-rc.14
-    created: "2020-06-30T09:14:11.835654056Z"
+    created: "2020-07-10T11:06:22.892195047Z"
     description: A Helm chart for deploying the reference implementation for the User
       Login and Consent Flow in Kuberenetes
     digest: 053dc4a4ac6eb879d3da29cda3872adb5bfc2fe56de00e3491988ed10ce705fb
@@ -288,7 +299,7 @@ entries:
     version: 0.0.26
   - apiVersion: v1
     appVersion: 1.0.0-rc.14
-    created: "2020-06-30T09:14:11.835243516Z"
+    created: "2020-07-10T11:06:22.891817252Z"
     description: A Helm chart for deploying the reference implementation for the User
       Login and Consent Flow in Kuberenetes
     digest: abf2d6c984517ef2838280ef05f1155bd7c632b693b639a2d0a9e4ac7ecc96b3
@@ -298,7 +309,7 @@ entries:
     version: 0.0.25
   - apiVersion: v1
     appVersion: 1.0.0-rc.14
-    created: "2020-06-30T09:14:11.834015244Z"
+    created: "2020-07-10T11:06:22.891428711Z"
     description: A Helm chart for deploying the reference implementation for the User
       Login and Consent Flow in Kuberenetes
     digest: eb583f822de2bec00228ceb5622295de79a36c918ee9e56824c02bc3061c04cc
@@ -308,7 +319,7 @@ entries:
     version: 0.0.24
   - apiVersion: v1
     appVersion: 1.0.0-rc.14
-    created: "2020-06-30T09:14:11.83363399Z"
+    created: "2020-07-10T11:06:22.891043513Z"
     description: A Helm chart for deploying the reference implementation for the User
       Login and Consent Flow in Kuberenetes
     digest: 8e88427cf18bbdcdadbea490bf38c6c1533002e2a7e84939bbfc8e64fe39dda5
@@ -318,7 +329,7 @@ entries:
     version: 0.0.23
   - apiVersion: v1
     appVersion: 1.0.0-rc.14
-    created: "2020-06-30T09:14:11.833252679Z"
+    created: "2020-07-10T11:06:22.890681178Z"
     description: A Helm chart for deploying the reference implementation for the User
       Login and Consent Flow in Kuberenetes
     digest: e5cbc4eed29fca170ef0de1a2d8e08cf4382723c1d778619fb87447394c9c400
@@ -328,7 +339,7 @@ entries:
     version: 0.0.22
   - apiVersion: v1
     appVersion: 1.0.0-rc.14
-    created: "2020-06-30T09:14:11.832868008Z"
+    created: "2020-07-10T11:06:22.890279068Z"
     description: A Helm chart for deploying the reference implementation for the User
       Login and Consent Flow in Kuberenetes
     digest: ab3e0927c6bd7c1640b652d5f6a84000ad0dabed64f8f73fa0e05d3bbb0ed4c9
@@ -338,7 +349,7 @@ entries:
     version: 0.0.21
   - apiVersion: v1
     appVersion: 1.0.0-rc.14
-    created: "2020-06-30T09:14:11.832487409Z"
+    created: "2020-07-10T11:06:22.88988994Z"
     description: A Helm chart for deploying the reference implementation for the User
       Login and Consent Flow in Kuberenetes
     digest: 8c13e93541f6f03d0bda83d3384aa4c5a353b84ffa6c85aacb32e810a9d67781
@@ -348,7 +359,7 @@ entries:
     version: 0.0.20
   - apiVersion: v1
     appVersion: 1.0.0-rc.14
-    created: "2020-06-30T09:14:11.832094438Z"
+    created: "2020-07-10T11:06:22.889543582Z"
     description: A Helm chart for deploying the reference implementation for the User
       Login and Consent Flow in Kuberenetes
     digest: d9092a7c901b9d5fb59d83534bdbdc3532323628ff4e38ee2d4c0d7e9ae19e71
@@ -358,7 +369,7 @@ entries:
     version: 0.0.17
   - apiVersion: v1
     appVersion: 1.0.0-rc.14
-    created: "2020-06-30T09:14:11.831680889Z"
+    created: "2020-07-10T11:06:22.889143891Z"
     description: A Helm chart for deploying the reference implementation for the User
       Login and Consent Flow in Kuberenetes
     digest: 518f405511e93ed01e9d4f5678ddfb52d93193a752ad70b9e850669f28bbc662
@@ -368,7 +379,7 @@ entries:
     version: 0.0.16
   - apiVersion: v1
     appVersion: 1.0.0-rc.14
-    created: "2020-06-30T09:14:11.831232631Z"
+    created: "2020-07-10T11:06:22.88880035Z"
     description: A Helm chart for deploying the reference implementation for the User
       Login and Consent Flow in Kuberenetes
     digest: 49a3db8beca58ff4a7e767a5488b8ff73e9035945fc82215ef00565f948a53da
@@ -378,7 +389,7 @@ entries:
     version: 0.0.15
   - apiVersion: v1
     appVersion: 1.0.0-rc.14
-    created: "2020-06-30T09:14:11.830851407Z"
+    created: "2020-07-10T11:06:22.888443154Z"
     description: A Helm chart for deploying the reference implementation for the User
       Login and Consent Flow in Kuberenetes
     digest: ffbe8d9c2bdb1d74a5ad90ad2bb9e12aea8f7823f4e8c5affd185e458eb3aebc
@@ -388,7 +399,7 @@ entries:
     version: 0.0.14
   - apiVersion: v1
     appVersion: 1.0.0-rc.14
-    created: "2020-06-30T09:14:11.830478085Z"
+    created: "2020-07-10T11:06:22.88800116Z"
     description: A Helm chart for deploying the reference implementation for the User
       Login and Consent Flow in Kuberenetes
     digest: cbf15e07ee1b27c9a73848b3936961515615955c20dc52004fc328bbd2aaa87b
@@ -398,7 +409,7 @@ entries:
     version: 0.0.13
   - apiVersion: v1
     appVersion: 1.0.0-rc.14
-    created: "2020-06-30T09:14:11.830087481Z"
+    created: "2020-07-10T11:06:22.886582253Z"
     description: A Helm chart for deploying the reference implementation for the User
       Login and Consent Flow in Kuberenetes
     digest: 0bec26ee5e27c40bd551326fa39c47ffa33cb72abee4dff99421a733c62ee296
@@ -408,7 +419,7 @@ entries:
     version: 0.0.12
   - apiVersion: v1
     appVersion: 1.0.0-rc.14
-    created: "2020-06-30T09:14:11.829576136Z"
+    created: "2020-07-10T11:06:22.885996304Z"
     description: A Helm chart for deploying the reference implementation for the User
       Login and Consent Flow in Kuberenetes
     digest: 1bc2bc16e7efcc84438e3fb3d62c31d0a6680a019bb5bcc1ccaa358f2b83dc99
@@ -419,7 +430,7 @@ entries:
   hive:
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2020-06-30T09:14:11.862584371Z"
+    created: "2020-07-10T11:06:22.920912924Z"
     description: A ORY Hive Helm chart for Kubernetes
     digest: 26873625f708fc1898793d211b00bc84aa353691f817ca815e1c1e210b59f3e9
     name: hive
@@ -428,7 +439,7 @@ entries:
     version: 0.1.0
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2020-06-30T09:14:11.861855597Z"
+    created: "2020-07-10T11:06:22.920393055Z"
     description: A ORY Hive Helm chart for Kubernetes
     digest: 68d202602e98053038cdc432d33d8c25fc5388ec86fc36e600cde2373d4c3085
     name: hive
@@ -437,7 +448,7 @@ entries:
     version: 0.0.48
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2020-06-30T09:14:11.861319728Z"
+    created: "2020-07-10T11:06:22.919879416Z"
     description: A ORY Hive Helm chart for Kubernetes
     digest: 8cffa81a69446e336396dc11c5e9e7ed3c1cb9220858b96cae354fb75a3d365d
     name: hive
@@ -446,7 +457,7 @@ entries:
     version: 0.0.47
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2020-06-30T09:14:11.860775757Z"
+    created: "2020-07-10T11:06:22.919343187Z"
     description: A ORY Hive Helm chart for Kubernetes
     digest: cccc67f9fed3148c452543995fab1d5156fc89b37f3b7bf4fbc0fd0659d382dd
     name: hive
@@ -455,7 +466,7 @@ entries:
     version: 0.0.46
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2020-06-30T09:14:11.860225675Z"
+    created: "2020-07-10T11:06:22.918812424Z"
     description: A ORY Hive Helm chart for Kubernetes
     digest: 64828e043613efe852b18eceb7809af19663fb3b5dcc17b04d1e4f34cb8ec351
     name: hive
@@ -464,7 +475,7 @@ entries:
     version: 0.0.45
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2020-06-30T09:14:11.859672934Z"
+    created: "2020-07-10T11:06:22.91825583Z"
     description: A ORY Hive Helm chart for Kubernetes
     digest: baf41c1201120bdef136a825bfc45917caf107946af317c720992b16ffb27fd9
     name: hive
@@ -473,7 +484,7 @@ entries:
     version: 0.0.43
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2020-06-30T09:14:11.859139918Z"
+    created: "2020-07-10T11:06:22.917703787Z"
     description: A ORY Hive Helm chart for Kubernetes
     digest: 6bd7ce490f21b5f8016c964b634a41bc4ba9f88c7a6864662f6d66bd32b875a0
     name: hive
@@ -482,7 +493,7 @@ entries:
     version: 0.0.42
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2020-06-30T09:14:11.858628055Z"
+    created: "2020-07-10T11:06:22.91717235Z"
     description: A ORY Hive Helm chart for Kubernetes
     digest: 7740f61618c9265f04edc952130d4d932bbe3349f01e59c075e1f520d7583367
     name: hive
@@ -491,7 +502,7 @@ entries:
     version: 0.0.41
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2020-06-30T09:14:11.858088229Z"
+    created: "2020-07-10T11:06:22.915780398Z"
     description: A ORY Hive Helm chart for Kubernetes
     digest: d3b29bae5e90a8daec89c16740ea7ce74df9961b12413bc56e1c6e9412b28a16
     name: hive
@@ -500,7 +511,7 @@ entries:
     version: 0.0.40
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2020-06-30T09:14:11.857554685Z"
+    created: "2020-07-10T11:06:22.915131577Z"
     description: A ORY Hive Helm chart for Kubernetes
     digest: 7ce229affa79e90c27368742156f5705d9197988dfc91c4e00f45c23cbf4d4f2
     name: hive
@@ -509,7 +520,7 @@ entries:
     version: 0.0.38
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2020-06-30T09:14:11.857004073Z"
+    created: "2020-07-10T11:06:22.914412972Z"
     description: A ORY Hive Helm chart for Kubernetes
     digest: 98ee99946f499a1c32683e1930f20f9a3767c423b67c2d2b0eb6a7dd306addf3
     name: hive
@@ -518,7 +529,7 @@ entries:
     version: 0.0.37
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2020-06-30T09:14:11.856483058Z"
+    created: "2020-07-10T11:06:22.913772267Z"
     description: A ORY Hive Helm chart for Kubernetes
     digest: 998c1f7a653c953b292af4f79e99788645dd852b3c9fb3837b48c3ca709a8b9e
     name: hive
@@ -527,7 +538,7 @@ entries:
     version: 0.0.36
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2020-06-30T09:14:11.85577221Z"
+    created: "2020-07-10T11:06:22.91307238Z"
     description: A ORY Hive Helm chart for Kubernetes
     digest: a8cf7d008d314e168a986a9e75d43f3f3e8d88859a05a2daa6371b2a297e9b3d
     name: hive
@@ -536,7 +547,7 @@ entries:
     version: 0.0.35
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2020-06-30T09:14:11.854991882Z"
+    created: "2020-07-10T11:06:22.912380653Z"
     description: A ORY Hive Helm chart for Kubernetes
     digest: 8c9d3c5c3f12e312d19de8833f1722113194eb8346b248f304ad2ecafb7c321c
     name: hive
@@ -545,7 +556,7 @@ entries:
     version: 0.0.34
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2020-06-30T09:14:11.854128694Z"
+    created: "2020-07-10T11:06:22.911647542Z"
     description: A ORY Hive Helm chart for Kubernetes
     digest: 43f99de57f0d8d46fd399a593e536ca1664c32052eeb86f5bc43371c19f3398d
     name: hive
@@ -554,7 +565,7 @@ entries:
     version: 0.0.33
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2020-06-30T09:14:11.853271259Z"
+    created: "2020-07-10T11:06:22.910957633Z"
     description: A ORY Hive Helm chart for Kubernetes
     digest: 46d5aed9c058a9ddc44db0e82eaad0645d8d232a6cc7473ba93b10a6786028bd
     name: hive
@@ -563,7 +574,7 @@ entries:
     version: 0.0.32
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2020-06-30T09:14:11.851778667Z"
+    created: "2020-07-10T11:06:22.910194719Z"
     description: A ORY Hive Helm chart for Kubernetes
     digest: dc7517a607824f602cc816b7329bf34163cef081d7a6a18181523493d22815c7
     name: hive
@@ -572,7 +583,7 @@ entries:
     version: 0.0.31
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2020-06-30T09:14:11.851246639Z"
+    created: "2020-07-10T11:06:22.909486091Z"
     description: A ORY Hive Helm chart for Kubernetes
     digest: 9a3854a4380948771e431263d02f7be6e8849053ec43177bc0687e814ca316f3
     name: hive
@@ -581,7 +592,7 @@ entries:
     version: 0.0.30
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2020-06-30T09:14:11.850718988Z"
+    created: "2020-07-10T11:06:22.90879854Z"
     description: A ORY Hive Helm chart for Kubernetes
     digest: fcac6c8672dcca321359b8bb27d9798ada0634addb49a22974e320e98a219065
     name: hive
@@ -590,7 +601,7 @@ entries:
     version: 0.0.29
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2020-06-30T09:14:11.850176999Z"
+    created: "2020-07-10T11:06:22.908110927Z"
     description: A ORY Hive Helm chart for Kubernetes
     digest: c78eab062467b548d486cdc3a872cac12c9804dd3d3db3713eca88ef31412e2c
     name: hive
@@ -599,7 +610,7 @@ entries:
     version: 0.0.28
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2020-06-30T09:14:11.849563747Z"
+    created: "2020-07-10T11:06:22.907470054Z"
     description: A ORY Hive Helm chart for Kubernetes
     digest: 9e6f93f51e01c298ba509d163c84b7f9149f0e5490a11e9642235ca9184367da
     name: hive
@@ -608,7 +619,7 @@ entries:
     version: 0.0.27
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2020-06-30T09:14:11.849065304Z"
+    created: "2020-07-10T11:06:22.906762551Z"
     description: A ORY Hive Helm chart for Kubernetes
     digest: a2ca8c7e4adee644288170fc78de49671829a6147d2cda583f32e8a349d1ca17
     name: hive
@@ -617,7 +628,7 @@ entries:
     version: 0.0.26
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2020-06-30T09:14:11.848562798Z"
+    created: "2020-07-10T11:06:22.906036517Z"
     description: A ORY Hive Helm chart for Kubernetes
     digest: 49cdcd28f2e643c68c0df59c0e2fcfbda624710e3ac694c93d827f9547c81a7f
     name: hive
@@ -626,7 +637,7 @@ entries:
     version: 0.0.25
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2020-06-30T09:14:11.848041671Z"
+    created: "2020-07-10T11:06:22.905307594Z"
     description: A ORY Hive Helm chart for Kubernetes
     digest: c0555675be45c4b41c061e1a36889a4c4fb020ad105f055ce520b357e7b63916
     name: hive
@@ -635,7 +646,7 @@ entries:
     version: 0.0.24
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2020-06-30T09:14:11.847508112Z"
+    created: "2020-07-10T11:06:22.904050405Z"
     description: A ORY Hive Helm chart for Kubernetes
     digest: 01adea68e5911eb11230d7b620f5cdbabaf81dac4c680199d4f9322f1a62fa12
     name: hive
@@ -645,7 +656,7 @@ entries:
   hive-selfservice-ui-node:
   - apiVersion: v1
     appVersion: v0.0.1
-    created: "2020-06-30T09:14:11.869904458Z"
+    created: "2020-07-10T11:06:22.928390615Z"
     description: A Helm chart for ORY Hive's example ui for Kubernetes
     digest: 13dbcdb024c401d7c58f54652e2909ef5922b18099f4e4ae0de66e365a9d8787
     name: hive-selfservice-ui-node
@@ -654,7 +665,7 @@ entries:
     version: 0.1.0
   - apiVersion: v1
     appVersion: v0.0.1
-    created: "2020-06-30T09:14:11.86951301Z"
+    created: "2020-07-10T11:06:22.927993966Z"
     description: A Helm chart for ORY Hive's example ui for Kubernetes
     digest: 8ce23b0b427ee9150ef25e7192fd73334767795b17897db68a9d76330f88a2b4
     name: hive-selfservice-ui-node
@@ -663,7 +674,7 @@ entries:
     version: 0.0.48
   - apiVersion: v1
     appVersion: v0.0.1
-    created: "2020-06-30T09:14:11.86908534Z"
+    created: "2020-07-10T11:06:22.927532386Z"
     description: A Helm chart for ORY Hive's example ui for Kubernetes
     digest: 7f79ddb23aec6e642b89a6a6d33356d4f41268b8f2514b99a7cec59fa55d6e91
     name: hive-selfservice-ui-node
@@ -672,7 +683,7 @@ entries:
     version: 0.0.47
   - apiVersion: v1
     appVersion: v0.0.1
-    created: "2020-06-30T09:14:11.868683021Z"
+    created: "2020-07-10T11:06:22.927147132Z"
     description: A Helm chart for ORY Hive's example ui for Kubernetes
     digest: 24ca8a4a3b0ab2905caaa1fe7aac94f38d67d933cbd628667efd1d9ca302e273
     name: hive-selfservice-ui-node
@@ -681,7 +692,7 @@ entries:
     version: 0.0.46
   - apiVersion: v1
     appVersion: v0.0.1
-    created: "2020-06-30T09:14:11.868281793Z"
+    created: "2020-07-10T11:06:22.926757372Z"
     description: A Helm chart for ORY Hive's example ui for Kubernetes
     digest: 2cbc442ca36b8eff30acef5c53a6f8868c463ae04d36766e27a244b9445ec2d3
     name: hive-selfservice-ui-node
@@ -690,7 +701,7 @@ entries:
     version: 0.0.45
   - apiVersion: v1
     appVersion: v0.0.1
-    created: "2020-06-30T09:14:11.867889369Z"
+    created: "2020-07-10T11:06:22.926355644Z"
     description: A Helm chart for ORY Hive's example ui for Kubernetes
     digest: 00c3ca3d23e5bedc8922f1bd96bcf8067a128d53f0ebd7c003a803a54b17d1d4
     name: hive-selfservice-ui-node
@@ -699,7 +710,7 @@ entries:
     version: 0.0.43
   - apiVersion: v1
     appVersion: v0.0.1
-    created: "2020-06-30T09:14:11.867490881Z"
+    created: "2020-07-10T11:06:22.925918203Z"
     description: A Helm chart for ORY Hive's example ui for Kubernetes
     digest: de36b68fc9273278db1363c272b8b6b0630198f9e95612873f32a59482e40a3e
     name: hive-selfservice-ui-node
@@ -708,7 +719,7 @@ entries:
     version: 0.0.42
   - apiVersion: v1
     appVersion: v0.0.1
-    created: "2020-06-30T09:14:11.867093239Z"
+    created: "2020-07-10T11:06:22.925049231Z"
     description: A Helm chart for ORY Hive's example ui for Kubernetes
     digest: b5f4565e727bd69c89c0670ee96a75b5932aecde271b2cd2c882151b283f3371
     name: hive-selfservice-ui-node
@@ -717,7 +728,7 @@ entries:
     version: 0.0.41
   - apiVersion: v1
     appVersion: v0.0.1
-    created: "2020-06-30T09:14:11.866707894Z"
+    created: "2020-07-10T11:06:22.924479769Z"
     description: A Helm chart for ORY Hive's example ui for Kubernetes
     digest: 57c06991e53e978853ccd5cec4056179aac473634e2887178062322717b5a679
     name: hive-selfservice-ui-node
@@ -726,7 +737,7 @@ entries:
     version: 0.0.40
   - apiVersion: v1
     appVersion: v0.0.1
-    created: "2020-06-30T09:14:11.866331126Z"
+    created: "2020-07-10T11:06:22.924100588Z"
     description: A Helm chart for ORY Hive's example ui for Kubernetes
     digest: 919aaeb94f522a2cf4f8d30dbf820dd0a6326a3727754a4279147de19ec018d5
     name: hive-selfservice-ui-node
@@ -735,7 +746,7 @@ entries:
     version: 0.0.38
   - apiVersion: v1
     appVersion: v0.0.1
-    created: "2020-06-30T09:14:11.865890384Z"
+    created: "2020-07-10T11:06:22.923737943Z"
     description: A Helm chart for ORY Hive's example ui for Kubernetes
     digest: 9aac53932b0c556be5907c5235d4a8dce03248b33a98fc0df3f8f927ea5918e0
     name: hive-selfservice-ui-node
@@ -744,7 +755,7 @@ entries:
     version: 0.0.37
   - apiVersion: v1
     appVersion: v0.0.1
-    created: "2020-06-30T09:14:11.865540609Z"
+    created: "2020-07-10T11:06:22.92340526Z"
     description: A Helm chart for ORY Hive's example ui for Kubernetes
     digest: 9f7ba44aa277084c1a7cbb98ed19c0369a56f83b069acdfdb3d92836ca028674
     name: hive-selfservice-ui-node
@@ -753,7 +764,7 @@ entries:
     version: 0.0.36
   - apiVersion: v1
     appVersion: v0.0.1
-    created: "2020-06-30T09:14:11.865170293Z"
+    created: "2020-07-10T11:06:22.923064453Z"
     description: A Helm chart for ORY Hive's example ui for Kubernetes
     digest: 21bedf7b93d2ee996bb653a269c34fbacd05b6e2ab5ef1e6cc130486afc59f6a
     name: hive-selfservice-ui-node
@@ -762,7 +773,7 @@ entries:
     version: 0.0.35
   - apiVersion: v1
     appVersion: v0.0.1
-    created: "2020-06-30T09:14:11.864767379Z"
+    created: "2020-07-10T11:06:22.922717169Z"
     description: A Helm chart for ORY Hive's example ui for Kubernetes
     digest: e6777801d12bb934be9d0f3eae9e217f5791d7bc4f06fbf0193ecfb95b964733
     name: hive-selfservice-ui-node
@@ -771,7 +782,7 @@ entries:
     version: 0.0.34
   - apiVersion: v1
     appVersion: v0.0.1
-    created: "2020-06-30T09:14:11.864419506Z"
+    created: "2020-07-10T11:06:22.922348649Z"
     description: A Helm chart for ORY Hive's example ui for Kubernetes
     digest: 5ef30e1093b61727a13bd16a501b8b2334276d0a22e10e7ef191ea2a0061b800
     name: hive-selfservice-ui-node
@@ -780,7 +791,7 @@ entries:
     version: 0.0.33
   - apiVersion: v1
     appVersion: v0.0.1
-    created: "2020-06-30T09:14:11.86407664Z"
+    created: "2020-07-10T11:06:22.921975363Z"
     description: A Helm chart for ORY Hive's example ui for Kubernetes
     digest: eaab2ee17637de06e4eeadc9849c022f0bc49b8bac5c557c1364f7fd5c73ff70
     name: hive-selfservice-ui-node
@@ -789,7 +800,7 @@ entries:
     version: 0.0.32
   - apiVersion: v1
     appVersion: v0.0.1
-    created: "2020-06-30T09:14:11.863721628Z"
+    created: "2020-07-10T11:06:22.921603805Z"
     description: A Helm chart for ORY Hive's example ui for Kubernetes
     digest: ea7aa5c0030ba19997e223322071592da1a3ede016749f974ee88500a7cfdcaf
     name: hive-selfservice-ui-node
@@ -798,7 +809,7 @@ entries:
     version: 0.0.31
   - apiVersion: v1
     appVersion: v0.0.1
-    created: "2020-06-30T09:14:11.863361435Z"
+    created: "2020-07-10T11:06:22.921265936Z"
     description: A Helm chart for ORY Hive's example ui for Kubernetes
     digest: 81f8a6d2fc0d4e538b55121c16310acb03e9e1df05826f05618325a7e1a09381
     name: hive-selfservice-ui-node
@@ -808,7 +819,39 @@ entries:
   hydra:
   - apiVersion: v2
     appVersion: v1.4.6
-    created: "2020-06-30T09:14:11.952068867Z"
+    created: "2020-07-10T11:06:22.975099001Z"
+    dependencies:
+    - alias: maester
+      condition: maester.enabled
+      name: hydra-maester
+      repository: file://../hydra-maester
+      version: 0.0.5-alpha10
+    description: A Helm chart for deploying ORY Hydra in Kubernetes
+    digest: 22a57d9df13b746e5cfdefc3ee5d6aeaad82262583aaf71aced5978d4968b707
+    home: https://www.ory.sh/
+    keywords:
+    - oauth2
+    - openid-connect
+    - openid
+    - oidc
+    - op
+    - api-security
+    - security
+    maintainers:
+    - email: hi@ory.sh
+      name: ORY Team
+      url: https://www.ory.sh/
+    name: hydra
+    sources:
+    - https://github.com/ory/hydra
+    - https://github.com/ory/k8s
+    type: application
+    urls:
+    - hydra-0.4.0.tgz
+    version: 0.4.0
+  - apiVersion: v2
+    appVersion: v1.4.6
+    created: "2020-07-10T11:06:22.973869614Z"
     dependencies:
     - alias: maester
       condition: maester.enabled
@@ -840,7 +883,7 @@ entries:
     version: 0.3.5
   - apiVersion: v2
     appVersion: v1.4.6
-    created: "2020-06-30T09:14:11.949988875Z"
+    created: "2020-07-10T11:06:22.972670501Z"
     dependencies:
     - alias: maester
       condition: maester.enabled
@@ -872,7 +915,7 @@ entries:
     version: 0.3.4
   - apiVersion: v2
     appVersion: v1.4.6
-    created: "2020-06-30T09:14:11.947906275Z"
+    created: "2020-07-10T11:06:22.971461994Z"
     dependencies:
     - alias: maester
       condition: maester.enabled
@@ -904,7 +947,7 @@ entries:
     version: 0.3.3
   - apiVersion: v2
     appVersion: v1.4.6
-    created: "2020-06-30T09:14:11.945133896Z"
+    created: "2020-07-10T11:06:22.970269251Z"
     dependencies:
     - alias: maester
       condition: maester.enabled
@@ -936,7 +979,7 @@ entries:
     version: 0.3.2
   - apiVersion: v2
     appVersion: v1.4.6
-    created: "2020-06-30T09:14:11.943862629Z"
+    created: "2020-07-10T11:06:22.969058918Z"
     dependencies:
     - alias: maester
       condition: maester.enabled
@@ -968,7 +1011,7 @@ entries:
     version: 0.3.1
   - apiVersion: v1
     appVersion: v1.3.2_oryOS.17
-    created: "2020-06-30T09:14:11.942330489Z"
+    created: "2020-07-10T11:06:22.96785919Z"
     dependencies:
     - alias: maester
       condition: maester.enabled
@@ -999,7 +1042,7 @@ entries:
     version: 0.2.0
   - apiVersion: v1
     appVersion: v1.3.2_oryOS.17
-    created: "2020-06-30T09:14:11.940733507Z"
+    created: "2020-07-10T11:06:22.966636572Z"
     dependencies:
     - alias: maester
       condition: maester.enabled
@@ -1030,7 +1073,7 @@ entries:
     version: 0.1.0
   - apiVersion: v1
     appVersion: v1.0.0-rc.14_oryOS.12
-    created: "2020-06-30T09:14:11.936866417Z"
+    created: "2020-07-10T11:06:22.963497573Z"
     dependencies:
     - alias: maester
       condition: maester.enabled
@@ -1061,7 +1104,7 @@ entries:
     version: 0.0.48
   - apiVersion: v1
     appVersion: v1.0.0-rc.14_oryOS.12
-    created: "2020-06-30T09:14:11.934811991Z"
+    created: "2020-07-10T11:06:22.962300147Z"
     dependencies:
     - condition: maester.enabled
       name: hydra-maester
@@ -1091,7 +1134,7 @@ entries:
     version: 0.0.47
   - apiVersion: v1
     appVersion: v1.0.0-rc.14_oryOS.12
-    created: "2020-06-30T09:14:11.932831267Z"
+    created: "2020-07-10T11:06:22.961157875Z"
     dependencies:
     - condition: maester.enabled
       name: hydra-maester
@@ -1121,7 +1164,7 @@ entries:
     version: 0.0.46
   - apiVersion: v1
     appVersion: v1.0.0-rc.14_oryOS.12
-    created: "2020-06-30T09:14:11.930043747Z"
+    created: "2020-07-10T11:06:22.960040301Z"
     dependencies:
     - condition: maester.enabled
       name: hydra-maester
@@ -1151,7 +1194,7 @@ entries:
     version: 0.0.45
   - apiVersion: v1
     appVersion: v1.0.0-rc.14_oryOS.12
-    created: "2020-06-30T09:14:11.927689585Z"
+    created: "2020-07-10T11:06:22.958944218Z"
     dependencies:
     - condition: maester.enabled
       name: hydra-maester
@@ -1181,7 +1224,7 @@ entries:
     version: 0.0.43
   - apiVersion: v1
     appVersion: v1.0.0-rc.14_oryOS.12
-    created: "2020-06-30T09:14:11.925219676Z"
+    created: "2020-07-10T11:06:22.957791022Z"
     dependencies:
     - condition: maester.enabled
       name: hydra-maester
@@ -1211,7 +1254,7 @@ entries:
     version: 0.0.42
   - apiVersion: v1
     appVersion: v1.0.0-rc.14_oryOS.12
-    created: "2020-06-30T09:14:11.92312325Z"
+    created: "2020-07-10T11:06:22.956716134Z"
     dependencies:
     - condition: maester.enabled
       name: hydra-maester
@@ -1241,7 +1284,7 @@ entries:
     version: 0.0.41
   - apiVersion: v1
     appVersion: v1.0.0-rc.14_oryOS.12
-    created: "2020-06-30T09:14:11.921023728Z"
+    created: "2020-07-10T11:06:22.955624022Z"
     dependencies:
     - condition: maester.enabled
       name: hydra-maester
@@ -1271,7 +1314,7 @@ entries:
     version: 0.0.40
   - apiVersion: v1
     appVersion: v1.0.0-rc.14_oryOS.12
-    created: "2020-06-30T09:14:11.918887268Z"
+    created: "2020-07-10T11:06:22.953854332Z"
     dependencies:
     - condition: maester.enabled
       name: hydra-maester
@@ -1301,7 +1344,7 @@ entries:
     version: 0.0.38
   - apiVersion: v1
     appVersion: v1.0.0-rc.14_oryOS.12
-    created: "2020-06-30T09:14:11.916729904Z"
+    created: "2020-07-10T11:06:22.952731708Z"
     dependencies:
     - condition: maester.enabled
       name: hydra-maester
@@ -1331,7 +1374,7 @@ entries:
     version: 0.0.37
   - apiVersion: v1
     appVersion: v1.0.0-rc.14_oryOS.12
-    created: "2020-06-30T09:14:11.914605499Z"
+    created: "2020-07-10T11:06:22.951634609Z"
     dependencies:
     - condition: maester.enabled
       name: hydra-maester
@@ -1361,7 +1404,7 @@ entries:
     version: 0.0.36
   - apiVersion: v1
     appVersion: v1.0.0-rc.14_oryOS.12
-    created: "2020-06-30T09:14:11.9124314Z"
+    created: "2020-07-10T11:06:22.950537078Z"
     dependencies:
     - condition: maester.enabled
       name: hydra-maester
@@ -1391,7 +1434,7 @@ entries:
     version: 0.0.35
   - apiVersion: v1
     appVersion: v1.0.0-rc.14_oryOS.12
-    created: "2020-06-30T09:14:11.909259142Z"
+    created: "2020-07-10T11:06:22.94942242Z"
     dependencies:
     - condition: maester.enabled
       name: hydra-maester
@@ -1421,7 +1464,7 @@ entries:
     version: 0.0.34
   - apiVersion: v1
     appVersion: v1.0.0-rc.14_oryOS.12
-    created: "2020-06-30T09:14:11.907202843Z"
+    created: "2020-07-10T11:06:22.948330769Z"
     dependencies:
     - condition: maester.enabled
       name: hydra-maester
@@ -1451,7 +1494,7 @@ entries:
     version: 0.0.33
   - apiVersion: v1
     appVersion: v1.0.0-rc.14_oryOS.12
-    created: "2020-06-30T09:14:11.905053382Z"
+    created: "2020-07-10T11:06:22.947235784Z"
     dependencies:
     - condition: maester.enabled
       name: hydra-maester
@@ -1481,7 +1524,7 @@ entries:
     version: 0.0.32
   - apiVersion: v1
     appVersion: v1.0.0-rc.14_oryOS.12
-    created: "2020-06-30T09:14:11.902998817Z"
+    created: "2020-07-10T11:06:22.946129925Z"
     dependencies:
     - condition: maester.enabled
       name: hydra-maester
@@ -1511,7 +1554,7 @@ entries:
     version: 0.0.31
   - apiVersion: v1
     appVersion: v1.0.0-rc.14_oryOS.12
-    created: "2020-06-30T09:14:11.900925818Z"
+    created: "2020-07-10T11:06:22.944205449Z"
     dependencies:
     - condition: maester.enabled
       name: hydra-maester
@@ -1541,7 +1584,7 @@ entries:
     version: 0.0.30
   - apiVersion: v1
     appVersion: v1.0.0-rc.14_oryOS.12
-    created: "2020-06-30T09:14:11.898893346Z"
+    created: "2020-07-10T11:06:22.94311933Z"
     dependencies:
     - condition: maester.enabled
       name: hydra-maester
@@ -1571,7 +1614,7 @@ entries:
     version: 0.0.29
   - apiVersion: v1
     appVersion: v1.0.0-rc.14_oryOS.12
-    created: "2020-06-30T09:14:11.896743943Z"
+    created: "2020-07-10T11:06:22.942021694Z"
     dependencies:
     - condition: maester.enabled
       name: hydra-maester
@@ -1601,7 +1644,7 @@ entries:
     version: 0.0.28
   - apiVersion: v1
     appVersion: v1.0.0-rc.14_oryOS.12
-    created: "2020-06-30T09:14:11.894675613Z"
+    created: "2020-07-10T11:06:22.940896167Z"
     dependencies:
     - condition: maester.enabled
       name: hydra-maester
@@ -1631,7 +1674,7 @@ entries:
     version: 0.0.27
   - apiVersion: v1
     appVersion: v1.0.0-rc.14_oryOS.12
-    created: "2020-06-30T09:14:11.892542105Z"
+    created: "2020-07-10T11:06:22.939824164Z"
     dependencies:
     - condition: maester.enabled
       name: hydra-maester
@@ -1661,7 +1704,7 @@ entries:
     version: 0.0.26
   - apiVersion: v1
     appVersion: v1.0.0-rc.14_oryOS.12
-    created: "2020-06-30T09:14:11.889032629Z"
+    created: "2020-07-10T11:06:22.938712357Z"
     dependencies:
     - condition: maester.enabled
       name: hydra-maester
@@ -1691,7 +1734,7 @@ entries:
     version: 0.0.25
   - apiVersion: v1
     appVersion: v1.0.0-rc.14_oryOS.12
-    created: "2020-06-30T09:14:11.886993578Z"
+    created: "2020-07-10T11:06:22.937612611Z"
     dependencies:
     - condition: maester.enabled
       name: hydra-maester
@@ -1721,7 +1764,7 @@ entries:
     version: 0.0.24
   - apiVersion: v1
     appVersion: v1.0.0-rc.14_oryOS.12
-    created: "2020-06-30T09:14:11.884877196Z"
+    created: "2020-07-10T11:06:22.936490172Z"
     description: A Helm chart for deployoing ORY Hydra in Kubernetes
     digest: f871e5f6206df60e4bd319589535c267b1b83c54792f4c07fe96f38e16e3f670
     home: https://www.ory.sh/
@@ -1746,7 +1789,7 @@ entries:
     version: 0.0.23
   - apiVersion: v1
     appVersion: v1.0.0-rc.14_oryOS.12
-    created: "2020-06-30T09:14:11.883595857Z"
+    created: "2020-07-10T11:06:22.935871Z"
     description: A Helm chart for deployoing ORY Hydra in Kubernetes
     digest: ea246b8f69f9356c7efb03b6d9d77a6f148cf75eb2d97810f3a001b35fe74826
     home: https://www.ory.sh/
@@ -1771,7 +1814,7 @@ entries:
     version: 0.0.22
   - apiVersion: v1
     appVersion: v1.0.0-rc.14_oryOS.12
-    created: "2020-06-30T09:14:11.882401519Z"
+    created: "2020-07-10T11:06:22.935078841Z"
     description: A Helm chart for deployoing ORY Hydra in Kubernetes
     digest: f0f2639698fb2bda97fd481d1980b7fb700df678725c78ba28e29f6e35be67c3
     home: https://www.ory.sh/
@@ -1796,7 +1839,7 @@ entries:
     version: 0.0.21
   - apiVersion: v1
     appVersion: v1.0.0-rc.14_oryOS.12
-    created: "2020-06-30T09:14:11.881161278Z"
+    created: "2020-07-10T11:06:22.933983978Z"
     description: A Helm chart for deployoing ORY Hydra in Kubernetes
     digest: ae739381e123d16feab53b309f4bc57dc66f4843870a9e6ab344baa920aa0518
     home: https://www.ory.sh/
@@ -1821,7 +1864,7 @@ entries:
     version: 0.0.20
   - apiVersion: v1
     appVersion: v1.0.0-rc.14_oryOS.12
-    created: "2020-06-30T09:14:11.879870663Z"
+    created: "2020-07-10T11:06:22.933359987Z"
     description: A Helm chart for deployoing ORY Hydra in Kubernetes
     digest: 1a0edc9fb45662ddafe3ae459768e4ebff945eff5f9bdb7100db6299c2a7440d
     home: https://www.ory.sh/
@@ -1846,7 +1889,7 @@ entries:
     version: 0.0.17
   - apiVersion: v1
     appVersion: v1.0.0-rc.14_oryOS.12
-    created: "2020-06-30T09:14:11.877280753Z"
+    created: "2020-07-10T11:06:22.932743429Z"
     description: A Helm chart for deployoing ORY Hydra in Kubernetes
     digest: a873582d2feb4235fff4dd2c55138611561ba3489820280cccd5f26124f3bd32
     home: https://www.ory.sh/
@@ -1871,7 +1914,7 @@ entries:
     version: 0.0.16
   - apiVersion: v1
     appVersion: v1.0.0-rc.14_oryOS.12
-    created: "2020-06-30T09:14:11.876150455Z"
+    created: "2020-07-10T11:06:22.932149528Z"
     description: A Helm chart for deployoing ORY Hydra in Kubernetes
     digest: 7e44b4a426e178a635dfb547f1891e9dabec86393248dd3d129fe1389e2d778a
     home: https://www.ory.sh/
@@ -1896,7 +1939,7 @@ entries:
     version: 0.0.15
   - apiVersion: v1
     appVersion: v1.0.0-rc.14_oryOS.12
-    created: "2020-06-30T09:14:11.875056749Z"
+    created: "2020-07-10T11:06:22.931534458Z"
     description: A Helm chart for deployoing ORY Hydra in Kubernetes
     digest: 4731889e0936ed9e699f42a02f993fb6c56520eb4cc146ed846f7fb2d281cb86
     home: https://www.ory.sh/
@@ -1921,7 +1964,7 @@ entries:
     version: 0.0.14
   - apiVersion: v1
     appVersion: v1.0.0-rc.14_oryOS.12
-    created: "2020-06-30T09:14:11.873942567Z"
+    created: "2020-07-10T11:06:22.930935958Z"
     description: A Helm chart for deployoing ORY Hydra in Kubernetes
     digest: 02bfbcd73b54504696503903fd1e57179c0c7d02d543fdbcf6e251652c33f8c7
     home: https://www.ory.sh/
@@ -1946,7 +1989,7 @@ entries:
     version: 0.0.13
   - apiVersion: v1
     appVersion: v1.0.0-rc.14_oryOS.12
-    created: "2020-06-30T09:14:11.872892592Z"
+    created: "2020-07-10T11:06:22.930293998Z"
     description: A Helm chart for deployoing ORY Hydra in Kubernetes
     digest: af327c82056d90a268389b5892d517ba0f6bbab2df3ec8aa07ee7aa47dd78da2
     home: https://www.ory.sh/
@@ -1971,7 +2014,7 @@ entries:
     version: 0.0.12
   - apiVersion: v1
     appVersion: v1.0.0-rc.14_oryOS.12
-    created: "2020-06-30T09:14:11.871429457Z"
+    created: "2020-07-10T11:06:22.929649968Z"
     description: A Helm chart for deployoing ORY Hydra in Kubernetes
     digest: d2e7b3b2d2c3a0833e4467d6f59799e5a355403cbfd137070cf7c1f9a1d68e4d
     home: https://www.ory.sh/
@@ -1996,7 +2039,7 @@ entries:
     version: 0.0.11
   - apiVersion: v1
     appVersion: v1.0.0-rc.14_oryOS.12
-    created: "2020-06-30T09:14:11.870589086Z"
+    created: "2020-07-10T11:06:22.929031723Z"
     description: A Helm chart for deployoing ORY Hydra in Kubernetes
     digest: 3d809930bf1364cc3e2d06efa698623051a727778bc4b634ab3cec6a5dc8df7c
     home: https://www.ory.sh/
@@ -2021,7 +2064,7 @@ entries:
     version: 0.0.10
   - apiVersion: v1
     appVersion: v1.0.0-rc.14_oryOS.12
-    created: "2020-06-30T09:14:11.938992895Z"
+    created: "2020-07-10T11:06:22.96468974Z"
     description: A Helm chart for deployoing ORY Hydra in Kubernetes
     digest: 05192b60af761b738d722d4fbb45f87f4872c26dd45da5c14b4e91142c9eadd8
     home: https://www.ory.sh/
@@ -2046,7 +2089,7 @@ entries:
     version: 0.0.9
   - apiVersion: v1
     appVersion: v1.0.0-rc.14_oryOS.12
-    created: "2020-06-30T09:14:11.937941132Z"
+    created: "2020-07-10T11:06:22.964101735Z"
     description: A Helm chart for deployoing ORY Hydra in Kubernetes
     digest: dd49cbd4002a13ceae1b47eafd820fc3890caba00b79d96e5e3a95e6710c3136
     home: https://www.ory.sh/
@@ -2072,7 +2115,17 @@ entries:
   hydra-maester:
   - apiVersion: v2
     appVersion: 0.0.5-alpha10
-    created: "2020-06-30T09:14:11.959674125Z"
+    created: "2020-07-10T11:06:22.980586666Z"
+    description: A Helm chart for Kubernetes
+    digest: 71da7184c95f10eeb43bd6c687bb192ac3dd3f8f47607808bc41362b22e05be6
+    name: hydra-maester
+    type: application
+    urls:
+    - hydra-maester-0.4.0.tgz
+    version: 0.4.0
+  - apiVersion: v2
+    appVersion: 0.0.5-alpha10
+    created: "2020-07-10T11:06:22.980029748Z"
     description: A Helm chart for Kubernetes
     digest: b87fa933c26a8433b7e324c8718f157999f70b30e894cec431b5e6bcb009a60c
     name: hydra-maester
@@ -2082,7 +2135,7 @@ entries:
     version: 0.3.5
   - apiVersion: v2
     appVersion: 0.0.5-alpha10
-    created: "2020-06-30T09:14:11.958728581Z"
+    created: "2020-07-10T11:06:22.979478845Z"
     description: A Helm chart for Kubernetes
     digest: 1a37b55a29927df00408b856576ff73be42d4dcdf7baf8befb17c784fce759e1
     name: hydra-maester
@@ -2092,7 +2145,7 @@ entries:
     version: 0.3.4
   - apiVersion: v2
     appVersion: 0.0.5-alpha10
-    created: "2020-06-30T09:14:11.957766084Z"
+    created: "2020-07-10T11:06:22.978923124Z"
     description: A Helm chart for Kubernetes
     digest: 7f5867e89e87d15ce5be739f18b082cf812fc71c82631195d9d39df7d35f6f98
     name: hydra-maester
@@ -2102,7 +2155,7 @@ entries:
     version: 0.3.3
   - apiVersion: v2
     appVersion: 0.0.5-alpha10
-    created: "2020-06-30T09:14:11.956811323Z"
+    created: "2020-07-10T11:06:22.978380568Z"
     description: A Helm chart for Kubernetes
     digest: 7d8d452c8a118c8dbbb41807ee0c42aba36154d9901821e9e33fd1e66a71aa10
     name: hydra-maester
@@ -2112,7 +2165,7 @@ entries:
     version: 0.3.2
   - apiVersion: v2
     appVersion: 0.0.5-alpha10
-    created: "2020-06-30T09:14:11.955886715Z"
+    created: "2020-07-10T11:06:22.977782219Z"
     description: A Helm chart for Kubernetes
     digest: 54df102d8c6e4c3709300eb71bdd5b1a69280c7c1a2a90066358d793166e2773
     name: hydra-maester
@@ -2122,7 +2175,7 @@ entries:
     version: 0.3.1
   - apiVersion: v1
     appVersion: 0.0.5-alpha10
-    created: "2020-06-30T09:14:11.954927627Z"
+    created: "2020-07-10T11:06:22.977239614Z"
     description: A Helm chart for Kubernetes
     digest: 36f063135ddb48f0f37824e7fb66e35c83ef4700b8204e5e892abb395e650d90
     name: hydra-maester
@@ -2131,7 +2184,7 @@ entries:
     version: 0.2.0
   - apiVersion: v1
     appVersion: 0.0.5-alpha10
-    created: "2020-06-30T09:14:11.953966306Z"
+    created: "2020-07-10T11:06:22.976698106Z"
     description: A Helm chart for Kubernetes
     digest: 813cde80a2697789ce42bc87fd2187eed333b22949bffb3c9e3f92c324cea83d
     name: hydra-maester
@@ -2140,7 +2193,7 @@ entries:
     version: 0.1.0
   - apiVersion: v1
     appVersion: 0.0.5-alpha10
-    created: "2020-06-30T09:14:11.953028301Z"
+    created: "2020-07-10T11:06:22.976126043Z"
     description: A Helm chart for Kubernetes
     digest: 92bbcccc83234962360a0f7ab82c02e19cd54e4172dd793e8eac80e90c0d1af5
     name: hydra-maester
@@ -2149,8 +2202,18 @@ entries:
     version: 0.0.48
   kratos:
   - apiVersion: v2
+    appVersion: 0.4.3-alpha.1
+    created: "2020-07-10T11:06:22.989309555Z"
+    description: A ORY Kratos Helm chart for Kubernetes
+    digest: 4639f3d65f225bf7b1aff123df76f6481c9f99e481da8e4b020b9fc46e211a28
+    name: kratos
+    type: application
+    urls:
+    - kratos-0.4.0.tgz
+    version: 0.4.0
+  - apiVersion: v2
     appVersion: 0.1.1-alpha.1
-    created: "2020-06-30T09:14:11.972898366Z"
+    created: "2020-07-10T11:06:22.988773943Z"
     description: A ORY Kratos Helm chart for Kubernetes
     digest: ad4cd39ae9bea7174f33108e560940822ecbeb51ea0e235c21e0ba4427843280
     name: kratos
@@ -2160,7 +2223,7 @@ entries:
     version: 0.3.5
   - apiVersion: v2
     appVersion: 0.1.1-alpha.1
-    created: "2020-06-30T09:14:11.97194658Z"
+    created: "2020-07-10T11:06:22.988239503Z"
     description: A ORY Kratos Helm chart for Kubernetes
     digest: b6de6fa629705fab47ddf59726772b225ceaf83ebdd7358f9701a9b93c85ce97
     name: kratos
@@ -2170,7 +2233,7 @@ entries:
     version: 0.3.4
   - apiVersion: v2
     appVersion: 0.1.1-alpha.1
-    created: "2020-06-30T09:14:11.970977626Z"
+    created: "2020-07-10T11:06:22.987688452Z"
     description: A ORY Kratos Helm chart for Kubernetes
     digest: 3147cff6b06109ad3e41223ce90c5f3f5af531e7f687de1eb6edc46d1e690cef
     name: kratos
@@ -2180,7 +2243,7 @@ entries:
     version: 0.3.3
   - apiVersion: v2
     appVersion: 0.1.1-alpha.1
-    created: "2020-06-30T09:14:11.97002223Z"
+    created: "2020-07-10T11:06:22.987114525Z"
     description: A ORY Kratos Helm chart for Kubernetes
     digest: 4dd3b134ba9db491e856952ac9938704f1647e82637ed67100e81e556fae8e37
     name: kratos
@@ -2190,7 +2253,7 @@ entries:
     version: 0.3.2
   - apiVersion: v2
     appVersion: 0.1.1-alpha.1
-    created: "2020-06-30T09:14:11.969079928Z"
+    created: "2020-07-10T11:06:22.986543707Z"
     description: A ORY Kratos Helm chart for Kubernetes
     digest: 3186cecc5e3bef86c260187c07ed8f34f125ab7be48dfa5096e348f11ed94321
     name: kratos
@@ -2200,7 +2263,7 @@ entries:
     version: 0.3.1
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2020-06-30T09:14:11.964866204Z"
+    created: "2020-07-10T11:06:22.983339874Z"
     dependencies:
     - name: postgresql
       repository: '@bitnami'
@@ -2214,7 +2277,17 @@ entries:
   kratos-selfservice-ui-node:
   - apiVersion: v2
     appVersion: v0.1.1-alpha.1
-    created: "2020-06-30T09:14:11.977409188Z"
+    created: "2020-07-10T11:06:22.992172582Z"
+    description: A Helm chart for ORY Kratos's example ui for Kubernetes
+    digest: f3a70e0d854317f8ffed02db3c4bb9b2a955048fce3415e72b87ba9b72573409
+    name: kratos-selfservice-ui-node
+    type: application
+    urls:
+    - kratos-selfservice-ui-node-0.4.0.tgz
+    version: 0.4.0
+  - apiVersion: v2
+    appVersion: v0.1.1-alpha.1
+    created: "2020-07-10T11:06:22.991755661Z"
     description: A Helm chart for ORY Kratos's example ui for Kubernetes
     digest: b59a86ced090dcabf09680ac24847486049d341482e058b322f754e5192b3da2
     name: kratos-selfservice-ui-node
@@ -2224,7 +2297,7 @@ entries:
     version: 0.3.5
   - apiVersion: v2
     appVersion: v0.1.1-alpha.1
-    created: "2020-06-30T09:14:11.976627239Z"
+    created: "2020-07-10T11:06:22.991324447Z"
     description: A Helm chart for ORY Kratos's example ui for Kubernetes
     digest: aecdc0fe677be29e4f8893e808c0cbb11233b4d38c1c9176fc412ca0e82220c1
     name: kratos-selfservice-ui-node
@@ -2234,7 +2307,7 @@ entries:
     version: 0.3.4
   - apiVersion: v2
     appVersion: v0.1.1-alpha.1
-    created: "2020-06-30T09:14:11.975852925Z"
+    created: "2020-07-10T11:06:22.990928158Z"
     description: A Helm chart for ORY Kratos's example ui for Kubernetes
     digest: 76821d5668716837e39412a088e99efd8dae2e57438a4e18ee5a09177c93718d
     name: kratos-selfservice-ui-node
@@ -2244,7 +2317,7 @@ entries:
     version: 0.3.3
   - apiVersion: v2
     appVersion: v0.1.1-alpha.1
-    created: "2020-06-30T09:14:11.97510032Z"
+    created: "2020-07-10T11:06:22.990526376Z"
     description: A Helm chart for ORY Kratos's example ui for Kubernetes
     digest: 9f4fa763985febdea3990ca6cb38eb571d8b43cf746162051f036c0e1b6d27f6
     name: kratos-selfservice-ui-node
@@ -2254,7 +2327,7 @@ entries:
     version: 0.3.2
   - apiVersion: v2
     appVersion: v0.1.1-alpha.1
-    created: "2020-06-30T09:14:11.974349392Z"
+    created: "2020-07-10T11:06:22.99010237Z"
     description: A Helm chart for ORY Kratos's example ui for Kubernetes
     digest: 245ad51c48f7a7f8113a22b5ee143044b69ea9c220187b77864ba559d4fb7f57
     name: kratos-selfservice-ui-node
@@ -2264,7 +2337,7 @@ entries:
     version: 0.3.1
   - apiVersion: v1
     appVersion: v0.0.1
-    created: "2020-06-30T09:14:11.9735997Z"
+    created: "2020-07-10T11:06:22.989707004Z"
     description: A Helm chart for ORY Kratos's example ui for Kubernetes
     digest: 14cead4a9c56a36164446c06d4e796ef270e4b76cbc184405ac9959561bbf3ee
     name: kratos-selfservice-ui-node
@@ -2274,7 +2347,7 @@ entries:
   maester:
   - apiVersion: v1
     appVersion: v0.0.1
-    created: "2020-06-30T09:14:11.980500103Z"
+    created: "2020-07-10T11:06:22.993215921Z"
     description: A Helm chart for deployoing ORY Oathkeeper Rule Controller in Kubernetes
     digest: 65ee23a8850dbce8dfebafa5fada0e746b135c2ebd66d801b68c5fc4e589f430
     home: https://www.ory.sh/
@@ -2300,7 +2373,7 @@ entries:
     version: 0.0.17
   - apiVersion: v1
     appVersion: v0.0.1
-    created: "2020-06-30T09:14:11.979473861Z"
+    created: "2020-07-10T11:06:22.992689999Z"
     description: A Helm chart for deployoing ORY Oathkeeper Rule Controller in Kubernetes
     digest: 80bfd42e02dff8a98049bca13e6a70c7dc619f1fae92810c01967562b1a05fcc
     home: https://www.ory.sh/
@@ -2327,7 +2400,40 @@ entries:
   oathkeeper:
   - apiVersion: v2
     appVersion: v0.37.1-beta.1
-    created: "2020-06-30T09:14:12.070841864Z"
+    created: "2020-07-10T11:06:23.052822718Z"
+    dependencies:
+    - alias: maester
+      condition: maester.enabled
+      name: oathkeeper-maester
+      repository: file://../oathkeeper-maester
+      version: 0.0.1
+    description: A Helm chart for deploying ORY Oathkeeper in Kubernetes
+    digest: 2f0954fcf801846aa14ff526a9294c9d6c4af518553106167395e8a47bce7b10
+    home: https://www.ory.sh/
+    keywords:
+    - zero-trust
+    - beyond-corp
+    - access-control
+    - reverse-proxy
+    - nginx
+    - envoy
+    - ambassador
+    - auth-filter
+    maintainers:
+    - email: office@ory.sh
+      name: ORY Team
+      url: https://www.ory.sh/
+    name: oathkeeper
+    sources:
+    - https://github.com/ory/oathkeeper
+    - https://github.com/ory/k8s
+    type: application
+    urls:
+    - oathkeeper-0.4.0.tgz
+    version: 0.4.0
+  - apiVersion: v2
+    appVersion: v0.37.1-beta.1
+    created: "2020-07-10T11:06:23.050782645Z"
     dependencies:
     - alias: maester
       condition: maester.enabled
@@ -2360,7 +2466,7 @@ entries:
     version: 0.3.5
   - apiVersion: v2
     appVersion: v0.37.1-beta.1
-    created: "2020-06-30T09:14:12.069312115Z"
+    created: "2020-07-10T11:06:23.049299384Z"
     dependencies:
     - alias: maester
       condition: maester.enabled
@@ -2393,7 +2499,7 @@ entries:
     version: 0.3.4
   - apiVersion: v2
     appVersion: v0.37.1-beta.1
-    created: "2020-06-30T09:14:12.066436735Z"
+    created: "2020-07-10T11:06:23.047819472Z"
     dependencies:
     - alias: maester
       condition: maester.enabled
@@ -2426,7 +2532,7 @@ entries:
     version: 0.3.3
   - apiVersion: v2
     appVersion: v0.37.1-beta.1
-    created: "2020-06-30T09:14:12.063890665Z"
+    created: "2020-07-10T11:06:23.046417045Z"
     dependencies:
     - alias: maester
       condition: maester.enabled
@@ -2459,7 +2565,7 @@ entries:
     version: 0.3.2
   - apiVersion: v2
     appVersion: v0.37.1-beta.1
-    created: "2020-06-30T09:14:12.061309956Z"
+    created: "2020-07-10T11:06:23.044990546Z"
     dependencies:
     - alias: maester
       condition: maester.enabled
@@ -2492,7 +2598,7 @@ entries:
     version: 0.3.1
   - apiVersion: v1
     appVersion: v0.32.0-beta.1
-    created: "2020-06-30T09:14:12.058711087Z"
+    created: "2020-07-10T11:06:23.043578481Z"
     dependencies:
     - alias: maester
       condition: maester.enabled
@@ -2524,7 +2630,7 @@ entries:
     version: 0.2.0
   - apiVersion: v1
     appVersion: v0.32.0-beta.1
-    created: "2020-06-30T09:14:12.056076997Z"
+    created: "2020-07-10T11:06:23.04206888Z"
     dependencies:
     - alias: maester
       condition: maester.enabled
@@ -2556,7 +2662,7 @@ entries:
     version: 0.1.0
   - apiVersion: v1
     appVersion: v0.32.0-beta.1
-    created: "2020-06-30T09:14:12.047680324Z"
+    created: "2020-07-10T11:06:23.036363748Z"
     dependencies:
     - condition: maester.enabled
       name: oathkeeper-maester
@@ -2587,7 +2693,7 @@ entries:
     version: 0.0.48
   - apiVersion: v1
     appVersion: v0.32.0-beta.1
-    created: "2020-06-30T09:14:12.04624066Z"
+    created: "2020-07-10T11:06:23.034953118Z"
     dependencies:
     - condition: maester.enabled
       name: oathkeeper-maester
@@ -2618,7 +2724,7 @@ entries:
     version: 0.0.47
   - apiVersion: v1
     appVersion: v0.32.0-beta.1
-    created: "2020-06-30T09:14:12.044880395Z"
+    created: "2020-07-10T11:06:23.033645189Z"
     dependencies:
     - condition: maester.enabled
       name: oathkeeper-maester
@@ -2649,7 +2755,7 @@ entries:
     version: 0.0.46
   - apiVersion: v1
     appVersion: v0.32.0-beta.1
-    created: "2020-06-30T09:14:12.043546193Z"
+    created: "2020-07-10T11:06:23.032328409Z"
     dependencies:
     - condition: maester.enabled
       name: oathkeeper-maester
@@ -2680,7 +2786,7 @@ entries:
     version: 0.0.45
   - apiVersion: v1
     appVersion: v0.32.0-beta.1
-    created: "2020-06-30T09:14:12.042208315Z"
+    created: "2020-07-10T11:06:23.031000111Z"
     dependencies:
     - condition: maester.enabled
       name: oathkeeper-maester
@@ -2711,7 +2817,7 @@ entries:
     version: 0.0.43
   - apiVersion: v1
     appVersion: v0.32.0-beta.1
-    created: "2020-06-30T09:14:12.040837452Z"
+    created: "2020-07-10T11:06:23.029080216Z"
     dependencies:
     - condition: maester.enabled
       name: oathkeeper-maester
@@ -2742,7 +2848,7 @@ entries:
     version: 0.0.42
   - apiVersion: v1
     appVersion: v0.32.0-beta.1
-    created: "2020-06-30T09:14:12.03952775Z"
+    created: "2020-07-10T11:06:23.027796272Z"
     dependencies:
     - condition: maester.enabled
       name: oathkeeper-maester
@@ -2773,7 +2879,7 @@ entries:
     version: 0.0.41
   - apiVersion: v1
     appVersion: v0.32.0-beta.1
-    created: "2020-06-30T09:14:12.038215286Z"
+    created: "2020-07-10T11:06:23.026562389Z"
     dependencies:
     - condition: maester.enabled
       name: oathkeeper-maester
@@ -2804,7 +2910,7 @@ entries:
     version: 0.0.40
   - apiVersion: v1
     appVersion: v0.32.0-beta.1
-    created: "2020-06-30T09:14:12.036138476Z"
+    created: "2020-07-10T11:06:23.025269699Z"
     dependencies:
     - condition: maester.enabled
       name: oathkeeper-maester
@@ -2835,7 +2941,7 @@ entries:
     version: 0.0.38
   - apiVersion: v1
     appVersion: v0.32.0-beta.1
-    created: "2020-06-30T09:14:12.03486235Z"
+    created: "2020-07-10T11:06:23.023966629Z"
     dependencies:
     - condition: maester.enabled
       name: oathkeeper-maester
@@ -2866,7 +2972,7 @@ entries:
     version: 0.0.37
   - apiVersion: v1
     appVersion: v0.32.0-beta.1
-    created: "2020-06-30T09:14:12.03354346Z"
+    created: "2020-07-10T11:06:23.02267037Z"
     dependencies:
     - condition: maester.enabled
       name: oathkeeper-maester
@@ -2897,7 +3003,7 @@ entries:
     version: 0.0.36
   - apiVersion: v1
     appVersion: v0.32.0-beta.1
-    created: "2020-06-30T09:14:12.032231104Z"
+    created: "2020-07-10T11:06:23.021367557Z"
     dependencies:
     - condition: maester.enabled
       name: oathkeeper-maester
@@ -2928,7 +3034,7 @@ entries:
     version: 0.0.35
   - apiVersion: v1
     appVersion: v0.16.0-beta.4_oryOS.12
-    created: "2020-06-30T09:14:12.030836356Z"
+    created: "2020-07-10T11:06:23.020048775Z"
     dependencies:
     - condition: maester.enabled
       name: oathkeeper-maester
@@ -2959,7 +3065,7 @@ entries:
     version: 0.0.34
   - apiVersion: v1
     appVersion: v0.16.0-beta.4_oryOS.12
-    created: "2020-06-30T09:14:12.028967465Z"
+    created: "2020-07-10T11:06:23.018742063Z"
     dependencies:
     - condition: maester.enabled
       name: oathkeeper-maester
@@ -2990,7 +3096,7 @@ entries:
     version: 0.0.33
   - apiVersion: v1
     appVersion: v0.16.0-beta.4_oryOS.12
-    created: "2020-06-30T09:14:12.026529251Z"
+    created: "2020-07-10T11:06:23.016698802Z"
     dependencies:
     - condition: maester.enabled
       name: oathkeeper-maester
@@ -3021,7 +3127,7 @@ entries:
     version: 0.0.32
   - apiVersion: v1
     appVersion: v0.16.0-beta.4_oryOS.12
-    created: "2020-06-30T09:14:12.024051835Z"
+    created: "2020-07-10T11:06:23.015447929Z"
     dependencies:
     - condition: maester.enabled
       name: oathkeeper-maester
@@ -3052,7 +3158,7 @@ entries:
     version: 0.0.31
   - apiVersion: v1
     appVersion: v0.16.0-beta.4_oryOS.12
-    created: "2020-06-30T09:14:12.020078582Z"
+    created: "2020-07-10T11:06:23.014158308Z"
     dependencies:
     - condition: maester.enabled
       name: oathkeeper-maester
@@ -3083,7 +3189,7 @@ entries:
     version: 0.0.30
   - apiVersion: v1
     appVersion: v0.16.0-beta.4_oryOS.12
-    created: "2020-06-30T09:14:12.017619224Z"
+    created: "2020-07-10T11:06:23.012877866Z"
     dependencies:
     - condition: maester.enabled
       name: oathkeeper-maester
@@ -3114,7 +3220,7 @@ entries:
     version: 0.0.29
   - apiVersion: v1
     appVersion: v0.16.0-beta.4_oryOS.12
-    created: "2020-06-30T09:14:12.015139382Z"
+    created: "2020-07-10T11:06:23.011603345Z"
     dependencies:
     - condition: maester.enabled
       name: oathkeeper-maester
@@ -3145,7 +3251,7 @@ entries:
     version: 0.0.28
   - apiVersion: v1
     appVersion: v0.16.0-beta.4_oryOS.12
-    created: "2020-06-30T09:14:12.012660627Z"
+    created: "2020-07-10T11:06:23.010350827Z"
     dependencies:
     - condition: maester.enabled
       name: oathkeeper-maester
@@ -3176,7 +3282,7 @@ entries:
     version: 0.0.27
   - apiVersion: v1
     appVersion: v0.16.0-beta.4_oryOS.12
-    created: "2020-06-30T09:14:12.010203086Z"
+    created: "2020-07-10T11:06:23.009073191Z"
     dependencies:
     - condition: maester.enabled
       name: oathkeeper-maester
@@ -3207,7 +3313,7 @@ entries:
     version: 0.0.26
   - apiVersion: v1
     appVersion: v0.16.0-beta.4_oryOS.12
-    created: "2020-06-30T09:14:12.007747947Z"
+    created: "2020-07-10T11:06:23.007800467Z"
     dependencies:
     - condition: maester.enabled
       name: oathkeeper-maester
@@ -3238,7 +3344,7 @@ entries:
     version: 0.0.25
   - apiVersion: v1
     appVersion: v0.16.0-beta.4_oryOS.12
-    created: "2020-06-30T09:14:12.005233712Z"
+    created: "2020-07-10T11:06:23.005856124Z"
     dependencies:
     - condition: maester.enabled
       name: oathkeeper-maester
@@ -3269,7 +3375,7 @@ entries:
     version: 0.0.24
   - apiVersion: v1
     appVersion: v0.16.0-beta.4_oryOS.12
-    created: "2020-06-30T09:14:12.002689567Z"
+    created: "2020-07-10T11:06:23.004584612Z"
     dependencies:
     - condition: maester.enabled
       name: oathkeeper-maester
@@ -3300,7 +3406,7 @@ entries:
     version: 0.0.23
   - apiVersion: v1
     appVersion: v0.16.0-beta.4_oryOS.12
-    created: "2020-06-30T09:14:12.000129045Z"
+    created: "2020-07-10T11:06:23.00334085Z"
     dependencies:
     - condition: maester.enabled
       name: oathkeeper-maester
@@ -3331,7 +3437,7 @@ entries:
     version: 0.0.22
   - apiVersion: v1
     appVersion: v0.16.0-beta.4_oryOS.12
-    created: "2020-06-30T09:14:11.996707323Z"
+    created: "2020-07-10T11:06:23.002063014Z"
     dependencies:
     - condition: maester.enabled
       name: oathkeeper-maester
@@ -3362,7 +3468,7 @@ entries:
     version: 0.0.21
   - apiVersion: v1
     appVersion: v0.16.0-beta.4_oryOS.12
-    created: "2020-06-30T09:14:11.994314523Z"
+    created: "2020-07-10T11:06:23.000800056Z"
     dependencies:
     - condition: maester.enabled
       name: oathkeeper-maester
@@ -3393,7 +3499,7 @@ entries:
     version: 0.0.20
   - apiVersion: v1
     appVersion: v0.16.0-beta.4_oryOS.12
-    created: "2020-06-30T09:14:11.991832333Z"
+    created: "2020-07-10T11:06:22.999570143Z"
     description: A Helm chart for deployoing ORY Oathkeeper in Kubernetes
     digest: a6db2a7b4608f94a817a58854a3b09e59af18707fd45fe03b823812ce256f1d8
     home: https://www.ory.sh/
@@ -3419,7 +3525,7 @@ entries:
     version: 0.0.17
   - apiVersion: v1
     appVersion: v0.16.0-beta.4_oryOS.12
-    created: "2020-06-30T09:14:11.990421918Z"
+    created: "2020-07-10T11:06:22.99885974Z"
     description: A Helm chart for deployoing ORY Oathkeeper in Kubernetes
     digest: 6a4b541bcaecfce82585c88da9f5819630a6b014aa8a213d63c7628d3a7e29d5
     home: https://www.ory.sh/
@@ -3445,7 +3551,7 @@ entries:
     version: 0.0.16
   - apiVersion: v1
     appVersion: v0.16.0-beta.4_oryOS.12
-    created: "2020-06-30T09:14:11.988945266Z"
+    created: "2020-07-10T11:06:22.998115882Z"
     description: A Helm chart for deployoing ORY Oathkeeper in Kubernetes
     digest: ed9e1cd99fd4882097385e4f4b0d46c50d62c803b66ebec4cfdc751a27da3ba3
     home: https://www.ory.sh/
@@ -3471,7 +3577,7 @@ entries:
     version: 0.0.15
   - apiVersion: v1
     appVersion: v0.16.0-beta.4_oryOS.12
-    created: "2020-06-30T09:14:11.98754401Z"
+    created: "2020-07-10T11:06:22.997392585Z"
     description: A Helm chart for deployoing ORY Oathkeeper in Kubernetes
     digest: ca07e8eb538cefbdae75d398cd12bc44ca0b644c4f4e0398616e45d554119a90
     home: https://www.ory.sh/
@@ -3497,7 +3603,7 @@ entries:
     version: 0.0.14
   - apiVersion: v1
     appVersion: v0.16.0-beta.4_oryOS.12
-    created: "2020-06-30T09:14:11.98616937Z"
+    created: "2020-07-10T11:06:22.996699606Z"
     description: A Helm chart for deployoing ORY Oathkeeper in Kubernetes
     digest: 909f77b1cdb624cbe3c34bb485feb2450dc9f0ba396759ebbac112f703109d9f
     home: https://www.ory.sh/
@@ -3523,7 +3629,7 @@ entries:
     version: 0.0.13
   - apiVersion: v1
     appVersion: v0.16.0-beta.4_oryOS.12
-    created: "2020-06-30T09:14:11.984774665Z"
+    created: "2020-07-10T11:06:22.995983326Z"
     description: A Helm chart for deployoing ORY Oathkeeper in Kubernetes
     digest: a7e239b332fc8205e38fc1b7b10cc228c1d03f9c81f8a2d60f7b736007bf1086
     home: https://www.ory.sh/
@@ -3549,7 +3655,7 @@ entries:
     version: 0.0.12
   - apiVersion: v1
     appVersion: v0.16.0-beta.4_oryOS.12
-    created: "2020-06-30T09:14:11.983378686Z"
+    created: "2020-07-10T11:06:22.994644014Z"
     description: A Helm chart for deployoing ORY Oathkeeper in Kubernetes
     digest: e1f7d7e0e3146aaf733fa4aeb97658bc000caf1f7b70f47f09ad86e809760bf9
     home: https://www.ory.sh/
@@ -3575,7 +3681,7 @@ entries:
     version: 0.0.11
   - apiVersion: v1
     appVersion: v0.16.0-beta.4_oryOS.12
-    created: "2020-06-30T09:14:11.98195417Z"
+    created: "2020-07-10T11:06:22.993921442Z"
     description: A Helm chart for deployoing ORY Oathkeeper in Kubernetes
     digest: cfeb9b742abf1c96d06b2f987964365c84f608e132893b5a3ca40562dc05c15f
     home: https://www.ory.sh/
@@ -3601,7 +3707,7 @@ entries:
     version: 0.0.10
   - apiVersion: v1
     appVersion: v0.16.0-beta.4_oryOS.12
-    created: "2020-06-30T09:14:12.053515878Z"
+    created: "2020-07-10T11:06:23.039929403Z"
     description: A Helm chart for deployoing ORY Oathkeeper in Kubernetes
     digest: f0618c4f62c97374a7df4eb3630cf80e5ffba15b65b564b3771c09f4d0838241
     home: https://www.ory.sh/
@@ -3627,7 +3733,7 @@ entries:
     version: 0.0.9
   - apiVersion: v1
     appVersion: v0.16.0-beta.4_oryOS.12
-    created: "2020-06-30T09:14:12.05226526Z"
+    created: "2020-07-10T11:06:23.039202359Z"
     description: A Helm chart for deployoing ORY Oathkeeper in Kubernetes
     digest: 38ff6ea7aff43eaf9cdb31ae6d1c0c49a6de5c261e89e9989a8d86a181e720c9
     home: https://www.ory.sh/
@@ -3653,7 +3759,7 @@ entries:
     version: 0.0.8
   - apiVersion: v1
     appVersion: v0.16.0-beta.4_oryOS.12
-    created: "2020-06-30T09:14:12.050968941Z"
+    created: "2020-07-10T11:06:23.038491094Z"
     description: A Helm chart for deployoing ORY Oathkeeper in Kubernetes
     digest: fe65f11483660a165d6699d46207d6ab2df7e24e712603dba75bb681ab9e7d9e
     home: https://www.ory.sh/
@@ -3679,7 +3785,7 @@ entries:
     version: 0.0.7
   - apiVersion: v1
     appVersion: v0.16.0-beta.4_oryOS.12
-    created: "2020-06-30T09:14:12.049414164Z"
+    created: "2020-07-10T11:06:23.037764554Z"
     description: A Helm chart for deployoing ORY Oathkeeper in Kubernetes
     digest: 56bdbdaaabf1ec25598fa4aa7e58e8a0627052cba280b76787dec009529fe7d9
     home: https://www.ory.sh/
@@ -3705,7 +3811,7 @@ entries:
     version: 0.0.6
   - apiVersion: v1
     appVersion: v0.16.0-beta.4
-    created: "2020-06-30T09:14:12.048400924Z"
+    created: "2020-07-10T11:06:23.037055723Z"
     description: A Helm chart for deployoing ORY Oathkeeper in Kubernetes
     digest: 49a9449435aade826fd38683373930863fe895a1a5b39fb0472c56d8c1a5ea7a
     home: https://www.ory.sh/
@@ -3732,7 +3838,33 @@ entries:
   oathkeeper-maester:
   - apiVersion: v1
     appVersion: v0.0.1
-    created: "2020-06-30T09:14:12.075154168Z"
+    created: "2020-07-10T11:06:23.057683546Z"
+    description: A Helm chart for deploying ORY Oathkeeper Rule Controller in Kubernetes
+    digest: 058291e12582df7f9391fecbae3c333d6c9cd3e53b8c748e101b57e0698880e5
+    home: https://www.ory.sh/
+    keywords:
+    - zero-trust
+    - beyond-corp
+    - access-control
+    - reverse-proxy
+    - nginx
+    - envoy
+    - ambassador
+    - auth-filter
+    maintainers:
+    - email: hi@ory.sh
+      name: ORY Team
+      url: https://www.ory.sh/
+    name: oathkeeper-maester
+    sources:
+    - https://github.com/ory/oathkeeper
+    - https://github.com/ory/k8s
+    urls:
+    - oathkeeper-maester-0.4.0.tgz
+    version: 0.4.0
+  - apiVersion: v1
+    appVersion: v0.0.1
+    created: "2020-07-10T11:06:23.057071358Z"
     description: A Helm chart for deploying ORY Oathkeeper Rule Controller in Kubernetes
     digest: 4b5ea8d377f576e6e60d43f5504b73ed4735c11145e730dc342fa2dba8a8b5c3
     home: https://www.ory.sh/
@@ -3758,7 +3890,7 @@ entries:
     version: 0.3.5
   - apiVersion: v1
     appVersion: v0.0.1
-    created: "2020-06-30T09:14:12.074485559Z"
+    created: "2020-07-10T11:06:23.056485899Z"
     description: A Helm chart for deploying ORY Oathkeeper Rule Controller in Kubernetes
     digest: 1d2aa61452c57f5aa3ab5a2143e6d5b2275e3d914be0ac8d482134352680df9f
     home: https://www.ory.sh/
@@ -3784,7 +3916,7 @@ entries:
     version: 0.3.4
   - apiVersion: v1
     appVersion: v0.0.1
-    created: "2020-06-30T09:14:12.073828014Z"
+    created: "2020-07-10T11:06:23.055907757Z"
     description: A Helm chart for deploying ORY Oathkeeper Rule Controller in Kubernetes
     digest: f5a9134718a5b342cc5dc851e4f6815a20047134cca30d27c61581797a920e12
     home: https://www.ory.sh/
@@ -3810,7 +3942,7 @@ entries:
     version: 0.3.3
   - apiVersion: v1
     appVersion: v0.0.1
-    created: "2020-06-30T09:14:12.073203725Z"
+    created: "2020-07-10T11:06:23.055310367Z"
     description: A Helm chart for deploying ORY Oathkeeper Rule Controller in Kubernetes
     digest: 7fa33c0681beaaf35d5bb6510cccaed13dc8550a44cd071a212ad9105fe48cfa
     home: https://www.ory.sh/
@@ -3836,7 +3968,7 @@ entries:
     version: 0.3.2
   - apiVersion: v1
     appVersion: v0.0.1
-    created: "2020-06-30T09:14:12.072617811Z"
+    created: "2020-07-10T11:06:23.0546905Z"
     description: A Helm chart for deploying ORY Oathkeeper Rule Controller in Kubernetes
     digest: 4bc84ae11c1c111ba6df057f8098feabe9758756f1d6564063466d86bdc31217
     home: https://www.ory.sh/
@@ -3862,7 +3994,7 @@ entries:
     version: 0.3.1
   - apiVersion: v1
     appVersion: v0.0.1
-    created: "2020-06-30T09:14:12.072029688Z"
+    created: "2020-07-10T11:06:23.054060288Z"
     description: A Helm chart for deploying ORY Oathkeeper Rule Controller in Kubernetes
     digest: e29d72f2eb613f84f77f0b557e7da029e8942dd0e7334a4df747e1654885a22e
     home: https://www.ory.sh/
@@ -3888,7 +4020,7 @@ entries:
     version: 0.2.0
   - apiVersion: v1
     appVersion: v0.0.1
-    created: "2020-06-30T09:14:12.071440961Z"
+    created: "2020-07-10T11:06:23.05347513Z"
     description: A Helm chart for deploying ORY Oathkeeper Rule Controller in Kubernetes
     digest: 00a986ec11628ea4e3f5efac83b73677d3b109de77944ff9cd752cbb59c52305
     home: https://www.ory.sh/
@@ -3912,4 +4044,4 @@ entries:
     urls:
     - oathkeeper-maester-0.1.0.tgz
     version: 0.1.0
-generated: "2020-06-30T09:14:11.828553417Z"
+generated: "2020-07-10T11:06:22.885216Z"
