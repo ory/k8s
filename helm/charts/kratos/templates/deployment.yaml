@@ -57,11 +57,17 @@ spec:
                   name: {{ include "kratos.fullname" . }}
                   key: dsn
             -
-              name: SECRETS_SESSION
+              name: SECRETS_DEFAULT
               valueFrom:
                 secretKeyRef:
                   name: {{ include "kratos.fullname" . }}
-                  key: secretsSession
+                  key: secretsDefault
+            -
+              name: SECRETS_COOKIE
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "kratos.fullname" . }}
+                  key: secretsCookie
     {{- end}}
       volumes:
         -
@@ -95,11 +101,17 @@ spec:
                   name: {{ include "kratos.fullname" . }}
                   key: dsn
             -
-              name: SECRETS_SESSION
+              name: SECRETS_DEFAULT
               valueFrom:
                 secretKeyRef:
                   name: {{ include "kratos.fullname" . }}
-                  key: secretsSession
+                  key: secretsDefault
+            -
+              name: SECRETS_COOKIE
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "kratos.fullname" . }}
+                  key: secretsCookie
           ports:
             - name: http-admin
               containerPort: {{ .Values.kratos.config.serve.admin.port }}

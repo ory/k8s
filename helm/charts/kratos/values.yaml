@@ -79,8 +79,7 @@ kratos:
       admin:
         port: 4434
 
-    secrets:
-      session: []
+    secrets: {}
 
 deployment:
   resources: {}
