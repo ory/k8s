@@ -42,9 +42,7 @@ ingress:
     hosts:
       - host: kratos.admin.local.com
         paths:
-          - path: /
-            backend:
-              servicePort: 80
+          - /
 
     tls: []
     #  - secretName: chart-example-tls
@@ -59,9 +57,7 @@ ingress:
       -
         host: kratos.public.local.com
         paths:
-          - path: /
-            backend:
-              servicePort: 80
+          - /
 
     tls: []
     #  - secretName: chart-example-tls
