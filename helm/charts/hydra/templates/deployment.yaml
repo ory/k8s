@@ -51,7 +51,7 @@ spec:
             - name: DSN
               valueFrom:
                 secretKeyRef:
-                  name: {{ include "hydra.fullname" . }}
+                  name: {{ include "hydra.secretname" . }}
                   key: dsn
     {{- end}}
       volumes:
