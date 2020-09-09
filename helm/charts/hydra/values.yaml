@@ -142,6 +142,20 @@ deployment:
   ## Uncoment if it is needed to provide a ServiceAccount for the Hydra deployment.
   # serviceAccountName:
 
+  extraVolumes: []
+  extraVolumeMounts: []
+  # If yout want to mount external volume
+  # For example, mount a secret containing Certificate root CA to verify database
+  # TLS connection.
+  # extraVolumes:
+  #   - name: postgresql-tls
+  #     secret:
+  #       secretName: postgresql-root-ca
+  # extraVolumeMounts:
+  #   - name: postgresql-tls
+  #     mountPath: "/etc/postgresql-tls"
+  #     readOnly: true
+
 # Configure node affinity
 affinity: {}
 
