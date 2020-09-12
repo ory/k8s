@@ -47,6 +47,9 @@ spec:
             - name: {{ include "hydra.name" . }}-config-volume
               mountPath: /etc/config
               readOnly: true
+            {{- if .Values.deployment.extraVolumeMounts }}
+{{ toYaml .Values.deployment.extraVolumeMounts | indent 12 }}
+            {{- end }}
           env:
             - name: DSN
               valueFrom:
@@ -58,6 +61,10 @@ spec:
         - name: {{ include "hydra.name" . }}-config-volume
           configMap:
             name: {{ include "hydra.fullname" . }}
+        {{- if .Values.deployment.extraVolumes }}
+{{ toYaml .Values.deployment.extraVolumes | indent 8 }}
+        {{- end }}
+
       {{- if .Values.deployment.serviceAccountName  }}
       serviceAccountName: {{ .Values.deployment.serviceAccountName }}
       {{- end }}
@@ -70,6 +77,9 @@ spec:
             - name: {{ include "hydra.name" . }}-config-volume
               mountPath: /etc/config
               readOnly: true
+            {{- if .Values.deployment.extraVolumeMounts }}
+{{ toYaml .Values.deployment.extraVolumeMounts | indent 12 }}
+            {{- end }}
           args: [
             "serve",
             "all",
