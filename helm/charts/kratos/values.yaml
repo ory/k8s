@@ -33,6 +33,12 @@ service:
     # kubernetes.io/ingress.class: nginx
     # kubernetes.io/tls-acme: "true"
 
+secret:
+  # switch to false to prevent creating the secret
+  enabled: true
+  # ... and choose a different name for a secret you provide like this
+  # nameOverride: "MyOtherName"
+
 ingress:
   admin:
     enabled: false

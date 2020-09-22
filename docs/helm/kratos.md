@@ -57,5 +57,9 @@ Additionally, the following extra settings are available:
 
 - `kratos.autoMigrate` (bool): If enabled, an `initContainer` running `kratos migrate sql` will be created.
 - `kratos.development` (bool): If enabled, kratos will run with `--dev` argument.
+- `secret.enabled` (bool): If false, a secret is not created (contains `dsn`, `secretsCookie` and `secretsDefault`)
+- `secret.nameOverride` (string): Let's you override the name of the secret to be used
 - `ingress.admin.enabled` (bool): If enabled, an ingress is created on admin endpoint
 - `ingress.public.enabled` (bool): If enabled, an ingress is created on public endpoint
+
+Check values.yaml for more configuration options.

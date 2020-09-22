@@ -54,19 +54,19 @@ spec:
               name: DSN
               valueFrom:
                 secretKeyRef:
-                  name: {{ include "kratos.fullname" . }}
+                  name: {{ include "kratos.secretname" . }}
                   key: dsn
             -
               name: SECRETS_DEFAULT
               valueFrom:
                 secretKeyRef:
-                  name: {{ include "kratos.fullname" . }}
+                  name: {{ include "kratos.secretname" . }}
                   key: secretsDefault
             -
               name: SECRETS_COOKIE
               valueFrom:
                 secretKeyRef:
-                  name: {{ include "kratos.fullname" . }}
+                  name: {{ include "kratos.secretname" . }}
                   key: secretsCookie
     {{- end}}
       volumes:
@@ -98,19 +98,19 @@ spec:
               name: DSN
               valueFrom:
                 secretKeyRef:
-                  name: {{ include "kratos.fullname" . }}
+                  name: {{ include "kratos.secretname" . }}
                   key: dsn
             -
               name: SECRETS_DEFAULT
               valueFrom:
                 secretKeyRef:
-                  name: {{ include "kratos.fullname" . }}
+                  name: {{ include "kratos.secretname" . }}
                   key: secretsDefault
             -
               name: SECRETS_COOKIE
               valueFrom:
                 secretKeyRef:
-                  name: {{ include "kratos.fullname" . }}
+                  name: {{ include "kratos.secretname" . }}
                   key: secretsCookie
           ports:
             - name: http-admin
