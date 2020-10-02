@@ -68,6 +68,14 @@ spec:
                 secretKeyRef:
                   name: {{ include "kratos.secretname" . }}
                   key: secretsCookie
+          {{- if .Values.kratos.config.courier.smtp.connection_uri }}
+            - 
+              name: COURIER_SMTP_CONNECTION_URI
+              valueFrom: 
+                secretKeyRef: 
+                  name: {{ include "kratos.secretname" . }}
+                  key: smtpConnectionURI
+          {{- end}}
     {{- end}}
       volumes:
         -
@@ -112,6 +120,14 @@ spec:
                 secretKeyRef:
                   name: {{ include "kratos.secretname" . }}
                   key: secretsCookie
+            {{- if .Values.kratos.config.courier.smtp.connection_uri }}
+            - 
+              name: COURIER_SMTP_CONNECTION_URI
+              valueFrom: 
+                secretKeyRef: 
+                  name: {{ include "kratos.secretname" . }}
+                  key: smtpConnectionURI
+          {{- end}}
           ports:
             - name: http-admin
               containerPort: {{ .Values.kratos.config.serve.admin.port }}

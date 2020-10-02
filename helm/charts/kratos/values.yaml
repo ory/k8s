@@ -75,6 +75,9 @@ kratos:
   autoMigrate: false
 
   config:
+    courier:
+      smtp: {}
+      
     serve:
       public:
         port: 4433

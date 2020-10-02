@@ -73,6 +73,9 @@ Generate the configmap data, redacting secrets
 {{- define "kratos.configmap" -}}
 {{- $config := unset .Values.kratos.config "dsn" -}}
 {{- $config := unset $config "secrets" -}}
+{{- if .Values.kratos.config.courier.smtp.connection_uri -}}
+{{- $config = set $config "courier" (set $config.courier "smtp" (unset $config.courier.smtp "connection_uri")) -}}
+{{- end -}}
 {{- toYaml $config -}}
 {{- end -}}
 
