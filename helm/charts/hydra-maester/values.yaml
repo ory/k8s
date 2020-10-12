@@ -14,6 +14,10 @@ image:
   # Image pull policy
   pullPolicy: IfNotPresent
 
+## Pod priority
+## https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/
+# priorityClassName: ""
+
 adminService:
   name:
   port:
