@@ -2,5 +2,5 @@ apiVersion: v2
 appVersion: "0.0.5-alpha10"
 description: A Helm chart for Kubernetes
 name: hydra-maester
-version: 0.0.5-alpha10
+version: 0.0.6-alpha10
 type: application

@@ -2,7 +2,7 @@ apiVersion: v2
 appVersion: "v1.7.4"
 description: A Helm chart for deploying ORY Hydra in Kubernetes
 name: hydra
-version: 0.0.1
+version: 0.1.0
 keywords:
   - oauth2
   - openid-connect

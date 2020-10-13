@@ -42,6 +42,9 @@ spec:
           terminationMessagePath: /dev/termination-log
           terminationMessagePolicy: File
       serviceAccountName: {{ include "hydra-maester.name" . }}-account
+      {{- if .Values.priorityClassName }}
+      priorityClassName: {{ .Values.priorityClassName }}
+      {{- end }}
       nodeSelector:
       {{- with .Values.deployment.nodeSelector }}
         {{- toYaml . | nindent 8 }}
