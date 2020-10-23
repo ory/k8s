@@ -1,6 +1,6 @@
 apiVersion: v2
-appVersion: "0.4.3-alpha.1"
+appVersion: "0.5.2-alpha.1-sqlite"
 description: A ORY Kratos Helm chart for Kubernetes
 name: kratos
-version: 0.2.0
+version: 0.0.0
 type: application

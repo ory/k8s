@@ -7,5 +7,10 @@ metadata:
   labels:
 {{ include "kratos.labels" . | indent 4 }}
 data:
-  "config.yaml": |
-{{ include "kratos.configmap" . | nindent 4 }}
+  # Render the kratos config:
+  "kratos.yaml": |
+    {{- include "kratos.configmap" . | nindent 4 }}
+  # Render the identity schemas to disk:
+  {{- with .Values.kratos.identitySchemas }}
+    {{- toYaml . | nindent 2 }}
+  {{- end }}
