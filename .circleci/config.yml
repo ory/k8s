@@ -74,8 +74,20 @@ jobs:
     working_directory: /go/src/github.com/ory/k8s
     steps:
       - checkout
+      - run: |
+          wget https://github.com/mikefarah/yq/releases/download/{VERSION}/{BINARY} -O /usr/bin/yq && \
+            chmod +x /usr/bin/yq
       -
         run: curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
+      - run: |
+          version=`echo $CIRCLE_TAG | sed s/v//g`
+          yq w -i helm/charts/example-idp/Chart.yaml version "$version"
+          yq w -i helm/charts/hydra/Chart.yaml version "$version"
+          yq w -i helm/charts/hydra-maester/Chart.yaml version "$version"
+          yq w -i helm/charts/kratos/Chart.yaml version "$version"
+          yq w -i helm/charts/kratos-selfservice-ui-node/Chart.yaml version "$version"
+          yq w -i helm/charts/oathkeeper/Chart.yaml version "$version"
+          yq w -i helm/charts/oathkeeper-maester/Chart.yaml version "$version"
       -
         run: helm dep update ./helm/charts/oathkeeper/
       -
