@@ -5,8 +5,8 @@
 replicaCount: 1
 
 image:
-  repository:  oryd/kratos
-  tag: v0.4.3-alpha.1-sqlite
+  repository: oryd/kratos
+  tag: v0.5.2-alpha.1-sqlite
   pullPolicy: IfNotPresent
 
 imagePullSecrets: []
@@ -73,6 +73,17 @@ ingress:
 kratos:
   development: false
   autoMigrate: false
+
+#  You can add multiple identity schemas here
+#  identitySchemas:
+#    "identity.default.schema.json": |
+#      {
+#        // ...
+#      }
+#    "identity.email.schema.json": |
+#      {
+#        // ...
+#      }
 
   config:
     courier:

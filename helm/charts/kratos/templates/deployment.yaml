@@ -43,7 +43,7 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           command: ["kratos"]
-          args: ["migrate", "sql", "-e", "--yes", "--config", "/etc/config/config.yaml"]
+          args: ["migrate", "sql", "-e", "--yes", "--config", "/etc/config/kratos.yaml"]
           volumeMounts:
             -
               name: {{ include "kratos.name" . }}-config-volume
@@ -94,7 +94,7 @@ spec:
             "--dev",
             {{- end}}
             "--config",
-            "/etc/config/config.yaml"
+            "/etc/config/kratos.yaml"
           ]
           volumeMounts:
             -
