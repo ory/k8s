@@ -137,7 +137,7 @@ $ helm install \
 
 with hostnames
 
-- `http://hydra-example-api:4445/` corresponding to deployment name `--name hydra-example` (see next code sample)
+- `http://hydra-example-admin:4445/` corresponding to deployment name `--name hydra-example` (see next code sample)
     with suffix `-admin` which is the hostname of the ORY Hydra Admin API Service.
 - `https://public.hydra.localhost/` which is the default value for `ingress.public.hosts[0].host` from `ory/hydra` (
     see next code sample).
