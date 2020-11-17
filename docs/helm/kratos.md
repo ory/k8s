@@ -57,9 +57,10 @@ Additionally, the following extra settings are available:
 
 - `kratos.autoMigrate` (bool): If enabled, an `initContainer` running `kratos migrate sql` will be created.
 - `kratos.development` (bool): If enabled, kratos will run with `--dev` argument.
-- `secret.enabled` (bool): If `true` (default), a Kubernetes Secret is created (contains `dsn`, `secretsCookie` and `secretsDefault`). Also generates `secertsCookie` and `secretsDefault` unless already set.
-- `secret.nameOverride` (string): Let's you override the name of the secret to be used
+- `secret.enabled` (bool): If `true` (default), a Kubernetes Secret is created (contains `dsn`, `secretsCookie` and `secretsDefault`). Also generates `secretsCookie` and `secretsDefault` unless already set.
+- `secret.nameOverride` (string): Lets you override the name of the secret to be used
 - `ingress.admin.enabled` (bool): If enabled, an ingress is created on admin endpoint
 - `ingress.public.enabled` (bool): If enabled, an ingress is created on public endpoint
+- `deployment.environmentSecretsName` (string): Allows you to set arbitrary environment variables from [a secret containing a list of keys and values](https://kubernetes.io/docs/tasks/inject-data-application/distribute-credentials-secure/#configure-all-key-value-pairs-in-a-secret-as-container-environment-variables). (This secret is not created by the Helm chart)
 
 Check values.yaml for more configuration options.
