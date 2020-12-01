@@ -12,7 +12,7 @@ spec:
     kind: Deployment
     name: {{ include "hydra.fullname" . }}
   minReplicas: {{ .Values.autoscaling.minReplicas }}
-  maxReplicas: {{ .Values.autoscaling.gitg }}
+  maxReplicas: {{ .Values.autoscaling.maxReplicas }}
   metrics:
   {{- if .Values.autoscaling.cpuAverageValue }}
     - type: Resource
