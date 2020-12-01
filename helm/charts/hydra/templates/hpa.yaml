@@ -3,16 +3,16 @@ apiVersion: autoscaling/v2beta2
 kind: HorizontalPodAutoscaler
 metadata:
   namespace: crm
-  name: {{ include "hydra-chart.fullname" . }}
+  name: {{ include "hydra.fullname" . }}
   labels:
-    {{- include "hydra-chart.labels" . | nindent 4 }}
+    {{- include "hydra.labels" . | nindent 4 }}
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: {{ include "hydra-chart.fullname" . }}
+    name: {{ include "hydra.fullname" . }}
   minReplicas: {{ .Values.autoscaling.minReplicas }}
-  maxReplicas: {{ .Values.autoscaling.maxReplicas }}
+  maxReplicas: {{ .Values.autoscaling.gitg }}
   metrics:
   {{- if .Values.autoscaling.cpuAverageValue }}
     - type: Resource
