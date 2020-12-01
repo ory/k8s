@@ -163,6 +163,14 @@ deployment:
 # Configure node affinity
 affinity: {}
 
+# Configure HPA
+autoscaling:
+  enabled: true
+  minReplicas: 1
+  maxReplicas: 3
+  cpuAverageValue: 200m
+  memoryAverageValue: 0.5Gi
+
 # Configures controller setup
 maester:
   enabled: true

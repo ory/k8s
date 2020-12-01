@@ -1,0 +1,33 @@
+{{- if .Values.autoscaling.enabled }}
+apiVersion: autoscaling/v2beta2
+kind: HorizontalPodAutoscaler
+metadata:
+  namespace: crm
+  name: {{ include "hydra-chart.fullname" . }}
+  labels:
+    {{- include "hydra-chart.labels" . | nindent 4 }}
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: {{ include "hydra-chart.fullname" . }}
+  minReplicas: {{ .Values.autoscaling.minReplicas }}
+  maxReplicas: {{ .Values.autoscaling.maxReplicas }}
+  metrics:
+  {{- if .Values.autoscaling.cpuAverageValue }}
+    - type: Resource
+      resource:
+        name: cpu
+        target: 
+          type: AverageValue 
+          averageValue: {{ .Values.autoscaling.cpuAverageValue }}
+  {{- end }}
+  {{- if .Values.autoscaling.memoryAverageValue }}
+    - type: Resource
+      resource:
+        name: memory
+        target:
+          type: AverageValue
+          averageValue: {{ .Values.autoscaling.memoryAverageValue }}
+  {{- end }}
+{{- end }}
