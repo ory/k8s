@@ -1,4 +1,4 @@
-{{- if .Values.autoscaling.enabled }}
+{{- if .Values.deployment.autoscaling.enabled }}
 apiVersion: autoscaling/v2beta2
 kind: HorizontalPodAutoscaler
 metadata:
@@ -11,23 +11,23 @@ spec:
     apiVersion: apps/v1
     kind: Deployment
     name: {{ include "hydra.fullname" . }}
-  minReplicas: {{ .Values.autoscaling.minReplicas }}
-  maxReplicas: {{ .Values.autoscaling.maxReplicas }}
+  minReplicas: {{ .Values.deployment.autoscaling.minReplicas }}
+  maxReplicas: {{ .Values.deployment.deployment.autoscaling.maxReplicas }}
   metrics:
-  {{- if .Values.autoscaling.cpuAverageValue }}
+  {{- if .Values.deployment.autoscaling.cpuAverageValue }}
     - type: Resource
       resource:
         name: cpu
         target: 
           type: AverageValue 
-          averageValue: {{ .Values.autoscaling.cpuAverageValue }}
+          averageValue: {{ .Values.deployment.autoscaling.cpuAverageValue }}
   {{- end }}
-  {{- if .Values.autoscaling.memoryAverageValue }}
+  {{- if .Values.deployment.autoscaling.memoryAverageValue }}
     - type: Resource
       resource:
         name: memory
         target:
           type: AverageValue
-          averageValue: {{ .Values.autoscaling.memoryAverageValue }}
+          averageValue: {{ .Values.deployment.autoscaling.memoryAverageValue }}
   {{- end }}
 {{- end }}
