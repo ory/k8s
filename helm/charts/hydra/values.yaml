@@ -148,7 +148,7 @@ deployment:
 
   extraVolumes: []
   extraVolumeMounts: []
-  # If yout want to mount external volume
+  # If you want to mount external volume
   # For example, mount a secret containing Certificate root CA to verify database
   # TLS connection.
   # extraVolumes:
@@ -160,8 +160,17 @@ deployment:
   #     mountPath: "/etc/postgresql-tls"
   #     readOnly: true
 
+  # Configure HPA
+  autoscaling:
+    enabled: false
+  # minReplicas: 1
+  # maxReplicas: 3
+  # cpuAverageValue: 200m
+  # memoryAverageValue: 0.5Gi
+
 # Configure node affinity
 affinity: {}
+
 
 # Configures controller setup
 maester:
