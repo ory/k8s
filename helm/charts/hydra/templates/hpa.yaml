@@ -21,7 +21,6 @@ spec:
         target:
           type: Utilization
           averageUtilization: {{ .Values.deployment.autoscaling.targetCPUUtilizationPercentage }}
-  {{- end }}
   {{- else if .Values.deployment.autoscaling.targetCPUAverageValue }}
   - type: Resource
     resource:
@@ -37,7 +36,6 @@ spec:
         target:
           type: Utilization
           averageUtilization: {{ .Values.deployment.autoscaling.targetMemoryUtilizationPercentage }}
-  {{- end }}
   {{- else if .Values.deployment.autoscaling.targetMemoryAverageValue }}
   - type: Resource
     resource:
