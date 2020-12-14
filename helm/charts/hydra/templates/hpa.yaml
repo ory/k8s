@@ -22,12 +22,12 @@ spec:
           type: Utilization
           averageUtilization: {{ .Values.deployment.autoscaling.targetCPUUtilizationPercentage }}
   {{- else if .Values.deployment.autoscaling.targetCPUAverageValue }}
-  - type: Resource
-    resource:
-      name: cpu
-      target:
-        type: AverageValue
-        averageValue: {{ .Values.deployment.autoscaling.targetCPUAverageValue }}
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: AverageValue
+          averageValue: {{ .Values.deployment.autoscaling.targetCPUAverageValue }}
   {{- end }}
   {{- if .Values.deployment.autoscaling.targetMemoryUtilizationPercentage }}
     - type: Resource
@@ -37,11 +37,11 @@ spec:
           type: Utilization
           averageUtilization: {{ .Values.deployment.autoscaling.targetMemoryUtilizationPercentage }}
   {{- else if .Values.deployment.autoscaling.targetMemoryAverageValue }}
-  - type: Resource
-    resource:
-      name: memory
-      target:
-        type: AverageValue
-        averageValue: {{ .Values.deployment.autoscaling.targetMemoryAverageValue }}
+    - type: Resource
+      resource:
+        name: memory
+        target:
+          type: AverageValue
+          averageValue: {{ .Values.deployment.autoscaling.targetMemoryAverageValue }}
   {{- end }}
 {{- end }}
