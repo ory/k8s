@@ -165,8 +165,8 @@ deployment:
     enabled: false
   # minReplicas: 1
   # maxReplicas: 3
-  # cpuAverageValue: 200m
-  # memoryAverageValue: 0.5Gi
+  # targetCPUUtilizationPercentage: 80
+  # targetMemoryUtilizationPercentage: 80
 
 # Configure node affinity
 affinity: {}
