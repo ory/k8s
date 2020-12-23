@@ -45,6 +45,15 @@ Alternatively, you can use an existing
 [Kubernetes Secret](https://kubernetes.io/docs/concepts/configuration/secret/)
 instead of letting the Helm Chart create one for you:
 
+Last but not least, if you'd like to customise the way secrets are updated on your kubernetes cluster, you can do so via the `hydra.config.secretAnnotations` value as follows:
+
+```bash
+$ helm install \
+    --set hydra.config.secretAnnotations."helm\.sh/hook"="pre-install\,pre-upgrade" \
+    --set hydra.config.secretAnnotations."helm\.sh/hook-delete-policy"=before-hook-creation \
+    ory/hydra
+```
+
 ```bash
 
 $ kubectl create secret generic my-secure-secret --from-literal=dsn=postgres://foo:bar@baz:1234/db \

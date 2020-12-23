@@ -99,6 +99,10 @@ hydra:
           - 172.16.0.0/12
           - 192.168.0.0/16
     secrets: {}
+    secretAnnotations:
+    # Create the secret before installation, and only then. This saves the secret from regenerating during an upgrade
+      helm.sh/hook: "pre-install,pre-upgrade"
+      helm.sh/hook-delete-policy: "before-hook-creation"
     # Use a pre-existing secret (see secret.yaml for required fields)
     # existingSecret: my-preexisting-secret
     urls:
