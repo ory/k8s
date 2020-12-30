@@ -6,7 +6,7 @@ replicaCount: 1
 
 image:
   repository: oryd/kratos
-  tag: v0.5.2-alpha.1-sqlite
+  tag: v0.5.5-alpha.1-sqlite
   pullPolicy: IfNotPresent
 
 imagePullSecrets: []
@@ -115,6 +115,32 @@ deployment:
   # If you do want to specify node labels, uncomment the following
   # lines, adjust them as necessary, and remove the curly braces after 'annotations:'.
   #   foo: bar
+
+  extraEnv: []
+
+  # Configuration for tracing providers. Only datadog is currently supported through this block.
+  # If you need to use a different tracing provider, please manually set the configuration values
+  # via "kratos.config" or via "deployment.extraEnv".
+  tracing:
+    datadog:
+      enabled: false
+
+      # Sets the datadog DD_ENV environment variable. This value indicates the environment where kratos is running.
+      # Default value: "none".
+      # env: production
+
+      # Sets the datadog DD_VERSION environment variable. This value indicates the version that kratos is running.
+      # Default value: .Values.image.tag (i.e. the tag used for the docker image).
+      # version: X.Y.Z
+
+      # Sets the datadog DD_SERVICE environment variable. This value indicates the name of the service running.
+      # Default value: "ory/kratos".
+      # service: ory/kratos
+
+      # Sets the datadog DD_AGENT_HOST environment variable. This value indicates the host address of the datadog agent.
+      # If set to true, this configuration will automatically set DD_AGENT_HOST to the field "status.hostIP" of the pod.
+      # Default value: false.
+      # useHostIP: true
 
   # Configure node tolerations.
   tolerations: []
