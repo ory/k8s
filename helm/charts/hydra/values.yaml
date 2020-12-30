@@ -104,6 +104,20 @@ hydra:
     urls:
       self: {}
 
+  # If you want to use Jaeger with agents being deployed in a daemonset, you can 
+  # use the following ENV vars to configure the right endpoints using the IP 
+  # address of the node the pod has been deployed to. 
+  #
+  # env:
+  #   - name: JAEGER_AGENT_HOST
+  #     valueFrom:
+  #       fieldRef:
+  #         fieldPath: status.hostIP 
+  #   - name: TRACING_PROVIDERS_JAEGER_LOCAL_AGENT_ADDRESS
+  #     value: $(JAEGER_AGENT_HOST):6831
+  #   - name: TRACING_PROVIDERS_JAEGER_SAMPLING_SERVER_URL
+  #     value: http://$(JAEGER_AGENT_HOST):5778
+
   autoMigrate: false
   dangerousForceHttp: false
   dangerousAllowInsecureRedirectUrls: false
