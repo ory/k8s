@@ -56,6 +56,9 @@ spec:
                 secretKeyRef:
                   name: {{ include "hydra.secretname" . }}
                   key: dsn
+            {{- if .Values.hydra.env }}
+            {{- toYaml .Values.hydra.env | nindent 12 }}      
+            {{- end }}
     {{- end}}
       volumes:
         - name: {{ include "hydra.name" . }}-config-volume
@@ -135,6 +138,9 @@ spec:
                 secretKeyRef:
                   name: {{ include "hydra.secretname" . }}
                   key: secretsCookie
+            {{- if .Values.hydra.env }}
+            {{- toYaml .Values.hydra.env | nindent 12 }}      
+            {{- end }}
           resources:
             {{- toYaml .Values.deployment.resources | nindent 12 }}
       {{- if .Values.priorityClassName }}
