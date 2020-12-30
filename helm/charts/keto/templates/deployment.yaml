@@ -71,11 +71,30 @@ spec:
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           env:
+            {{- if .Values.tracing.datadog.enabled }}
+            - name: TRACING_PROVIDER
+              value: datadog
+            - name: DD_ENV
+              value: {{ .Values.tracing.datadog.env | default "none" | quote }}
+            - name: DD_VERSION
+              value: {{ .Values.tracing.datadog.version | default .Chart.AppVersion | quote }}
+            - name: DD_SERVICE
+              value: {{ .Values.tracing.datadog.service | default "ory/keto" | quote }}
+            {{- if .Values.tracing.datadog.useHostIP }}
+            - name: DD_AGENT_HOST
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.hostIP
+            {{- end }}
+            {{- end }}
             - name: DSN
               valueFrom:
                 secretKeyRef:
                   name: {{ include "keto.secretname" . }}
                   key: dsn
+            {{- with .Values.extraEnv }}
+              {{- toYaml . | nindent 12 }}
+            {{- end }}
           volumeMounts:
             - name: {{ include "keto.name" . }}-config-volume
               mountPath: /etc/config
