@@ -2,7 +2,7 @@ apiVersion: v2
 appVersion: "v1.8.5"
 description: A Helm chart for deploying ORY Hydra in Kubernetes
 name: hydra
-version: 0.4.14
+version: 0.4.15
 keywords:
   - oauth2
   - openid-connect
@@ -22,7 +22,7 @@ maintainers: # (optional)
 type: application
 dependencies:
   - name: hydra-maester
-    version: 0.4.14
+    version: 0.4.15
     condition: maester.enabled
     alias: hydra-maester
     repository: file://../hydra-maester
