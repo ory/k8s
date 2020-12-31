@@ -56,8 +56,8 @@ spec:
                 secretKeyRef:
                   name: {{ include "hydra.secretname" . }}
                   key: dsn
-            {{- if .Values.hydra.env }}
-            {{- toYaml .Values.hydra.env | nindent 12 }}      
+            {{- with .Values.deployment.extraEnv }}
+              {{- toYaml . | nindent 12 }}
             {{- end }}
     {{- end}}
       volumes:
