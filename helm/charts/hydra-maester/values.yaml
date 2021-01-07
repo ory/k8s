@@ -46,6 +46,10 @@ deployment:
   # Configure node tolerations.
   tolerations: []
   annotations: {}
+  podLabels: {}
+
+job:
+  podLabels: {}
 
 # Configure node affinity
 affinity: {}

@@ -19,6 +19,9 @@ spec:
         control-plane: controller-manager
         app.kubernetes.io/name: {{ include "hydra-maester.name" . }}
         app.kubernetes.io/instance: {{ .Release.Name }}
+        {{- with .Values.deployment.podLabels }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
       {{- with .Values.annotations }}
       annotations:
         {{- toYaml . | nindent 8 }}
