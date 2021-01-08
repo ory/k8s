@@ -9,6 +9,8 @@ Hydra Maester is a part of the Hydra chart and is installed together with it.
 ## Configuration
 
 - `enabledNamespaces` defines the namespaces in which instances of `oauth2clients.hydra.ory.sh/v1alpha1` CR can be created. By default, users are allowed to create CR instances only in the controller's native namespace.
+- `deployment.podLabels` permit to set custom additional labels on hydra-maester controller pod.
+- `job.podLabels` permit to set custom additional labels on hydra-maester job init-crd pod (which setup crd on cluster).
 
 You can set the values in the `values.yaml` file or using the `--set` syntax of Helm during chart installation.
 
