@@ -1,6 +1,6 @@
 dependencies:
 - name: oathkeeper-maester
   repository: file://../oathkeeper-maester
-  version: 0.5.1
-digest: sha256:32f58d1390a905a30481455827c0819d76dc9b4422f5b295f6cbd976a07a72e8
-generated: "2021-01-15T09:11:45.907443366Z"
+  version: 0.5.2
+digest: sha256:cf118f3c9fee7ec7198fab6658b0e8479ce72a1b62b0c9fbd75a4606b21673ac
+generated: "2021-01-25T14:45:54.28803997Z"
