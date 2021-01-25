@@ -111,6 +111,14 @@ spec:
           name: {{ include "kratos.name" . }}-config-volume
           configMap:
             name: {{ include "kratos.fullname" . }}-config
+        {{- $root := . -}}
+        {{- range $method, $methodEntry := .Values.kratos.emailTemplates }}
+        {{- range $result, $resultEntry := $methodEntry }}
+        - name: {{ include "kratos.name" $root }}-template-{{ $method }}-{{ $result }}-volume
+          configMap:
+            name: {{ include "kratos.fullname" $root }}-template-{{ $method }}-{{ $result }}
+        {{- end }}
+        {{- end }}
       containers:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
@@ -130,6 +138,14 @@ spec:
               name: {{ include "kratos.name" . }}-config-volume
               mountPath: /etc/config
               readOnly: true
+            {{- $root := . -}}
+            {{- range $method, $methodEntry := .Values.kratos.emailTemplates }}
+            {{- range $result, $resultEntry := $methodEntry }}
+            - name: {{ include "kratos.name" $root }}-template-{{ $method }}-{{ $result }}-volume
+              mountPath: /conf/courier-templates/{{ $method }}/{{ $result }}
+              readOnly: true
+            {{- end }}
+            {{- end }}
           env:
             -
               name: DSN
