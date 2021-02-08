@@ -45,10 +45,12 @@ spec:
           command: ["kratos"]
           args: ["migrate", "sql", "-e", "--yes", "--config", "/etc/config/kratos.yaml"]
           volumeMounts:
-            -
-              name: {{ include "kratos.name" . }}-config-volume
+            - name: {{ include "kratos.name" . }}-config-volume
               mountPath: /etc/config
               readOnly: true
+            {{- if .Values.deployment.extraVolumeMounts }}
+{{ toYaml .Values.deployment.extraVolumeMounts | indent 12 }}
+            {{- end }}
           env:
             {{- if .Values.deployment.tracing.datadog.enabled }}
             -
@@ -107,8 +109,10 @@ spec:
         {{- end}}
     {{- end}}
       volumes:
-        -
-          name: {{ include "kratos.name" . }}-config-volume
+        {{- if .Values.deployment.extraVolumes }}
+{{ toYaml .Values.deployment.extraVolumes | indent 8 }}
+        {{- end }}
+        - name: {{ include "kratos.name" . }}-config-volume
           configMap:
             name: {{ include "kratos.fullname" . }}-config
         {{- $root := . -}}
@@ -119,6 +123,7 @@ spec:
             name: {{ include "kratos.fullname" $root }}-template-{{ $method }}-{{ $result }}
         {{- end }}
         {{- end }}
+        
       containers:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
@@ -134,8 +139,10 @@ spec:
             "/etc/config/kratos.yaml"
           ]
           volumeMounts:
-            -
-              name: {{ include "kratos.name" . }}-config-volume
+            {{- if .Values.deployment.extraVolumeMounts }}
+{{ toYaml .Values.deployment.extraVolumeMounts | indent 12 }}
+            {{- end }}
+            - name: {{ include "kratos.name" . }}-config-volume
               mountPath: /etc/config
               readOnly: true
             {{- $root := . -}}

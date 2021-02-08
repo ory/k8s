@@ -180,6 +180,20 @@ deployment:
   #      lines, adjust them as necessary, and remove the curly braces after 'labels:'.
   #      e.g.  type: app
 
+  extraVolumes: []
+  extraVolumeMounts: []
+  # If you want to mount external volume
+  # For example, mount a secret containing Certificate root CA to verify database
+  # TLS connection.
+  # extraVolumes:
+  #   - name: postgresql-tls
+  #     secret:
+  #       secretName: postgresql-root-ca
+  # extraVolumeMounts:
+  #   - name: postgresql-tls
+  #     mountPath: "/etc/postgresql-tls"
+  #     readOnly: true
+  
   annotations: {}
   #      If you do want to specify annotations, uncomment the following
   #      lines, adjust them as necessary, and remove the curly braces after 'annotations:'.
