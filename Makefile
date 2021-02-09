@@ -16,6 +16,7 @@ release: .bin/yq .bin/helm
 		yq w -i helm/charts/hydra-maester/Chart.yaml version "${VERSION}"; \
 		yq w -i helm/charts/hydra/Chart.yaml version "${VERSION}"; \
 		yq w -i helm/charts/hydra/Chart.yaml "dependencies.(name==hydra-maester).version" "${VERSION}"; \
+		yq w -i helm/charts/keto/Chart.yaml version "${VERSION}"; \
 		yq w -i helm/charts/kratos/Chart.yaml version "${VERSION}"; \
 		yq w -i helm/charts/kratos-selfservice-ui-node/Chart.yaml version "${VERSION}"; \
 		yq w -i helm/charts/oathkeeper-maester/Chart.yaml version "${VERSION}"; \
@@ -29,5 +30,6 @@ release: .bin/yq .bin/helm
 		helm package -d docs/helm/charts/ ./helm/charts/hydra-maester/ --version "${VERSION}"; \
 		helm package -d docs/helm/charts/ ./helm/charts/example-idp/ --version "${VERSION}"; \
 		helm package -d docs/helm/charts/ ./helm/charts/kratos/ --version "${VERSION}"; \
+		helm package -d docs/helm/charts/ ./helm/charts/keto/ --version "${VERSION}"; \
 		helm package -d docs/helm/charts/ ./helm/charts/kratos-selfservice-ui-node/ --version "${VERSION}"; \
 		helm repo index docs/helm/charts/
