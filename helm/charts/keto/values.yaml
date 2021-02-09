@@ -110,4 +110,6 @@ tracing:
 
 tolerations: []
 
+secret: {}
+
 affinity: {}
