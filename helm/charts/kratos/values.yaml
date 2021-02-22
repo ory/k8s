@@ -72,6 +72,8 @@ ingress:
 
 kratos:
   development: false
+  # autoMigrate is relying on a simple initContainer mechanism
+  # Do not turn it on if the replicaCount > 1
   autoMigrate: false
 
 #  You can add multiple identity schemas here
@@ -127,24 +129,27 @@ kratos:
 
     secrets: {}
 
-deployment:
-  resources: {}
-  #  We usually recommend not to specify default resources and to leave this as a conscious
-  #  choice for the user. This also increases chances charts run on environments with little
-  #  resources, such as Minikube. If you do want to specify resources, uncomment the following
-  #  lines, adjust them as necessary, and remove the curly braces after 'resources:'.
-  #  limits:
-  #    cpu: 100m
-  #    memory: 128Mi
-  #  requests:
-  #    cpu: 100m
-  #  memory: 128Mi
+# The resources requests/limits for Kratos container
+resources: {}
+#  limits:
+#    cpu: 100m
+#    memory: 128Mi
+#  requests:
+#    cpu: 100m
+#  memory: 128Mi
 
-  # Node labels for pod assignment.
-  nodeSelector: {}
-  # If you do want to specify node labels, uncomment the following
-  # lines, adjust them as necessary, and remove the curly braces after 'annotations:'.
-  #   foo: bar
+# Node labels for pod assignment.
+nodeSelector: {}
+# If you do want to specify node labels, uncomment the following
+# lines, adjust them as necessary, and remove the curly braces after 'annotations:'.
+#   foo: bar
+
+# Configure node tolerations.
+tolerations: []
+
+
+deployment:
+
 
   extraEnv: []
 
@@ -172,9 +177,6 @@ deployment:
       # Default value: false.
       # useHostIP: true
 
-  # Configure node tolerations.
-  tolerations: []
-
   labels: {}
   #      If you do want to specify additional labels, uncomment the following
   #      lines, adjust them as necessary, and remove the curly braces after 'labels:'.
@@ -193,7 +195,7 @@ deployment:
   #   - name: postgresql-tls
   #     mountPath: "/etc/postgresql-tls"
   #     readOnly: true
-  
+
   annotations: {}
   #      If you do want to specify annotations, uncomment the following
   #      lines, adjust them as necessary, and remove the curly braces after 'annotations:'.
