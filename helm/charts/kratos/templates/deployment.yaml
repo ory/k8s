@@ -36,8 +36,12 @@ spec:
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
     {{- end }}
-    {{- if .Values.kratos.autoMigrate }}
+    {{- if or .Values.kratos.autoMigrate .Values.deployment.extraInitContainers}}
       initContainers:
+        {{- if .Values.deployment.extraInitContainers }}
+{{ tpl .Values.deployment.extraInitContainers . | indent 8 }}
+        {{- end }}
+        {{- if .Values.kratos.autoMigrate }}
         -
           name: {{ .Chart.Name }}-automigrate
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
@@ -106,6 +110,7 @@ spec:
           envFrom:
           - secretRef:
               name: {{ .Values.deployment.environmentSecretsName }}
+        {{- end}}
         {{- end}}
     {{- end}}
       volumes:
