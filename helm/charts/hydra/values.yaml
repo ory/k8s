@@ -35,6 +35,10 @@ service:
     annotations: {}
     # kubernetes.io/ingress.class: nginx
     # kubernetes.io/tls-acme: "true"
+    labels: {}
+    #      If you do want to specify additional labels, uncomment the following
+    #      lines, adjust them as necessary, and remove the curly braces after 'labels:'.
+    #      e.g.  app: hydra
   # Configures the Kubernetes service for the api port.
   admin:
     # En-/disable the service
@@ -48,6 +52,10 @@ service:
     annotations: {}
     # kubernetes.io/ingress.class: nginx
     # kubernetes.io/tls-acme: "true"
+    labels: {}
+    #      If you do want to specify additional labels, uncomment the following
+    #      lines, adjust them as necessary, and remove the curly braces after 'labels:'.
+    #      e.g.  app: hydra
 
 # Configure ingress
 ingress:
