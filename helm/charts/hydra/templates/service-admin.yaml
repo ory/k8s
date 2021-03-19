@@ -5,7 +5,7 @@ metadata:
   name: {{ include "hydra.fullname" . }}-admin
   namespace: {{ .Release.Namespace }}
   labels:
-    {{ include "hydra.labels" . | indent 4 }}
+{{ include "hydra.labels" . | indent 4 }}
     {{- with .Values.service.admin.labels }}
       {{- toYaml . | nindent 4 }}
     {{- end }}
