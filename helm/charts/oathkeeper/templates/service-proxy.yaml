@@ -7,7 +7,10 @@ metadata:
   namespace: {{ .Release.Namespace }}
   {{- end }}
   labels:
-{{ include "oathkeeper.labels" . | indent 4 }}
+    {{ include "oathkeeper.labels" . | indent 4 }}
+    {{- with .Values.service.proxy.labels }}
+      {{- toYaml . | nindent 4 }}
+    {{- end }}
   {{- with .Values.service.proxy.annotations }}
   annotations:
     {{- toYaml . | nindent 4 }}
