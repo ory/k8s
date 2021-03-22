@@ -50,6 +50,11 @@ service:
     annotations: {}
     # kubernetes.io/ingress.class: nginx
     # kubernetes.io/tls-acme: "true"
+    labels: {}
+    #      If you do want to specify additional labels, uncomment the following
+    #      lines, adjust them as necessary, and remove the curly braces after 'labels:'.
+    #      e.g.  app: oathkeeper
+
   # Configures the Kubernetes service for the api port.
   api:
     # En-/disable the service
@@ -63,6 +68,10 @@ service:
     annotations: {}
     # kubernetes.io/ingress.class: nginx
     # kubernetes.io/tls-acme: "true"
+    labels: {}
+    #      If you do want to specify additional labels, uncomment the following
+    #      lines, adjust them as necessary, and remove the curly braces after 'labels:'.
+    #      e.g.  app: oathkeeper
 
 # Configure ingress
 ingress:

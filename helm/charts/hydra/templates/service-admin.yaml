@@ -6,6 +6,9 @@ metadata:
   namespace: {{ .Release.Namespace }}
   labels:
 {{ include "hydra.labels" . | indent 4 }}
+    {{- with .Values.service.admin.labels }}
+      {{- toYaml . | nindent 4 }}
+    {{- end }}
   {{- with .Values.service.admin.annotations }}
   annotations:
     {{- toYaml . | nindent 4 }}
