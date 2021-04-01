@@ -466,7 +466,6 @@ spec:
               - url
               type: object
           required:
-          - upstream
           - match
           type: object
         status:
