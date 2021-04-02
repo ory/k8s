@@ -44,6 +44,8 @@ spec:
             {{- toYaml .Values.deployment.resources | nindent 12 }}
           terminationMessagePath: /dev/termination-log
           terminationMessagePolicy: File
+          securityContext:
+            {{- toYaml .Values.deployment.securityContext | nindent 12 }}
       serviceAccountName: {{ include "hydra-maester.name" . }}-account
       {{- if .Values.priorityClassName }}
       priorityClassName: {{ .Values.priorityClassName }}

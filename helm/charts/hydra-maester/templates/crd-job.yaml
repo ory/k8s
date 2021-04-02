@@ -27,6 +27,8 @@ spec:
           mountPath: /etc/crd
           readOnly: true
         command: ["kubectl",  "apply", "-f", "/etc/crd/oauth2clients.yaml"]
+        securityContext:
+          {{- toYaml .Values.deployment.securityContext | nindent 12 }}
       volumes:
       - name: crd-oauth2clients
         configMap:
