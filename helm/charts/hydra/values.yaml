@@ -133,13 +133,13 @@ deployment:
   #    cpu: 100m
   #  memory: 128Mi
 
-  securityContext:
-    capabilities:
-      drop:
-      - ALL
-    readOnlyRootFilesystem: true
-    runAsNonRoot: true
-    runAsUser: 1000
+  securityContext: {}
+    # capabilities:
+    #   drop:
+    #   - ALL
+    # readOnlyRootFilesystem: true
+    # runAsNonRoot: true
+    # runAsUser: 1000
 
   labels: {}
   #      If you do want to specify additional labels, uncomment the following
@@ -233,7 +233,7 @@ affinity: {}
 
 # Configures controller setup
 maester:
-  enabled: false
+  enabled: true
 
   # Values for the hydra admin service arguments to hydra-maester
   hydra-maester:
