@@ -56,6 +56,8 @@ spec:
             - |
               touch /etc/rules/access-rules.json
               chmod 666 /etc/rules/access-rules.json
+          securityContext:
+            {{- toYaml .Values.deployment.securityContext | nindent 12 }}
       containers:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
@@ -93,6 +95,8 @@ spec:
               port: http-api
           resources:
             {{- toYaml .Values.deployment.resources | nindent 12 }}
+          securityContext:
+            {{- toYaml .Values.deployment.securityContext | nindent 12 }}
         - name: {{ .Chart.Name }}-maester
           image: "{{ .Values.sidecar.image.repository }}:{{ .Values.sidecar.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
@@ -115,6 +119,8 @@ spec:
             - name: {{ include "oathkeeper.name" . }}-rules-volume
               mountPath: /etc/rules
               readOnly: false
+          securityContext:
+            {{- toYaml .Values.deployment.securityContext | nindent 12 }}
       serviceAccountName: {{ default "maester" .Values.maester.nameOverride }}-account
       {{- with .Values.deployment.nodeSelector }}
       nodeSelector:

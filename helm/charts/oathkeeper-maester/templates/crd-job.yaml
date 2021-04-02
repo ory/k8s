@@ -23,6 +23,8 @@ spec:
           mountPath: /etc/ory/crd
           readOnly: true
         command: ["kubectl",  "apply", "-f", "/etc/ory/crd/rules.yaml"]
+        securityContext:
+          {{- toYaml .Values.deployment.securityContext | nindent 12 }}
       volumes:
       - name: crd-rules
         configMap:

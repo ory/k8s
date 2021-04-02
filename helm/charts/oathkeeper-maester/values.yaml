@@ -33,6 +33,13 @@ deployment:
     # requests:
     #   cpu: 100m
     #   memory: 20Mi
+  securityContext:
+    capabilities:
+      drop:
+      - ALL
+    readOnlyRootFilesystem: true
+    runAsNonRoot: true
+    runAsUser: 1000
 
   # Node labels for pod assignment.
   nodeSelector: {}
