@@ -11,7 +11,7 @@ spec:
     plural: oauth2clients
   scope: Namespaced
   versions:
-  - name: v1
+  - name: v1alpha1
     schema:
       openAPIV3Schema:
         description: OAuth2Client is the Schema for the oauth2clients API
