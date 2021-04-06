@@ -59,6 +59,8 @@ spec:
           env:
             {{- toYaml . | nindent 12 }}
           {{- end }}
+          securityContext:
+            {{- toYaml .Values.deployment.securityContext | nindent 12 }}
       serviceAccountName: {{ include "oathkeeper-maester.name" . }}-account
       dnsPolicy: ClusterFirst
       restartPolicy: Always

@@ -108,6 +108,8 @@ spec:
               port: http-api
           resources:
             {{- toYaml .Values.deployment.resources | nindent 12 }}
+          securityContext:
+            {{- toYaml .Values.deployment.securityContext | nindent 12 }}
       {{- with .Values.deployment.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
