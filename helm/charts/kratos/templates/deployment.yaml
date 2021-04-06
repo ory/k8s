@@ -55,6 +55,8 @@ spec:
             {{- if .Values.deployment.extraVolumeMounts }}
 {{ toYaml .Values.deployment.extraVolumeMounts | indent 12 }}
             {{- end }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
           env:
             {{- if .Values.deployment.tracing.datadog.enabled }}
             -
@@ -207,6 +209,8 @@ spec:
               port: http-admin
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
