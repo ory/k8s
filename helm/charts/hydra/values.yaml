@@ -133,13 +133,15 @@ deployment:
   #    cpu: 100m
   #  memory: 128Mi
 
-  securityContext: {}
-    # capabilities:
-    #   drop:
-    #   - ALL
-    # readOnlyRootFilesystem: true
-    # runAsNonRoot: true
-    # runAsUser: 1000
+  securityContext: 
+    capabilities:
+      drop:
+      - ALL
+    readOnlyRootFilesystem: true
+    runAsNonRoot: true
+    runAsUser: 1000
+    allowPrivilegeEscalation: false
+    privileged: false
 
   labels: {}
   #      If you do want to specify additional labels, uncomment the following

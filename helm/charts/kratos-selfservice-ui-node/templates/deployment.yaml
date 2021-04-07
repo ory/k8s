@@ -76,6 +76,8 @@ spec:
               port: http
           resources:
             {{- toYaml .Values.deployment.resources | nindent 12 }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
       {{- with .Values.deployment.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
