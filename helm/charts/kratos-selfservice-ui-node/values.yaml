@@ -31,6 +31,15 @@ ingress:
   #    hosts:
   #      - chart-example.local
 
+securityContext:
+  capabilities:
+    drop:
+    - ALL
+  readOnlyRootFilesystem: true
+  runAsNonRoot: true
+  runAsUser: 1000
+  allowPrivilegeEscalation: false
+  privileged: false
 
 deployment:
   resources: {}
