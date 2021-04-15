@@ -8,7 +8,7 @@ image:
   repository: oryd/keto
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "v0.6.0-sqlite"
+  tag: "v0.6.0-alpha.1-sqlite"
 
 imagePullSecrets: []
 nameOverride: ""
@@ -46,7 +46,8 @@ ingress:
     # kubernetes.io/tls-acme: "true"
     hosts:
       - host: chart-example.local
-        paths: []
+        paths: 
+          - /read
     tls: []
     #  - secretName: chart-example-tls
     #    hosts:
@@ -58,7 +59,8 @@ ingress:
     # kubernetes.io/tls-acme: "true"
     hosts:
       - host: chart-example.local
-        paths: []
+        paths: 
+          - /write
     tls: []
     #  - secretName: chart-example-tls
     #    hosts:
