@@ -11,9 +11,9 @@ spec:
   type: {{ .Values.service.read.type }}
   ports:
     - port: {{ .Values.service.read.port }}
-      targetPort: read
+      targetPort: http-read
       protocol: TCP
-      name: read
+      name: http-read
   selector:
     app.kubernetes.io/name: {{ include "keto.name" . }}
     app.kubernetes.io/instance: {{ .Release.Name }}

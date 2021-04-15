@@ -11,9 +11,9 @@ spec:
   type: {{ .Values.service.write.type }}
   ports:
     - port: {{ .Values.service.write.port }}
-      targetPort: write
+      targetPort: http-write
       protocol: TCP
-      name: write
+      name: http-write
   selector:
     app.kubernetes.io/name: {{ include "keto.name" . }}
     app.kubernetes.io/instance: {{ .Release.Name }}

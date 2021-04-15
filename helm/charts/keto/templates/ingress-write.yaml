@@ -36,7 +36,7 @@ spec:
                 service:
                   name: {{ $fullName }}
                   port:
-                    name: public
+                    name: http-write
         {{- end }}
   {{- end }}
 {{- end }}

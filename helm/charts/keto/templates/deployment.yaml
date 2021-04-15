@@ -59,20 +59,20 @@ spec:
             - --config
             - /etc/config/keto.yaml
           ports:
-            - name: read
-              containerPort: 4466
+            - name: http-read
+              containerPort: {{ .Values.keto.config.serve.read.port }}
               protocol: TCP
-            - name: write
-              containerPort: 4467
+            - name: http-write
+              containerPort: {{ .Values.keto.config.serve.write.port }}
               protocol: TCP
           livenessProbe:
             httpGet:
               path: /health/alive
-              port: write
+              port: http-write
           readinessProbe:
             httpGet:
               path: /health/ready
-              port: write
+              port: http-write
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           env:
