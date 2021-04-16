@@ -36,40 +36,17 @@ spec:
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
     {{- end }}
-    {{- if .Values.hydra.autoMigrate }}
-      initContainers:
-        - name: {{ .Chart.Name }}-automigrate
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
-          command: ["hydra"]
-          args: ["migrate", "sql", "-e", "--yes", "--config", "/etc/config/config.yaml"]
-          volumeMounts:
-            - name: {{ include "hydra.name" . }}-config-volume
-              mountPath: /etc/config
-              readOnly: true
-            {{- if .Values.deployment.extraVolumeMounts }}
-{{ toYaml .Values.deployment.extraVolumeMounts | indent 12 }}
-            {{- end }}
-          env:
-            - name: DSN
-              valueFrom:
-                secretKeyRef:
-                  name: {{ include "hydra.secretname" . }}
-                  key: dsn
-            {{- with .Values.deployment.extraEnv }}
-              {{- toYaml . | nindent 12 }}
-            {{- end }}
-          securityContext:
-            {{- toYaml .Values.deployment.securityContext | nindent 12 }}
-    {{- end}}
       volumes:
         - name: {{ include "hydra.name" . }}-config-volume
           configMap:
             name: {{ include "hydra.fullname" . }}
+        - name: {{ include "hydra.name" . }}-migration
+          configMap:
+            name: {{ include "hydra.fullname" . }}-migration
+            optional: false
         {{- if .Values.deployment.extraVolumes }}
 {{ toYaml .Values.deployment.extraVolumes | indent 8 }}
         {{- end }}
-
       {{- if .Values.deployment.serviceAccountName  }}
       serviceAccountName: {{ .Values.deployment.serviceAccountName }}
       {{- end }}
@@ -81,6 +58,9 @@ spec:
           volumeMounts:
             - name: {{ include "hydra.name" . }}-config-volume
               mountPath: /etc/config
+              readOnly: true
+            - name: {{ include "hydra.fullname" . }}-migration
+              mountPath: /etc/migration
               readOnly: true
             {{- if .Values.deployment.extraVolumeMounts }}
 {{ toYaml .Values.deployment.extraVolumeMounts | indent 12 }}

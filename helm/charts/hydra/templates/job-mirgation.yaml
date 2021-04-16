@@ -1,0 +1,70 @@
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ include "hydra.fullname" . }}-automigrate
+  {{- if .Release.Namespace }}
+  namespace: {{ .Release.Namespace }}
+  {{- end }}
+  labels:
+{{ include "hydra.labels" . | indent 4 }}
+    {{- with .Values.deployment.labels }}
+      {{- toYaml . | nindent 4 }}
+    {{- end }}
+  annotations:
+    {{- with .Values.deployment.annotations }}
+      {{- toYaml . | nindent 4 }}
+    {{- end }}
+spec:
+  template:
+    spec:
+      containers:
+      - name: {{ .Chart.Name }}-automigrate
+        image: {{ .Values.image.repository }}:{{ include "hydra.getImageAlpine" . }}
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        command:
+        - /bin/sh
+        - -c
+        - |
+          set -ex
+          apk add curl 
+          curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+          chmod +x kubectl
+          mv kubectl /usr/local/bin/kubectl
+          [[ -f /etc/migration/migration.json ]] && echo "Migration was done, nothing to do here" && exit 0
+          hydra migrate sql -e --yes --config /etc/config/config.yaml
+          echo {\"timestamp\": \"$(date "+%Y%m%d-%H%M%S")\",\"completed\": true} > /tmp/migration.json
+          kubectl create configmap {{ include "hydra.fullname" . }}-migration --from-file=/tmp/migration.json
+        volumeMounts:
+          - name: {{ include "hydra.name" . }}-config-volume
+            mountPath: /etc/config
+            readOnly: true
+          - name: {{ include "hydra.fullname" . }}-migration
+            mountPath: /etc/migration
+            readOnly: true
+        env:
+          - name: DSN
+            valueFrom:
+              secretKeyRef:
+                name: {{ include "hydra.secretname" . }}
+                key: dsn
+        securityContext:
+          capabilities:
+            drop:
+            - ALL
+          readOnlyRootFilesystem: false
+          runAsNonRoot: false
+          runAsUser: 0
+          allowPrivilegeEscalation: false
+          privileged: false
+      restartPolicy: Never
+      volumes:
+        - name: {{ include "hydra.name" . }}-config-volume
+          configMap:
+            name: {{ include "hydra.fullname" . }}
+        - name: {{ include "hydra.name" . }}-migration
+          configMap:
+            name: {{ include "hydra.fullname" . }}-migration
+            optional: true
+      serviceAccountName: {{ include "hydra.fullname" . }}-automigrate
+  backoffLimit: 1
