@@ -144,7 +144,7 @@ Check overrides consistency
 {{/*
 Get alpine image
 */}}
-{{- define "hydra.getImageAlpine" -}}
+{{- define "hydra.getAlpineImage" -}}
   {{- $parts := split "-" .Values.image.tag -}}
   {{- printf "%s-alpine" $parts._0 -}}
 {{- end -}}

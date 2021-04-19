@@ -15,12 +15,15 @@ metadata:
     {{- with .Values.deployment.annotations }}
       {{- toYaml . | nindent 4 }}
     {{- end }}
+    helm.sh/hook-weight: "1"
+    helm.sh/hook: "pre-install, pre-upgrade"
+    helm.sh/hook-delete-policy: "before-hook-creation, hook-succeeded"
 spec:
   template:
     spec:
       containers:
       - name: {{ .Chart.Name }}-automigrate
-        image: {{ .Values.image.repository }}:{{ include "hydra.getImageAlpine" . }}
+        image: {{ .Values.image.repository }}:{{ include "hydra.getAlpineImage" . }}
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         command:
         - /bin/sh
@@ -31,10 +34,10 @@ spec:
           curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
           chmod +x kubectl
           mv kubectl /usr/local/bin/kubectl
-          [[ -f /etc/migration/migration.json ]] && echo "Migration was done, nothing to do here" && exit 0
+          [[ -f /etc/migration/migration.json ]] && kubectl delete cm {{ include "hydra.fullname" . }}-migration -n {{ .Release.Namespace }}
           hydra migrate sql -e --yes --config /etc/config/config.yaml
           echo {\"timestamp\": \"$(date "+%Y%m%d-%H%M%S")\",\"completed\": true} > /tmp/migration.json
-          kubectl create configmap {{ include "hydra.fullname" . }}-migration --from-file=/tmp/migration.json
+          kubectl create configmap {{ include "hydra.fullname" . }}-migration -n {{ .Release.Namespace }} --from-file=/tmp/migration.json
         volumeMounts:
           - name: {{ include "hydra.name" . }}-config-volume
             mountPath: /etc/config
