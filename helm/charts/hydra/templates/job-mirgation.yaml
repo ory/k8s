@@ -17,7 +17,7 @@ metadata:
     {{- end }}
     helm.sh/hook-weight: "1"
     helm.sh/hook: "pre-install, pre-upgrade"
-    helm.sh/hook-delete-policy: "before-hook-creation, hook-succeeded"
+    helm.sh/hook-delete-policy: "before-hook-creation"
 spec:
   template:
     spec:
@@ -29,15 +29,7 @@ spec:
         - /bin/sh
         - -c
         - |
-          set -ex
-          apk add curl 
-          curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
-          chmod +x kubectl
-          mv kubectl /usr/local/bin/kubectl
-          [[ -f /etc/migration/migration.json ]] && kubectl delete cm {{ include "hydra.fullname" . }}-migration -n {{ .Release.Namespace }}
-          hydra migrate sql -e --yes --config /etc/config/config.yaml
-          echo {\"timestamp\": \"$(date "+%Y%m%d-%H%M%S")\",\"completed\": true} > /tmp/migration.json
-          kubectl create configmap {{ include "hydra.fullname" . }}-migration -n {{ .Release.Namespace }} --from-file=/tmp/migration.json
+{{ .Files.Get "files/automigrate.sh" | printf "%s" | indent 10 }}
         volumeMounts:
           - name: {{ include "hydra.name" . }}-config-volume
             mountPath: /etc/config
@@ -51,6 +43,10 @@ spec:
               secretKeyRef:
                 name: {{ include "hydra.secretname" . }}
                 key: dsn
+          - name: NAME_ROOT
+            value: {{ include "hydra.fullname" . | quote }}
+          - name: NAMESPACE
+            value: {{ .Release.Namespace }}
         securityContext:
           capabilities:
             drop:

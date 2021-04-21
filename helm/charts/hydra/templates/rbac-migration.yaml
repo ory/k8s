@@ -21,10 +21,10 @@ metadata:
 rules:
   - apiGroups: [""]
     resources: ["configmaps"]
-    verbs: ["get", "list"]
+    verbs: ["get", "list", "create"]
   - apiGroups: [""]
     resources: ["configmaps"]
-    verbs: ["create", "delete"]
+    verbs: ["delete"]
     resourceNames:
       - {{ include "hydra.fullname" . }}-migration
 

@@ -5,6 +5,10 @@ metadata:
   namespace: {{ .Release.Namespace }}
   labels:
 {{ include "hydra.labels" . | indent 4 }}
+  annotations:
+    helm.sh/hook-weight: "0"
+    helm.sh/hook: "pre-install, pre-upgrade"
+    helm.sh/hook-delete-policy: "before-hook-creation"
 data:
   "config.yaml": |
 {{ include "hydra.configmap" . | nindent 4 }}
