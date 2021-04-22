@@ -140,11 +140,3 @@ Check overrides consistency
 {{- $local := dict "first" true -}}
 {{- range $k, $v := . -}}{{- if not $local.first -}},{{- end -}}{{- $v -}}{{- $_ := set $local "first" false -}}{{- end -}}
 {{- end -}}
-
-{{/*
-Get alpine image
-*/}}
-{{- define "hydra.getAlpineImage" -}}
-  {{- $parts := split "-" .Values.image.tag -}}
-  {{- printf "%s-alpine" $parts._0 -}}
-{{- end -}}
