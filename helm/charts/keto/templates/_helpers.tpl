@@ -86,11 +86,3 @@ Create the name of the service account to use
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
 {{- end }}
-
-{{/*
-Get alpine image
-*/}}
-{{- define "keto.getAlpineImage" -}}
-  {{- $parts := split "-" .Values.image.tag -}}
-  {{- printf "%s-alpine" $parts._0 -}}
-{{- end -}}

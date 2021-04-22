@@ -33,7 +33,7 @@ spec:
                 name: {{ include "keto.secretname" . }}
                 key: dsn
         securityContext:
-          {{- toYaml .Values.securityContext | nindent 12 }}
+          {{- toYaml .Values.securityContext | nindent 10 }}
       restartPolicy: Never
       volumes:
         - name: {{ include "keto.name" . }}-config-volume
