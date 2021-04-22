@@ -143,6 +143,8 @@ deployment:
     allowPrivilegeEscalation: false
     privileged: false
 
+  lifecycle: {}
+
   labels: {}
   #      If you do want to specify additional labels, uncomment the following
   #      lines, adjust them as necessary, and remove the curly braces after 'labels:'.
