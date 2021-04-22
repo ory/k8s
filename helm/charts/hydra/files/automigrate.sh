@@ -11,7 +11,7 @@ export $NAMESPACE
 
 if [[ -f /etc/migration/migration.json ]]; then
   echo "---> Deleting ${NAMESPACE}/${NAME_ROOT}-migration"
-  timeout 30s sh -c "until kubectl delete cm ${NAME_ROOT}-migration -n ${NAMESPACE}; do sleep 5; done"
+  timeout $TASK_TIMEOUT sh -c "until kubectl delete cm ${NAME_ROOT}-migration -n ${NAMESPACE}; do sleep 5; done"
 fi
 
 # DSN is always in the form DSN=DB_TYPE://DB_USER:PASSWORD@DB_URL/DB_NAME?sslmode=disable
@@ -51,4 +51,4 @@ done
 
 hydra migrate sql -e --yes --config /etc/config/config.yaml
 echo {\"timestamp\": \"$(date "+%Y%m%d-%H%M%S")\",\"completed\": true} > /tmp/migration.json
-timeout 30s sh -c "until kubectl create cm ${NAME_ROOT}-migration -n ${NAMESPACE} --from-file=/tmp/migration.json --dry-run=client -o yaml | kubectl apply -f - ; do sleep 5; done"
+timeout $TASK_TIMEOUT sh -c "until kubectl create cm ${NAME_ROOT}-migration -n ${NAMESPACE} --from-file=/tmp/migration.json --dry-run=client -o yaml | kubectl apply -f - ; do sleep 5; done"
