@@ -35,9 +35,6 @@ spec:
           - name: {{ include "hydra.name" . }}-config-volume
             mountPath: /etc/config
             readOnly: true
-          - name: {{ include "hydra.fullname" . }}-migration
-            mountPath: /etc/migration
-            readOnly: true
         env:
           - name: DSN
             valueFrom:
@@ -65,10 +62,6 @@ spec:
         - name: {{ include "hydra.name" . }}-config-volume
           configMap:
             name: {{ include "hydra.fullname" . }}-automigrate
-        - name: {{ include "hydra.name" . }}-migration
-          configMap:
-            name: {{ include "hydra.fullname" . }}-migration
-            optional: true
       serviceAccountName: {{ include "hydra.fullname" . }}-automigrate
   backoffLimit: 5
 {{- end }}

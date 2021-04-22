@@ -2,17 +2,6 @@ set -e
 set -o pipefail
 
 apk add curl netcat-openbsd coreutils
-curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
-chmod +x kubectl
-mv kubectl /usr/local/bin/kubectl
-
-export $NAME_ROOT
-export $NAMESPACE
-
-if [[ -f /etc/migration/migration.json ]]; then
-  echo "---> Deleting ${NAMESPACE}/${NAME_ROOT}-migration"
-  timeout $TASK_TIMEOUT sh -c "until kubectl delete cm ${NAME_ROOT}-migration -n ${NAMESPACE}; do sleep 5; done"
-fi
 
 # DSN is always in the form DSN=DB_TYPE://DB_USER:PASSWORD@DB_URL/DB_NAME?sslmode=disable
 # Extract DB_URL by cutting between @ and first /
@@ -50,5 +39,3 @@ until nc -zv -w 5 $DB_URL $DB_PORT; do
 done
 
 hydra migrate sql -e --yes --config /etc/config/config.yaml
-echo {\"timestamp\": \"$(date "+%Y%m%d-%H%M%S")\",\"completed\": true} > /tmp/migration.json
-timeout $TASK_TIMEOUT sh -c "until kubectl create cm ${NAME_ROOT}-migration -n ${NAMESPACE} --from-file=/tmp/migration.json --dry-run=client -o yaml | kubectl apply -f - ; do sleep 5; done"
