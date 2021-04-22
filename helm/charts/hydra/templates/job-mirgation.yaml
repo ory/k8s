@@ -24,44 +24,18 @@ spec:
     spec:
       containers:
       - name: {{ .Chart.Name }}-automigrate
-        image: {{ .Values.image.repository }}:{{ include "hydra.getAlpineImage" . }}
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
         imagePullPolicy: {{ .Values.image.pullPolicy }}
-        command:
-        - /bin/sh
-        - -c
-        - |
-{{ .Files.Get "files/automigrate.sh" | printf "%s" | indent 10 }}
-        volumeMounts:
-          - name: {{ include "hydra.name" . }}-config-volume
-            mountPath: /etc/config
-            readOnly: true
+        command: ["hydra"]
+        args: ["migrate", "sql", "-e", "--yes"]
         env:
           - name: DSN
             valueFrom:
               secretKeyRef:
                 name: {{ include "hydra.secretname" . }}
                 key: dsn
-          - name: NAME_ROOT
-            value: {{ include "hydra.fullname" . | quote }}
-          - name: NAMESPACE
-            value: {{ .Release.Namespace }}
-          - name: TASK_TIMEOUT
-            value: "30s"
         securityContext:
-          capabilities:
-            drop:
-            - ALL
-          readOnlyRootFilesystem: false
-          runAsNonRoot: false
-          # Temporary. Need root to install packages
-          runAsUser: 0
-          allowPrivilegeEscalation: false
-          privileged: false
+          {{- toYaml .Values.deployment.securityContext | nindent 12 }}
       restartPolicy: Never
-      volumes:
-        - name: {{ include "hydra.name" . }}-config-volume
-          configMap:
-            name: {{ include "hydra.fullname" . }}-automigrate
-      serviceAccountName: {{ include "hydra.fullname" . }}-automigrate
-  backoffLimit: 5
+  backoffLimit: 10
 {{- end }}
