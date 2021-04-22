@@ -24,26 +24,6 @@ spec:
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      {{- if .Values.keto.autoMigrate }}
-      initContainers:
-        - name: {{ .Chart.Name }}-automigrate
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
-          command: [ "keto" ]
-          args: [ "migrate", "up", "-y", "--all-namespaces", "--config", "/etc/config/keto.yaml" ]
-          volumeMounts:
-            - name: {{ include "keto.name" . }}-config-volume
-              mountPath: /etc/config
-              readOnly: true
-          env:
-            - name: DSN
-              valueFrom:
-                secretKeyRef:
-                  name: {{ include "keto.secretname" . }}
-                  key: dsn
-          securityContext:
-            {{- toYaml .Values.securityContext | nindent 12 }}
-      {{- end }}
       serviceAccountName: {{ include "keto.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
