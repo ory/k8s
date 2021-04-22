@@ -1,4 +1,5 @@
 set -e
+set -o pipefail
 apk add curl netcat-openbsd
 curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
 chmod +x kubectl
@@ -23,7 +24,13 @@ else
   	"postgres" )
 		DB_PORT="5432"
   		;;
-  	* )
+    "cockroach" )
+      DB_PORT="26257"
+      ;;
+    "mysql" )
+      DB_PORT="3306"
+      ;;
+    * )
 		DB_PORT="80"
 		;;
   esac

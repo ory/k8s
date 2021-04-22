@@ -1,3 +1,4 @@
+{{- if .Values.hydra.autoMigrate }}
 ---
 apiVersion: v1
 kind: ServiceAccount
@@ -46,3 +47,4 @@ subjects:
   - kind: ServiceAccount
     name: {{ include "hydra.fullname" . }}-automigrate
     namespace: {{ .Release.Namespace }}
+{{- end }}
