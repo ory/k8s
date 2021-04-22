@@ -48,12 +48,15 @@ spec:
             value: {{ include "hydra.fullname" . | quote }}
           - name: NAMESPACE
             value: {{ .Release.Namespace }}
+          - name: TASK_TIMEOUT
+            value: "30s"
         securityContext:
           capabilities:
             drop:
             - ALL
           readOnlyRootFilesystem: false
           runAsNonRoot: false
+          # Temporary. Need root to install packages
           runAsUser: 0
           allowPrivilegeEscalation: false
           privileged: false
@@ -61,11 +64,11 @@ spec:
       volumes:
         - name: {{ include "hydra.name" . }}-config-volume
           configMap:
-            name: {{ include "hydra.fullname" . }}
+            name: {{ include "hydra.fullname" . }}-automigrate
         - name: {{ include "hydra.name" . }}-migration
           configMap:
             name: {{ include "hydra.fullname" . }}-migration
             optional: true
       serviceAccountName: {{ include "hydra.fullname" . }}-automigrate
-  backoffLimit: 1
+  backoffLimit: 5
 {{- end }}
