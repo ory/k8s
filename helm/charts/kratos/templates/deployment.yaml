@@ -36,84 +36,11 @@ spec:
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
     {{- end }}
-    {{- if or .Values.kratos.autoMigrate .Values.deployment.extraInitContainers}}
+    {{- if .Values.deployment.extraInitContainers}}
       initContainers:
         {{- if .Values.deployment.extraInitContainers }}
 {{ tpl .Values.deployment.extraInitContainers . | indent 8 }}
         {{- end }}
-        {{- if .Values.kratos.autoMigrate }}
-        -
-          name: {{ .Chart.Name }}-automigrate
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
-          command: ["kratos"]
-          args: ["migrate", "sql", "-e", "--yes", "--config", "/etc/config/kratos.yaml"]
-          volumeMounts:
-            - name: {{ include "kratos.name" . }}-config-volume
-              mountPath: /etc/config
-              readOnly: true
-            {{- if .Values.deployment.extraVolumeMounts }}
-{{ toYaml .Values.deployment.extraVolumeMounts | indent 12 }}
-            {{- end }}
-          securityContext:
-            {{- toYaml .Values.securityContext | nindent 12 }}
-          env:
-            {{- if .Values.deployment.tracing.datadog.enabled }}
-            -
-              name: TRACING_PROVIDER
-              value: datadog
-            -
-              name: DD_ENV
-              value: {{ .Values.deployment.tracing.datadog.env | default "none" | quote }}
-            -
-              name: DD_VERSION
-              value: {{ .Values.deployment.tracing.datadog.version | default .Values.image.tag | quote }}
-            -
-              name: DD_SERVICE
-              value: {{ .Values.deployment.tracing.datadog.service | default "ory/kratos" | quote }}
-            {{- if .Values.deployment.tracing.datadog.useHostIP }}
-            -
-              name: DD_AGENT_HOST
-              valueFrom:
-                fieldRef:
-                  fieldPath: status.hostIP
-            {{- end }}
-            {{- end }}
-            -
-              name: DSN
-              valueFrom:
-                secretKeyRef:
-                  name: {{ include "kratos.secretname" . }}
-                  key: dsn
-            -
-              name: SECRETS_DEFAULT
-              valueFrom:
-                secretKeyRef:
-                  name: {{ include "kratos.secretname" . }}
-                  key: secretsDefault
-            -
-              name: SECRETS_COOKIE
-              valueFrom:
-                secretKeyRef:
-                  name: {{ include "kratos.secretname" . }}
-                  key: secretsCookie
-          {{- if .Values.kratos.config.courier.smtp.connection_uri }}
-            -
-              name: COURIER_SMTP_CONNECTION_URI
-              valueFrom:
-                secretKeyRef:
-                  name: {{ include "kratos.secretname" . }}
-                  key: smtpConnectionURI
-          {{- end}}
-            {{- with .Values.deployment.extraEnv }}
-              {{- toYaml . | nindent 12 }}
-            {{- end }}
-        {{- if .Values.deployment.environmentSecretsName }}
-          envFrom:
-          - secretRef:
-              name: {{ .Values.deployment.environmentSecretsName }}
-        {{- end}}
-        {{- end}}
     {{- end}}
       volumes:
         {{- if .Values.deployment.extraVolumes }}
@@ -129,8 +56,7 @@ spec:
           configMap:
             name: {{ include "kratos.fullname" $root }}-template-{{ $method }}-{{ $result }}
         {{- end }}
-        {{- end }}
-        
+        {{- end }}   
       containers:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
@@ -161,32 +87,44 @@ spec:
             {{- end }}
             {{- end }}
           env:
-            -
-              name: DSN
+            - name: DSN
               valueFrom:
                 secretKeyRef:
                   name: {{ include "kratos.secretname" . }}
                   key: dsn
-            -
-              name: SECRETS_DEFAULT
+            - name: SECRETS_DEFAULT
               valueFrom:
                 secretKeyRef:
                   name: {{ include "kratos.secretname" . }}
                   key: secretsDefault
-            -
-              name: SECRETS_COOKIE
+            - name: SECRETS_COOKIE
               valueFrom:
                 secretKeyRef:
                   name: {{ include "kratos.secretname" . }}
                   key: secretsCookie
             {{- if .Values.kratos.config.courier.smtp.connection_uri }}
-            -
-              name: COURIER_SMTP_CONNECTION_URI
+            - name: COURIER_SMTP_CONNECTION_URI
               valueFrom:
                 secretKeyRef:
                   name: {{ include "kratos.secretname" . }}
                   key: smtpConnectionURI
           {{- end}}
+          {{- if .Values.deployment.tracing.datadog.enabled }}
+            - name: TRACING_PROVIDER
+              value: datadog
+            - name: DD_ENV
+              value: {{ .Values.deployment.tracing.datadog.env | default "none" | quote }}
+            - name: DD_VERSION
+              value: {{ .Values.deployment.tracing.datadog.version | default .Values.image.tag | quote }}
+            - name: DD_SERVICE
+              value: {{ .Values.deployment.tracing.datadog.service | default "ory/kratos" | quote }}
+            {{- if .Values.deployment.tracing.datadog.useHostIP }}
+            - name: DD_AGENT_HOST
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.hostIP
+            {{- end }}
+            {{- end }}
         {{- if .Values.deployment.environmentSecretsName }}
           envFrom:
           - secretRef:
