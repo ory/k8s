@@ -231,6 +231,16 @@ deployment:
   # targetCPUUtilizationPercentage: 80
   # targetMemoryUtilizationPercentage: 80
 
+  # Configure the probes for when the deployment is considered ready and ongoing health check
+  livenessProbe:
+    initialDelaySeconds: 30
+    periodSeconds: 10
+    failureThreshold: 5
+  readinessProbe:
+    initialDelaySeconds: 30
+    periodSeconds: 10
+    failureThreshold: 5
+
 # Configure node affinity
 affinity: {}
 
