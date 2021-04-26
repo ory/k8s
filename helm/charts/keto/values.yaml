@@ -124,6 +124,16 @@ nodeSelector: {}
 
 extraEnv: []
 
+extraVolumes: []
+# - name: my-volume
+#   secret:
+#     secretName: my-secret
+
+extraVolumeMounts: []
+# - name: my-volume
+#   mountPath: /etc/secrets/my-secret
+#   readOnly: true
+
 # Configuration for tracing providers. Only datadog is currently supported through this block.
 # If you need to use a different tracing provider, please manually set the configuration values
 # via "keto.config" or via "extraEnv".
