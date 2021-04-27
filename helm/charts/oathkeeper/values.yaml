@@ -130,6 +130,21 @@ oathkeeper:
   # used as it will have no effect once "managedAccessRules" is disabled.
   managedAccessRules: true
 
+secret:
+  # set to true for this helm chart to manage the secret
+  # set to false for this helm chart to NOT manage the secret
+  # defaults to true
+  manage: true
+
+  # name of the secret to use
+  # if empty, defaults to {{ include "oathkeeper.fullname" . }}
+  name: ""
+
+  # default mount path for the kubernetes secret
+  mountPath: /etc/secrets
+  # default filename of JWKS (mounted as secret)
+  filename: mutator.id_token.jwks.json
+
 deployment: 
   resources: {}
   #  We usually recommend not to specify default resources and to leave this as a conscious
