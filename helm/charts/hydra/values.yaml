@@ -241,6 +241,9 @@ deployment:
     periodSeconds: 10
     failureThreshold: 5
 
+job:
+  annotations: {}
+
 # Configure node affinity
 affinity: {}
 

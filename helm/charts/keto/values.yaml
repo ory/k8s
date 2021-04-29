@@ -38,6 +38,9 @@ securityContext:
   allowPrivilegeEscalation: false
   privileged: false
 
+job:
+  annotations: {}
+
 ingress:
   read:
     enabled: false
