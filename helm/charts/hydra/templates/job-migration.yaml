@@ -13,7 +13,7 @@ metadata:
       {{- toYaml . | nindent 4 }}
     {{- end }}
   annotations:
-    {{- with .Values.deployment.annotations }}
+    {{- with .Values.job.annotations }}
       {{- toYaml . | nindent 4 }}
     {{- end }}
     helm.sh/hook-weight: "1"
