@@ -42,7 +42,7 @@ spec:
           emptyDir: {}
         - name: {{ include "oathkeeper.name" . }}-secrets-volume
           secret:
-            secretName: {{ include "oathkeeper.fullname" . }}
+            secretName: {{ empty .Values.secret.name | ternary (include "oathkeeper.fullname" .) (.Values.secret.name) }}
       initContainers:
         - name: init
           image: busybox:1
@@ -66,7 +66,7 @@ spec:
           env:
             {{- if .Values.oathkeeper.mutatorIdTokenJWKs }}
             - name: MUTATORS_ID_TOKEN_CONFIG_JWKS_URL
-              value: "file:///etc/secrets/mutator.id_token.jwks.json"
+              value: "file://{{ .Values.secret.mountPath }}/{{ .Values.secret.filename }}"
             {{- end }}
           volumeMounts:
             - name: {{ include "oathkeeper.name" . }}-config-volume
@@ -76,7 +76,7 @@ spec:
               mountPath: /etc/rules
               readOnly: true
             - name: {{ include "oathkeeper.name" . }}-secrets-volume
-              mountPath: /etc/secrets
+              mountPath: {{ .Values.secret.mountPath }}
               readOnly: true
           ports:
             - name: http-api
