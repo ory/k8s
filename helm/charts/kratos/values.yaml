@@ -230,5 +230,8 @@ deployment:
   # https://kubernetes.io/docs/tasks/inject-data-application/distribute-credentials-secure/#configure-all-key-value-pairs-in-a-secret-as-container-environment-variables
   environmentSecretsName:
 
+job:
+  annotations: {}
+
 # Configure node affinity
 affinity: {}
