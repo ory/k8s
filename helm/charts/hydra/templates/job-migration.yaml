@@ -21,6 +21,11 @@ metadata:
     helm.sh/hook-delete-policy: "before-hook-creation,hook-succeeded"
 spec:
   template:
+    {{- with .Values.job.annotations }}
+    metadata: 
+      annotations:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
     spec:
       containers:
       - name: {{ .Chart.Name }}-automigrate
