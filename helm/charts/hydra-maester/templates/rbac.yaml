@@ -83,5 +83,4 @@ roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
   name: {{ $name }}-role-{{ . }}
-  namespace: {{ . }}
 {{- end }}
