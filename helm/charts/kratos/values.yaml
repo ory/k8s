@@ -106,12 +106,14 @@ kratos:
 #          Hi, please recover access to your account by clicking the following link:
 #
 #          <a href="{{ .RecoveryURL }}">{{ .RecoveryURL }}</a>
+#        plainBody: Hi, please recover access to your account by clicking the following link: {{ .RecoveryURL }}
 #      invalid:
 #        subject: Account access attempted
 #        body: |-
 #          Hi, you (or someone else) entered this email address when trying to recover access to an account.
 #
 #          However, this email address is not on our database of registered users and therefore the attempt has failed. If this was you, check if you signed up using a different address. If this was not you, please ignore this email.
+#        plainBody: Hi, you (or someone else) entered this email address when trying to recover access to an account.
 #    verification:
 #      valid:
 #        subject: Please verify your email address
@@ -119,9 +121,11 @@ kratos:
 #          Hi, please verify your account by clicking the following link:
 #
 #          <a href="{{ .RecoveryURL }}">{{ .RecoveryURL }}</a>
+#        plainBody: Hi, please verify your account by clicking the following link: {{ .RecoveryURL }}
 #      invalid:
 #        subject:
 #        body:
+#        plainBody:
 
   config:
     courier:
