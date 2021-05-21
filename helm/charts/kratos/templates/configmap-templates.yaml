@@ -17,7 +17,7 @@ data:
   {{- if $resultEntry.body }}
   "email.body.gotmpl": |-
 {{ $resultEntry.body | indent 4 }}
-  {{- end }}
+    {{- end }}
     {{- if $resultEntry.plainBody }}
   "email.body.plaintext.gotmpl": |-
 {{ $resultEntry.plainBody | indent 4 }}
