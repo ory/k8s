@@ -108,8 +108,8 @@ spec:
                 secretKeyRef:
                   name: {{ include "kratos.secretname" . }}
                   key: smtpConnectionURI
-          {{- end}}
-          {{- if .Values.deployment.tracing.datadog.enabled }}
+            {{- end}}
+            {{- if .Values.deployment.tracing.datadog.enabled }}
             - name: TRACING_PROVIDER
               value: datadog
             - name: DD_ENV
@@ -124,6 +124,9 @@ spec:
                 fieldRef:
                   fieldPath: status.hostIP
             {{- end }}
+            {{- end }}
+            {{- if .Values.deployment.extraEnv }}
+{{ toYaml .Values.deployment.extraEnv | indent 12 }}
             {{- end }}
         {{- if .Values.deployment.environmentSecretsName }}
           envFrom:
