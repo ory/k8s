@@ -52,6 +52,7 @@ spec:
         - name: {{ include "oathkeeper.name" . }}-secrets-volume
           secret:
             secretName: {{ empty .Values.secret.name | ternary (include "oathkeeper.fullname" .) (.Values.secret.name) }}
+      automountServiceAccountToken: {{ .Values.deployment.automountServiceAccountToken }}
       containers:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"

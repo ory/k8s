@@ -56,7 +56,8 @@ spec:
           configMap:
             name: {{ include "kratos.fullname" $root }}-template-{{ $method }}-{{ $result }}
         {{- end }}
-        {{- end }}   
+        {{- end }}
+      automountServiceAccountToken: {{ .Values.automountServiceAccountToken }}
       containers:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"

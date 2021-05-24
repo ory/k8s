@@ -58,6 +58,9 @@ deployment:
   annotations: {}
   podLabels: {}
 
+  # https://github.com/kubernetes/kubernetes/issues/57601
+  automountServiceAccountToken: false
+
 job:
   podLabels: {}
 

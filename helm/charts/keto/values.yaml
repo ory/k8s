@@ -28,6 +28,9 @@ podAnnotations: {}
 podSecurityContext: {}
   # fsGroup: 2000
 
+# https://github.com/kubernetes/kubernetes/issues/57601
+automountServiceAccountToken: false
+
 securityContext:
   capabilities:
     drop:

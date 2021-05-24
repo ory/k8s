@@ -46,6 +46,7 @@ spec:
       {{- if .Values.deployment.serviceAccountName  }}
       serviceAccountName: {{ .Values.deployment.serviceAccountName }}
       {{- end }}
+      automountServiceAccountToken: {{ .Values.deployment.automountServiceAccountToken }}
       containers:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"

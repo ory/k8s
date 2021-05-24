@@ -241,6 +241,9 @@ deployment:
     periodSeconds: 10
     failureThreshold: 5
 
+  # https://github.com/kubernetes/kubernetes/issues/57601
+  automountServiceAccountToken: false
+
 job:
   annotations: {}
 

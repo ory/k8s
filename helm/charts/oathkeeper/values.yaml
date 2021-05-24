@@ -167,6 +167,9 @@ deployment:
     allowPrivilegeEscalation: false
     privileged: false
 
+  # https://github.com/kubernetes/kubernetes/issues/57601
+  automountServiceAccountToken: false
+
   # Node labels for pod assignment.
   nodeSelector: {}
   # If you do want to specify node labels, uncomment the following

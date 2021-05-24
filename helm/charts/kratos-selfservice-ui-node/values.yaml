@@ -73,6 +73,9 @@ deployment:
   #      lines, adjust them as necessary, and remove the curly braces after 'annotations:'.
   #      e.g.  sidecar.istio.io/rewriteAppHTTPProbers: "true"
 
+  # https://github.com/kubernetes/kubernetes/issues/57601
+  automountServiceAccountToken: false
+
 affinity: {}
 
 # Set this to ORY Kratos's Admin URL
