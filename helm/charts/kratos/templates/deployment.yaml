@@ -145,10 +145,12 @@ spec:
             httpGet:
               path: /health/alive
               port: http-admin
+            {{- toYaml .Values.deployment.livenessProbe | nindent 12 }}
           readinessProbe:
             httpGet:
               path: /health/ready
               port: http-admin
+            {{- toYaml .Values.deployment.readinessProbe | nindent 12 }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           securityContext:
