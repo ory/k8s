@@ -57,6 +57,8 @@ deployment:
 
   # Configure environment variables.
   envs: {}
+  # https://github.com/kubernetes/kubernetes/issues/57601
+  automountServiceAccountToken: false
 
 # Configure node affinity
 affinity: {}

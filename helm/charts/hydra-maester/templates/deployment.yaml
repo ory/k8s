@@ -47,6 +47,7 @@ spec:
           securityContext:
             {{- toYaml .Values.deployment.securityContext | nindent 12 }}
       serviceAccountName: {{ include "hydra-maester.name" . }}-account
+      automountServiceAccountToken: {{ .Values.deployment.automountServiceAccountToken }}
       {{- if .Values.priorityClassName }}
       priorityClassName: {{ .Values.priorityClassName }}
       {{- end }}
