@@ -36,6 +36,9 @@ spec:
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
     {{- end }}
+    {{- if .Values.serviceAccount.enabled }}
+      serviceAccountName: {{ default (include "kratos.fullname" . ) .Values.serviceAccount.name }}
+    {{- end }}
     {{- if .Values.deployment.extraInitContainers}}
       initContainers:
         {{- if .Values.deployment.extraInitContainers }}

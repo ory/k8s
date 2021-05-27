@@ -236,6 +236,26 @@ deployment:
 
 job:
   annotations: {}
+  #  If you'd like to use Istio and auto-migration is enabled edit the command and args for the migration job
+  #  Please note Kratos container image is very light and doesn't include curl. You'd need to build your own
+  #  e.g.
+  #  args: []
+  #  command:
+  #    - /bin/sh
+  #    - -ec
+  #    - |
+  #      kratos migrate sql -e --yes
+  #      x=$(echo $?); curl -fsI -X POST http://localhost:15020/quitquitquit && exit $x
+  command: ["kratos"]
+  args: ["migrate", "sql", "-e", "--yes"]
 
 # Configure node affinity
 affinity: {}
+
+## Pod Service Account
+## ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/
+##
+serviceAccount:
+  enabled: false
+  ## Name of an already existing service account. Setting this value disables the automatic service account creation.
+  # name:

@@ -24,12 +24,19 @@ spec:
         {{- toYaml . | nindent 8 }}
     {{- end }}
     spec:
+      {{- if .Values.serviceAccount.enabled }}
+      serviceAccountName: {{ default (include "kratos.fullname" . ) .Values.serviceAccount.name }}
+      {{- end }}
       containers:
       - name: {{ .Chart.Name }}-automigrate
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
         imagePullPolicy: {{ .Values.image.pullPolicy }}
-        command: ["kratos"]
-        args: ["migrate", "sql", "-e", "--yes"]
+        {{- if .Values.job.args }}
+        args: {{ .Values.job.args | toYaml | nindent 10 }}
+        {{- end }}
+        {{- if .Values.job.command }}
+        command: {{ .Values.job.command | toYaml | nindent 10 }}
+        {{- end }}
         env:
           - name: DSN
             valueFrom:
