@@ -41,6 +41,14 @@ spec:
                 key: dsn
         securityContext:
           {{- toYaml .Values.deployment.securityContext | nindent 10 }}
+        {{- if .Values.deployment.extraVolumeMounts }}
+        volumeMounts:
+{{ toYaml .Values.deployment.extraVolumeMounts | indent 10 }}
+         {{- end }}
       restartPolicy: Never
+      {{- if .Values.deployment.extraVolumes }}
+      volumes:
+{{ toYaml .Values.deployment.extraVolumes | indent 8 }}
+      {{- end }}
   backoffLimit: 10
 {{- end }}
