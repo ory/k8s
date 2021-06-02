@@ -83,16 +83,12 @@ spec:
             httpGet:
               path: /health/alive
               port: http-admin
-            initialDelaySeconds: {{ .Values.deployment.livenessProbe.initialDelaySeconds }}
-            periodSeconds: {{ .Values.deployment.livenessProbe.periodSeconds }}
-            failureThreshold: {{ .Values.deployment.livenessProbe.failureThreshold }}
+            {{- toYaml .Values.deployment.livenessProbe | nindent 12 }}
           readinessProbe:
             httpGet:
               path: /health/ready
               port: http-admin
-            initialDelaySeconds: {{ .Values.deployment.readinessProbe.initialDelaySeconds }}
-            periodSeconds: {{ .Values.deployment.readinessProbe.periodSeconds }}
-            failureThreshold: {{ .Values.deployment.readinessProbe.failureThreshold }}
+            {{- toYaml .Values.deployment.readinessProbe | nindent 12 }}
           env:
             {{- if .Values.deployment.tracing.datadog.enabled }}
             - name: TRACING_PROVIDER

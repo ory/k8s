@@ -237,6 +237,16 @@ deployment:
   # https://kubernetes.io/docs/tasks/inject-data-application/distribute-credentials-secure/#configure-all-key-value-pairs-in-a-secret-as-container-environment-variables
   environmentSecretsName:
 
+  # Configure the probes for when the deployment is considered ready and ongoing health check
+  livenessProbe:
+    initialDelaySeconds: 30
+    periodSeconds: 10
+    failureThreshold: 5
+  readinessProbe:
+    initialDelaySeconds: 30
+    periodSeconds: 10
+    failureThreshold: 5
+
 job:
   annotations: {}
 
