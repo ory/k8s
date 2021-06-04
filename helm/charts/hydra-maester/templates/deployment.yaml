@@ -46,7 +46,7 @@ spec:
           terminationMessagePolicy: File
           securityContext:
             {{- toYaml .Values.deployment.securityContext | nindent 12 }}
-      serviceAccountName: {{ include "hydra-maester.name" . }}-account
+      serviceAccountName: {{ include "hydra-maester.fullname" . }}-account
       automountServiceAccountToken: {{ .Values.deployment.automountServiceAccountToken }}
       {{- if .Values.priorityClassName }}
       priorityClassName: {{ .Values.priorityClassName }}
