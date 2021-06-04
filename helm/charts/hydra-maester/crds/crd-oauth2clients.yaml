@@ -99,8 +99,9 @@ spec:
                 type: object
               metadata:
                 description: Metadata is abritrary data
-                format: byte
-                type: string
+                nullable: true
+                type: object
+                x-kubernetes-preserve-unknown-fields: true
               postLogoutRedirectUris:
                 description: PostLogoutRedirectURIs is an array of the post logout
                   redirect URIs allowed for the application
