@@ -32,9 +32,12 @@ spec:
         command: [ "keto" ]
         args: [ "migrate", "up", "-y", "--all-namespaces", "--config", "/etc/config/keto.yaml" ]
         volumeMounts:
-        - name: {{ include "keto.name" . }}-config-volume
-          mountPath: /etc/config
-          readOnly: true
+          - name: {{ include "keto.name" . }}-config-volume
+            mountPath: /etc/config
+            readOnly: true
+        {{- with .Values.extraVolumeMounts }}
+          {{- toYaml . | nindent 10 }}
+        {{- end }}
         env:
           - name: DSN
             valueFrom:
@@ -48,5 +51,8 @@ spec:
         - name: {{ include "keto.name" . }}-config-volume
           configMap:
             name: {{ include "keto.fullname" . }}-migrate
+      {{- with .Values.extraVolumes }}
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
   backoffLimit: 10
 {{- end }}
