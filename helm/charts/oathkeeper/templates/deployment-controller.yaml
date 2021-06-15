@@ -42,16 +42,21 @@ spec:
         - name: {{ include "oathkeeper.name" . }}-config-volume
           configMap:
             {{- if .Values.demo }}
-            name: {{ include "oathkeeper.fullname" . }}-config-demo
+            name: {{ include "oathkeeper.name" . }}-config-demo
             {{- else }}
-            name: {{ include "oathkeeper.fullname" . }}-config
+            name: {{ include "oathkeeper.name" . }}-config
             {{- end }}
         - name: {{ include "oathkeeper.name" . }}-rules-volume
           configMap:
-            name: {{ include "oathkeeper.fullname" . }}-rules
+            name: {{ include "oathkeeper.name" . }}-rules
         - name: {{ include "oathkeeper.name" . }}-secrets-volume
           secret:
             secretName: {{ empty .Values.secret.name | ternary (include "oathkeeper.fullname" .) (.Values.secret.name) }}
+        {{- if .Values.certs.enabled }}
+        - name: {{ include "oathkeeper.name" . }}-certs
+          secret:
+            secretName: {{- if .Values.certs.existingSecret }}
+        {{- end }}
       automountServiceAccountToken: {{ .Values.deployment.automountServiceAccountToken }}
       containers:
         - name: {{ .Chart.Name }}
@@ -92,6 +97,11 @@ spec:
             - name: {{ include "oathkeeper.name" . }}-secrets-volume
               mountPath: {{ .Values.secret.mountPath }}
               readOnly: true
+            {{- if .Values.certs.enabled }}
+            - name: {{ include "oathkeeper.name" . }}-certs
+              mountPath: /data/certs/
+              readOnly: true
+            {{- end }}
           ports:
             - name: http-api
               containerPort: {{ .Values.oathkeeper.config.serve.api.port }}

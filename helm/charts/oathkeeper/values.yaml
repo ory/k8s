@@ -222,3 +222,10 @@ affinity: {}
 # Configures controller setup
 maester:
   enabled: true
+
+# Configures the client TLS transport certificates
+certs:
+  enabled: false
+
+  # The name of an already existing secret containing the certificates to be mounted.
+  existingSecret: ""
