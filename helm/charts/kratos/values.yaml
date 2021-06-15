@@ -242,10 +242,14 @@ deployment:
     initialDelaySeconds: 30
     periodSeconds: 10
     failureThreshold: 5
+    successThreshold: 1
+    timeoutSeconds: 1
   readinessProbe:
     initialDelaySeconds: 30
     periodSeconds: 10
     failureThreshold: 5
+    successThreshold: 1
+    timeoutSeconds: 1
 
 job:
   annotations: {}
