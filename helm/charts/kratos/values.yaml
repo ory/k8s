@@ -6,7 +6,7 @@ replicaCount: 1
 
 image:
   repository: oryd/kratos
-  tag: v0.5.5-alpha.1-sqlite
+  tag: v0.6.3-alpha.1-sqlite
   pullPolicy: IfNotPresent
 
 imagePullSecrets: []
@@ -224,7 +224,7 @@ deployment:
   # extraInitContainers: |
   #  - name: ...
   #    image: ...
-  
+
   annotations: {}
   #      If you do want to specify annotations, uncomment the following
   #      lines, adjust them as necessary, and remove the curly braces after 'annotations:'.
