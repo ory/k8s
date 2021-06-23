@@ -66,7 +66,7 @@ spec:
           args: [
             "serve",
             "all",
-            "--watch-courier" # Will be configurable, check out https://github.com/ory/k8s/issues/285
+            "--watch-courier", # Will be configurable, check out https://github.com/ory/k8s/issues/285
             {{- if .Values.kratos.development }}
             "--dev",
             {{- end}}
