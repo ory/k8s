@@ -5,12 +5,15 @@ rbacJob:
     repository: eu.gcr.io/kyma-project/test-infra/alpine-kubectl
     tag: "v20190325-ff66a3a"
 
-#The Controller have CREATE and READ access to all Secrets in the namespaces listed below.
+# The Controller have CREATE and READ access to all Secrets in the namespaces listed below.
 enabledNamespaces: []
+
+# Single namespace mode. If enabled the controller will watch for resources only from this namespace, ignoring others
+singleNamespaceMode: false
 
 image:
   repository: oryd/hydra-maester
-  tag: v0.0.19
+  tag: v0.0.23
   # Image pull policy
   pullPolicy: IfNotPresent
 

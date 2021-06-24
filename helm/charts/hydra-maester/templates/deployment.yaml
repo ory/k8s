@@ -11,13 +11,13 @@ spec:
   selector:
     matchLabels:
       control-plane: controller-manager
-      app.kubernetes.io/name: {{ include "hydra-maester.name" . }}
+      app.kubernetes.io/name: {{ include "hydra-maester.fullname" . }}
       app.kubernetes.io/instance: {{ .Release.Name }}
   template:
     metadata:
       labels:
         control-plane: controller-manager
-        app.kubernetes.io/name: {{ include "hydra-maester.name" . }}
+        app.kubernetes.io/name: {{ include "hydra-maester.fullname" . }}
         app.kubernetes.io/instance: {{ .Release.Name }}
         {{- with .Values.deployment.podLabels }}
         {{- toYaml . | nindent 8 }}
@@ -35,10 +35,13 @@ spec:
             - /manager
           args:
             - --metrics-addr=127.0.0.1:8080
-            - --hydra-url=http://{{ include "hydra-maester.adminService" . }}
+            - --hydra-url=http://{{ .Values.adminService.name | default ( include "hydra-maester.adminService" . ) }}
             - --hydra-port={{ .Values.adminService.port | default 4445 }}
             {{- if .Values.forwardedProto }}
             - --forwarded-proto={{ .Values.forwardedProto }}
+            {{- end }}
+            {{- if .Values.singleNamespaceMode }}
+            - --namespace={{ .Release.Namespace }}
             {{- end }}
           resources:
             {{- toYaml .Values.deployment.resources | nindent 12 }}
