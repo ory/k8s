@@ -33,8 +33,7 @@ until [[ $n -ge 15 ]]; do
   helm test --timeout "${TIMEOUT}" "${release}"
   TEST_STATUS=$?
   set -e
-  
-  kubectl delete pod "${release}-test-connection"
+
   if [[ ${TEST_STATUS} -eq 0 ]]; then
     echo "Test Successful"
     exit ${TEST_STATUS}
