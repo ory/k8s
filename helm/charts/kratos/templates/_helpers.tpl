@@ -99,3 +99,20 @@ app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{- end -}}
+
+{{- define "kratos.courier.name" -}}
+{{- include "kratos.name" . }}-courier
+{{- end -}}
+
+{{/*
+Courier statefulset labels
+*/}}
+{{- define "kratos.courier.labels" -}}
+app.kubernetes.io/name: {{ include "kratos.courier.name" . }}
+helm.sh/chart: {{ include "kratos.chart" . }}
+app.kubernetes.io/instance: {{ .Release.Name }}
+{{- if .Chart.AppVersion }}
+app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
+{{- end }}
+app.kubernetes.io/managed-by: {{ .Release.Service }}
+{{- end -}}

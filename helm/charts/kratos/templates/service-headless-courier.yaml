@@ -1,0 +1,15 @@
+{{- if .Values.standaloneCourier -}}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "kratos.fullname" . }}-courier
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "kratos.courier.labels" . | nindent 4 }}
+spec:
+  clusterIP: None
+  ports: []
+  selector:
+    app.kubernetes.io/name: {{ include "kratos.courier.name" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+{{- end }}
