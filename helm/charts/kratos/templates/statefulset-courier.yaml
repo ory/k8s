@@ -1,12 +1,11 @@
+{{- if .Values.kratos.standaloneCourier }}
+---
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: {{ include "kratos.fullname" . }}
-  {{- if .Release.Namespace }}
-  namespace: {{ .Release.Namespace }}
-  {{- end }}
   labels:
-{{ include "kratos.labels" . | indent 4 }}
+    {{- include "kratos.labels" . | nindent 4 }}
     {{- with .Values.deployment.labels }}
       {{- toYaml . | nindent 4 }}
     {{- end }}
@@ -15,7 +14,8 @@ metadata:
       {{- toYaml . | nindent 4 }}
     {{- end }}
 spec:
-  replicas: {{ .Values.replicaCount }}
+  # Due to some limitation in the persistence layer, this has to be a singleton
+  replicas: 1
   selector:
     matchLabels:
       app.kubernetes.io/name: {{ include "kratos.name" . }}
@@ -23,7 +23,7 @@ spec:
   template:
     metadata:
       labels:
-{{ include "kratos.labels" . | indent 8 }}
+        {{- include "kratos.labels" . | nindent 8 }}
         {{- with .Values.deployment.labels }}
           {{- toYaml . | nindent 8 }}
         {{- end }}
@@ -38,7 +38,7 @@ spec:
     {{- end }}
       volumes:
         {{- if .Values.deployment.extraVolumes }}
-{{ toYaml .Values.deployment.extraVolumes | indent 8 }}
+        {{- toYaml .Values.deployment.extraVolumes | nindent 8 }}
         {{- end }}
         - name: {{ include "kratos.name" . }}-config-volume
           configMap:
@@ -68,11 +68,8 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           command: ["kratos"]
           args: [
-            "serve",
-            "all",
-            {{- if .Values.kratos.embeddedCourier }}
-            "--watch-courier",
-            {{- end}}
+            "courier",
+            "watch",
             {{- if .Values.kratos.development }}
             "--dev",
             {{- end}}
@@ -81,7 +78,7 @@ spec:
           ]
           volumeMounts:
             {{- if .Values.deployment.extraVolumeMounts }}
-{{ toYaml .Values.deployment.extraVolumeMounts | indent 12 }}
+            {{- toYaml .Values.deployment.extraVolumeMounts | nindent 12 }}
             {{- end }}
             - name: {{ include "kratos.name" . }}-config-volume
               mountPath: /etc/config
@@ -134,7 +131,7 @@ spec:
             {{- end }}
             {{- end }}
             {{- if .Values.deployment.extraEnv }}
-{{ toYaml .Values.deployment.extraEnv | indent 12 }}
+            {{- toYaml .Values.deployment.extraEnv | nindent 12 }}
             {{- end }}
         {{- if .Values.deployment.environmentSecretsName }}
           envFrom:
@@ -174,3 +171,4 @@ spec:
       tolerations:
         {{- toYaml . | nindent 8 }}
     {{- end }}
+{{- end }}

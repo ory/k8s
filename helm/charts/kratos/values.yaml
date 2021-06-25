@@ -81,6 +81,15 @@ kratos:
   development: false
   autoMigrate: true
 
+  # Enable this will launch the embedded courier inside the Kratos main app
+  # Only enable it if you intend to run a single replica of Kratos
+  embeddedCourier: false
+
+  # Enable this will lanch a dedicated Courier StatefulSet with only 1 replica.
+  # Disable it if you intend to use SQLite.
+  # embeddedCourier and standaloneCourier can't be true at the same time
+  standaloneCourier: true
+
 #  You can add multiple identity schemas here
 #  identitySchemas:
 #    "identity.default.schema.json": |
