@@ -46,6 +46,21 @@ secret:
     helm.sh/hook-delete-policy: "before-hook-creation"
     helm.sh/resource-policy: "keep"
 
+# Create role for ServiceAccount
+# Required by default.
+# can be disabled if both of these are true:
+# 1. No RBAC control is installed in the cluster.
+# 2. You want to manage RBAC yourself.
+rbac:
+  create: true
+
+# Service account for all pods
+serviceAccount:
+  enabled: true
+  # Name of an already existing service account.
+  # Setting this value disables the automatic service account creation
+  # name:
+
 ingress:
   admin:
     enabled: false
@@ -155,9 +170,6 @@ resources: {}
 #  requests:
 #    cpu: 100m
 #  memory: 128Mi
-
-# https://github.com/kubernetes/kubernetes/issues/57601
-automountServiceAccountToken: false
 
 securityContext:
   capabilities:

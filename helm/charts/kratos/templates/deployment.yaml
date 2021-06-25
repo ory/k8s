@@ -51,7 +51,10 @@ spec:
             name: {{ include "kratos.fullname" $root }}-template-{{ $method }}-{{ $result }}
         {{- end }}
         {{- end }}
-      automountServiceAccountToken: {{ .Values.automountServiceAccountToken }}
+      automountServiceAccountToken: {{ .Values.serviceAccount.enabled }}
+      {{- if .Values.serviceAccount.enabled }}
+      serviceAccountName: {{ default (include "kratos.fullname" . ) .Values.serviceAccount.name }}
+      {{- end }}
       initContainers:
         - name: wait-for-automigrate
           image: "groundnuty/k8s-wait-for:v1.4"
