@@ -5,7 +5,7 @@ set -Eeuxo pipefail
 cfg=$(mktemp)
 export cfg
 export KUBECONFIG="$cfg"
-export TIMEOUT="30s"
+export TIMEOUT="120s"
 
 kind get kubeconfig > "$cfg"
 
