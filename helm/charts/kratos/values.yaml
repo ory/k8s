@@ -6,7 +6,7 @@ replicaCount: 1
 
 image:
   repository: oryd/kratos
-  tag: v0.5.5-alpha.1-sqlite
+  tag: v0.6.3-alpha.1
   pullPolicy: IfNotPresent
 
 imagePullSecrets: []
@@ -79,9 +79,7 @@ ingress:
 
 kratos:
   development: false
-  # autoMigrate is relying on a simple initContainer mechanism
-  # Do not turn it on if the replicaCount > 1
-  autoMigrate: false
+  autoMigrate: true
 
 #  You can add multiple identity schemas here
 #  identitySchemas:
@@ -224,7 +222,7 @@ deployment:
   # extraInitContainers: |
   #  - name: ...
   #    image: ...
-  
+
   annotations: {}
   #      If you do want to specify annotations, uncomment the following
   #      lines, adjust them as necessary, and remove the curly braces after 'annotations:'.

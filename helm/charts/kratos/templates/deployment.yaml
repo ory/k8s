@@ -58,6 +58,13 @@ spec:
         {{- end }}
         {{- end }}
       automountServiceAccountToken: {{ .Values.automountServiceAccountToken }}
+      initContainers:
+        - name: wait-for-automigrate
+          image: "groundnuty/k8s-wait-for:v1.4"
+          imagePullPolicy: IfNotPresent
+          args:
+            - job
+            - {{ include "kratos.automigrate-job-name" . }}
       containers:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"

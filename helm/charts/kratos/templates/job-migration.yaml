@@ -3,23 +3,17 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: {{ include "kratos.fullname" . }}-automigrate
-  {{- if .Release.Namespace }}
-  namespace: {{ .Release.Namespace }}
-  {{- end }}
+  name: {{ include "kratos.automigrate-job-name" . }}
   labels:
 {{ include "kratos.labels" . | indent 4 }}
   annotations:
     {{- with .Values.job.annotations }}
       {{- toYaml . | nindent 4 }}
     {{- end }}
-    helm.sh/hook-weight: "1"
-    helm.sh/hook: "pre-install, pre-upgrade"
-    helm.sh/hook-delete-policy: "before-hook-creation"
 spec:
   template:
     {{- with .Values.job.annotations }}
-    metadata: 
+    metadata:
       annotations:
         {{- toYaml . | nindent 8 }}
     {{- end }}

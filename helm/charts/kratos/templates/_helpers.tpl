@@ -25,6 +25,14 @@ If release name contains chart name it will be used as a full name.
 {{- end -}}
 
 {{/*
+Name of the Automigrate Job
+It's unique per release
+*/}}
+{{- define "kratos.automigrate-job-name" -}}
+{{ include "kratos.fullname" . }}-automigrate-{{ .Release.Revision }}
+{{- end }}
+
+{{/*
 Create a secret name which can be overridden.
 */}}
 {{- define "kratos.secretname" -}}
