@@ -14,7 +14,7 @@ metadata:
       {{- toYaml . | nindent 4 }}
     {{- end }}
 spec:
-  # Due to some limitation in the persistence layer, this has to be a singleton
+  # Due to some limitation in the Kratos persistence layer, this has to be a singleton
   replicas: 1
   serviceName: {{ include "kratos.fullname" . }}-courier
   selector:
@@ -142,23 +142,6 @@ spec:
           - secretRef:
               name: {{ .Values.deployment.environmentSecretsName }}
         {{- end}}
-          ports:
-            - name: http-admin
-              containerPort: {{ .Values.kratos.config.serve.admin.port }}
-              protocol: TCP
-            - name: http-public
-              containerPort: {{ .Values.kratos.config.serve.public.port }}
-              protocol: TCP
-          livenessProbe:
-            httpGet:
-              path: /health/alive
-              port: http-admin
-            {{- toYaml .Values.deployment.livenessProbe | nindent 12 }}
-          readinessProbe:
-            httpGet:
-              path: /health/ready
-              port: http-admin
-            {{- toYaml .Values.deployment.readinessProbe | nindent 12 }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           securityContext:
