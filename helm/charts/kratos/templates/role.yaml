@@ -1,0 +1,13 @@
+{{- if .Values.rbac.create }}
+kind: Role
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: {{ include "kratos.fullname" . }}
+  labels:
+    {{- include "kratos.labels" . | nindent 4 }}
+rules:
+  # Needed by initContainer to check monitor whether migration job has been done
+  - apiGroups: ["batch"]
+    resources: ["jobs"]
+    verbs: ["get", "list", "watch"]
+{{- end }}
