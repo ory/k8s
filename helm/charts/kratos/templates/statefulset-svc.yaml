@@ -1,0 +1,28 @@
+# Headless Service for StatefulSet. See https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/#limitations 
+# and https://kubernetes.io/docs/concepts/services-networking/service/#headless-services for details.
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "kratos.fullname" . }}-courier
+  {{- if .Release.Namespace }}
+  namespace: {{ .Release.Namespace }}
+  {{- end }}
+  labels:
+{{ include "kratos.labels" . | indent 4 }}
+    {{- with .Values.deployment.labels }}
+      {{- toYaml . | nindent 4 }}
+    {{- end }}
+  annotations:
+    {{- with .Values.deployment.annotations }}
+      {{- toYaml . | nindent 4 }}
+    {{- end }}
+spec:
+  clusterIP: None
+  ports:
+    - port: {{ .Values.service.public.port }}
+      targetPort: http-public
+      protocol: TCP
+      name: http
+  selector:
+    app.kubernetes.io/name: {{ include "kratos.fullname" . }}-courier
+    app.kubernetes.io/instance: {{ .Release.Name }}

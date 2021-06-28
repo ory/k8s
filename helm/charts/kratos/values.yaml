@@ -1,17 +1,22 @@
 # Default values for kratos.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
-
 replicaCount: 1
+strategy:
+  type: RollingUpdate
+  rollingUpdate:
+    maxSurge: 30%
+    maxUnavailable: 0 
 
-image:
-  repository: oryd/kratos
-  tag: v0.5.5-alpha.1-sqlite
-  pullPolicy: IfNotPresent
+image: 'oryd/kratos:v0.6.3-alpha.1'
+imagePullPolicy: IfNotPresent
 
 imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
+
+job: 
+  ttlSecondsAfterFinished: 60
 
 service:
   admin:
@@ -79,9 +84,7 @@ ingress:
 
 kratos:
   development: false
-  # autoMigrate is relying on a simple initContainer mechanism
-  # Do not turn it on if the replicaCount > 1
-  autoMigrate: false
+  autoMigrate: true
 
 #  You can add multiple identity schemas here
 #  identitySchemas:
@@ -94,43 +97,9 @@ kratos:
 #        // ...
 #      }
 
-#  You can customize the emails kratos is sending (also uncomment config.courier.template_override_path below)
-#  Note: If you are setting config.courier.template_override_path you need to supply overrides for all templates.
-#        It is currently not possible to overrides only selected methods.
-#
-#  emailTemplates:
-#    recovery:
-#      valid:
-#        subject: Recover access to your account
-#        body: |-
-#          Hi, please recover access to your account by clicking the following link:
-#
-#          <a href="{{ .RecoveryURL }}">{{ .RecoveryURL }}</a>
-#        plainBody: Hi, please recover access to your account by clicking the following link: {{ .RecoveryURL }}
-#      invalid:
-#        subject: Account access attempted
-#        body: |-
-#          Hi, you (or someone else) entered this email address when trying to recover access to an account.
-#
-#          However, this email address is not on our database of registered users and therefore the attempt has failed. If this was you, check if you signed up using a different address. If this was not you, please ignore this email.
-#        plainBody: Hi, you (or someone else) entered this email address when trying to recover access to an account.
-#    verification:
-#      valid:
-#        subject: Please verify your email address
-#        body: |-
-#          Hi, please verify your account by clicking the following link:
-#
-#          <a href="{{ .RecoveryURL }}">{{ .RecoveryURL }}</a>
-#        plainBody: Hi, please verify your account by clicking the following link: {{ .RecoveryURL }}
-#      invalid:
-#        subject:
-#        body:
-#        plainBody:
-
   config:
     courier:
       smtp: {}
-      #template_override_path: /conf/courier-templates
 
     serve:
       public:
@@ -140,91 +109,43 @@ kratos:
 
     secrets: {}
 
-# The resources requests/limits for Kratos container
-resources: {}
-#  limits:
-#    cpu: 100m
-#    memory: 128Mi
-#  requests:
-#    cpu: 100m
-#  memory: 128Mi
-
-# https://github.com/kubernetes/kubernetes/issues/57601
-automountServiceAccountToken: false
-
-securityContext:
-  capabilities:
-    drop:
-    - ALL
-  readOnlyRootFilesystem: true
-  runAsNonRoot: true
-  runAsUser: 100
-  allowPrivilegeEscalation: false
-  privileged: false
-
-# Node labels for pod assignment.
-nodeSelector: {}
-# If you do want to specify node labels, uncomment the following
-# lines, adjust them as necessary, and remove the curly braces after 'annotations:'.
-#   foo: bar
-
-# Configure node tolerations.
-tolerations: []
-
-
 deployment:
+  livenessProbe:
+    httpGet:
+      path: /health/alive
+      port: http-admin
 
+  readinessProbe:
+    httpGet:
+      path: /health/ready
+      port: http-admin
 
-  extraEnv: []
+  resources: {}
+  #  We usually recommend not to specify default resources and to leave this as a conscious
+  #  choice for the user. This also increases chances charts run on environments with little
+  #  resources, such as Minikube. If you do want to specify resources, uncomment the following
+  #  lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  #  limits:
+  #    cpu: 100m
+  #    memory: 128Mi
+  #  requests:
+  #    cpu: 100m
+  #  memory: 128Mi
 
-  # Configuration for tracing providers. Only datadog is currently supported through this block.
-  # If you need to use a different tracing provider, please manually set the configuration values
-  # via "kratos.config" or via "deployment.extraEnv".
-  tracing:
-    datadog:
-      enabled: false
+  # Node labels for pod assignment.
+  nodeSelector: {}
+  # If you do want to specify node labels, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'annotations:'.
+  #   foo: bar
 
-      # Sets the datadog DD_ENV environment variable. This value indicates the environment where kratos is running.
-      # Default value: "none".
-      # env: production
-
-      # Sets the datadog DD_VERSION environment variable. This value indicates the version that kratos is running.
-      # Default value: .Values.image.tag (i.e. the tag used for the docker image).
-      # version: X.Y.Z
-
-      # Sets the datadog DD_SERVICE environment variable. This value indicates the name of the service running.
-      # Default value: "ory/kratos".
-      # service: ory/kratos
-
-      # Sets the datadog DD_AGENT_HOST environment variable. This value indicates the host address of the datadog agent.
-      # If set to true, this configuration will automatically set DD_AGENT_HOST to the field "status.hostIP" of the pod.
-      # Default value: false.
-      # useHostIP: true
+  # Configure node tolerations.
+  tolerations: []
 
   labels: {}
   #      If you do want to specify additional labels, uncomment the following
   #      lines, adjust them as necessary, and remove the curly braces after 'labels:'.
   #      e.g.  type: app
 
-  extraVolumes: []
-  extraVolumeMounts: []
-  # If you want to mount external volume
-  # For example, mount a secret containing Certificate root CA to verify database
-  # TLS connection.
-  # extraVolumes:
-  #   - name: postgresql-tls
-  #     secret:
-  #       secretName: postgresql-root-ca
-  # extraVolumeMounts:
-  #   - name: postgresql-tls
-  #     mountPath: "/etc/postgresql-tls"
-  #     readOnly: true
-
-  # If you want to add extra init containers. These are processed before the migration init container.
-  # extraInitContainers: |
-  #  - name: ...
-  #    image: ...
-  
   annotations: {}
   #      If you do want to specify annotations, uncomment the following
   #      lines, adjust them as necessary, and remove the curly braces after 'annotations:'.
@@ -237,18 +158,15 @@ deployment:
   # https://kubernetes.io/docs/tasks/inject-data-application/distribute-credentials-secure/#configure-all-key-value-pairs-in-a-secret-as-container-environment-variables
   environmentSecretsName:
 
-  # Configure the probes for when the deployment is considered ready and ongoing health check
-  livenessProbe:
-    initialDelaySeconds: 30
-    periodSeconds: 10
-    failureThreshold: 5
-  readinessProbe:
-    initialDelaySeconds: 30
-    periodSeconds: 10
-    failureThreshold: 5
-
-job:
-  annotations: {}
+securityContext:
+  capabilities:
+    drop:
+    - ALL
+  readOnlyRootFilesystem: true
+  runAsNonRoot: true
+  runAsUser: 100
+  allowPrivilegeEscalation: false
+  privileged: false
 
 # Configure node affinity
 affinity: {}

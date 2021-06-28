@@ -53,7 +53,7 @@ kratos:
     hashers:
       argon2:
         parallelism: 1
-        memory: 131072
+        memory: 2048MB
         iterations: 2
         salt_length: 16
         key_length: 16
