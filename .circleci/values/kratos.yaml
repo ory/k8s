@@ -1,0 +1,64 @@
+---
+kratos:
+  autoMigrate: true
+  identitySchemas:
+    "identity.default.schema.json": |
+      {
+         "$id": "https://schemas.ory.sh/presets/kratos/identity.email.schema.json",
+         "$schema": "http://json-schema.org/draft-07/schema#",
+         "title": "Person",
+         "type": "object",
+         "properties": {
+            "traits": {
+               "type": "object",
+               "properties": {
+                  "email": {
+                     "type": "string",
+                     "format": "email",
+                     "title": "E-Mail",
+                     "ory.sh/kratos": {
+                        "credentials": {
+                           "password": {
+                              "identifier": true
+                           }
+                        },
+                        "recovery": {
+                           "via": "email"
+                        },
+                        "verification": {
+                           "via": "email"
+                        }
+                     }
+                  }
+               },
+               "required": [
+                  "email"
+               ],
+               "additionalProperties": false
+            }
+         }
+      }
+  config:
+    dsn: "postgres://ory:ory@postgresql.default.svc.cluster.local/ory?sslmode=disable&max_conn_lifetime=10s"
+    selfservice:
+      default_browser_return_url: http://127.0.0.1:4455/
+      methods:
+        password:
+          enabled: true
+    log:
+      level: debug
+    secrets:
+      session:
+        - PLEASE-CHANGE-ME-I-AM-VERY-INSECURE
+    hashers:
+      argon2:
+        parallelism: 1
+        memory: 131072
+        iterations: 2
+        salt_length: 16
+        key_length: 16
+    identity:
+      default_schema_url: file:///etc/config/kratos/identity.default.schema.json
+    courier:
+      smtp:
+        connection_uri: smtps://test:test@mailslurper:1025/?skip_ssl_verify=true
