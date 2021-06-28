@@ -2,29 +2,19 @@ version: 2.1
 jobs:
   lint:
     docker:
-      -
-        image: circleci/golang:1.16.5
+      - image: circleci/golang:1.16.5
     working_directory: /go/src/github.com/ory/k8s
     steps:
       - checkout
-      -
-        run: curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
-      -
-        run: helm lint ./helm/charts/oathkeeper/
-      -
-        run: helm lint ./helm/charts/oathkeeper-maester/
-      -
-        run: helm lint ./helm/charts/keto/
-      -
-        run: helm lint ./helm/charts/hydra/
-      -
-        run: helm lint ./helm/charts/hydra-maester/
-      -
-        run: helm lint ./helm/charts/kratos/
-      -
-        run: helm lint ./helm/charts/example-idp/
-      -
-        run: helm lint ./helm/charts/kratos-selfservice-ui-node/
+      - run: curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
+      - run: helm lint ./helm/charts/oathkeeper/
+      - run: helm lint ./helm/charts/oathkeeper-maester/
+      - run: helm lint ./helm/charts/keto/
+      - run: helm lint ./helm/charts/hydra/
+      - run: helm lint ./helm/charts/hydra-maester/
+      - run: helm lint ./helm/charts/kratos/
+      - run: helm lint ./helm/charts/example-idp/
+      - run: helm lint ./helm/charts/kratos-selfservice-ui-node/
 
   test:
     machine:
@@ -32,8 +22,7 @@ jobs:
       # docker_layer_caching: true
     steps:
       - checkout
-      -
-        run:
+      - run:
           name: "Install kind & kubectl"
           command: |
             curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
@@ -42,13 +31,11 @@ jobs:
             chmod +x ./kind
             sudo mv ./kubectl /usr/local/bin/kubectl
             sudo mv ./kind /usr/local/bin/kind
-      -
-        run:
+      - run:
           name: "Create cluster"
           command: |
             kind create cluster --wait 2m
-      -
-        run:
+      - run:
           name: "Install Helm"
           command: |
             curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
@@ -58,64 +45,52 @@ jobs:
             helm repo add bitnami https://charts.bitnami.com/bitnami
             helm repo update
             helm install postgresql bitnami/postgresql -f .circleci/values/postgres.yaml
-      -
-        run:
+      - run:
           command: |
             .circleci/helm-test.sh oathkeeper
-      -
-        run:
+      - run:
           command: |
             .circleci/helm-test.sh oathkeeper-maester
-      -
-        run:
+      - run:
           command: |
             .circleci/helm-test.sh hydra
-      -
-        run:
+      - run:
           command: |
             .circleci/helm-test.sh hydra-maester
-      -
-        run:
+      - run:
           command: |
             .circleci/helm-test.sh kratos
+      - run:
+          command: |
+            .circleci/helm-test.sh keto
 
   release:
     docker:
-      -
-        image: circleci/golang:1.16.5
+      - image: circleci/golang:1.16.5
     working_directory: /go/src/github.com/ory/k8s
     steps:
       - checkout
       - run: make release
-      -
-        run: git config --global user.email "aeneas@ory.sh"
-      -
-        run: git config --global user.name "aeneasr"
-      -
-        run: git checkout -b make-release HEAD
-      -
-        run: git add -A
-      -
-        run: git commit -a -m "Release $CIRCLE_TAG"
-      -
-        run: git push origin HEAD:master
+      - run: git config --global user.email "aeneas@ory.sh"
+      - run: git config --global user.name "aeneasr"
+      - run: git checkout -b make-release HEAD
+      - run: git add -A
+      - run: git commit -a -m "Release $CIRCLE_TAG"
+      - run: git push origin HEAD:master
 
 workflows:
   version: 2
   ci:
     jobs:
-      -
-        test:
+      - test:
           filters:
             tags:
               only: /.*/
-      -
-        lint:
+      - lint:
           filters:
             tags:
               only: /.*/
-      -
-        release:
+      - release:
           requires:
             - lint
           filters:

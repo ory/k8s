@@ -11,5 +11,5 @@ spec:
     - name: wget
       image: busybox
       command: ['wget']
-      args: ['{{ include "keto.fullname" . }}:{{ .Values.service.port }}']
+      args: ['{{ include "keto.fullname" . }}-write:{{ .Values.service.write.port }}/health/ready']
   restartPolicy: Never
