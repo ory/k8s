@@ -52,10 +52,18 @@ jobs:
           name: "Install Helm"
           command: |
             curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
+      - run:
+          name: "Install postgres"
+          command: |
+            helm install postgresql bitnami/postgresql -f .circleci/values/postgres.yaml
       -
         run:
           command: |
             .circleci/helm-test.sh oathkeeper
+      -
+        run:
+          command: |
+            .circleci/helm-test.sh oathkeeper-maester
       -
         run:
           command: |

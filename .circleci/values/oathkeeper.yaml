@@ -1,4 +1,6 @@
 demo: true
+maester:
+  enabled: false
 #
 #service:
 #  proxy:
