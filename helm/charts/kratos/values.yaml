@@ -261,6 +261,11 @@ job:
   annotations: {}
   ttlSecondsAfterFinished: 60
 
+statefulset:
+  log:
+    format: json
+    level: trace
+
 # Configure node affinity
 affinity: {}
 # Node labels for pod assignment.
