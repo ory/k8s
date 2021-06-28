@@ -52,7 +52,7 @@ spec:
         - name: {{ include "kratos.name" . }}-config-volume
           configMap:
             name: {{ include "kratos.fullname" . }}-config
-      {{- $root := . -}}
+        {{- $root := . -}}
         {{- range $method, $methodEntry := .Values.kratos.emailTemplates }}
         {{- range $result, $resultEntry := $methodEntry }}
         - name: {{ include "kratos.name" $root }}-template-{{ $method }}-{{ $result }}-volume
