@@ -8,8 +8,10 @@ strategy:
     maxSurge: 30%
     maxUnavailable: 0 
 
-image: 'oryd/kratos:v0.6.3-alpha.1'
-imagePullPolicy: IfNotPresent
+image:
+  repository: oryd/kratos
+  tag: v0.6.3-alpha.1
+  pullPolicy: IfNotPresent
 
 imagePullSecrets: []
 nameOverride: ""
