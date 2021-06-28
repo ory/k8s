@@ -39,14 +39,33 @@ spec:
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
     {{- end }}
+    {{- if .Values.deployment.extraInitContainers}}
+      initContainers:
+        {{- if .Values.deployment.extraInitContainers }}
+{{ tpl .Values.deployment.extraInitContainers . | indent 8 }}
+        {{- end }}
+    {{- end }}
       volumes:
+        {{- if .Values.deployment.extraVolumes }}
+{{ toYaml .Values.deployment.extraVolumes | indent 8 }}
+        {{- end }}
         - name: {{ include "kratos.name" . }}-config-volume
           configMap:
             name: {{ include "kratos.fullname" . }}-config
+      {{- $root := . -}}
+        {{- range $method, $methodEntry := .Values.kratos.emailTemplates }}
+        {{- range $result, $resultEntry := $methodEntry }}
+        - name: {{ include "kratos.name" $root }}-template-{{ $method }}-{{ $result }}-volume
+          configMap:
+            name: {{ include "kratos.fullname" $root }}-template-{{ $method }}-{{ $result }}
+        {{- end }}
+        {{- end }}
+      automountServiceAccountToken: {{ .Values.automountServiceAccountToken }}
       containers:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image }}"
           imagePullPolicy: {{ .Values.imagePullPolicy }}
+          command: ["kratos"]
           args: [
             "serve",
             "all",
@@ -57,9 +76,20 @@ spec:
             "/etc/config/meta/kratos.yaml"
           ]
           volumeMounts:
+            {{- if .Values.deployment.extraVolumeMounts }}
+{{ toYaml .Values.deployment.extraVolumeMounts | indent 12 }}
+            {{- end }}
             - name: {{ include "kratos.name" . }}-config-volume
               mountPath: /etc/config/meta
               readOnly: true
+            {{- $root := . -}}
+            {{- range $method, $methodEntry := .Values.kratos.emailTemplates }}
+            {{- range $result, $resultEntry := $methodEntry }}
+            - name: {{ include "kratos.name" $root }}-template-{{ $method }}-{{ $result }}-volume
+              mountPath: /conf/courier-templates/{{ $method }}/{{ $result }}
+              readOnly: true
+            {{- end }}
+            {{- end }}
           env:
             - name: DSN
               valueFrom:
@@ -91,8 +121,24 @@ spec:
             - name: DEV_DISABLE_API_FLOW_ENFORCEMENT
               value: "true"
             {{- end }}
-            {{- if .Values.kratos.env }}
-            {{- toYaml .Values.kratos.env | nindent 12 }}      
+            {{- if .Values.deployment.tracing.datadog.enabled }}
+            - name: TRACING_PROVIDER
+              value: datadog
+            - name: DD_ENV
+              value: {{ .Values.deployment.tracing.datadog.env | default "none" | quote }}
+            - name: DD_VERSION
+              value: {{ .Values.deployment.tracing.datadog.version | default .Values.image.tag | quote }}
+            - name: DD_SERVICE
+              value: {{ .Values.deployment.tracing.datadog.service | default "ory/kratos" | quote }}
+            {{- if .Values.deployment.tracing.datadog.useHostIP }}
+            - name: DD_AGENT_HOST
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.hostIP
+            {{- end }}
+            {{- end }}
+            {{- if .Values.deployment.extraEnv }}
+{{ toYaml .Values.deployment.extraEnv | indent 12 }}
             {{- end }}
         {{- if .Values.deployment.environmentSecretsName }}
           envFrom:
