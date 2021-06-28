@@ -32,10 +32,10 @@ spec:
         - name: {{ include "kratos.fullname" . }}-courier
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
-          args: [ "courier", "watch", "--config", "/etc/config/meta/kratos.yaml" ]
+          args: [ "courier", "watch", "--config", "/etc/config/kratos.yaml" ]
           volumeMounts:
             - name: {{ include "kratos.fullname" . }}-config-volume
-              mountPath: /etc/config/meta
+              mountPath: /etc/config
               readOnly: true                 
           env:
             - name: LOG_FORMAT

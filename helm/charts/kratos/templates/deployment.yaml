@@ -73,14 +73,14 @@ spec:
             "--dev",
             {{- end}}
             "--config",
-            "/etc/config/meta/kratos.yaml"
+            "/etc/config/kratos.yaml"
           ]
           volumeMounts:
             {{- if .Values.deployment.extraVolumeMounts }}
 {{ toYaml .Values.deployment.extraVolumeMounts | indent 12 }}
             {{- end }}
             - name: {{ include "kratos.name" . }}-config-volume
-              mountPath: /etc/config/meta
+              mountPath: /etc/config
               readOnly: true
             {{- $root := . -}}
             {{- range $method, $methodEntry := .Values.kratos.emailTemplates }}
