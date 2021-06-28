@@ -3,7 +3,7 @@ jobs:
   lint:
     docker:
       -
-        image: circleci/golang:1.14
+        image: circleci/golang:1.16.5
     working_directory: /go/src/github.com/ory/k8s
     steps:
       - checkout
@@ -28,7 +28,7 @@ jobs:
 
   test:
     machine:
-      image: ubuntu-1604:201903-01
+      image: ubuntu-2004:202104-01
       # docker_layer_caching: true
     steps:
       - checkout
@@ -37,7 +37,7 @@ jobs:
           name: "Install kind & kubectl"
           command: |
             curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
-            curl -Lo ./kind https://github.com/kubernetes-sigs/kind/releases/download/v0.7.0/kind-$(uname)-amd64
+            curl -Lo ./kind https://github.com/kubernetes-sigs/kind/releases/download/v0.11.1/kind-$(uname)-amd64
             chmod +x ./kubectl
             chmod +x ./kind
             sudo mv ./kubectl /usr/local/bin/kubectl
@@ -82,7 +82,7 @@ jobs:
   release:
     docker:
       -
-        image: circleci/golang:1.14
+        image: circleci/golang:1.16.5
     working_directory: /go/src/github.com/ory/k8s
     steps:
       - checkout
