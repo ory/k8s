@@ -27,8 +27,8 @@ spec:
       automountServiceAccountToken: {{ .Values.automountServiceAccountToken }}
       containers:
       - name: {{ .Chart.Name }}-automigrate
-        image: {{ .Values.image }}
-        imagePullPolicy: {{ .Values.imagePullPolicy }}
+        image: {{ include "kratos.image" . }}
+        imagePullPolicy: {{ include "kratos.imagePullPolicy" . }}
         command: ["kratos"]
         args: ["migrate", "sql", "-e", "--yes"]
         env:

@@ -91,3 +91,26 @@ app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{- end -}}
+
+{{/*
+Generate image
+*/}}
+{{- define "kratos.image" -}}
+{{- if eq "string" ( typeOf .Values.image ) }}
+{{- printf "%s" .Values.image -}}
+{{- else -}}
+{{- printf "%s:%s" .Values.image.repository .Values.image.tag -}}
+{{- end -}}
+{{- end -}}
+
+{{/*
+Generate imagePullPolicy
+*/}}
+{{- define "kratos.imagePullPolicy" -}}
+{{- if eq "string" ( typeOf .Values.image ) }}
+{{- printf "%s" .Values.imagePullPolicy -}}
+{{- else -}}
+{{- printf "%s" .Values.image.pullPolicy -}}
+{{- end -}}
+{{- end -}}
+

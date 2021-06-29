@@ -63,8 +63,8 @@ spec:
       automountServiceAccountToken: {{ .Values.automountServiceAccountToken }}
       containers:
         - name: {{ .Chart.Name }}
-          image: {{ .Values.image }}
-          imagePullPolicy: {{ .Values.imagePullPolicy }}
+          image: {{ include "kratos.image" . }}
+          imagePullPolicy: {{ include "kratos.imagePullPolicy" . }}
           command: ["kratos"]
           args: [
             "serve",
