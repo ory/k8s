@@ -39,7 +39,15 @@ spec:
               readOnly: true
             {{- if .Values.deployment.extraVolumeMounts }}
 {{ toYaml .Values.deployment.extraVolumeMounts | indent 12 }}
-            {{- end }}                 
+            {{- end }}
+            {{- $root := . -}}
+            {{- range $method, $methodEntry := .Values.kratos.emailTemplates }}
+            {{- range $result, $resultEntry := $methodEntry }}
+            - name: {{ include "kratos.name" $root }}-template-{{ $method }}-{{ $result }}-volume
+              mountPath: /conf/courier-templates/{{ $method }}/{{ $result }}
+              readOnly: true
+            {{- end }}
+            {{- end }}           
           env:
             - name: LOG_FORMAT
               value: {{ .Values.statefulset.log.format }}
@@ -66,4 +74,12 @@ spec:
             name: {{ include "kratos.fullname" . }}-config
         {{- if .Values.deployment.extraVolumes }}
 {{ toYaml .Values.deployment.extraVolumes | indent 8 }}
+        {{- end }}
+        {{- $root := . -}}
+        {{- range $method, $methodEntry := .Values.kratos.emailTemplates }}
+        {{- range $result, $resultEntry := $methodEntry }}
+        - name: {{ include "kratos.name" $root }}-template-{{ $method }}-{{ $result }}-volume
+          configMap:
+            name: {{ include "kratos.fullname" $root }}-template-{{ $method }}-{{ $result }}
+        {{- end }}
         {{- end }}
