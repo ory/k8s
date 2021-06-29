@@ -30,8 +30,8 @@ spec:
     spec:
       containers:
         - name: {{ include "kratos.fullname" . }}-courier
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          image: {{ include "kratos.image" . }}
+          imagePullPolicy: {{ include "kratos.imagePullPolicy" . }}
           args: [ "courier", "watch", "--config", "/etc/config/kratos.yaml" ]
           volumeMounts:
             - name: {{ include "kratos.fullname" . }}-config-volume
