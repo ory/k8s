@@ -36,7 +36,10 @@ spec:
           volumeMounts:
             - name: {{ include "kratos.fullname" . }}-config-volume
               mountPath: /etc/config
-              readOnly: true                 
+              readOnly: true
+            {{- if .Values.deployment.extraVolumeMounts }}
+{{ toYaml .Values.deployment.extraVolumeMounts | indent 12 }}
+            {{- end }}                 
           env:
             - name: LOG_FORMAT
               value: {{ .Values.statefulset.log.format }}
@@ -52,8 +55,8 @@ spec:
                 secretKeyRef:
                   name: {{ include "kratos.secretname" . }}
                   key: smtpConnectionURI
-            {{- if .Values.kratos.env }}
-            {{- toYaml .Values.kratos.env | nindent 12 }}      
+            {{- if .Values.deployment.extraEnv }}
+{{ toYaml .Values.deployment.extraEnv | indent 12 }}
             {{- end }}
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
@@ -61,3 +64,6 @@ spec:
         - name: {{ include "kratos.fullname" . }}-config-volume
           configMap:
             name: {{ include "kratos.fullname" . }}-config
+        {{- if .Values.deployment.extraVolumes }}
+{{ toYaml .Values.deployment.extraVolumes | indent 8 }}
+        {{- end }}
