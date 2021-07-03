@@ -53,7 +53,7 @@ spec:
           secret:
             secretName: {{ empty .Values.secret.name | ternary (include "oathkeeper.fullname" .) (.Values.secret.name) }}
         {{- if .Values.certs.enabled }}
-        - name: {{ include "oathkeeper.name" . }}-certs
+        - name: {{ include "oathkeeper.name" . }}-certs-volume
           secret:
             secretName: {{- .Values.certs.existingSecret }}
         {{- end }}
@@ -98,7 +98,7 @@ spec:
               mountPath: {{ .Values.secret.mountPath }}
               readOnly: true
             {{- if .Values.certs.enabled }}
-            - name: {{ include "oathkeeper.name" . }}-certs
+            - name: {{ include "oathkeeper.name" . }}-certs-volume
               mountPath: /data/certs/
               readOnly: true
             {{- end }}
