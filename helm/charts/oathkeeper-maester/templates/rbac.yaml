@@ -28,7 +28,7 @@ metadata:
   namespace:  {{ .Release.Namespace }}
 subjects:
   - kind: ServiceAccount
-    name: {{ include "oathkeeper-maester.name" . }}-account # Service account assigned to the controller pod.
+    name: {{ include "oathkeeper-maester.fullname" . }}-account # Service account assigned to the controller pod.
     namespace:  {{ .Release.Namespace }}
 roleRef:
   apiGroup: rbac.authorization.k8s.io
