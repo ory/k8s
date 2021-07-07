@@ -31,14 +31,13 @@ spec:
       containers:
         {{- if .Values.watcher.enabled }}
         - name: watcher
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
           image: {{ .Values.watcher.image }}
           command:
             - /bin/bash
             - -c
             - |
-              # TODO delete this
-              mkdir -p /home/ory/config
-              touch {{ .Values.watcher.mountFile }}
 {{ .Files.Get "files/watch.sh" | printf "%s" | indent 14 }}
           env:
             - name: NAMESPACE

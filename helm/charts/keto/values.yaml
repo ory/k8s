@@ -180,7 +180,7 @@ deployment:
     failureThreshold: 5
 
 watcher:
-  enabled: true
+  enabled: false
   # TODO publish this image as official?
   image: demonsthere/ory-toolbox:v0.1
-  mountFile: /home/ory/config/somefile
+  mountFile: /etc/secrets/my-secret/foo
