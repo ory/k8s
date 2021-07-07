@@ -29,7 +29,7 @@ podSecurityContext: {}
   # fsGroup: 2000
 
 # https://github.com/kubernetes/kubernetes/issues/57601
-automountServiceAccountToken: false
+automountServiceAccountToken: true
 
 securityContext:
   capabilities:
@@ -178,3 +178,9 @@ deployment:
     initialDelaySeconds: 30
     periodSeconds: 10
     failureThreshold: 5
+
+watcher:
+  enabled: true
+  # TODO publish this image as official?
+  image: demonsthere/ory-toolbox:v0.1
+  mountFile: /home/ory/config/somefile

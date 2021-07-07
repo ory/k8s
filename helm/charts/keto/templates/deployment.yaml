@@ -29,6 +29,29 @@ spec:
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
+        {{- if .Values.watcher.enabled }}
+        - name: watcher
+          image: {{ .Values.watcher.image }}
+          command:
+            - /bin/bash
+            - -c
+            - |
+              # TODO delete this
+              mkdir -p /home/ory/config
+              touch {{ .Values.watcher.mountFile }}
+{{ .Files.Get "files/watch.sh" | printf "%s" | indent 14 }}
+          env:
+            - name: NAMESPACE
+              value: {{ .Release.Namespace | quote }}
+            - name: WATCH_FILE
+              value: {{ .Values.watcher.mountFile | quote }}
+            - name: DEPLOYMENT_SELECTOR
+              value: 'app.kubernetes.io/name={{ include "keto.name" . }}'
+          volumeMounts:
+          {{- with .Values.extraVolumeMounts }}
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+        {{- end }}  
         - name: {{ .Chart.Name }}
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
