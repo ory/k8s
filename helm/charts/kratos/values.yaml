@@ -164,8 +164,14 @@ deployment:
     failureThreshold: 5
 
   extraEnv: []
-  extraVolumes: []
-  extraVolumeMounts: []
+  extraVolumes: 
+  - name: my-volume
+    secret:
+      secretName: my-secret
+  extraVolumeMounts: 
+  - name: my-volume
+    mountPath: /etc/secrets/my-secret
+    readOnly: true
   # If you want to mount external volume
   # For example, mount a secret containing Certificate root CA to verify database
   # TLS connection.
@@ -247,7 +253,7 @@ deployment:
   # environmentSecretsName:
 
   # https://github.com/kubernetes/kubernetes/issues/57601
-  automountServiceAccountToken: false
+  automountServiceAccountToken: true
 
 securityContext:
   capabilities:
@@ -278,3 +284,10 @@ nodeSelector: {}
 #   foo: bar
 # Configure node tolerations.
 tolerations: []
+
+watcher:
+  enabled: true
+  # TODO publish this image as official?
+  image: demonsthere/ory-toolbox:v0.1
+  mountFile: /etc/secrets/my-secret/foo
+

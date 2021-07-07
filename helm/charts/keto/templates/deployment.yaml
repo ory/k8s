@@ -50,7 +50,7 @@ spec:
           {{- with .Values.extraVolumeMounts }}
             {{- toYaml . | nindent 12 }}
           {{- end }}
-        {{- end }}  
+        {{- end }}
         - name: {{ .Chart.Name }}
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
