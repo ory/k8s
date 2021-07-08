@@ -287,7 +287,6 @@ tolerations: []
 
 watcher:
   enabled: false
-  # TODO publish this image as official?
-  image: demonsthere/ory-toolbox:v0.1
-  mountFile: /etc/secrets/my-secret/foo
-
+  image: oryd/k8s-toolbox:0.0.1
+  mountFile: ''
+  # mountFile: /etc/secrets/my-secret/foo
