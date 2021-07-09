@@ -165,7 +165,13 @@ deployment:
 
   extraEnv: []
   extraVolumes: []
+  # - name: my-volume
+  #   secret:
+  #     secretName: my-secret
   extraVolumeMounts: []
+  # - name: my-volume
+  #   mountPath: /etc/secrets/my-secret
+  #   readOnly: true
   # If you want to mount external volume
   # For example, mount a secret containing Certificate root CA to verify database
   # TLS connection.
@@ -247,7 +253,7 @@ deployment:
   # environmentSecretsName:
 
   # https://github.com/kubernetes/kubernetes/issues/57601
-  automountServiceAccountToken: false
+  automountServiceAccountToken: true
 
 securityContext:
   capabilities:
@@ -278,3 +284,9 @@ nodeSelector: {}
 #   foo: bar
 # Configure node tolerations.
 tolerations: []
+
+watcher:
+  enabled: false
+  image: oryd/k8s-toolbox:0.0.1
+  mountFile: ''
+  # mountFile: /etc/secrets/my-secret/foo

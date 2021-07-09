@@ -29,7 +29,7 @@ podSecurityContext: {}
   # fsGroup: 2000
 
 # https://github.com/kubernetes/kubernetes/issues/57601
-automountServiceAccountToken: false
+automountServiceAccountToken: true
 
 securityContext:
   capabilities:
@@ -178,3 +178,9 @@ deployment:
     initialDelaySeconds: 30
     periodSeconds: 10
     failureThreshold: 5
+
+watcher:
+  enabled: false
+  image: oryd/k8s-toolbox:0.0.1
+  mountFile: ''
+  # mountFile: /etc/secrets/my-secret/foo

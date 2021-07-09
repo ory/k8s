@@ -210,7 +210,13 @@ deployment:
   # serviceAccountName:
 
   extraVolumes: []
+  # - name: my-volume
+  #   secret:
+  #     secretName: my-secret
   extraVolumeMounts: []
+  # - name: my-volume
+  #   mountPath: /etc/secrets/my-secret
+  #   readOnly: true
   # If you want to mount external volume
   # For example, mount a secret containing Certificate root CA to verify database
   # TLS connection.
@@ -242,7 +248,7 @@ deployment:
     failureThreshold: 5
 
   # https://github.com/kubernetes/kubernetes/issues/57601
-  automountServiceAccountToken: false
+  automountServiceAccountToken: true
 
 job:
   annotations: {}
@@ -265,3 +271,9 @@ hydra-maester:
     # You only need to set this port if you change the value for
     # `service.admin.port` in the parent chart
     # port:
+
+watcher:
+  enabled: false
+  image: oryd/k8s-toolbox:0.0.1
+  mountFile: ''
+  # mountFile: /etc/secrets/my-secret/foo

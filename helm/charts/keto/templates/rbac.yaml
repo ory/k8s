@@ -1,0 +1,46 @@
+{{- if .Values.serviceAccount.create -}}
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: {{ include "keto.serviceAccountName" . }}
+  labels:
+    {{- include "keto.labels" . | nindent 4 }}
+  {{- with .Values.serviceAccount.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+
+{{- if .Values.watcher.enabled }}
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: {{ include "keto.fullname" . }}-watcher
+  namespace: {{ .Release.Namespace }}
+rules:
+  - apiGroups: ["apps"]
+    resources: ["deployments"]
+    verbs: ["list", "watch"]
+  - apiGroups: ["apps"]
+    resources: ["deployments"]
+    verbs: ["list", "patch", "get", "watch"]
+    resourceNames:
+      - {{ include "keto.fullname" . }}
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: {{ include "keto.fullname" . }}-watcher
+  namespace: {{ .Release.Namespace }}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: {{ include "keto.fullname" . }}-watcher
+subjects:
+  - kind: ServiceAccount
+    name: {{ include "keto.serviceAccountName" . }}
+    namespace: {{ .Release.Namespace }}
+{{- end }}
+
+{{- end }}

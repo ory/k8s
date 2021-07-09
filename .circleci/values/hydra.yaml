@@ -7,3 +7,17 @@ hydra:
       system: OG5XbmxXa3dYeGplQXpQanYxeEFuRUFa
 maester:
   enabled: false
+
+# deployment:
+#  extraVolumes:
+#   - name: my-volume
+#     secret:
+#       secretName: my-secret
+#   extraVolumeMounts:
+#   - name: my-volume
+#     mountPath: /etc/secrets/my-secret
+#     readOnly: true
+
+# watcher:
+#   enabled: true
+#   mountFile: /etc/secrets/my-secret/foo
