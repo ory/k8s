@@ -3,20 +3,18 @@ image:
   tag: v1.10.2-alpine
   pullPolicy: IfNotPresent
 
-demo: true
-
 hydra:
   autoMigrate: true
   dangerousForceHttp: true
   config:
     dsn: "postgres://ory:ory@postgresql.default.svc.cluster.local/ory?sslmode=disable&max_conn_lifetime=10s"
-    # secrets:
-    #   system:
-    #     - "OG5XbmxXa3dYeGplQXpQanYxeEFuRUFa"
-    #     - "foo bar 123 456 lorem"
-    #     - "foo bar 123 456 lorem 1"
-    #     - "foo bar 123 456 lorem 2"
-    #     - "foo bar 123 456 lorem 3"
+    secrets:
+      system:
+        - "OG5XbmxXa3dYeGplQXpQanYxeEFuRUFa"
+        - "foo bar 123 456 lorem"
+        - "foo bar 123 456 lorem 1"
+        - "foo bar 123 456 lorem 2"
+        - "foo bar 123 456 lorem 3"
 maester:
   enabled: false
 
