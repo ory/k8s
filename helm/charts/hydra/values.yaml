@@ -107,17 +107,13 @@ hydra:
           - 172.16.0.0/12
           - 192.168.0.0/16
     secrets: {}
-      # The secrets have to be provided as a string, or stringified json
-      # system: >-
-      #  OG5XbmxXa3dYeGplQXpQanYxeEFuRUFa
-      # system: >-
-      #   [
-      #     "OG5XbmxXa3dYeGplQXpQanYxeEFuRUFa",
-      #     "foo bar 123 456 lorem",
-      #     "foo bar 123 456 lorem 1",
-      #     "foo bar 123 456 lorem 2",
-      #     "foo bar 123 456 lorem 3"
-      #   ]
+      # The secrets have to be provided as a string slice, example:
+      # system:
+      #   - "OG5XbmxXa3dYeGplQXpQanYxeEFuRUFa"
+      #   - "foo bar 123 456 lorem"
+      #   - "foo bar 123 456 lorem 1"
+      #   - "foo bar 123 456 lorem 2"
+      #   - "foo bar 123 456 lorem 3"
     secretAnnotations:
     # Create the secret before installation, and only then. This saves the secret from regenerating during an upgrade
       helm.sh/hook: "pre-install"
