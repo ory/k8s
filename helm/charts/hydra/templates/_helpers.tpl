@@ -81,15 +81,15 @@ Generate the name of the secret resource containing secrets
 Generate the secrets.system value
 */}}
 {{- define "hydra.secrets.system" -}}
-{{- if .Values.hydra.config.secrets.system -}}
-{{- if (kindIs "string" .Values.hydra.config.secrets.system) -}}
-{{- printf "'%s'" ( .Values.hydra.config.secrets.system | nospace | trim ) -}}
-{{- else -}}
-{{- fail "The value of .Values.hydra.config.secrets.system is incorrect. Please view values.yaml for examples" -}}
-{{- end -}}
-{{- else if .Values.demo -}}
-a-very-insecure-secret-for-checking-out-the-demo
-{{- end -}}
+  {{- if .Values.hydra.config.secrets.system -}}
+    {{- if kindIs "slice" .Values.hydra.config.secrets.system -}}
+      {{- printf "'%s'" ( mustToRawJson .Values.hydra.config.secrets.system ) -}}
+    {{- else -}}
+      {{- fail "Expected .Values.hydra.config.secrets.system to be a list of strings" -}}
+    {{- end -}}
+  {{- else if .Values.demo -}}
+'["a-very-insecure-secret-for-checking-out-the-demo"]'
+  {{- end -}}
 {{- end -}}
 
 {{/*
