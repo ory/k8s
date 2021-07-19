@@ -70,3 +70,9 @@ job:
 
 # Configure node affinity
 affinity: {}
+
+# PodDistributionBudget configuration
+pdb:
+  enabled: false
+  spec:
+    minAvailable: 1
