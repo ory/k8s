@@ -3,7 +3,7 @@ The ORY Hydra HTTP Public API is available via:
 {{- if .Values.ingress.public.enabled }}
 {{- range $host := .Values.ingress.public.hosts }}
   {{- range .paths }}
-  http{{ if $.Values.ingress.public.tls }}s{{ end }}://{{ $host.host }}{{ . }}
+  http{{ if $.Values.ingress.public.tls }}s{{ end }}://{{ $host.host }}{{ .path }}
   {{- end }}
 {{- end }}
 {{- else if contains "NodePort" .Values.service.public.type }}
@@ -53,7 +53,7 @@ The ORY Hydra HTTP Admin API is available via:
 {{- if .Values.ingress.admin.enabled }}
 {{- range $host := .Values.ingress.admin.hosts }}
   {{- range .paths }}
-  http{{ if $.Values.ingress.admin.tls }}s{{ end }}://{{ $host.host }}{{ . }}
+  http{{ if $.Values.ingress.admin.tls }}s{{ end }}://{{ $host.host }}{{ .path }}
   {{- end }}
 {{- end }}
 {{- else if contains "NodePort" .Values.service.admin.type }}
