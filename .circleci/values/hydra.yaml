@@ -3,6 +3,12 @@ image:
   tag: v1.10.2-alpine
   pullPolicy: IfNotPresent
 
+ingress:
+  public:
+    enabled: true
+  admin:
+    enabled: true
+
 hydra:
   autoMigrate: true
   dangerousForceHttp: true
