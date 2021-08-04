@@ -72,7 +72,7 @@ Check values.yaml for more configuration options.
 Since this version we support only kubernetes >= v1.18 for the ingress definition.
 
 If you enabled ingresses you need to migrate values from:
-```
+```yaml
 ingress:
   public:
     hosts:
@@ -83,8 +83,10 @@ ingress:
       - host: kratos.admin.local.com
         paths: ["/"]
 ```
+
 to
-```
+
+```yaml
 ingress:
   public:
     className: ""

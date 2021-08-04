@@ -79,12 +79,15 @@ ingress:
   proxy:
     # En-/Disable the proxy ingress.
     enabled: false
+    className: ""
     annotations: {}
 #     kubernetes.io/ingress.class: nginx
 #     kubernetes.io/tls-acme: "true"
     hosts:
       - host: proxy.oathkeeper.localhost
-        paths: ["/"]
+        paths: 
+          - path: /
+            pathType: ImplementationSpecific
 #    tls: []
 #        hosts:
 #          - proxy.oathkeeper.local
@@ -93,7 +96,7 @@ ingress:
   api:
     # En-/Disable the api ingress.
     enabled: false
-
+    className: ""
     annotations: {}
 #      If you do want to specify annotations, uncomment the following
 #      lines, adjust them as necessary, and remove the curly braces after 'annotations:'.
@@ -101,7 +104,9 @@ ingress:
 #      kubernetes.io/tls-acme: "true"
     hosts:
       - host: api.oathkeeper.localhost
-        paths: ["/"]
+        paths: 
+          - path: /
+            pathType: ImplementationSpecific
 #    tls: []
 #      hosts:
 #        - api.oathkeeper.local

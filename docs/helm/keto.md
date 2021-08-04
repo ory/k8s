@@ -85,7 +85,7 @@ Additionally, the following extra settings are available:
 Since this version we support only kubernetes >= v1.18 for the ingress definition.
 
 If you enabled ingresses you need to migrate values from:
-```
+```yaml
 ingress:
   read:
     hosts:
@@ -96,8 +96,10 @@ ingress:
       - host: chart-example.local
         paths: ["/write"]
 ```
+
 to
-```
+
+```yaml
 ingress:
   read:
     className: ""

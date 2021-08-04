@@ -303,7 +303,7 @@ Should you forget, helm will fail and remind you to.
 Since this version we support only kubernetes >= v1.18 for the ingress definition.
 
 If you enabled ingresses you need to migrate values from:
-```
+```yaml
 ingress:
   public:
     hosts:
@@ -314,8 +314,10 @@ ingress:
       - host: admin.hydra.localhost
         paths: ["/"]
 ```
+
 to
-```
+
+```yaml
 ingress:
   public:
     className: ""
