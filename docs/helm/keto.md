@@ -99,17 +99,17 @@ ingress:
 to
 ```
 ingress:
-  public:
+  read:
     className: ""
     hosts:
       - host: chart-example.local
         paths:
           - path: /read
             pathType: Prefix
-  admin:
+  write:
     className: ""
     hosts:
-      - host: admin.hydra.localhost
+      - host: chart-example.local
         paths:
           - path: /write
             pathType: Prefix
