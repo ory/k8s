@@ -6,6 +6,9 @@ This repository contains helm charts for Kubernetes. All charts are in incubatio
 
 Please go to [k8s.ory.sh/helm](https://k8s.ory.sh/helm/) for a list of helm charts and their configuration options.
 
+**NOTE**
+> All charts present in this repository require Kuberentes 1.18+. Please refer to releases [0.18.0](https://github.com/ory/k8s/releases/tag/v0.18.0) and older for versions supporting older releases of Kubernetes.
+
 ## Development
 
 You can test and develop charts locally using [Minikube](https://kubernetes.io/docs/setup/learning-environment/minikube/).
