@@ -24,14 +24,14 @@ jobs:
       - checkout
       - run: curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
       - run: helm plugin install https://github.com/instrumenta/helm-kubeval
-      - run: helm kubeval ./helm/charts/oathkeeper/
-      - run: helm kubeval ./helm/charts/oathkeeper-maester/
-      - run: helm kubeval ./helm/charts/keto/
-      - run: helm kubeval ./helm/charts/hydra/
-      - run: helm kubeval ./helm/charts/hydra-maester/
-      - run: helm kubeval ./helm/charts/kratos/
-      - run: helm kubeval ./helm/charts/example-idp/
-      - run: helm kubeval ./helm/charts/kratos-selfservice-ui-node/
+      - run: helm kubeval ./helm/charts/oathkeeper/ -o tap --exit-on-error
+      - run: helm kubeval ./helm/charts/oathkeeper-maester/ -o tap --exit-on-error
+      - run: helm kubeval ./helm/charts/keto/ -o tap --exit-on-error
+      - run: helm kubeval ./helm/charts/hydra/ -o tap --exit-on-error
+      - run: helm kubeval ./helm/charts/hydra-maester/ -o tap --exit-on-error
+      - run: helm kubeval ./helm/charts/kratos/ -o tap --exit-on-error
+      - run: helm kubeval ./helm/charts/example-idp/ -o tap --exit-on-error
+      - run: helm kubeval ./helm/charts/kratos-selfservice-ui-node/ -o tap --exit-on-error
 
   test:
     machine:
