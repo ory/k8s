@@ -80,6 +80,9 @@ jobs:
       - run:
           command: |
             .circleci/helm-test.sh keto
+      - run:
+          command: |
+            .circleci/helm-test.sh kratos-selfservice-ui-node
 
   release:
     docker:
