@@ -107,6 +107,10 @@ workflows:
           filters:
             tags:
               only: /.*/
+      - validate:
+          filters:
+            tags:
+              only: /.*/
       - release:
           requires:
             - lint
