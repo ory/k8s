@@ -3,13 +3,13 @@
   Read endpoint available at: 
   {{- range $host := .Values.ingress.read.hosts }}
     {{- range .paths }}
-      http{{ if $.Values.ingress.read.tls }}s{{ end }}://{{ $host.host }}{{ . }}
+      http{{ if $.Values.ingress.read.tls }}s{{ end }}://{{ $host.host }}{{ .path }}
     {{- end }}
   {{- end }}
   Write endpoint available at: 
   {{- range $host := .Values.ingress.write.hosts }}
     {{- range .paths }}
-      http{{ if $.Values.ingress.write.tls }}s{{ end }}://{{ $host.host }}{{ . }}
+      http{{ if $.Values.ingress.write.tls }}s{{ end }}://{{ $host.host }}{{ .path }}
     {{- end }}
  {{- end }}
 {{- else if or ( contains "NodePort" .Values.service.read.type ) ( contains "NodePort" .Values.service.write.type ) }}

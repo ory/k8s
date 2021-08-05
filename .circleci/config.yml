@@ -15,6 +15,23 @@ jobs:
       - run: helm lint ./helm/charts/kratos/
       - run: helm lint ./helm/charts/example-idp/
       - run: helm lint ./helm/charts/kratos-selfservice-ui-node/
+  
+  validate:
+    docker:
+      - image: circleci/golang:1.16.5
+    working_directory: /go/src/github.com/ory/k8s
+    steps:
+      - checkout
+      - run: curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
+      - run: helm plugin install https://github.com/instrumenta/helm-kubeval
+      - run: .circleci/helm-validate.sh oathkeeper
+      - run: .circleci/helm-validate.sh oathkeeper-maester
+      - run: .circleci/helm-validate.sh keto
+      - run: .circleci/helm-validate.sh hydra
+      - run: .circleci/helm-validate.sh hydra-maester
+      - run: .circleci/helm-validate.sh kratos
+      - run: .circleci/helm-validate.sh example-idp
+      - run: .circleci/helm-validate.sh kratos-selfservice-ui-node
 
   test:
     machine:
@@ -63,6 +80,9 @@ jobs:
       - run:
           command: |
             .circleci/helm-test.sh keto
+      - run:
+          command: |
+            .circleci/helm-test.sh kratos-selfservice-ui-node
 
   release:
     docker:
@@ -87,6 +107,10 @@ workflows:
             tags:
               only: /.*/
       - lint:
+          filters:
+            tags:
+              only: /.*/
+      - validate:
           filters:
             tags:
               only: /.*/

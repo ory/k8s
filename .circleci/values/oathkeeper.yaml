@@ -8,19 +8,8 @@ maester:
 #  api:
 #    type: NodePort
 #
-#ingress:
-#  proxy:
-#    enabled: true
-#    annotations:
-#      kubernetes.io/ingress.global-static-ip-name: "oathkeeper-proxy"
-#    hosts:
-#      - host: oathkeeper-k8s-proxy.dev.ory.dev
-#        paths: ["/"]
-#
-#  api:
-#    enabled: true
-#    hosts:
-#      - host: oathkeeper-k8s-api.dev.ory.dev
-#        paths: ["/"]
-#    annotations:
-#      kubernetes.io/ingress.global-static-ip-name: "oathkeeper-api"
+ingress:
+ proxy:
+   enabled: true
+ api:
+   enabled: true

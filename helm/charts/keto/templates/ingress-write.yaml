@@ -1,42 +1,52 @@
 {{- if .Values.ingress.write.enabled -}}
 {{- $fullName := include "keto.fullname" . -}}
+{{- if semverCompare ">=1.19-0" .Capabilities.KubeVersion.GitVersion -}}
 apiVersion: networking.k8s.io/v1
+{{- else -}}
+apiVersion: networking.k8s.io/v1beta1
+{{- end }}
 kind: Ingress
 metadata:
   name: {{ $fullName }}-write
-  {{- if .Release.Namespace }}
   namespace: {{ .Release.Namespace }}
-  {{- end }}
   labels:
-{{ include "keto.labels" . | indent 4 }}
+    {{- include "keto.labels" . | nindent 4 }}
   {{- with .Values.ingress.write.annotations }}
   annotations:
     {{- toYaml . | nindent 4 }}
   {{- end }}
 spec:
-{{- if .Values.ingress.write.tls }}
+  ingressClassName: {{ .Values.ingress.write.className }}
+  {{- if .Values.ingress.write.tls }}
   tls:
-  {{- range .Values.ingress.write.tls }}
+    {{- range .Values.ingress.write.tls }}
     - hosts:
-      {{- range .hosts }}
+        {{- range .hosts }}
         - {{ . | quote }}
-      {{- end }}
+        {{- end }}
       secretName: {{ .secretName }}
+    {{- end }}
   {{- end }}
-{{- end }}
   rules:
-  {{- range .Values.ingress.write.hosts }}
+    {{- range .Values.ingress.write.hosts }}
     - host: {{ .host | quote }}
       http:
         paths:
-        {{- range .paths }}
-          - path: {{ . }}
-            pathType: Prefix
+          {{- range .paths }}
+          - path: {{ .path }}
+            {{- if .pathType }}
+            pathType: {{ .pathType }}
+            {{- end }}
             backend:
-                service:
-                  name: {{ $fullName }}
-                  port:
-                    name: http-write
-        {{- end }}
-  {{- end }}
+              {{- if semverCompare ">=1.19-0" $.Capabilities.KubeVersion.GitVersion }}
+              service:
+                name: {{ $fullName }}
+                port:
+                  name: http-write
+              {{- else }}
+              serviceName: {{ $fullName }}
+              servicePort: http-write
+              {{- end }}
+          {{- end }}
+    {{- end }}
 {{- end }}

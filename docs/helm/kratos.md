@@ -64,3 +64,46 @@ Additionally, the following extra settings are available:
 - `deployment.environmentSecretsName` (string): Allows you to set arbitrary environment variables from [a secret containing a list of keys and values](https://kubernetes.io/docs/tasks/inject-data-application/distribute-credentials-secure/#configure-all-key-value-pairs-in-a-secret-as-container-environment-variables). (This secret is not created by the Helm chart)
 
 Check values.yaml for more configuration options.
+
+## Upgrade
+
+### From `0.18.0`
+
+Since this version we support only kubernetes >= v1.18 for the ingress definition.
+
+If you enabled ingresses you need to migrate values from:
+```yaml
+ingress:
+  public:
+    hosts:
+      - host: kratos.public.local.com
+        paths: ["/"]
+  admin:
+    hosts:
+      - host: kratos.admin.local.com
+        paths: ["/"]
+```
+
+to
+
+```yaml
+ingress:
+  public:
+    className: ""
+    hosts:
+      - host: kratos.public.local.com
+        paths:
+          - path: /
+            pathType: ImplementationSpecific
+  admin:
+    className: ""
+    hosts:
+      - host: kratos.admin.local.com
+        paths:
+          - path: /
+            pathType: ImplementationSpecific
+```
+
+where changes are on:
+- introduce the `className` to specify the [ingress class documentation](https://kubernetes.io/blog/2020/04/02/improvements-to-the-ingress-api-in-kubernetes-1.18/#extended-configuration-with-ingress-classes) that need to be used
+- change `paths` definition from an array of strings to an array of objects, where each object include the `path` and the `pathType` (see [path matching documentation](https://kubernetes.io/blog/2020/04/02/improvements-to-the-ingress-api-in-kubernetes-1.18/#better-path-matching-with-path-types))
