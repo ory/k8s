@@ -1,6 +1,6 @@
 image:
   repository: oryd/hydra
-  tag: v1.10.2-alpine
+  tag: v1.10.3-alpine
   pullPolicy: IfNotPresent
 
 ingress:
@@ -23,7 +23,6 @@ hydra:
         - "foo bar 123 456 lorem 3"
 maester:
   enabled: false
-
 # deployment:
 #  extraVolumes:
 #   - name: my-volume
