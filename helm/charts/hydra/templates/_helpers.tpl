@@ -83,12 +83,12 @@ Generate the secrets.system value
 {{- define "hydra.secrets.system" -}}
   {{- if .Values.hydra.config.secrets.system -}}
     {{- if kindIs "slice" .Values.hydra.config.secrets.system -}}
-      {{- printf "'%s'" ( mustToRawJson .Values.hydra.config.secrets.system ) -}}
+      "{{- join "\",\"" .Values.hydra.config.secrets.system -}}"
     {{- else -}}
-      {{- fail "Expected .Values.hydra.config.secrets.system to be a list of strings" -}}
+      {{- fail "Expected hydra.config.secrets.system to be a list of strings" -}}
     {{- end -}}
   {{- else if .Values.demo -}}
-'["a-very-insecure-secret-for-checking-out-the-demo"]'
+      "a-very-insecure-secret-for-checking-out-the-demo"
   {{- end -}}
 {{- end -}}
 
