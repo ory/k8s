@@ -44,6 +44,10 @@ spec:
 {{ toYaml .Values.deployment.extraVolumeMounts | indent 10 }}
          {{- end }}
       restartPolicy: Never
+      {{- if .Values.deployment.extraInitContainers }}
+      initContainers:
+{{ toYaml ( tpl .Values.deployment.extraInitContainers . ) | indent 8 }}
+      {{- end }}
       {{- if .Values.deployment.extraVolumes }}
       volumes:
 {{ toYaml .Values.deployment.extraVolumes | indent 8 }}
