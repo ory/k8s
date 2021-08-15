@@ -70,7 +70,7 @@ spec:
             {{- toYaml .Values.securityContext | nindent 12 }}
       {{- if .Values.deployment.extraInitContainers }}
       initContainers:
-{{ toYaml ( tpl .Values.deployment.extraInitContainers . ) | indent 8 }}
+{{ tpl .Values.deployment.extraInitContainers . | indent 8 }}
       {{- end }}
       volumes:
         - name: {{ include "kratos.fullname" . }}-config-volume
