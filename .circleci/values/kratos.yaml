@@ -67,3 +67,9 @@ ingress:
     enabled: true
   public:
     enabled: true
+deployment:
+  extraInitContainers: |
+    - name: "hello-world"
+      image: "alpine:latest"
+      command: ["/bin/sh"]
+      args: ["-c", "echo hello, world!"]
