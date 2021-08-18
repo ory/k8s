@@ -4395,6 +4395,31 @@ entries:
     - hydra-maester-0.0.48.tgz
     version: 0.0.48
   keto:
+    - apiVersion: v2
+      appVersion: v0.6.0
+      created: "2021-08-16T08:45:34.721139779Z"
+      description: Access Control Policies as a Server
+      digest: 966827dbb8651abe97d03196ac9c0bf865c04452c6402b5fdcdde368732b3869
+      home: https://www.ory.sh/keto/
+      keywords:
+        - rbac
+        - hrbac
+        - acl
+        - iam
+        - api-security
+        - security
+      maintainers:
+        - email: hi@ory.sh
+          name: ORY Team
+          url: https://www.ory.sh/
+      name: keto
+      sources:
+        - https://github.com/ory/keto
+        - https://github.com/ory/k8s
+      type: application
+      urls:
+        - keto-0.19.3.tgz
+      version: 0.19.3
   - apiVersion: v2
     appVersion: v0.6.0
     created: "2021-08-16T08:45:34.721139779Z"
