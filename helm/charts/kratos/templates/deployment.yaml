@@ -15,7 +15,10 @@ metadata:
       {{- toYaml . | nindent 4 }}
     {{- end }}
 spec:
+  progressDeadlineSeconds: 3600
   replicas: {{ .Values.replicaCount }}
+  strategy:
+    {{- toYaml .Values.strategy | nindent 4 }}
   selector:
     matchLabels:
       app.kubernetes.io/name: {{ include "kratos.name" . }}
@@ -36,83 +39,12 @@ spec:
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
     {{- end }}
-    {{- if or .Values.kratos.autoMigrate .Values.deployment.extraInitContainers}}
+    {{- if .Values.deployment.extraInitContainers}}
       initContainers:
         {{- if .Values.deployment.extraInitContainers }}
 {{ tpl .Values.deployment.extraInitContainers . | indent 8 }}
         {{- end }}
-        {{- if .Values.kratos.autoMigrate }}
-        -
-          name: {{ .Chart.Name }}-automigrate
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
-          command: ["kratos"]
-          args: ["migrate", "sql", "-e", "--yes", "--config", "/etc/config/kratos.yaml"]
-          volumeMounts:
-            - name: {{ include "kratos.name" . }}-config-volume
-              mountPath: /etc/config
-              readOnly: true
-            {{- if .Values.deployment.extraVolumeMounts }}
-{{ toYaml .Values.deployment.extraVolumeMounts | indent 12 }}
-            {{- end }}
-          env:
-            {{- if .Values.deployment.tracing.datadog.enabled }}
-            -
-              name: TRACING_PROVIDER
-              value: datadog
-            -
-              name: DD_ENV
-              value: {{ .Values.deployment.tracing.datadog.env | default "none" | quote }}
-            -
-              name: DD_VERSION
-              value: {{ .Values.deployment.tracing.datadog.version | default .Values.image.tag | quote }}
-            -
-              name: DD_SERVICE
-              value: {{ .Values.deployment.tracing.datadog.service | default "ory/kratos" | quote }}
-            {{- if .Values.deployment.tracing.datadog.useHostIP }}
-            -
-              name: DD_AGENT_HOST
-              valueFrom:
-                fieldRef:
-                  fieldPath: status.hostIP
-            {{- end }}
-            {{- end }}
-            -
-              name: DSN
-              valueFrom:
-                secretKeyRef:
-                  name: {{ include "kratos.secretname" . }}
-                  key: dsn
-            -
-              name: SECRETS_DEFAULT
-              valueFrom:
-                secretKeyRef:
-                  name: {{ include "kratos.secretname" . }}
-                  key: secretsDefault
-            -
-              name: SECRETS_COOKIE
-              valueFrom:
-                secretKeyRef:
-                  name: {{ include "kratos.secretname" . }}
-                  key: secretsCookie
-          {{- if .Values.kratos.config.courier.smtp.connection_uri }}
-            -
-              name: COURIER_SMTP_CONNECTION_URI
-              valueFrom:
-                secretKeyRef:
-                  name: {{ include "kratos.secretname" . }}
-                  key: smtpConnectionURI
-          {{- end}}
-            {{- with .Values.deployment.extraEnv }}
-              {{- toYaml . | nindent 12 }}
-            {{- end }}
-        {{- if .Values.deployment.environmentSecretsName }}
-          envFrom:
-          - secretRef:
-              name: {{ .Values.deployment.environmentSecretsName }}
-        {{- end}}
-        {{- end}}
-    {{- end}}
+    {{- end }}
       volumes:
         {{- if .Values.deployment.extraVolumes }}
 {{ toYaml .Values.deployment.extraVolumes | indent 8 }}
@@ -128,11 +60,34 @@ spec:
             name: {{ include "kratos.fullname" $root }}-template-{{ $method }}-{{ $result }}
         {{- end }}
         {{- end }}
-        
+      automountServiceAccountToken: {{ .Values.automountServiceAccountToken }}
+      serviceAccountName: {{ include "kratos.fullname" . }}
       containers:
+        {{- if .Values.watcher.enabled }}
+        - name: watcher
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: {{ .Values.watcher.image }}
+          command:
+            - /bin/bash
+            - -c
+            - |
+{{ .Files.Get "files/watch.sh" | printf "%s" | indent 14 }}
+          env:
+            - name: NAMESPACE
+              value: {{ .Release.Namespace | quote }}
+            - name: WATCH_FILE
+              value: {{ .Values.watcher.mountFile | quote }}
+            - name: DEPLOYMENT_SELECTOR
+              value: 'app.kubernetes.io/name={{ include "kratos.name" . }}'
+          volumeMounts:
+          {{- with .Values.deployment.extraVolumeMounts }}
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+        {{- end }}        
         - name: {{ .Chart.Name }}
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          image: {{ include "kratos.image" . }}
+          imagePullPolicy: {{ include "kratos.imagePullPolicy" . }}
           command: ["kratos"]
           args: [
             "serve",
@@ -159,32 +114,55 @@ spec:
             {{- end }}
             {{- end }}
           env:
-            -
-              name: DSN
+            - name: DSN
               valueFrom:
                 secretKeyRef:
                   name: {{ include "kratos.secretname" . }}
                   key: dsn
-            -
-              name: SECRETS_DEFAULT
+            {{- if .Values.kratos.config.secrets.default }}
+            - name: SECRETS_DEFAULT
               valueFrom:
                 secretKeyRef:
                   name: {{ include "kratos.secretname" . }}
                   key: secretsDefault
-            -
-              name: SECRETS_COOKIE
+            {{- end}}
+            {{- if .Values.kratos.config.secrets.cookie }}
+            - name: SECRETS_COOKIE
               valueFrom:
                 secretKeyRef:
                   name: {{ include "kratos.secretname" . }}
                   key: secretsCookie
+            {{- end}}
             {{- if .Values.kratos.config.courier.smtp.connection_uri }}
-            -
-              name: COURIER_SMTP_CONNECTION_URI
+            - name: COURIER_SMTP_CONNECTION_URI
               valueFrom:
                 secretKeyRef:
                   name: {{ include "kratos.secretname" . }}
                   key: smtpConnectionURI
-          {{- end}}
+            {{- end}}
+            {{- if .Values.kratos.dev_disable_api_flow_enforcement }}
+            - name: DEV_DISABLE_API_FLOW_ENFORCEMENT
+              value: "true"
+            {{- end }}
+            {{- if .Values.deployment.tracing.datadog.enabled }}
+            - name: TRACING_PROVIDER
+              value: datadog
+            - name: DD_ENV
+              value: {{ .Values.deployment.tracing.datadog.env | default "none" | quote }}
+            - name: DD_VERSION
+              value: {{ .Values.deployment.tracing.datadog.version | default .Values.image.tag | quote }}
+            - name: DD_SERVICE
+              value: {{ .Values.deployment.tracing.datadog.service | default "ory/kratos" | quote }}
+            {{- if .Values.deployment.tracing.datadog.useHostIP }}
+            - name: DD_AGENT_HOST
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.hostIP
+            {{- end }}
+            {{- end }}
+            {{- if .Values.deployment.extraEnv }}
+{{ toYaml .Values.deployment.extraEnv | indent 12 }}
+            {{- end }}
         {{- if .Values.deployment.environmentSecretsName }}
           envFrom:
           - secretRef:
@@ -198,15 +176,13 @@ spec:
               containerPort: {{ .Values.kratos.config.serve.public.port }}
               protocol: TCP
           livenessProbe:
-            httpGet:
-              path: /health/alive
-              port: http-admin
+            {{- toYaml .Values.deployment.livenessProbe | nindent 12 }}
           readinessProbe:
-            httpGet:
-              path: /health/ready
-              port: http-admin
+            {{- toYaml .Values.deployment.readinessProbe | nindent 12 }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

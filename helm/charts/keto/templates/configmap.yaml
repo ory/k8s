@@ -6,5 +6,5 @@ metadata:
   labels:
 {{ include "keto.labels" . | indent 4 }}
 data:
-  ".keto.yaml": |
+  "keto.yaml": |
     {{- include "keto.configmap" . | nindent 4 }}

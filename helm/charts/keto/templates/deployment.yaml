@@ -24,28 +24,33 @@ spec:
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      {{- if .Values.keto.autoMigrate }}
-      initContainers:
-        - name: {{ .Chart.Name }}-automigrate
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
-          command: [ "keto" ]
-          args: [ "migrate", "sql", "-e", "--config", "/etc/config/.keto.yaml" ]
-          volumeMounts:
-            - name: {{ include "keto.name" . }}-config-volume
-              mountPath: /etc/config
-              readOnly: true
-          env:
-            - name: DSN
-              valueFrom:
-                secretKeyRef:
-                  name: {{ include "keto.secretname" . }}
-                  key: dsn
-      {{- end }}
       serviceAccountName: {{ include "keto.serviceAccountName" . }}
+      automountServiceAccountToken: {{ .Values.automountServiceAccountToken }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
+        {{- if .Values.watcher.enabled }}
+        - name: watcher
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: {{ .Values.watcher.image }}
+          command:
+            - /bin/bash
+            - -c
+            - |
+{{ .Files.Get "files/watch.sh" | printf "%s" | indent 14 }}
+          env:
+            - name: NAMESPACE
+              value: {{ .Release.Namespace | quote }}
+            - name: WATCH_FILE
+              value: {{ .Values.watcher.mountFile | quote }}
+            - name: DEPLOYMENT_SELECTOR
+              value: 'app.kubernetes.io/name={{ include "keto.name" . }}'
+          volumeMounts:
+          {{- with .Values.extraVolumeMounts }}
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+        {{- end }}
         - name: {{ .Chart.Name }}
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
@@ -55,19 +60,24 @@ spec:
           args:
             - serve
             - --config
-            - /etc/config/.keto.yaml
+            - /etc/config/keto.yaml
           ports:
-            - name: http
-              containerPort: {{ .Values.keto.config.serve.port }}
+            - name: http-read
+              containerPort: {{ .Values.keto.config.serve.read.port }}
+              protocol: TCP
+            - name: http-write
+              containerPort: {{ .Values.keto.config.serve.write.port }}
               protocol: TCP
           livenessProbe:
             httpGet:
               path: /health/alive
-              port: http
+              port: http-write
+            {{- toYaml .Values.deployment.livenessProbe | nindent 12 }}
           readinessProbe:
             httpGet:
               path: /health/ready
-              port: http
+              port: http-write
+          {{- toYaml .Values.deployment.readinessProbe | nindent 12 }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           env:
@@ -99,10 +109,16 @@ spec:
             - name: {{ include "keto.name" . }}-config-volume
               mountPath: /etc/config
               readOnly: true
+          {{- with .Values.extraVolumeMounts }}
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
       volumes:
         - name: {{ include "keto.name" . }}-config-volume
           configMap:
             name: {{ include "keto.fullname" . }}-config
+      {{- with .Values.extraVolumes }}
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

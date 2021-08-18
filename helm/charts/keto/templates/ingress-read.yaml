@@ -1,0 +1,52 @@
+{{- if .Values.ingress.read.enabled -}}
+{{- $fullName := include "keto.fullname" . -}}
+{{- if semverCompare ">=1.19-0" .Capabilities.KubeVersion.GitVersion -}}
+apiVersion: networking.k8s.io/v1
+{{- else -}}
+apiVersion: networking.k8s.io/v1beta1
+{{- end }}
+kind: Ingress
+metadata:
+  name: {{ $fullName }}-read
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "keto.labels" . | nindent 4 }}
+  {{- with .Values.ingress.read.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  ingressClassName: {{ .Values.ingress.read.className }}
+  {{- if .Values.ingress.read.tls }}
+  tls:
+    {{- range .Values.ingress.read.tls }}
+    - hosts:
+        {{- range .hosts }}
+        - {{ . | quote }}
+        {{- end }}
+      secretName: {{ .secretName }}
+    {{- end }}
+  {{- end }}
+  rules:
+    {{- range .Values.ingress.read.hosts }}
+    - host: {{ .host | quote }}
+      http:
+        paths:
+          {{- range .paths }}
+          - path: {{ .path }}
+            {{- if .pathType }}
+            pathType: {{ .pathType }}
+            {{- end }}
+            backend:
+              {{- if semverCompare ">=1.19-0" $.Capabilities.KubeVersion.GitVersion }}
+              service:
+                name: {{ $fullName }}
+                port:
+                  name: http-read
+              {{- else }}
+              serviceName: {{ $fullName }}
+              servicePort: http-read
+              {{- end }}
+          {{- end }}
+    {{- end }}
+{{- end }}

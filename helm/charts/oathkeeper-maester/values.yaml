@@ -17,7 +17,7 @@ image:
   # ORY Oathkeeper Rule Controller image
   repository: oryd/oathkeeper-maester
   # ORY Oathkeeper Rule Controller version
-  tag: "v0.1.0"
+  tag: "v0.1.4"
   # Image pull policy
   pullPolicy: IfNotPresent
 
@@ -33,6 +33,15 @@ deployment:
     # requests:
     #   cpu: 100m
     #   memory: 20Mi
+  securityContext:
+    capabilities:
+      drop:
+      - ALL
+    readOnlyRootFilesystem: true
+    runAsNonRoot: true
+    runAsUser: 1000
+    allowPrivilegeEscalation: false
+    privileged: false
 
   # Node labels for pod assignment.
   nodeSelector: {}
@@ -48,6 +57,15 @@ deployment:
 
   # Configure environment variables.
   envs: {}
+  # https://github.com/kubernetes/kubernetes/issues/57601
+  # This applications connects to the k8s API and requires the permissions
+  automountServiceAccountToken: true
 
 # Configure node affinity
 affinity: {}
+
+# PodDistributionBudget configuration
+pdb:
+  enabled: false
+  spec:
+    minAvailable: 1

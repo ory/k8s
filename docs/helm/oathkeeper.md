@@ -109,3 +109,46 @@ This mode requires giving elevated privileges to the Oathkeeper Maestercontrolle
 
 **Sidecar mode**
 In this mode, the Hydra Maester controller runs as an additional container in the Oathkeeper application Pod. All communication is done on the local filesystem, which can be a shared `tempfs`, mounted directory or a persistent volume, and the controller is scaled together with the Oathkeeper application. 
+
+## Upgrade
+
+### From `0.18.0`
+
+Since this version we support only kubernetes >= v1.18 for the ingress definition.
+
+If you enabled ingresses you need to migrate values from:
+```yaml
+ingress:
+  proxy:
+    hosts:
+      - host: proxy.oathkeeper.localhost
+        paths: ["/"]
+  api:
+    hosts:
+      - host: api.oathkeeper.localhost
+        paths: ["/"]
+```
+
+to
+
+```yaml
+ingress:
+  proxy:
+    className: ""
+    hosts:
+      - host: proxy.oathkeeper.localhost
+        paths:
+          - path: /
+            pathType: ImplementationSpecific
+  api:
+    className: ""
+    hosts:
+      - host: api.oathkeeper.localhost
+        paths:
+          - path: /
+            pathType: ImplementationSpecific
+```
+
+where changes are on:
+- introduce the `className` to specify the [ingress class documentation](https://kubernetes.io/blog/2020/04/02/improvements-to-the-ingress-api-in-kubernetes-1.18/#extended-configuration-with-ingress-classes) that need to be used
+- change `paths` definition from an array of strings to an array of objects, where each object include the `path` and the `pathType` (see [path matching documentation](https://kubernetes.io/blog/2020/04/02/improvements-to-the-ingress-api-in-kubernetes-1.18/#better-path-matching-with-path-types))

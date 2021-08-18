@@ -1,21 +1,33 @@
 1. Get the application URL by running these commands:
-{{- if .Values.ingress.enabled }}
-{{- range $host := .Values.ingress.hosts }}
-  {{- range .paths }}
-  http{{ if $.Values.ingress.tls }}s{{ end }}://{{ $host.host }}{{ . }}
+{{- if or .Values.ingress.read.enabled .Values.ingress.write.enabled -}}
+  Read endpoint available at: 
+  {{- range $host := .Values.ingress.read.hosts }}
+    {{- range .paths }}
+      http{{ if $.Values.ingress.read.tls }}s{{ end }}://{{ $host.host }}{{ .path }}
+    {{- end }}
   {{- end }}
-{{- end }}
-{{- else if contains "NodePort" .Values.service.type }}
-  export NODE_PORT=$(kubectl get --namespace {{ .Release.Namespace }} -o jsonpath="{.spec.ports[0].nodePort}" services {{ include "keto.fullname" . }})
+  Write endpoint available at: 
+  {{- range $host := .Values.ingress.write.hosts }}
+    {{- range .paths }}
+      http{{ if $.Values.ingress.write.tls }}s{{ end }}://{{ $host.host }}{{ .path }}
+    {{- end }}
+ {{- end }}
+{{- else if or ( contains "NodePort" .Values.service.read.type ) ( contains "NodePort" .Values.service.write.type ) }}
+  export NODE_PORT_READ=$(kubectl get --namespace {{ .Release.Namespace }} -o jsonpath="{.spec.ports[0].nodePort}" services {{ include "keto.fullname" . }}-read)
+  export NODE_PORT_READ=$(kubectl get --namespace {{ .Release.Namespace }} -o jsonpath="{.spec.ports[0].nodePort}" services {{ include "keto.fullname" . }}-write)
   export NODE_IP=$(kubectl get nodes --namespace {{ .Release.Namespace }} -o jsonpath="{.items[0].status.addresses[0].address}")
-  echo http://$NODE_IP:$NODE_PORT
-{{- else if contains "LoadBalancer" .Values.service.type }}
+Read endpoint available at: http://$NODE_IP:$NODE_PORT_READ
+Write endpoint available at: http://$NODE_IP:$NODE_PORT_WRITE
+{{- else if or ( contains "LoadBalancer" .Values.service.read.type ) ( contains "LoadBalancer" .Values.service.read.type ) }}
      NOTE: It may take a few minutes for the LoadBalancer IP to be available.
-           You can watch the status of by running 'kubectl get --namespace {{ .Release.Namespace }} svc -w {{ include "keto.fullname" . }}'
-  export SERVICE_IP=$(kubectl get svc --namespace {{ .Release.Namespace }} {{ include "keto.fullname" . }} --template "{{"{{ range (index .status.loadBalancer.ingress 0) }}{{.}}{{ end }}"}}")
-  echo http://$SERVICE_IP:{{ .Values.service.port }}
-{{- else if contains "ClusterIP" .Values.service.type }}
-  export POD_NAME=$(kubectl get pods --namespace {{ .Release.Namespace }} -l "app.kubernetes.io/name={{ include "keto.name" . }},app.kubernetes.io/instance={{ .Release.Name }}" -o jsonpath="{.items[0].metadata.name}")
-  echo "Visit http://127.0.0.1:8080 to use your application"
-  kubectl --namespace {{ .Release.Namespace }} port-forward $POD_NAME 8080:80
+           You can watch the status of by running 'kubectl get --namespace {{ .Release.Namespace }} svc -w {{ include "keto.fullname" . }}-read'
+  export SERVICE_IP_READ=$(kubectl get svc --namespace {{ .Release.Namespace }} {{ include "keto.fullname" . }}-read --template "{{"{{ range (index .status.loadBalancer.ingress 0) }}{{.}}{{ end }}"}}")
+  export SERVICE_IP_WRITE=$(kubectl get svc --namespace {{ .Release.Namespace }} {{ include "keto.fullname" . }}-write --template "{{"{{ range (index .status.loadBalancer.ingress 0) }}{{.}}{{ end }}"}}")
+  Read endpoint available at: http://$SERVICE_IP_READ:{{ .Values.service.read.port }}
+  Write endpoint available at: http://$SERVICE_IP_READ:{{ .Values.service.write.port }}
+{{- else if or ( contains "ClusterIP" .Values.service.read.type ) ( contains "ClusterIP" .Values.service.read.type ) }}
+  kubectl --namespace {{ .Release.Namespace }} port-forward svc/{{ include "keto.fullname" . }}-read {{ .Values.keto.config.serve.read.port }}:80
+  kubectl --namespace {{ .Release.Namespace }} port-forward svc/{{ include "keto.fullname" . }}-write {{ .Values.keto.config.serve.write.port }}:80
+  Read endpoint available at: http://127.0.0.1:{{ .Values.keto.config.serve.read.port }}
+  Write endpoint available at: http://127.0.0.1:{{ .Values.keto.config.serve.write.port }}
 {{- end }}

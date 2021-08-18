@@ -1,0 +1,12 @@
+{{- if .Values.pdb.enabled -}}
+---
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: {{ include "keto.fullname" . }}
+spec:
+  selector:
+    matchLabels:
+      {{- include "keto.selectorLabels" . | nindent 6 }}
+  {{ toYaml .Values.pdb.spec }}
+{{- end -}}

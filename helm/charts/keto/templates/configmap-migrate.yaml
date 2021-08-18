@@ -1,0 +1,16 @@
+{{- if .Values.keto.autoMigrate }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "keto.fullname" . }}-migrate
+  namespace: {{ .Release.Namespace }}
+  labels:
+{{ include "keto.labels" . | indent 4 }}
+  annotations:
+    helm.sh/hook-weight: "0"
+    helm.sh/hook: "pre-install, pre-upgrade"
+    helm.sh/hook-delete-policy: "before-hook-creation,hook-succeeded"
+data:
+  "keto.yaml": |
+    {{- include "keto.configmap" . | nindent 4 }}
+{{- end }}

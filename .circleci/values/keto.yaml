@@ -1,0 +1,10 @@
+---
+keto:
+  autoMigrate: true
+  config:
+    dsn: "postgres://ory:ory@postgresql.default.svc.cluster.local/ory?sslmode=disable&max_conn_lifetime=10s"
+ingress:
+  read:
+    enabled: true
+  write:
+    enabled: true

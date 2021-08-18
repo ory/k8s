@@ -5,12 +5,15 @@ rbacJob:
     repository: eu.gcr.io/kyma-project/test-infra/alpine-kubectl
     tag: "v20190325-ff66a3a"
 
-#The Controller have CREATE and READ access to all Secrets in the namespaces listed below.
+# The Controller have CREATE and READ access to all Secrets in the namespaces listed below.
 enabledNamespaces: []
+
+# Single namespace mode. If enabled the controller will watch for resources only from this namespace, ignoring others
+singleNamespaceMode: false
 
 image:
   repository: oryd/hydra-maester
-  tag: v0.0.19
+  tag: v0.0.23
   # Image pull policy
   pullPolicy: IfNotPresent
 
@@ -37,6 +40,16 @@ deployment:
     #   cpu: 100m
     #   memory: 20Mi
 
+  securityContext:
+    capabilities:
+      drop:
+      - ALL
+    readOnlyRootFilesystem: true
+    runAsNonRoot: true
+    runAsUser: 1000
+    allowPrivilegeEscalation: false
+    privileged: false
+
   # Node labels for pod assignment.
   nodeSelector: {}
   # If you do want to specify node labels, uncomment the following
@@ -48,8 +61,18 @@ deployment:
   annotations: {}
   podLabels: {}
 
+  # https://github.com/kubernetes/kubernetes/issues/57601
+  # This applications connects to the k8s API and requires the permissions
+  automountServiceAccountToken: true
+
 job:
   podLabels: {}
 
 # Configure node affinity
 affinity: {}
+
+# PodDistributionBudget configuration
+pdb:
+  enabled: false
+  spec:
+    minAvailable: 1

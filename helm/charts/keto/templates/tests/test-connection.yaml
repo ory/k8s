@@ -5,11 +5,11 @@ metadata:
   labels:
     {{- include "keto.labels" . | nindent 4 }}
   annotations:
-    "helm.sh/hook": test-success
+    helm.sh/hook: test-success
 spec:
   containers:
     - name: wget
       image: busybox
       command: ['wget']
-      args: ['{{ include "keto.fullname" . }}:{{ .Values.service.port }}']
+      args: ['{{ include "keto.fullname" . }}-write:{{ .Values.service.write.port }}/health/ready']
   restartPolicy: Never

@@ -51,7 +51,8 @@ spec:
             name: {{ include "oathkeeper.fullname" . }}-rules
         - name: {{ include "oathkeeper.name" . }}-secrets-volume
           secret:
-            secretName: {{ include "oathkeeper.fullname" . }}
+            secretName: {{ empty .Values.secret.name | ternary (include "oathkeeper.fullname" .) (.Values.secret.name) }}
+      automountServiceAccountToken: {{ .Values.deployment.automountServiceAccountToken }}
       containers:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
@@ -60,7 +61,7 @@ spec:
           env:
             {{- if .Values.oathkeeper.mutatorIdTokenJWKs }}
             - name: MUTATORS_ID_TOKEN_CONFIG_JWKS_URL
-              value: "file:///etc/secrets/mutator.id_token.jwks.json"
+              value: "file://{{ .Values.secret.mountPath }}/{{ .Values.secret.filename }}"
             {{- end }}
             {{- if .Values.deployment.tracing.datadog.enabled }}
             - name: TRACING_PROVIDER
@@ -89,7 +90,7 @@ spec:
               mountPath: /etc/rules
               readOnly: true
             - name: {{ include "oathkeeper.name" . }}-secrets-volume
-              mountPath: /etc/secrets
+              mountPath: {{ .Values.secret.mountPath }}
               readOnly: true
           ports:
             - name: http-api
@@ -108,6 +109,8 @@ spec:
               port: http-api
           resources:
             {{- toYaml .Values.deployment.resources | nindent 12 }}
+          securityContext:
+            {{- toYaml .Values.deployment.securityContext | nindent 12 }}
       {{- with .Values.deployment.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

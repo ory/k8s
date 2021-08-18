@@ -36,30 +36,6 @@ spec:
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
     {{- end }}
-    {{- if .Values.hydra.autoMigrate }}
-      initContainers:
-        - name: {{ .Chart.Name }}-automigrate
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
-          command: ["hydra"]
-          args: ["migrate", "sql", "-e", "--yes", "--config", "/etc/config/config.yaml"]
-          volumeMounts:
-            - name: {{ include "hydra.name" . }}-config-volume
-              mountPath: /etc/config
-              readOnly: true
-            {{- if .Values.deployment.extraVolumeMounts }}
-{{ toYaml .Values.deployment.extraVolumeMounts | indent 12 }}
-            {{- end }}
-          env:
-            - name: DSN
-              valueFrom:
-                secretKeyRef:
-                  name: {{ include "hydra.secretname" . }}
-                  key: dsn
-            {{- with .Values.deployment.extraEnv }}
-              {{- toYaml . | nindent 12 }}
-            {{- end }}
-    {{- end}}
       volumes:
         - name: {{ include "hydra.name" . }}-config-volume
           configMap:
@@ -67,11 +43,31 @@ spec:
         {{- if .Values.deployment.extraVolumes }}
 {{ toYaml .Values.deployment.extraVolumes | indent 8 }}
         {{- end }}
-
-      {{- if .Values.deployment.serviceAccountName  }}
-      serviceAccountName: {{ .Values.deployment.serviceAccountName }}
-      {{- end }}
+      serviceAccountName: {{ .Values.deployment.serviceAccountName  | default ( include "hydra.fullname" . ) }}
+      automountServiceAccountToken: {{ .Values.deployment.automountServiceAccountToken }}
       containers:
+        {{- if .Values.watcher.enabled }}
+        - name: watcher
+          securityContext:
+            {{- toYaml .Values.deployment.securityContext | nindent 12 }}
+          image: {{ .Values.watcher.image }}
+          command:
+            - /bin/bash
+            - -c
+            - |
+{{ .Files.Get "files/watch.sh" | printf "%s" | indent 14 }}
+          env:
+            - name: NAMESPACE
+              value: {{ .Release.Namespace | quote }}
+            - name: WATCH_FILE
+              value: {{ .Values.watcher.mountFile | quote }}
+            - name: DEPLOYMENT_SELECTOR
+              value: 'app.kubernetes.io/name={{ include "hydra.name" . }}'
+          volumeMounts:
+          {{- with .Values.deployment.extraVolumeMounts }}
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+        {{- end }}
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
@@ -107,16 +103,12 @@ spec:
             httpGet:
               path: /health/alive
               port: http-admin
-            initialDelaySeconds: 30
-            periodSeconds: 10
-            failureThreshold: 5
+            {{- toYaml .Values.deployment.livenessProbe | nindent 12 }}
           readinessProbe:
             httpGet:
               path: /health/ready
               port: http-admin
-            initialDelaySeconds: 30
-            periodSeconds: 10
-            failureThreshold: 5
+            {{- toYaml .Values.deployment.readinessProbe | nindent 12 }}
           env:
             {{- if .Values.deployment.tracing.datadog.enabled }}
             - name: TRACING_PROVIDER
@@ -159,6 +151,10 @@ spec:
             {{- end }}
           resources:
             {{- toYaml .Values.deployment.resources | nindent 12 }}
+          securityContext:
+            {{- toYaml .Values.deployment.securityContext | nindent 12 }}
+          lifecycle:
+            {{- toYaml .Values.deployment.lifecycle | nindent 12 }}
       {{- if .Values.priorityClassName }}
       priorityClassName: {{ .Values.priorityClassName }}
       {{- end }}

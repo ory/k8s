@@ -295,3 +295,46 @@ If you use it and deploy maester as part of hydra, make sure you also set
 name used by maester is properly computed with the new value.
 
 Should you forget, helm will fail and remind you to.
+
+## Upgrade
+
+### From `0.18.0`
+
+Since this version we support only kubernetes >= v1.18 for the ingress definition.
+
+If you enabled ingresses you need to migrate values from:
+```yaml
+ingress:
+  public:
+    hosts:
+      - host: public.hydra.localhost
+        paths: ["/"]
+  admin:
+    hosts:
+      - host: admin.hydra.localhost
+        paths: ["/"]
+```
+
+to
+
+```yaml
+ingress:
+  public:
+    className: ""
+    hosts:
+      - host: public.hydra.localhost
+        paths:
+          - path: /
+            pathType: ImplementationSpecific
+  admin:
+    className: ""
+    hosts:
+      - host: admin.hydra.localhost
+        paths:
+          - path: /
+            pathType: ImplementationSpecific
+```
+
+where changes are on:
+- introduce the `className` to specify the [ingress class documentation](https://kubernetes.io/blog/2020/04/02/improvements-to-the-ingress-api-in-kubernetes-1.18/#extended-configuration-with-ingress-classes) that need to be used
+- change `paths` definition from an array of strings to an array of objects, where each object include the `path` and the `pathType` (see [path matching documentation](https://kubernetes.io/blog/2020/04/02/improvements-to-the-ingress-api-in-kubernetes-1.18/#better-path-matching-with-path-types))

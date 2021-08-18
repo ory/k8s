@@ -81,11 +81,19 @@ Generate the name of the secret resource containing secrets
 Generate the secrets.system value
 */}}
 {{- define "hydra.secrets.system" -}}
-{{- if .Values.hydra.config.secrets.system -}}
-{{- .Values.hydra.config.secrets.system }}
-{{- else if .Values.demo -}}
-a-very-insecure-secret-for-checking-out-the-demo
-{{- end -}}
+  {{- if .Values.hydra.config.secrets.system -}}
+    {{- if kindIs "slice" .Values.hydra.config.secrets.system -}}
+      {{- if gt (len .Values.hydra.config.secrets.system) 1 -}}
+        "{{- join "\",\"" .Values.hydra.config.secrets.system -}}"
+      {{- else -}}
+        {{- join "" .Values.hydra.config.secrets.system -}}
+      {{- end -}}
+    {{- else -}}
+      {{- fail "Expected hydra.config.secrets.system to be a list of strings" -}}
+    {{- end -}}
+  {{- else if .Values.demo -}}
+    a-very-insecure-secret-for-checking-out-the-demo
+  {{- end -}}
 {{- end -}}
 
 {{/*

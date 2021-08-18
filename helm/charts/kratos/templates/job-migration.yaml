@@ -1,0 +1,56 @@
+{{- if .Values.kratos.autoMigrate }}
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ include "kratos.fullname" . }}-automigrate
+  {{- if .Release.Namespace }}
+  namespace: {{ .Release.Namespace }}
+  {{- end }}
+  labels:
+{{ include "kratos.labels" . | indent 4 }}
+  annotations:
+    {{- with .Values.job.annotations }}
+      {{- toYaml . | nindent 4 }}
+    {{- end }}
+    helm.sh/hook-weight: "1"
+    helm.sh/hook: "pre-install, pre-upgrade"
+    helm.sh/hook-delete-policy: "before-hook-creation,hook-succeeded"
+spec:
+  template:
+    {{- with .Values.job.annotations }}
+    metadata: 
+      annotations:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+    spec:
+      automountServiceAccountToken: {{ .Values.automountServiceAccountToken }}
+      containers:
+      - name: {{ .Chart.Name }}-automigrate
+        image: {{ include "kratos.image" . }}
+        imagePullPolicy: {{ include "kratos.imagePullPolicy" . }}
+        command: ["kratos"]
+        args: ["migrate", "sql", "-e", "--yes"]
+        env:
+          - name: DSN
+            valueFrom:
+              secretKeyRef:
+                name: {{ include "kratos.secretname" . }}
+                key: dsn
+        securityContext:
+          {{- toYaml .Values.securityContext | nindent 10 }}
+        {{- if .Values.deployment.extraVolumeMounts }}
+        volumeMounts:
+{{ toYaml .Values.deployment.extraVolumeMounts | indent 10 }}
+         {{- end }}
+      restartPolicy: Never
+      {{- if .Values.deployment.extraInitContainers }}
+      initContainers:
+{{ tpl .Values.deployment.extraInitContainers . | indent 8 }}
+      {{- end }}
+      {{- if .Values.deployment.extraVolumes }}
+      volumes:
+{{ toYaml .Values.deployment.extraVolumes | indent 8 }}
+      {{- end }}
+  backoffLimit: 10
+{{- end }}

@@ -1,0 +1,89 @@
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ include "kratos.fullname" . }}-courier
+  {{- if .Release.Namespace }}
+  namespace: {{ .Release.Namespace }}
+  {{- end }}
+  labels:
+{{ include "kratos.labels" . | indent 4 }}
+    {{- with .Values.deployment.labels }}
+      {{- toYaml . | nindent 4 }}
+    {{- end }}
+  annotations:
+    {{- with .Values.deployment.annotations }}
+      {{- toYaml . | nindent 4 }}
+    {{- end }}
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ include "kratos.fullname" . }}-courier
+      app.kubernetes.io/instance: {{ .Release.Name }}      
+  serviceName: {{ include "kratos.fullname" . }}-courier
+  replicas: 1 
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: {{ include "kratos.fullname" . }}-courier
+        app.kubernetes.io/instance: {{ .Release.Name }}      
+    spec:
+      containers:
+        - name: {{ include "kratos.fullname" . }}-courier
+          image: {{ include "kratos.image" . }}
+          imagePullPolicy: {{ include "kratos.imagePullPolicy" . }}
+          args: [ "courier", "watch", "--config", "/etc/config/kratos.yaml" ]
+          volumeMounts:
+            - name: {{ include "kratos.fullname" . }}-config-volume
+              mountPath: /etc/config
+              readOnly: true
+            {{- if .Values.deployment.extraVolumeMounts }}
+{{ toYaml .Values.deployment.extraVolumeMounts | indent 12 }}
+            {{- end }}
+            {{- $root := . -}}
+            {{- range $method, $methodEntry := .Values.kratos.emailTemplates }}
+            {{- range $result, $resultEntry := $methodEntry }}
+            - name: {{ include "kratos.name" $root }}-template-{{ $method }}-{{ $result }}-volume
+              mountPath: /conf/courier-templates/{{ $method }}/{{ $result }}
+              readOnly: true
+            {{- end }}
+            {{- end }}           
+          env:
+            - name: LOG_FORMAT
+              value: {{ .Values.statefulset.log.format }}
+            - name: LOG_LEVEL
+              value: {{ .Values.statefulset.log.level }}
+            - name: DSN
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "kratos.secretname" . }}
+                  key: dsn
+            - name: COURIER_SMTP_CONNECTION_URI
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "kratos.secretname" . }}
+                  key: smtpConnectionURI
+            {{- if .Values.deployment.extraEnv }}
+{{ toYaml .Values.deployment.extraEnv | indent 12 }}
+            {{- end }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+      {{- if .Values.deployment.extraInitContainers }}
+      initContainers:
+{{ tpl .Values.deployment.extraInitContainers . | indent 8 }}
+      {{- end }}
+      volumes:
+        - name: {{ include "kratos.fullname" . }}-config-volume
+          configMap:
+            name: {{ include "kratos.fullname" . }}-config
+        {{- if .Values.deployment.extraVolumes }}
+{{ toYaml .Values.deployment.extraVolumes | indent 8 }}
+        {{- end }}
+        {{- $root := . -}}
+        {{- range $method, $methodEntry := .Values.kratos.emailTemplates }}
+        {{- range $result, $resultEntry := $methodEntry }}
+        - name: {{ include "kratos.name" $root }}-template-{{ $method }}-{{ $result }}-volume
+          configMap:
+            name: {{ include "kratos.fullname" $root }}-template-{{ $method }}-{{ $result }}
+        {{- end }}
+        {{- end }}

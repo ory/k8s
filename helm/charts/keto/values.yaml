@@ -8,7 +8,7 @@ image:
   repository: oryd/keto
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: ""
+  tag: "v0.6.0-alpha.1-sqlite"
 
 imagePullSecrets: []
 nameOverride: ""
@@ -28,38 +28,88 @@ podAnnotations: {}
 podSecurityContext: {}
   # fsGroup: 2000
 
-securityContext: {}
-  # capabilities:
-  #   drop:
-  #   - ALL
-  # readOnlyRootFilesystem: true
-  # runAsNonRoot: true
-  # runAsUser: 1000
+# https://github.com/kubernetes/kubernetes/issues/57601
+automountServiceAccountToken: true
+
+securityContext:
+  capabilities:
+    drop:
+    - ALL
+  readOnlyRootFilesystem: true
+  runAsNonRoot: true
+  runAsUser: 100
+  allowPrivilegeEscalation: false
+  privileged: false
+
+job:
+  annotations: {}
+
+ingress:
+  read:
+    enabled: false
+    className: ""
+    annotations: {}
+    # kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
+    hosts:
+      - host: chart-example.local
+        paths: 
+          - path: /read
+            pathType: Prefix
+    tls: []
+    #  - secretName: chart-example-tls
+    #    hosts:
+    #      - chart-example.local
+  write:
+    enabled: false
+    className: ""
+    annotations: {}
+    # kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
+    hosts:
+      - host: chart-example.local
+        paths: 
+          - path: /write
+            pathType: Prefix
+    tls: []
+    #  - secretName: chart-example-tls
+    #    hosts:
+    #      - chart-example.local
 
 service:
-  type: ClusterIP
-  port: 4456
+  read:
+    type: ClusterIP
+    port: 80
+  write:
+    type: ClusterIP
+    port: 80
+
+secret:
+  # switch to false to prevent creating the secret
+  enabled: true
+  # ... and choose a different name for a secret you provide like this
+  # nameOverride: "MyOtherName"
+  secretAnnotations:
+    # Create the secret before installation, and only then. This saves the secret from regenerating during an upgrade
+    # pre-upgrade is needed to upgrade from 0.7.0 to newer. Can be deleted afterwards.
+      helm.sh/hook-weight: "0"
+      helm.sh/hook: "pre-install, pre-upgrade"
+      helm.sh/hook-delete-policy: "before-hook-creation"
+      helm.sh/resource-policy: "keep"
 
 keto:
   # https://www.ory.sh/keto/docs/reference/configuration
   config:
     serve:
-      port: 4456
-
+      read:
+        port: 4466
+      write:
+        port: 4467
+    namespaces:
+      - id: 0
+        name: sample
+    dsn: memory
   autoMigrate: false
-
-ingress:
-  enabled: false
-  annotations: {}
-    # kubernetes.io/ingress.class: nginx
-    # kubernetes.io/tls-acme: "true"
-  hosts:
-    - host: chart-example.local
-      paths: []
-  tls: []
-  #  - secretName: chart-example-tls
-  #    hosts:
-  #      - chart-example.local
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
@@ -83,6 +133,16 @@ autoscaling:
 nodeSelector: {}
 
 extraEnv: []
+
+extraVolumes: []
+# - name: my-volume
+#   secret:
+#     secretName: my-secret
+
+extraVolumeMounts: []
+# - name: my-volume
+#   mountPath: /etc/secrets/my-secret
+#   readOnly: true
 
 # Configuration for tracing providers. Only datadog is currently supported through this block.
 # If you need to use a different tracing provider, please manually set the configuration values
@@ -110,6 +170,27 @@ tracing:
 
 tolerations: []
 
-secret: {}
-
 affinity: {}
+
+# Configure the probes for when the deployment is considered ready and ongoing health check
+deployment:
+  livenessProbe:
+    initialDelaySeconds: 30
+    periodSeconds: 10
+    failureThreshold: 5
+  readinessProbe:
+    initialDelaySeconds: 30
+    periodSeconds: 10
+    failureThreshold: 5
+
+watcher:
+  enabled: false
+  image: oryd/k8s-toolbox:0.0.1
+  mountFile: ''
+  # mountFile: /etc/secrets/my-secret/foo
+
+# PodDistributionBudget configuration
+pdb:
+  enabled: false
+  spec:
+    minAvailable: 1

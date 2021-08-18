@@ -3,7 +3,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "oathkeeper-maester.name" . }}
+  name: {{ include "oathkeeper-maester.fullname" . }}
   {{- if .Release.Namespace }}
   namespace: {{ .Release.Namespace }}
   {{- end }}
@@ -15,7 +15,7 @@ spec:
   selector:
     matchLabels:
       control-plane: controller-manager
-      app.kubernetes.io/name: {{ include "oathkeeper-maester.name" . }}
+      app.kubernetes.io/name: {{ include "oathkeeper-maester.fullname" . }}
       app.kubernetes.io/instance: {{ .Release.Name }}
   strategy:
     rollingUpdate:
@@ -26,7 +26,7 @@ spec:
     metadata:
       labels:
         control-plane: controller-manager
-        app.kubernetes.io/name: {{ include "oathkeeper-maester.name" . }}
+        app.kubernetes.io/name: {{ include "oathkeeper-maester.fullname" . }}
         app.kubernetes.io/instance: {{ .Release.Name }}
       {{- with .Values.deployment.annotations }}
       annotations:
@@ -59,7 +59,10 @@ spec:
           env:
             {{- toYaml . | nindent 12 }}
           {{- end }}
-      serviceAccountName: {{ include "oathkeeper-maester.name" . }}-account
+          securityContext:
+            {{- toYaml .Values.deployment.securityContext | nindent 12 }}
+      serviceAccountName: {{ include "oathkeeper-maester.fullname" . }}-account
+      automountServiceAccountToken: {{ .Values.deployment.automountServiceAccountToken }}
       dnsPolicy: ClusterFirst
       restartPolicy: Always
       securityContext: {}
