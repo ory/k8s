@@ -1,6 +1,6 @@
 image:
   repository: oryd/hydra
-  tag: v1.10.3-alpine
+  tag: v1.10.5-alpine
   pullPolicy: IfNotPresent
 
 ingress:
