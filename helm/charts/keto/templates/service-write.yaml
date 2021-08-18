@@ -1,3 +1,4 @@
+{{- if.Values.service.enabled }}
 apiVersion: v1
 kind: Service
 metadata:
@@ -13,7 +14,8 @@ spec:
     - port: {{ .Values.service.write.port }}
       targetPort: http-write
       protocol: TCP
-      name: http-write
+      name: {{ .Values.service.write.name }}
   selector:
     app.kubernetes.io/name: {{ include "keto.name" . }}
     app.kubernetes.io/instance: {{ .Release.Name }}
+{{ end }}

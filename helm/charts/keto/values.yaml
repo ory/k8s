@@ -77,11 +77,14 @@ ingress:
     #      - chart-example.local
 
 service:
+  enabled: true
   read:
     type: ClusterIP
+    name: http-read
     port: 80
   write:
     type: ClusterIP
+    name: http-write
     port: 80
 
 secret:
