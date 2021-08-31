@@ -128,8 +128,8 @@ kratos:
 #        body: |-
 #          Hi, please verify your account by clicking the following link:
 #
-#          <a href="{{ .RecoveryURL }}">{{ .RecoveryURL }}</a>
-#        plainBody: Hi, please verify your account by clicking the following link: {{ .RecoveryURL }}
+#          <a href="{{ .VerificationURL }}">{{ .VerificationURL }}</a>
+#        plainBody: Hi, please verify your account by clicking the following link: {{ .VerificationURL }}
 #      invalid:
 #        subject:
 #        body:
