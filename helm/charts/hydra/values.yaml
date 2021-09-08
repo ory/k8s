@@ -244,8 +244,8 @@ deployment:
   # Configure HPA
   autoscaling:
     enabled: false
-  # minReplicas: 1
-  # maxReplicas: 3
+    minReplicas: 1
+    maxReplicas: 3
   # targetCPUUtilizationPercentage: 80
   # targetMemoryUtilizationPercentage: 80
 
