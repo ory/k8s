@@ -25,7 +25,6 @@ A Helm chart for Kubernetes
 | deployment.tolerations | list | `[]` | k8s toleration |
 | enabledNamespaces | list | `[]` | The Controller have CREATE and READ access to all Secrets in the namespaces listed below. |
 | forwardedProto | string | `nil` |  |
-| syncPeriod | string | `10h` | The minimum frequency at which watched resources are reconciled |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"oryd/hydra-maester"` |  |
 | image.tag | string | `"v0.0.23"` |  |

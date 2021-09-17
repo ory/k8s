@@ -27,8 +27,6 @@ adminService:
 
 forwardedProto:
 
-syncPeriod: 10h
-
 deployment:
   resources: {}
     #  We usually recommend not to specify default resources and to leave this as a conscious
@@ -66,6 +64,11 @@ deployment:
   # https://github.com/kubernetes/kubernetes/issues/57601
   # This applications connects to the k8s API and requires the permissions
   automountServiceAccountToken: true
+
+  args:
+    # The minimum frequency at which watched resources are reconciled
+    syncPeriod: ""
+    # syncPeriod: 10h
 
 job:
   podLabels: {}
