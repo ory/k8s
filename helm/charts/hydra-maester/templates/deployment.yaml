@@ -43,8 +43,8 @@ spec:
             {{- if .Values.singleNamespaceMode }}
             - --namespace={{ .Release.Namespace }}
             {{- end }}
-            {{- if .Values.syncPeriod }}
-            - --sync-period={{ .Values.syncPeriod }}
+            {{- if .Values.deployment.args.syncPeriod }}
+            - --sync-period={{ .Values.deployment.args.syncPeriod }}
             {{- end }}
           resources:
             {{- toYaml .Values.deployment.resources | nindent 12 }}
