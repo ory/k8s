@@ -56,7 +56,7 @@ jobs:
 
   helm-docs:
     docker:
-      - image: circleci/buildpack-deps:latest
+      - image: circleci/golang:1.16.5
     working_directory: /go/src/github.com/ory/k8s
     steps:
       - checkout
