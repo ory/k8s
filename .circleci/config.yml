@@ -77,11 +77,11 @@ workflows:
   scheduled-workflow:
     triggers:
     - schedule:
-      cron: "0 0 * * *"
-      filters:
-        branches:
-          only:
-          - master
+        cron: "0 0 * * *"
+        filters:
+          branches:
+            only:
+            - master
     jobs:
     - helm-docs
   ci:
