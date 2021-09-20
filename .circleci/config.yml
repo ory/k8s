@@ -74,6 +74,16 @@ jobs:
 
 workflows:
   version: 2
+  scheduled-workflow:
+    triggers:
+    - schedule:
+        cron: "0 0 * * *"
+        filters:
+          branches:
+            only:
+            - master
+    jobs:
+    - helm-docs
   ci:
     jobs:
       - test:
@@ -88,14 +98,6 @@ workflows:
           filters:
             tags:
               only: /.*/
-      - helm-docs:
-          requires:
-            - lint
-            - validate
-          filters:
-            branches:
-              only:
-                - master
       - release:
           requires:
             - lint

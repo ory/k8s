@@ -1,28 +1,29 @@
+# -- Number of replicas in deployment
 replicaCount: 1
 
-rbacJob:
-  image:
-    repository: eu.gcr.io/kyma-project/test-infra/alpine-kubectl
-    tag: "v20190325-ff66a3a"
-
-# The Controller have CREATE and READ access to all Secrets in the namespaces listed below.
+# -- The Controller have CREATE and READ access to all Secrets in the namespaces listed below.
 enabledNamespaces: []
 
-# Single namespace mode. If enabled the controller will watch for resources only from this namespace, ignoring others
+# -- Single namespace mode. If enabled the controller will watch for resources only from this namespace, ignoring others
 singleNamespaceMode: false
 
 image:
+  # -- Ory Hydra-maester image
   repository: oryd/hydra-maester
+  # -- Ory Hydra-maester version
   tag: v0.0.23
-  # Image pull policy
+  # -- Image pull policy
   pullPolicy: IfNotPresent
 
-## Pod priority
+# -- Pod priority
 ## https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/
-# priorityClassName: ""
+priorityClassName: ""
 
+# -- Connection data to admin service of Hydra
 adminService:
+  # -- Service name
   name:
+  # -- Service port
   port:
 
 forwardedProto:
@@ -40,6 +41,7 @@ deployment:
     #   cpu: 100m
     #   memory: 20Mi
 
+  # -- Default security context
   securityContext:
     capabilities:
       drop:
@@ -50,33 +52,31 @@ deployment:
     allowPrivilegeEscalation: false
     privileged: false
 
-  # Node labels for pod assignment.
+  # -- Node labels for pod assignment.
   nodeSelector: {}
   # If you do want to specify node labels, uncomment the following
   # lines, adjust them as necessary, and remove the curly braces after 'annotations:'.
   #   foo: bar
 
-  # Configure node tolerations.
+  # -- Configure node tolerations.
   tolerations: []
   annotations: {}
   podLabels: {}
 
   # https://github.com/kubernetes/kubernetes/issues/57601
-  # This applications connects to the k8s API and requires the permissions
+  # -- This applications connects to the k8s API and requires the permissions
   automountServiceAccountToken: true
 
+  # -- Arguments to be passed to the program
   args:
-    # The minimum frequency at which watched resources are reconciled
+    # -- The minimum frequency at which watched resources are reconciled
     syncPeriod: ""
     # syncPeriod: 10h
 
-job:
-  podLabels: {}
-
-# Configure node affinity
+# -- Configure node affinity
 affinity: {}
 
-# PodDistributionBudget configuration
+# -- PodDistributionBudget configuration
 pdb:
   enabled: false
   spec:

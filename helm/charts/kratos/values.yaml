@@ -1,7 +1,9 @@
 # Default values for kratos.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
+# -- Number of replicas in deployment
 replicaCount: 1
+# -- Deployment update strategy
 strategy:
   type: RollingUpdate
   rollingUpdate:
@@ -9,12 +11,13 @@ strategy:
     maxUnavailable: 0 
 
 image:
+  # -- ORY KRATOS image
   repository: oryd/kratos
+  # -- ORY KRATOS VERSION
+  # Alternative format: image: oryd/kratos:v0.6.3-alpha.1
   tag: v0.6.3-alpha.1
   pullPolicy: IfNotPresent
-# Alternative format
-# image: oryd/kratos:v0.6.3-alpha.1
-# imagePullPolicy: Always
+  # imagePullPolicy: Always
 
 imagePullSecrets: []
 nameOverride: ""
@@ -25,7 +28,7 @@ service:
     enabled: true
     type: ClusterIP
     port: 80
-    # If you do want to specify annotations, uncomment the following
+    # -- If you do want to specify annotations, uncomment the following
     # lines, adjust them as necessary, and remove the curly braces after 'annotations:'.
     annotations: {}
     # kubernetes.io/ingress.class: nginx
@@ -34,14 +37,14 @@ service:
     enabled: true
     type: ClusterIP
     port: 80
-    # If you do want to specify annotations, uncomment the following
+    # -- If you do want to specify annotations, uncomment the following
     # lines, adjust them as necessary, and remove the curly braces after 'annotations:'.
     annotations: {}
     # kubernetes.io/ingress.class: nginx
     # kubernetes.io/tls-acme: "true"
 
 secret:
-  # switch to false to prevent creating the secret
+  # -- switch to false to prevent creating the secret
   enabled: true
   # ... and choose a different name for a secret you provide like this
   # nameOverride: "MyOtherName"
@@ -88,10 +91,10 @@ ingress:
 
 kratos:
   development: false
-  # Enable the initialization job. Required to work with a DB
+  # -- Enable the initialization job. Required to work with a DB
   autoMigrate: false
 
-#  You can add multiple identity schemas here
+# -- You can add multiple identity schemas here
 #  identitySchemas:
 #    "identity.default.schema.json": |
 #      {
@@ -102,7 +105,7 @@ kratos:
 #        // ...
 #      }
 
-#  You can customize the emails kratos is sending (also uncomment config.courier.template_override_path below)
+# -- You can customize the emails kratos is sending (also uncomment config.courier.template_override_path below)
 #  Note: If you are setting config.courier.template_override_path you need to supply overrides for all templates.
 #        It is currently not possible to overrides only selected methods.
 #
@@ -149,7 +152,7 @@ kratos:
     secrets: {}
 
 deployment:
-   # Configure the probes for when the deployment is considered ready and ongoing health check
+   # -- Configure the probes for when the deployment is considered ready and ongoing health check
   livenessProbe:
     httpGet:
       path: /health/alive
@@ -166,6 +169,9 @@ deployment:
     failureThreshold: 5
 
   extraEnv: []
+  # -- If you want to mount external volume
+  # For example, mount a secret containing Certificate root CA to verify database
+  # TLS connection.
   extraVolumes: []
   # - name: my-volume
   #   secret:
@@ -174,9 +180,7 @@ deployment:
   # - name: my-volume
   #   mountPath: /etc/secrets/my-secret
   #   readOnly: true
-  # If you want to mount external volume
-  # For example, mount a secret containing Certificate root CA to verify database
-  # TLS connection.
+
   # extraVolumes:
   #   - name: postgresql-tls
   #     secret:
@@ -186,13 +190,13 @@ deployment:
   #     mountPath: "/etc/postgresql-tls"
   #     readOnly: true
 
+  # -- If you want to add extra init containers. These are processed before the migration init container.
   extraInitContainers: {}
-  # If you want to add extra init containers. These are processed before the migration init container.
   # extraInitContainers: |
   #  - name: ...
   #    image: ...
 
-  # Configuration for tracing providers. Only datadog is currently supported through this block.
+  # -- Configuration for tracing providers. Only datadog is currently supported through this block.
   # If you need to use a different tracing provider, please manually set the configuration values
   # via "kratos.config" or via "deployment.extraEnv".
   tracing:
@@ -228,13 +232,13 @@ deployment:
   #    cpu: 100m
   #  memory: 128Mi
 
-  # Node labels for pod assignment.
+  # -- Node labels for pod assignment.
   nodeSelector: {}
   # If you do want to specify node labels, uncomment the following
   # lines, adjust them as necessary, and remove the curly braces after 'annotations:'.
   #   foo: bar
 
-  # Configure node tolerations.
+  # -- Configure node tolerations.
   tolerations: []
 
   labels: {}
@@ -247,7 +251,7 @@ deployment:
   #      lines, adjust them as necessary, and remove the curly braces after 'annotations:'.
   #      e.g.  sidecar.istio.io/rewriteAppHTTPProbers: "true"
 
-  # The secret specified here will be used to load environment variables with envFrom.
+  # -- The secret specified here will be used to load environment variables with envFrom.
   # This allows arbitrary environment variables to be provided to the application which is useful for
   # sensitive values which should not be in a configMap.
   # This secret is not created by the helm chart and must already exist in the namespace.
@@ -267,7 +271,7 @@ securityContext:
   allowPrivilegeEscalation: false
   privileged: false
 
-# Horizontal pod autoscaling configuration
+# -- Horizontal pod autoscaling configuration
 autoscaling:
   enabled: false
   minReplicas: 1
@@ -275,7 +279,7 @@ autoscaling:
   targetCPUUtilizationPercentage: 80
   # targetMemoryUtilizationPercentage: 80
 
-# Values for initialization job
+# -- Values for initialization job
 job:
   annotations: {}
   ttlSecondsAfterFinished: 60
@@ -285,11 +289,11 @@ statefulset:
     format: json
     level: trace
 
-# Configure node affinity
+# -- Configure node affinity
 affinity: {}
-# Node labels for pod assignment.
+# -- Node labels for pod assignment.
 nodeSelector: {}
-# If you do want to specify node labels, uncomment the following
+# -- If you do want to specify node labels, uncomment the following
 # lines, adjust them as necessary, and remove the curly braces after 'annotations:'.
 #   foo: bar
 # Configure node tolerations.
@@ -301,7 +305,7 @@ watcher:
   mountFile: ''
   # mountFile: /etc/secrets/my-secret/foo
 
-# PodDistributionBudget configuration
+# -- PodDistributionBudget configuration
 pdb:
   enabled: false
   spec:
