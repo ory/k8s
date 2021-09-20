@@ -93,6 +93,8 @@ workflows:
             - lint
             - validate
           filters:
+            tags:
+              only: /.*/
             branches:
               only:
                 - master

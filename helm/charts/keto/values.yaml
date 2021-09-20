@@ -1,13 +1,16 @@
 # Default values for keto.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
-
+# -- Number of replicas in deployment
 replicaCount: 1
 
 image:
+  # -- Ory KETO image
   repository: oryd/keto
+  # -- Default image pull policy
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
+  # -- Ory KETO version
   tag: "v0.6.0-alpha.1-sqlite"
 
 imagePullSecrets: []
@@ -15,11 +18,11 @@ nameOverride: ""
 fullnameOverride: ""
 
 serviceAccount:
-  # Specifies whether a service account should be created
+  # -- Specifies whether a service account should be created
   create: true
-  # Annotations to add to the service account
+  # -- Annotations to add to the service account
   annotations: {}
-  # The name of the service account to use.
+  # -- The name of the service account to use.
   # If not set and create is true, a name is generated using the fullname template
   name: ""
 
@@ -31,6 +34,7 @@ podSecurityContext: {}
 # https://github.com/kubernetes/kubernetes/issues/57601
 automountServiceAccountToken: true
 
+# -- Default security context configuration
 securityContext:
   capabilities:
     drop:
@@ -89,7 +93,7 @@ service:
     port: 80
 
 secret:
-  # switch to false to prevent creating the secret
+  # -- Switch to false to prevent creating the secret
   enabled: true
   # ... and choose a different name for a secret you provide like this
   # nameOverride: "MyOtherName"
@@ -148,7 +152,7 @@ extraVolumeMounts: []
 #   mountPath: /etc/secrets/my-secret
 #   readOnly: true
 
-# Configuration for tracing providers. Only datadog is currently supported through this block.
+# -- Configuration for tracing providers. Only datadog is currently supported through this block.
 # If you need to use a different tracing provider, please manually set the configuration values
 # via "keto.config" or via "extraEnv".
 tracing:
@@ -176,7 +180,7 @@ tolerations: []
 
 affinity: {}
 
-# Configure the probes for when the deployment is considered ready and ongoing health check
+# -- Configure the probes for when the deployment is considered ready and ongoing health check
 deployment:
   livenessProbe:
     initialDelaySeconds: 30
@@ -187,13 +191,14 @@ deployment:
     periodSeconds: 10
     failureThreshold: 5
 
+# -- Watcher sidecar configuration
 watcher:
   enabled: false
   image: oryd/k8s-toolbox:0.0.1
   mountFile: ''
   # mountFile: /etc/secrets/my-secret/foo
 
-# PodDistributionBudget configuration
+# -- PodDistributionBudget configuration
 pdb:
   enabled: false
   spec:

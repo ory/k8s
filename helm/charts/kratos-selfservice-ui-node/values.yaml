@@ -56,13 +56,13 @@ deployment:
   #    cpu: 100m
   #  memory: 128Mi
 
-  # Node labels for pod assignment.
+  # -- Node labels for pod assignment.
   nodeSelector: {}
   # If you do want to specify node labels, uncomment the following
   # lines, adjust them as necessary, and remove the curly braces after 'annotations:'.
   #   foo: bar
 
-  # Configure node tolerations.
+  # -- Configure node tolerations.
   tolerations: []
 
   labels: {}
@@ -80,19 +80,19 @@ deployment:
 
 affinity: {}
 
-# Set this to ORY Kratos's Admin URL
+# -- Set this to ORY Kratos's Admin URL
 kratosAdminUrl: "http://kratos-admin"
 
-# Set this to ORY Kratos's public URL
+# -- Set this to ORY Kratos's public URL
 kratosPublicUrl: "http://kratos-public"
 
-# Set this to ORY Kratos's public URL accessible from the outside world.
+# -- Set this to ORY Kratos's public URL accessible from the outside world.
 kratosBrowserUrl: "http://kratos-browserui"
 
-# The baseUrl
+# -- The baseUrl
 baseUrl: ""
 
-# The jwksUrl
+# -- The jwksUrl
 jwksUrl: "http://oathkeeper-api"
 
 projectName: "SecureApp"
