@@ -7,14 +7,7 @@ jobs:
     steps:
       - checkout
       - run: curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
-      - run: helm lint ./helm/charts/oathkeeper/
-      - run: helm lint ./helm/charts/oathkeeper-maester/
-      - run: helm lint ./helm/charts/keto/
-      - run: helm lint ./helm/charts/hydra/
-      - run: helm lint ./helm/charts/hydra-maester/
-      - run: helm lint ./helm/charts/kratos/
-      - run: helm lint ./helm/charts/example-idp/
-      - run: helm lint ./helm/charts/kratos-selfservice-ui-node/
+      - run: make lint
   
   validate:
     docker:
@@ -24,14 +17,7 @@ jobs:
       - checkout
       - run: curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
       - run: helm plugin install https://github.com/instrumenta/helm-kubeval
-      - run: .circleci/helm-validate.sh oathkeeper
-      - run: .circleci/helm-validate.sh oathkeeper-maester
-      - run: .circleci/helm-validate.sh keto
-      - run: .circleci/helm-validate.sh hydra
-      - run: .circleci/helm-validate.sh hydra-maester
-      - run: .circleci/helm-validate.sh kratos
-      - run: .circleci/helm-validate.sh example-idp
-      - run: .circleci/helm-validate.sh kratos-selfservice-ui-node
+      - run: make validate
 
   test:
     machine:
@@ -49,40 +35,10 @@ jobs:
             sudo mv ./kubectl /usr/local/bin/kubectl
             sudo mv ./kind /usr/local/bin/kind
       - run:
-          name: "Create cluster"
-          command: |
-            kind create cluster --wait 2m
-      - run:
           name: "Install Helm"
           command: |
             curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
-      - run:
-          name: "Install postgres"
-          command: |
-            helm repo add bitnami https://charts.bitnami.com/bitnami
-            helm repo update
-            helm install postgresql bitnami/postgresql -f .circleci/values/postgres.yaml
-      - run:
-          command: |
-            .circleci/helm-test.sh oathkeeper
-      - run:
-          command: |
-            .circleci/helm-test.sh oathkeeper-maester
-      - run:
-          command: |
-            .circleci/helm-test.sh hydra
-      - run:
-          command: |
-            .circleci/helm-test.sh hydra-maester
-      - run:
-          command: |
-            .circleci/helm-test.sh kratos
-      - run:
-          command: |
-            .circleci/helm-test.sh keto
-      - run:
-          command: |
-            .circleci/helm-test.sh kratos-selfservice-ui-node
+      - run: make kind-test
 
   release:
     docker:
@@ -97,6 +53,16 @@ jobs:
       - run: git add -A
       - run: git commit -a -m "Release $CIRCLE_TAG"
       - run: git push origin HEAD:master
+
+  # chart-docs:
+  #   docker:
+  #     - image: circleci/buildpack-deps:latest
+  #   working_directory: /go/src/github.com/ory/k8s
+  #   steps:
+  #     - checkout
+  #     - run:
+  #         command: |
+
 
 workflows:
   version: 2
@@ -117,6 +83,8 @@ workflows:
       - release:
           requires:
             - lint
+            - validate
+            - test
           filters:
             tags:
               only: /.*/

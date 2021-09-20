@@ -33,3 +33,43 @@ release: .bin/yq .bin/helm
 		helm package -d docs/helm/charts/ ./helm/charts/keto/ --version "${VERSION}"; \
 		helm package -d docs/helm/charts/ ./helm/charts/kratos-selfservice-ui-node/ --version "${VERSION}"; \
 		helm repo index docs/helm/charts/
+
+kind-start:
+	kind create cluster --wait 2m
+
+kind-stop:
+	kind delete cluster
+
+postgresql:
+	helm repo add bitnami https://charts.bitnami.com/bitnami
+	helm repo update
+	helm install postgresql bitnami/postgresql -f .circleci/values/postgres.yaml
+
+kind-test: kind-start postgresql
+	.circleci/helm-test.sh oathkeeper
+	.circleci/helm-test.sh oathkeeper-maester
+	.circleci/helm-test.sh hydra
+	.circleci/helm-test.sh hydra-maester
+	.circleci/helm-test.sh kratos
+	.circleci/helm-test.sh keto
+	.circleci/helm-test.sh kratos-selfservice-ui-node
+
+lint:
+	helm lint ./helm/charts/oathkeeper/
+	helm lint ./helm/charts/oathkeeper-maester/
+	helm lint ./helm/charts/keto/
+	helm lint ./helm/charts/hydra/
+	helm lint ./helm/charts/hydra-maester/
+	helm lint ./helm/charts/kratos/
+	helm lint ./helm/charts/example-idp/
+	helm lint ./helm/charts/kratos-selfservice-ui-node/
+
+validate:
+	.circleci/helm-validate.sh oathkeeper
+	.circleci/helm-validate.sh oathkeeper-maester
+	.circleci/helm-validate.sh keto
+	.circleci/helm-validate.sh hydra
+	.circleci/helm-validate.sh hydra-maester
+	.circleci/helm-validate.sh kratos
+	.circleci/helm-validate.sh example-idp
+	.circleci/helm-validate.sh kratos-selfservice-ui-node
