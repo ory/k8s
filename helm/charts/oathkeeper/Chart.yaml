@@ -2,6 +2,7 @@ apiVersion: v2
 appVersion: "v0.38.9-beta.1"
 description: A Helm chart for deploying ORY Oathkeeper in Kubernetes
 name: oathkeeper
+icon: https://raw.githubusercontent.com/ory/docs/master/docs/static/img/logo-oathkeeper.svg
 version: 0.19.3
 keywords:
   - zero-trust
