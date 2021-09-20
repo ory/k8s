@@ -89,15 +89,16 @@ workflows:
             tags:
               only: /.*/
       - helm-docs:
+          triggers:
+          - schedule:
+            cron: "0 0 * * *"
+            filters:
+              branches:
+                only:
+                - master
           requires:
             - lint
             - validate
-          filters:
-            tags:
-              only: /.*/
-            branches:
-              only:
-                - master
       - release:
           requires:
             - lint
