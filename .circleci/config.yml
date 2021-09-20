@@ -54,7 +54,7 @@ jobs:
       - run: git commit -a -m "Release $CIRCLE_TAG"
       - run: git push origin HEAD:master
 
-  chart-docs:
+  helm-docs:
     docker:
       - image: circleci/buildpack-deps:latest
     working_directory: /go/src/github.com/ory/k8s
