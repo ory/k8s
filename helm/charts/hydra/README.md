@@ -27,82 +27,64 @@ A Helm chart for deploying ORY Hydra in Kubernetes
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| affinity | object | `{}` |  |
+| affinity | object | `{}` | Configure node affinity |
 | deployment.annotations | object | `{}` |  |
 | deployment.automountServiceAccountToken | bool | `true` |  |
 | deployment.autoscaling.enabled | bool | `false` |  |
 | deployment.autoscaling.maxReplicas | int | `3` |  |
 | deployment.autoscaling.minReplicas | int | `1` |  |
-| deployment.extraEnv | list | `[]` |  |
+| deployment.extraEnv | list | `[]` | If you want to use Jaeger with agents being deployed in a daemonset, you can  -- use the following ENV vars to configure the right endpoints using the IP  -- address of the node the pod has been deployed to.  extraEnv:   - name: JAEGER_AGENT_HOST     valueFrom:       fieldRef:         fieldPath: status.hostIP    - name: TRACING_PROVIDERS_JAEGER_LOCAL_AGENT_ADDRESS     value: $(JAEGER_AGENT_HOST):6831   - name: TRACING_PROVIDERS_JAEGER_SAMPLING_SERVER_URL     value: http://$(JAEGER_AGENT_HOST):5778 |
 | deployment.extraVolumeMounts | list | `[]` |  |
-| deployment.extraVolumes | list | `[]` |  |
+| deployment.extraVolumes | list | `[]` | If you want to mount external volume |
 | deployment.labels | object | `{}` |  |
 | deployment.lifecycle | object | `{}` |  |
-| deployment.livenessProbe.failureThreshold | int | `5` |  |
-| deployment.livenessProbe.initialDelaySeconds | int | `30` |  |
-| deployment.livenessProbe.periodSeconds | int | `10` |  |
+| deployment.livenessProbe | object | `{"failureThreshold":5,"initialDelaySeconds":30,"periodSeconds":10}` | Configure the probes for when the deployment is considered ready and ongoing health check |
 | deployment.nodeSelector | object | `{}` |  |
 | deployment.readinessProbe.failureThreshold | int | `5` |  |
 | deployment.readinessProbe.initialDelaySeconds | int | `30` |  |
 | deployment.readinessProbe.periodSeconds | int | `10` |  |
-| deployment.resources | object | `{}` |  |
+| deployment.resources | object | `{}` | We usually recommend not to specify default resources and to leave this as a conscious choice for the user.   This also increases chances charts run on environments with little  resources, such as Minikube. If you do want to specify resources, uncomment the following  lines, adjust them as necessary, and remove the curly braces after 'resources:'.  limits:    cpu: 100m    memory: 128Mi  requests:    cpu: 100m  memory: 128Mi |
 | deployment.securityContext.allowPrivilegeEscalation | bool | `false` |  |
 | deployment.securityContext.capabilities.drop[0] | string | `"ALL"` |  |
 | deployment.securityContext.privileged | bool | `false` |  |
 | deployment.securityContext.readOnlyRootFilesystem | bool | `true` |  |
 | deployment.securityContext.runAsNonRoot | bool | `true` |  |
 | deployment.securityContext.runAsUser | int | `100` |  |
-| deployment.tolerations | list | `[]` |  |
-| deployment.tracing.datadog.enabled | bool | `false` |  |
-| fullnameOverride | string | `""` |  |
-| hydra-maester.adminService | object | `{}` |  |
-| hydra.autoMigrate | bool | `false` |  |
-| hydra.config.secretAnnotations."helm.sh/hook" | string | `"pre-install"` |  |
-| hydra.config.secretAnnotations."helm.sh/hook-delete-policy" | string | `"before-hook-creation"` |  |
-| hydra.config.secrets | object | `{}` |  |
-| hydra.config.serve.admin.port | int | `4445` |  |
-| hydra.config.serve.public.port | int | `4444` |  |
-| hydra.config.serve.tls.allow_termination_from[0] | string | `"10.0.0.0/8"` |  |
-| hydra.config.serve.tls.allow_termination_from[1] | string | `"172.16.0.0/12"` |  |
-| hydra.config.serve.tls.allow_termination_from[2] | string | `"192.168.0.0/16"` |  |
-| hydra.config.urls.self | object | `{}` |  |
-| hydra.dangerousAllowInsecureRedirectUrls | bool | `false` |  |
-| hydra.dangerousForceHttp | bool | `false` |  |
-| image.pullPolicy | string | `"IfNotPresent"` |  |
-| image.repository | string | `"oryd/hydra"` |  |
-| image.tag | string | `"v1.10.5"` |  |
-| imagePullSecrets | list | `[]` |  |
-| ingress.admin.annotations | object | `{}` |  |
-| ingress.admin.className | string | `""` |  |
-| ingress.admin.enabled | bool | `false` |  |
-| ingress.admin.hosts[0].host | string | `"admin.hydra.localhost"` |  |
-| ingress.admin.hosts[0].paths[0].path | string | `"/"` |  |
-| ingress.admin.hosts[0].paths[0].pathType | string | `"ImplementationSpecific"` |  |
-| ingress.public.annotations | object | `{}` |  |
-| ingress.public.className | string | `""` |  |
-| ingress.public.enabled | bool | `false` |  |
-| ingress.public.hosts[0].host | string | `"public.hydra.localhost"` |  |
-| ingress.public.hosts[0].paths[0].path | string | `"/"` |  |
-| ingress.public.hosts[0].paths[0].pathType | string | `"ImplementationSpecific"` |  |
+| deployment.serviceAccountName | string | `""` | Specify the serviceAccountName value. In some situations it is needed to provides specific permissions to Hydra deployments Like for example installing Hydra on a cluster with a PosSecurityPolicy and Istio. Uncoment if it is needed to provide a ServiceAccount for the Hydra deployment. |
+| deployment.tolerations | list | `[]` | Configure node tolerations. |
+| deployment.tracing | object | `{"datadog":{"enabled":false}}` | Configuration for tracing providers. Only datadog is currently supported through this block. -- If you need to use a different tracing provider, please manually set the configuration values via "hydra.config" or via "deployment.extraEnv". |
+| fullnameOverride | string | `""` | Full chart name override |
+| hydra | object | `{"autoMigrate":false,"config":{"existingSecret":"","secretAnnotations":{"helm.sh/hook":"pre-install","helm.sh/hook-delete-policy":"before-hook-creation"},"secrets":{},"serve":{"admin":{"port":4445},"public":{"port":4444},"tls":{"allow_termination_from":["10.0.0.0/8","172.16.0.0/12","192.168.0.0/16"]}},"urls":{"self":{}}},"dangerousAllowInsecureRedirectUrls":false,"dangerousForceHttp":false}` | Configure ORY Hydra itself |
+| hydra-maester | object | `{"adminService":{"name":"","port":null}}` | Values for the hydra admin service arguments to hydra-maester |
+| hydra-maester.adminService.name | string | `""` | The service name value may need to be set if you use `fullnameOverride` for the parent chart |
+| hydra-maester.adminService.port | string | `nil` | You only need to set this port if you change the value for `service.admin.port` in the parent chart |
+| hydra.config | object | `{"existingSecret":"","secretAnnotations":{"helm.sh/hook":"pre-install","helm.sh/hook-delete-policy":"before-hook-creation"},"secrets":{},"serve":{"admin":{"port":4445},"public":{"port":4444},"tls":{"allow_termination_from":["10.0.0.0/8","172.16.0.0/12","192.168.0.0/16"]}},"urls":{"self":{}}}` | The ORY Hydra configuration. For a full list of available settings, check:   https://github.com/ory/hydra/blob/master/docs/config.yaml |
+| hydra.config.existingSecret | string | `""` | Use a pre-existing secret (see secret.yaml for required fields) |
+| hydra.config.secrets | object | `{}` | The secrets have to be provided as a string slice, example: system:   - "OG5XbmxXa3dYeGplQXpQanYxeEFuRUFa"   - "foo bar 123 456 lorem"   - "foo bar 123 456 lorem 1"   - "foo bar 123 456 lorem 2"   - "foo bar 123 456 lorem 3" |
+| image.pullPolicy | string | `"IfNotPresent"` | Image pull policy |
+| image.repository | string | `"oryd/hydra"` | ORY Hydra image |
+| image.tag | string | `"v1.10.5"` | ORY Hydra version |
+| imagePullSecrets | list | `[]` | Image pull secrets |
+| ingress | object | `{"admin":{"annotations":{},"className":"","enabled":false,"hosts":[{"host":"admin.hydra.localhost","paths":[{"path":"/","pathType":"ImplementationSpecific"}]}]},"public":{"annotations":{},"className":"","enabled":false,"hosts":[{"host":"public.hydra.localhost","paths":[{"path":"/","pathType":"ImplementationSpecific"}]}]}}` | Configure ingress |
+| ingress.admin.enabled | bool | `false` | En-/Disable the api ingress. |
+| ingress.public | object | `{"annotations":{},"className":"","enabled":false,"hosts":[{"host":"public.hydra.localhost","paths":[{"path":"/","pathType":"ImplementationSpecific"}]}]}` | Configure ingress for the proxy port. |
+| ingress.public.enabled | bool | `false` | En-/Disable the proxy ingress. |
 | job.annotations | object | `{}` |  |
-| maester.enabled | bool | `true` |  |
+| maester | object | `{"enabled":true}` | Configures controller setup |
 | nameOverride | string | `""` |  |
-| pdb.enabled | bool | `false` |  |
-| pdb.spec.minAvailable | int | `1` |  |
-| replicaCount | int | `1` |  |
-| service.admin.annotations | object | `{}` |  |
-| service.admin.enabled | bool | `true` |  |
-| service.admin.labels | object | `{}` |  |
-| service.admin.port | int | `4445` |  |
-| service.admin.type | string | `"ClusterIP"` |  |
-| service.public.annotations | object | `{}` |  |
-| service.public.enabled | bool | `true` |  |
-| service.public.labels | object | `{}` |  |
-| service.public.port | int | `4444` |  |
-| service.public.type | string | `"ClusterIP"` |  |
-| watcher.enabled | bool | `false` |  |
-| watcher.image | string | `"oryd/k8s-toolbox:0.0.1"` |  |
-| watcher.mountFile | string | `""` |  |
+| pdb | object | `{"enabled":false,"spec":{"minAvailable":1}}` | PodDistributionBudget configuration |
+| replicaCount | int | `1` | Number of ORY Hydra members |
+| service.admin | object | `{"annotations":{},"enabled":true,"labels":{},"port":4445,"type":"ClusterIP"}` | Configures the Kubernetes service for the api port. |
+| service.admin.annotations | object | `{}` | If you do want to specify annotations, uncomment the following lines, adjust them as necessary, and remove the curly braces after 'annotations:'. |
+| service.admin.enabled | bool | `true` | En-/disable the service |
+| service.admin.port | int | `4445` | The service port |
+| service.admin.type | string | `"ClusterIP"` | The service type |
+| service.public | object | `{"annotations":{},"enabled":true,"labels":{},"port":4444,"type":"ClusterIP"}` | Configures the Kubernetes service for the proxy port. |
+| service.public.annotations | object | `{}` | If you do want to specify annotations, uncomment the following lines, adjust them as necessary, and remove the curly braces after 'annotations:'. |
+| service.public.enabled | bool | `true` | En-/disable the service |
+| service.public.port | int | `4444` | The service port |
+| service.public.type | string | `"ClusterIP"` | The service type |
+| watcher | object | `{"enabled":false,"image":"oryd/k8s-toolbox:0.0.1","mountFile":""}` | Sidecar watcher configuration |
 
 ----------------------------------------------
 Autogenerated from chart metadata using [helm-docs v1.5.0](https://github.com/norwoodj/helm-docs/releases/v1.5.0)

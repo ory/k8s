@@ -9,13 +9,13 @@ A Helm chart for ORY Kratos's example ui for Kubernetes
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | affinity | object | `{}` |  |
-| baseUrl | string | `""` |  |
+| baseUrl | string | `""` | The baseUrl |
 | deployment.annotations | object | `{}` |  |
 | deployment.automountServiceAccountToken | bool | `false` |  |
 | deployment.labels | object | `{}` |  |
-| deployment.nodeSelector | object | `{}` |  |
+| deployment.nodeSelector | object | `{}` | Node labels for pod assignment. |
 | deployment.resources | object | `{}` |  |
-| deployment.tolerations | list | `[]` |  |
+| deployment.tolerations | list | `[]` | Configure node tolerations. |
 | fullnameOverride | string | `""` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"oryd/kratos-selfservice-ui-node"` |  |
@@ -28,10 +28,10 @@ A Helm chart for ORY Kratos's example ui for Kubernetes
 | ingress.hosts[0].paths[0].path | string | `"/"` |  |
 | ingress.hosts[0].paths[0].pathType | string | `"ImplementationSpecific"` |  |
 | ingress.tls | list | `[]` |  |
-| jwksUrl | string | `"http://oathkeeper-api"` |  |
-| kratosAdminUrl | string | `"http://kratos-admin"` |  |
-| kratosBrowserUrl | string | `"http://kratos-browserui"` |  |
-| kratosPublicUrl | string | `"http://kratos-public"` |  |
+| jwksUrl | string | `"http://oathkeeper-api"` | The jwksUrl |
+| kratosAdminUrl | string | `"http://kratos-admin"` | Set this to ORY Kratos's Admin URL |
+| kratosBrowserUrl | string | `"http://kratos-browserui"` | Set this to ORY Kratos's public URL accessible from the outside world. |
+| kratosPublicUrl | string | `"http://kratos-public"` | Set this to ORY Kratos's public URL |
 | nameOverride | string | `""` |  |
 | projectName | string | `"SecureApp"` |  |
 | replicaCount | int | `1` |  |

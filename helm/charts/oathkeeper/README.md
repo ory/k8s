@@ -27,13 +27,13 @@ A Helm chart for deploying ORY Oathkeeper in Kubernetes
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| affinity | object | `{}` |  |
-| demo | bool | `false` |  |
+| affinity | object | `{}` | Configure node affinity |
+| demo | bool | `false` | If enabled, a demo deployment with exemplary access rules and JSON Web Key Secrets will be generated. |
 | deployment.annotations | object | `{}` |  |
 | deployment.automountServiceAccountToken | bool | `false` |  |
 | deployment.extraEnv | list | `[]` |  |
 | deployment.labels | object | `{}` |  |
-| deployment.nodeSelector | object | `{}` |  |
+| deployment.nodeSelector | object | `{}` | Node labels for pod assignment. |
 | deployment.resources | object | `{}` |  |
 | deployment.securityContext.allowPrivilegeEscalation | bool | `false` |  |
 | deployment.securityContext.capabilities.drop[0] | string | `"ALL"` |  |
@@ -41,52 +41,43 @@ A Helm chart for deploying ORY Oathkeeper in Kubernetes
 | deployment.securityContext.readOnlyRootFilesystem | bool | `true` |  |
 | deployment.securityContext.runAsNonRoot | bool | `true` |  |
 | deployment.securityContext.runAsUser | int | `1000` |  |
-| deployment.tolerations | list | `[]` |  |
-| deployment.tracing.datadog.enabled | bool | `false` |  |
-| fullnameOverride | string | `""` |  |
-| global.ory.oathkeeper.maester.mode | string | `"controller"` |  |
-| image.pullPolicy | string | `"IfNotPresent"` |  |
-| image.repository | string | `"oryd/oathkeeper"` |  |
-| image.tag | string | `"v0.38.9-beta.1"` |  |
-| imagePullSecrets | list | `[]` |  |
-| ingress.api.annotations | object | `{}` |  |
-| ingress.api.className | string | `""` |  |
-| ingress.api.enabled | bool | `false` |  |
-| ingress.api.hosts[0].host | string | `"api.oathkeeper.localhost"` |  |
-| ingress.api.hosts[0].paths[0].path | string | `"/"` |  |
-| ingress.api.hosts[0].paths[0].pathType | string | `"ImplementationSpecific"` |  |
-| ingress.proxy.annotations | object | `{}` |  |
-| ingress.proxy.className | string | `""` |  |
-| ingress.proxy.enabled | bool | `false` |  |
-| ingress.proxy.hosts[0].host | string | `"proxy.oathkeeper.localhost"` |  |
-| ingress.proxy.hosts[0].paths[0].path | string | `"/"` |  |
-| ingress.proxy.hosts[0].paths[0].pathType | string | `"ImplementationSpecific"` |  |
-| maester.enabled | bool | `true` |  |
-| nameOverride | string | `""` |  |
-| oathkeeper.config.access_rules.repositories[0] | string | `"file:///etc/rules/access-rules.json"` |  |
-| oathkeeper.config.serve.api.port | int | `4456` |  |
-| oathkeeper.config.serve.proxy.port | int | `4455` |  |
-| oathkeeper.managedAccessRules | bool | `true` |  |
-| pdb.enabled | bool | `false` |  |
-| pdb.spec.minAvailable | int | `1` |  |
-| replicaCount | int | `1` |  |
-| secret.filename | string | `"mutator.id_token.jwks.json"` |  |
-| secret.manage | bool | `true` |  |
-| secret.mountPath | string | `"/etc/secrets"` |  |
-| secret.name | string | `""` |  |
-| service.api.annotations | object | `{}` |  |
-| service.api.enabled | bool | `true` |  |
-| service.api.labels | object | `{}` |  |
-| service.api.port | int | `4456` |  |
-| service.api.type | string | `"ClusterIP"` |  |
-| service.proxy.annotations | object | `{}` |  |
-| service.proxy.enabled | bool | `true` |  |
-| service.proxy.labels | object | `{}` |  |
-| service.proxy.port | int | `4455` |  |
-| service.proxy.type | string | `"ClusterIP"` |  |
-| sidecar.envs | object | `{}` |  |
-| sidecar.image.repository | string | `"oryd/oathkeeper-maester"` |  |
-| sidecar.image.tag | string | `"v0.1.2"` |  |
+| deployment.tolerations | list | `[]` | Configure node tolerations. |
+| deployment.tracing | object | `{"datadog":{"enabled":false}}` | Configuration for tracing providers. Only datadog is currently supported through this block. If you need to use a different tracing provider, please manually set the configuration values via "oathkeeper.config" or via "deployment.extraEnv". |
+| fullnameOverride | string | `""` | Full chart name override |
+| global | object | `{"ory":{"oathkeeper":{"maester":{"mode":"controller"}}}}` | Mode for oathkeeper controller -- Two possible modes are: controller or sidecar |
+| image.pullPolicy | string | `"IfNotPresent"` | Image pull policy |
+| image.repository | string | `"oryd/oathkeeper"` | ORY Oathkeeper image |
+| image.tag | string | `"v0.38.9-beta.1"` | ORY Oathkeeper version |
+| imagePullSecrets | list | `[]` | Image pull secrets |
+| ingress | object | `{"api":{"annotations":{},"className":"","enabled":false,"hosts":[{"host":"api.oathkeeper.localhost","paths":[{"path":"/","pathType":"ImplementationSpecific"}]}]},"proxy":{"annotations":{},"className":"","enabled":false,"hosts":[{"host":"proxy.oathkeeper.localhost","paths":[{"path":"/","pathType":"ImplementationSpecific"}]}]}}` | Configure ingress |
+| ingress.api.enabled | bool | `false` | En-/Disable the api ingress. |
+| ingress.proxy | object | `{"annotations":{},"className":"","enabled":false,"hosts":[{"host":"proxy.oathkeeper.localhost","paths":[{"path":"/","pathType":"ImplementationSpecific"}]}]}` | Configure ingress for the proxy port. |
+| ingress.proxy.enabled | bool | `false` | En-/Disable the proxy ingress. |
+| maester | object | `{"enabled":true}` | Configures controller setup |
+| nameOverride | string | `""` | Chart name override |
+| oathkeeper | object | `{"accessRules":{},"config":{"access_rules":{"repositories":["file:///etc/rules/access-rules.json"]},"serve":{"api":{"port":4456},"proxy":{"port":4455}}},"managedAccessRules":true,"mutatorIdTokenJWKs":{}}` | Configure ORY Oathkeeper itself |
+| oathkeeper.accessRules | object | `{}` | If set, uses the given access rules. |
+| oathkeeper.config | object | `{"access_rules":{"repositories":["file:///etc/rules/access-rules.json"]},"serve":{"api":{"port":4456},"proxy":{"port":4455}}}` | The ORY Oathkeeper configuration. For a full list of available settings, check:   https://github.com/ory/oathkeeper/blob/master/docs/config.yaml |
+| oathkeeper.managedAccessRules | bool | `true` | If you enable maester, the following value should be set to "false" to avoid overwriting the rules generated by the CDRs. Additionally, the value "accessRules" shouldn't be used as it will have no effect once "managedAccessRules" is disabled. |
+| oathkeeper.mutatorIdTokenJWKs | object | `{}` | If set, uses the given JSON Web Key Set as the signing key for the ID Token Mutator. |
+| pdb | object | `{"enabled":false,"spec":{"minAvailable":1}}` | PodDistributionBudget configuration |
+| replicaCount | int | `1` | Number of ORY Oathkeeper members |
+| secret.filename | string | `"mutator.id_token.jwks.json"` | default filename of JWKS (mounted as secret) |
+| secret.manage | bool | `true` | set to true for this helm chart to manage the secret -- set to false for this helm chart to NOT manage the secret -- defaults to true |
+| secret.mountPath | string | `"/etc/secrets"` | default mount path for the kubernetes secret |
+| secret.name | string | `""` | name of the secret to use. If empty, defaults to {{ include "oathkeeper.fullname" . }} |
+| service | object | `{"api":{"annotations":{},"enabled":true,"labels":{},"port":4456,"type":"ClusterIP"},"proxy":{"annotations":{},"enabled":true,"labels":{},"port":4455,"type":"ClusterIP"}}` | Configures the Kubernetes service |
+| service.api | object | `{"annotations":{},"enabled":true,"labels":{},"port":4456,"type":"ClusterIP"}` | Configures the Kubernetes service for the api port. |
+| service.api.annotations | object | `{}` | If you do want to specify annotations, uncomment the following lines, adjust them as necessary, and remove the curly braces after 'annotations:'. |
+| service.api.enabled | bool | `true` | En-/disable the service |
+| service.api.port | int | `4456` | The service port |
+| service.api.type | string | `"ClusterIP"` | The service type |
+| service.proxy | object | `{"annotations":{},"enabled":true,"labels":{},"port":4455,"type":"ClusterIP"}` | Configures the Kubernetes service for the proxy port. |
+| service.proxy.annotations | object | `{}` | If you do want to specify annotations, uncomment the following lines, adjust them as necessary, and remove the curly braces after 'annotations:'. |
+| service.proxy.enabled | bool | `true` | En-/disable the service |
+| service.proxy.port | int | `4455` | The service port |
+| service.proxy.type | string | `"ClusterIP"` | The service type |
+| sidecar | object | `{"envs":{},"image":{"repository":"oryd/oathkeeper-maester","tag":"v0.1.2"}}` | Options for the sidecar |
 
 ----------------------------------------------
 Autogenerated from chart metadata using [helm-docs v1.5.0](https://github.com/norwoodj/helm-docs/releases/v1.5.0)
