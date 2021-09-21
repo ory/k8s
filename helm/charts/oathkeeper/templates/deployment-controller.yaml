@@ -39,6 +39,9 @@ spec:
         {{- toYaml . | nindent 8 }}
     {{- end }}
       volumes:
+        {{- if .Values.deployment.extraVolumes }}
+{{ toYaml .Values.deployment.extraVolumes | indent 8 }}
+        {{- end }}
         - name: {{ include "oathkeeper.name" . }}-config-volume
           configMap:
             {{- if .Values.demo }}
@@ -83,6 +86,9 @@ spec:
               {{- toYaml . | nindent 12 }}
             {{- end }}
           volumeMounts:
+          {{- with .Values.deployment.extraVolumeMounts }}
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
             - name: {{ include "oathkeeper.name" . }}-config-volume
               mountPath: /etc/config
               readOnly: true

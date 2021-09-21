@@ -181,6 +181,18 @@ deployment:
 
   extraEnv: []
 
+  # -- Extra volumes you can attach to the pod.
+  extraVolumes: []
+  # - name: my-volume
+  #   secret:
+  #     secretName: my-secret
+
+  # -- Extra volume mounts, allows mounting the extraVolumes to the container.
+  extraVolumeMounts: []
+  # - name: my-volume
+  #   mountPath: /etc/secrets/my-secret
+  #   readOnly: true
+
   # -- Configuration for tracing providers. Only datadog is currently supported through this block.
   # If you need to use a different tracing provider, please manually set the configuration values
   # via "oathkeeper.config" or via "deployment.extraEnv".
