@@ -6,7 +6,11 @@ global:
       maester:
         mode: controller
 
+# -- Number of controller replicas in deployment mode
 replicaCount: 1
+
+# -- Single namespace mode. If enabled the controller will watch for resources only from namespace it is deployed in, ignoring others
+singleNamespaceMode: false
 
 # oathkeeperFullnameOverride: oathkeeper
 # -- Defines the Namespace in which the ConfigMap is stored. Defaults to the same Namespace as the ORY Maester Helm release.
