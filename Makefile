@@ -45,6 +45,10 @@ postgresql:
 	helm repo update
 	helm install postgresql bitnami/postgresql -f .circleci/values/postgres.yaml
 
+ory-repo:
+	helm repo add ory https://k8s.ory.sh/helm/charts
+	helm repo update
+
 kind-test: kind-start postgresql
 	.circleci/helm-test.sh oathkeeper
 	.circleci/helm-test.sh oathkeeper-maester
@@ -53,6 +57,15 @@ kind-test: kind-start postgresql
 	.circleci/helm-test.sh kratos
 	.circleci/helm-test.sh keto
 	.circleci/helm-test.sh kratos-selfservice-ui-node
+
+kind-upgrade: kind-start postgresql ory-repo
+	.circleci/helm-upgrade.sh oathkeeper
+	.circleci/helm-upgrade.sh oathkeeper-maester
+	.circleci/helm-upgrade.sh hydra
+	.circleci/helm-upgrade.sh hydra-maester
+	.circleci/helm-upgrade.sh kratos
+	.circleci/helm-upgrade.sh keto
+	.circleci/helm-upgrade.sh kratos-selfservice-ui-node
 
 lint:
 	helm lint ./helm/charts/oathkeeper/
@@ -73,3 +86,4 @@ validate:
 	.circleci/helm-validate.sh kratos
 	.circleci/helm-validate.sh example-idp
 	.circleci/helm-validate.sh kratos-selfservice-ui-node
+

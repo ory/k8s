@@ -1,3 +1,20 @@
+install_kind_kubectl: &install_kind_kubectl
+  run:
+    name: "Install kind & kubectl"
+    command: |
+      curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
+      curl -Lo ./kind https://github.com/kubernetes-sigs/kind/releases/download/v0.11.1/kind-$(uname)-amd64
+      chmod +x ./kubectl
+      chmod +x ./kind
+      sudo mv ./kubectl /usr/local/bin/kubectl
+      sudo mv ./kind /usr/local/bin/kind
+install_helm: &install_helm
+  run:
+    name: "Install Helm"
+    command: |
+      curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
+
+---
 version: 2.1
 jobs:
   lint:
@@ -25,20 +42,19 @@ jobs:
       # docker_layer_caching: true
     steps:
       - checkout
-      - run:
-          name: "Install kind & kubectl"
-          command: |
-            curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
-            curl -Lo ./kind https://github.com/kubernetes-sigs/kind/releases/download/v0.11.1/kind-$(uname)-amd64
-            chmod +x ./kubectl
-            chmod +x ./kind
-            sudo mv ./kubectl /usr/local/bin/kubectl
-            sudo mv ./kind /usr/local/bin/kind
-      - run:
-          name: "Install Helm"
-          command: |
-            curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
+      - <<: *install_kind_kubectl
+      - <<: *install_helm
       - run: make kind-test
+
+  upgrade:
+    machine:
+      image: ubuntu-2004:202104-01
+      # docker_layer_caching: true
+    steps:
+      - checkout
+      - <<: *install_kind_kubectl
+      - <<: *install_helm
+      - run: make kind-upgrade
 
   release:
     docker:
@@ -87,6 +103,10 @@ workflows:
   ci:
     jobs:
       - test:
+          filters:
+            tags:
+              only: /.*/
+      - upgrade:
           filters:
             tags:
               only: /.*/
