@@ -52,12 +52,10 @@ spec:
             - --rulesFileName={{ .Values.rulesFileName }}
             {{- end }}
           env:
+            {{- if .Values.singleNamespaceMode }}
             - name: NAMESPACE
-              {{- if .Values.singleNamespaceMode }}
               value: {{ .Release.Namespace }}
-              {{- else }}
-              value: ""
-              {{- end }}
+            {{- end }}
             {{- with .Values.deployment.envs }}
             {{- toYaml . | nindent 12 }}
             {{- end }}
