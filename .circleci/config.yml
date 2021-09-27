@@ -1,3 +1,4 @@
+version: 2.1
 install_kind_kubectl: &install_kind_kubectl
   run:
     name: "Install kind & kubectl"
@@ -13,8 +14,6 @@ install_helm: &install_helm
     name: "Install Helm"
     command: |
       curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
-
-version: 2.1
 jobs:
   lint:
     docker:
