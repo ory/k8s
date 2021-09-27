@@ -4,14 +4,14 @@ replicaCount: 1
 # -- The Controller have CREATE and READ access to all Secrets in the namespaces listed below.
 enabledNamespaces: []
 
-# -- Single namespace mode. If enabled the controller will watch for resources only from this namespace, ignoring others
+# -- Single namespace mode. If enabled the controller will watch for resources only from namespace it is deployed in, ignoring others
 singleNamespaceMode: false
 
 image:
   # -- Ory Hydra-maester image
   repository: oryd/hydra-maester
   # -- Ory Hydra-maester version
-  tag: v0.0.23
+  tag: v0.0.24
   # -- Image pull policy
   pullPolicy: IfNotPresent
 

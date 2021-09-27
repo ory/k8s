@@ -51,14 +51,18 @@ spec:
             {{- if .Values.rulesFileName }}
             - --rulesFileName={{ .Values.rulesFileName }}
             {{- end }}
+          env:
+            {{- if .Values.singleNamespaceMode }}
+            - name: NAMESPACE
+              value: {{ .Release.Namespace }}
+            {{- end }}
+            {{- with .Values.deployment.envs }}
+            {{- toYaml . | nindent 12 }}
+            {{- end }}
           resources:
             {{- toYaml .Values.deployment.resources | nindent 12 }}
           terminationMessagePath: /dev/termination-log
           terminationMessagePolicy: File
-          {{- with .Values.deployment.envs }}
-          env:
-            {{- toYaml . | nindent 12 }}
-          {{- end }}
           securityContext:
             {{- toYaml .Values.deployment.securityContext | nindent 12 }}
       serviceAccountName: {{ include "oathkeeper-maester.fullname" . }}-account
