@@ -122,6 +122,7 @@ workflows:
             - lint
             - validate
             - test
+            - upgrade
           filters:
             tags:
               only: /.*/

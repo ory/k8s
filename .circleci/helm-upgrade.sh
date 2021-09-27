@@ -16,7 +16,7 @@ release=$(echo "cci-$(date +%s)-$1-${CIRCLE_SHA1}" | cut -c 1-15)r
 echo "---> Installing $1"
 
 set +e
-helm install -f ".circleci/values/$1.yaml" "${release}" "ory/$1" --wait --debug --timeout="${TIMEOUT}"
+helm install -f ".circleci/values/$1.yaml" "${release}" "ory/$1" --wait --timeout="${TIMEOUT}"
 export INSTALLATION_STATUS=$?
 set -e
 
