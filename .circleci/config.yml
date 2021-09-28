@@ -83,7 +83,7 @@ jobs:
       - run: git config --global user.email "aeneas@ory.sh"
       - run: git config --global user.name "aeneasr"
       - run: git checkout -b regen-docs HEAD
-      - run: git add -A
+      - run: git add helm/charts
       - run: git commit -a -m "Regenerate helm docs $(date)" || echo "No changes to commit"
       - run: git push origin HEAD:master
 
