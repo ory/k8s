@@ -283,7 +283,7 @@ hydra-maester:
 # -- Sidecar watcher configuration
 watcher:
   enabled: false
-  image: oryd/k8s-toolbox:0.0.1
+  image: oryd/k8s-toolbox:0.0.2
   mountFile: ''
   # mountFile: /etc/secrets/my-secret/foo
 
