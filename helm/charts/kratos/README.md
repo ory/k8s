@@ -1,6 +1,6 @@
 # kratos
 
-![Version: 0.19.4](https://img.shields.io/badge/Version-0.19.4-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.6.3-alpha.1](https://img.shields.io/badge/AppVersion-0.6.3--alpha.1-informational?style=flat-square)
+![Version: 0.19.5](https://img.shields.io/badge/Version-0.19.5-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.6.3-alpha.1](https://img.shields.io/badge/AppVersion-0.6.3--alpha.1-informational?style=flat-square)
 
 A ORY Kratos Helm chart for Kubernetes
 
@@ -78,7 +78,7 @@ A ORY Kratos Helm chart for Kubernetes
 | strategy | object | `{"rollingUpdate":{"maxSurge":"30%","maxUnavailable":0},"type":"RollingUpdate"}` | Deployment update strategy |
 | tolerations | list | `[]` | If you do want to specify node labels, uncomment the following lines, adjust them as necessary, and remove the curly braces after 'annotations:'.   foo: bar Configure node tolerations. |
 | watcher.enabled | bool | `false` |  |
-| watcher.image | string | `"oryd/k8s-toolbox:0.0.1"` |  |
+| watcher.image | string | `"oryd/k8s-toolbox:0.0.2"` |  |
 | watcher.mountFile | string | `""` |  |
 
 ----------------------------------------------
