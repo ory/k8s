@@ -12,7 +12,7 @@ metadata:
 data:
   {{- if $resultEntry.subject }}
   "email.subject.gotmpl": |
-    {{ $resultEntry.subject | quote }}
+{{ $resultEntry.subject | indent 4 }}
   {{- end }}
   {{- if $resultEntry.body }}
   "email.body.gotmpl": |-
