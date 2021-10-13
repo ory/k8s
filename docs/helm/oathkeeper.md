@@ -30,7 +30,7 @@ other than experimenting**.
 
 ## Configuration
 
-You can pass your [ORY Oathkeeper configuration file](https://github.com/ory/oathkeeper/blob/master/docs/config.yaml)
+You can pass your [ORY Oathkeeper configuration file](https://www.ory.sh/oathkeeper/docs/reference/configuration/)
 by creating a yaml file with key `oathkeeper.config`
 
 ```yaml
