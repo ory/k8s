@@ -87,7 +87,7 @@ a configuration file will be overwritten by this setting.
 ### JSON Web Key Set for Authenticator
 
 
-1. Using https:// , reference from [here](https://www.ory.sh/oathkeeper/docs/reference/configuration/)
+1. Using `https://` , reference from [here](https://www.ory.sh/oathkeeper/docs/reference/configuration/)
 
 ```yaml 
 # oathkeeper-config.yaml
@@ -100,7 +100,7 @@ oathkeeper:
           jwks_urls:
             - https://my-website.com/.well-known/jwks.json
 ```
-2. Using file:// (this implies that the file must existing within the container), reference from [here](https://www.ory.sh/oathkeeper/docs/reference/configuration/)
+2. Using `file://` (this implies that the file must existing within the container), reference from [here](https://www.ory.sh/oathkeeper/docs/reference/configuration/)
 
 ```yaml
 # oathkeeper-config.yaml
@@ -132,7 +132,7 @@ deployment:
 ```
 
 
-3. Using s3 storage, reference from [here](https://github.com/ory/oathkeeper/pull/829)
+3. Using storage bucket, e.g. `s3://` , `gs://` or `azblob://`, reference from [here](https://github.com/ory/oathkeeper/pull/829)
 
 > Warning: this feature has not been released but it is developing.
 
