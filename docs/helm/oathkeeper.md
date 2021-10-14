@@ -83,6 +83,76 @@ $ helm install \
 Please note that any configuration values set for `oathkeeper.config.access_rules.repositories` using e.g.
 a configuration file will be overwritten by this setting.
 
+
+### JSON Web Key Set for Authenticator
+
+
+1. Using https:// , reference from [here](https://www.ory.sh/oathkeeper/docs/reference/configuration/)
+
+```yaml 
+# oathkeeper-config.yaml
+oathkeeper:
+  config:
+    # e.g.:
+    authenticators:
+      jwt:
+        config:
+          jwks_urls:
+            - https://my-website.com/.well-known/jwks.json
+```
+2. Using file:// (this implies that the file must existing within the container), reference from [here](https://www.ory.sh/oathkeeper/docs/reference/configuration/)
+
+```yaml
+# oathkeeper-config.yaml
+oathkeeper:
+  config:
+    # e.g.:
+    authenticators:
+      jwt:
+        config:
+          jwks_urls:
+            - file://etc/jwks.json
+```
+
+
+- You can add `secret` or `configmap` and mount the secret/configmaps with the file, and point `oathkeeper` to it using the file directive, by modify `values.yaml` for this helm chart.
+
+```yaml
+deployment:
+  extraVolumes: []
+  # - name: my-volume
+  #   secret:
+  #     secretName: my-secret
+
+  # -- Extra volume mounts, allows mounting the extraVolumes to the container.
+  extraVolumeMounts: []
+  # - name: my-volume
+  #   mountPath: /etc/secrets/my-secret
+  #   readOnly: true
+```
+
+
+3. Using s3 storage, reference from [here](https://github.com/ory/oathkeeper/pull/829)
+
+> Warning: this feature has not been released but it is developing.
+
+```yaml
+oathkeeper:
+  config:
+    # e.g.:
+    authenticators:
+      jwt:
+        config:
+          jwks_urls:
+            # S3 storage also supports S3-compatible endpoints served by Minio or Ceph.
+            # See aws.ConfigFromURLParams (https://godoc.org/gocloud.dev/aws#ConfigFromURLParams) for more details on supported URL options for S3.
+            - s3://my-bucket-name/rules.json
+            - s3://my-bucket-name/rules.json?endpoint=minio.my-server.net
+            - gs://gcp-bucket-name/rules.json
+            - azblob://my-blob-container/rules.json
+```
+
+
 ### Oathkeeper-maester
 This chart includes a helper chart in the form of [Oathkeeper-maester](https://github.com/ory/k8s/blob/master/docs/helm/oathkeeper-maester.md), a k8s controller, which translates access rules object into a kubernetes native [CustomResource](https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/). This component is enabled by default, and installed together with Oathkeeper, however it can be disabled by setting the proper flag:
 
