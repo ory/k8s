@@ -100,7 +100,7 @@ oathkeeper:
           jwks_urls:
             - https://my-website.com/.well-known/jwks.json
 ```
-2. Using `file://` (this implies that the file must existing within the container), reference from [here](https://www.ory.sh/oathkeeper/docs/reference/configuration/)
+2. Using `file://` (this requires that the file must existing within the container), reference from [here](https://www.ory.sh/oathkeeper/docs/reference/configuration/)
 
 ```yaml
 # oathkeeper-config.yaml
