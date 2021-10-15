@@ -132,7 +132,7 @@ deployment:
 ```
 
 
-3. Using storage bucket, e.g. `s3://` , `gs://` or `azblob://`, reference from [here](https://github.com/ory/oathkeeper/pull/829)
+3. Using storage bucket, e.g. `s3://` , `gs://` or `azblob://`, reference from [here](https://github.com/tobbbles/oathkeeper/blob/master/docs/docs/reference/configuration.md)
 
 > Warning: this feature has not been released but it is developing.
 
