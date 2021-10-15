@@ -115,7 +115,7 @@ oathkeeper:
 ```
 
 
-- You can add `secret` or `configmap` and mount the secret/configmaps with the file, and point `oathkeeper` to it using the file directive, by modify `values.yaml` for this helm chart.
+- You can add `secret` or `configmap` and mount the secret/configmaps with the file, and point `oathkeeper` to it using the file directive, by modifying `values.yaml` for this helm chart.
 
 ```yaml
 deployment:
