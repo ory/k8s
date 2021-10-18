@@ -274,6 +274,7 @@ securityContext:
 # -- Horizontal pod autoscaling configuration
 autoscaling:
   enabled: false
+  useAutoscalingApiV2beta2: false
   minReplicas: 1
   maxReplicas: 3
   targetCPUUtilizationPercentage: 80
