@@ -1,4 +1,6 @@
 ---
+autoscaling:
+  enabled: false
 kratos:
   autoMigrate: true
   identitySchemas:
