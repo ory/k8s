@@ -9,7 +9,7 @@ A ORY Kratos Helm chart for Kubernetes
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | affinity | object | `{}` | Configure node affinity |
-| autoscaling | object | `{"enabled":false,"useAutoscalingApiV2beta2":false,"maxReplicas":3,"minReplicas":1,"targetCPUUtilizationPercentage":80}` | Horizontal pod autoscaling configuration |
+| autoscaling | object | `{"enabled":false,"maxReplicas":3,"minReplicas":1,"targetCPUUtilizationPercentage":80}` | Horizontal pod autoscaling configuration |
 | deployment.annotations | object | `{}` |  |
 | deployment.automountServiceAccountToken | bool | `true` | The secret specified here will be used to load environment variables with envFrom. This allows arbitrary environment variables to be provided to the application which is useful for sensitive values which should not be in a configMap. This secret is not created by the helm chart and must already exist in the namespace. https://kubernetes.io/docs/tasks/inject-data-application/distribute-credentials-secure/#configure-all-key-value-pairs-in-a-secret-as-container-environment-variables environmentSecretsName: https://github.com/kubernetes/kubernetes/issues/57601 |
 | deployment.extraEnv | list | `[]` |  |
