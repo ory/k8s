@@ -1,5 +1,4 @@
-{{- if .Values.autoscaling.enabled }}
-  {{- if .Capabilities.APIVersions.Has "autoscaling/v2beta2" }}
+{{- if and (.Values.autoscaling.enabled) (.Capabilities.APIVersions.Has "autoscaling/v2beta2") }}
 apiVersion: autoscaling/v2beta2
 kind: HorizontalPodAutoscaler
 metadata:
@@ -27,23 +26,5 @@ spec:
     resource:
       name: memory
       targetAverageUtilization: {{ .Values.autoscaling.targetMemoryUtilizationPercentage }}
-  {{- end }}
-  {{- else }}
-apiVersion: autoscaling/v1
-kind: HorizontalPodAutoscaler
-metadata:
-  name: {{ include "kratos.fullname" . }}
-  labels:
-    {{- include "kratos.labels" . | nindent 4 }}
-spec:
-  scaleTargetRef:
-    apiVersion: apps/v1
-    kind: Deployment
-    name: {{ include "kratos.fullname" . }}
-  minReplicas: {{ .Values.autoscaling.minReplicas }}
-  maxReplicas: {{ .Values.autoscaling.maxReplicas }}
-  {{- if .Values.autoscaling.targetCPUUtilizationPercentage }}
-  targetCPUUtilizationPercentage: {{ .Values.autoscaling.targetCPUUtilizationPercentage }}
-  {{- end }}
   {{- end }}
 {{- end }}
