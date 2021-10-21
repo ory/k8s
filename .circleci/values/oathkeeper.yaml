@@ -10,10 +10,18 @@ maester:
 #    type: NodePort
 #
 ingress:
- proxy:
-   enabled: true
- api:
-   enabled: true
+  proxy:
+    enabled: true
+    defaultBackend:
+      service:
+        name: myservice
+        port:
+          number: 80
+    annotations:
+      kubernetes.io/ingress.class: nginx
+      kubernetes.io/tls-acme: "true"
+  api:
+    enabled: true
 oathkeeper:
   accessRules: |
     [

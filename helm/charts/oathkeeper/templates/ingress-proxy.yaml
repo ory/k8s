@@ -11,12 +11,16 @@ metadata:
   namespace: {{ .Release.Namespace }}
   labels:
     {{- include "oathkeeper.labels" . | nindent 4 }}
-  {{- with .Values.ingress.proxy.annotations }}
   annotations:
+  {{- with .Values.ingress.proxy.annotations }}
     {{- toYaml . | nindent 4 }}
   {{- end }}
 spec:
   ingressClassName: {{ .Values.ingress.proxy.className }}
+  defaultBackend:
+  {{- with .Values.ingress.proxy.defaultBackend }}
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
   {{- if .Values.ingress.proxy.tls }}
   tls:
     {{- range .Values.ingress.proxy.tls }}
