@@ -11,8 +11,11 @@ metadata:
   namespace: {{ .Release.Namespace }}
   labels:
     {{- include "oathkeeper.labels" . | nindent 4 }}
-  {{- with .Values.ingress.proxy.annotations }}
   annotations:
+  {{- if .Values.ingress.proxy.defaultBackendService.enabled }}
+    ingress.kubernetes.io/rewrite-target: /
+  {{- end }}
+  {{- with .Values.ingress.proxy.annotations }}
     {{- toYaml . | nindent 4 }}
   {{- end }}
 spec:
@@ -48,5 +51,16 @@ spec:
               servicePort: http
               {{- end }}
           {{- end }}
+    {{- end }}
+    {{- if .Values.ingress.proxy.defaultBackendService.enabled }}
+    - http:
+        paths:
+        - backend:
+            service:
+              name: {{ .Values.ingress.proxy.defaultBackendService.name }}
+              port:
+                name: {{ .Values.ingress.proxy.defaultBackendService.portName }}
+          path: /
+          pathType: Prefix
     {{- end }}
 {{- end }}
