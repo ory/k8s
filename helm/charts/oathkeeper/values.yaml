@@ -92,13 +92,11 @@ ingress:
 #          - proxy.oathkeeper.local
 #      - secretName: oathkeeper-proxy-example-tls
     # -- Configuration for custom default service. This service will be used to handle the response when the configured service in the Ingress rule does not have any active endpoints
-    defaultBackendService:
-      # -- Enable/Disable this feature
-      enabled: false
-      # -- This <svc name> is a reference to a service inside of the same namespace which will be used
-      name: my-service
-      # -- Name of the port to be used in the service
-      portName: http
+    defaultBackend: {}
+      # service:
+      #   name: myservice
+      #   port:
+      #     number: 80
 
   api:
     # -- En-/Disable the api ingress.

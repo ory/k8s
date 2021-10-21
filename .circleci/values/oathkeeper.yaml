@@ -12,10 +12,11 @@ maester:
 ingress:
   proxy:
     enabled: true
-    defaultBackendService:
-      enabled: true
-      name: postgresql
-      portName: tcp-postgresql
+    defaultBackend:
+      service:
+        name: myservice
+        port:
+          number: 80
     annotations:
       kubernetes.io/ingress.class: nginx
       kubernetes.io/tls-acme: "true"
