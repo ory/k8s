@@ -1,6 +1,6 @@
 # oathkeeper
 
-![Version: 0.19.6](https://img.shields.io/badge/Version-0.19.6-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.38.9-beta.1](https://img.shields.io/badge/AppVersion-v0.38.9--beta.1-informational?style=flat-square)
+![Version: 0.20.0](https://img.shields.io/badge/Version-0.20.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.38.9-beta.1](https://img.shields.io/badge/AppVersion-v0.38.9--beta.1-informational?style=flat-square)
 
 A Helm chart for deploying ORY Oathkeeper in Kubernetes
 
@@ -21,7 +21,7 @@ A Helm chart for deploying ORY Oathkeeper in Kubernetes
 
 | Repository | Name | Version |
 |------------|------|---------|
-| file://../oathkeeper-maester | oathkeeper-maester(oathkeeper-maester) | 0.19.6 |
+| file://../oathkeeper-maester | oathkeeper-maester(oathkeeper-maester) | 0.20.0 |
 
 ## Values
 
@@ -51,9 +51,10 @@ A Helm chart for deploying ORY Oathkeeper in Kubernetes
 | image.repository | string | `"oryd/oathkeeper"` | ORY Oathkeeper image |
 | image.tag | string | `"v0.38.9-beta.1"` | ORY Oathkeeper version |
 | imagePullSecrets | list | `[]` | Image pull secrets |
-| ingress | object | `{"api":{"annotations":{},"className":"","enabled":false,"hosts":[{"host":"api.oathkeeper.localhost","paths":[{"path":"/","pathType":"ImplementationSpecific"}]}]},"proxy":{"annotations":{},"className":"","enabled":false,"hosts":[{"host":"proxy.oathkeeper.localhost","paths":[{"path":"/","pathType":"ImplementationSpecific"}]}]}}` | Configure ingress |
+| ingress | object | `{"api":{"annotations":{},"className":"","enabled":false,"hosts":[{"host":"api.oathkeeper.localhost","paths":[{"path":"/","pathType":"ImplementationSpecific"}]}]},"proxy":{"annotations":{},"className":"","defaultBackend":{},"enabled":false,"hosts":[{"host":"proxy.oathkeeper.localhost","paths":[{"path":"/","pathType":"ImplementationSpecific"}]}]}}` | Configure ingress |
 | ingress.api.enabled | bool | `false` | En-/Disable the api ingress. |
-| ingress.proxy | object | `{"annotations":{},"className":"","enabled":false,"hosts":[{"host":"proxy.oathkeeper.localhost","paths":[{"path":"/","pathType":"ImplementationSpecific"}]}]}` | Configure ingress for the proxy port. |
+| ingress.proxy | object | `{"annotations":{},"className":"","defaultBackend":{},"enabled":false,"hosts":[{"host":"proxy.oathkeeper.localhost","paths":[{"path":"/","pathType":"ImplementationSpecific"}]}]}` | Configure ingress for the proxy port. |
+| ingress.proxy.defaultBackend | object | `{}` | Configuration for custom default service. This service will be used to handle the response when the configured service in the Ingress rule does not have any active endpoints |
 | ingress.proxy.enabled | bool | `false` | En-/Disable the proxy ingress. |
 | maester | object | `{"enabled":true}` | Configures controller setup |
 | nameOverride | string | `""` | Chart name override |
