@@ -27,4 +27,4 @@ dependencies:
     version: 0.20.0
     condition: maester.enabled
     alias: oathkeeper-maester
-    repository: file://../oathkeeper-maester
+    repository: https://k8s.ory.sh/helm/charts
