@@ -62,7 +62,7 @@ spec:
             name: {{ include "kratos.fullname" $root }}-template-{{ $method }}-{{ $result }}
         {{- end }}
         {{- end }}
-      automountServiceAccountToken: {{ .Values.automountServiceAccountToken }}
+      automountServiceAccountToken: {{ .Values.deployment.automountServiceAccountToken }}
       serviceAccountName: {{ include "kratos.serviceAccountName" . }}
       containers:
         {{- if .Values.watcher.enabled }}
