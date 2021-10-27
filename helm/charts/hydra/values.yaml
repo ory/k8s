@@ -218,12 +218,11 @@ deployment:
   # Like for example installing Hydra on a cluster with a PosSecurityPolicy and Istio.
   # Uncoment if it is needed to provide a ServiceAccount for the Hydra deployment.
   serviceAccount:
-    # Specifies whether a service account should be created
+    # -- Specifies whether a service account should be created
     create: true
     # Annotations to add to the service account
     annotations: {}
-    # The name of the service account to use.
-    # If not set and create is true, a name is generated using the fullname template
+    # -- The name of the service account to use. If not set and create is true, a name is generated using the fullname template
     name: ""
 
   # -- If you want to mount external volume
