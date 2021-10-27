@@ -168,7 +168,11 @@ deployment:
     periodSeconds: 10
     failureThreshold: 5
 
-  extraEnv: []
+  extraEnv: ''
+  # extraEnv: |
+  #  - name: ...
+  #    image: ...
+
   # -- If you want to mount external volume
   # For example, mount a secret containing Certificate root CA to verify database
   # TLS connection.

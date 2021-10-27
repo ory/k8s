@@ -32,11 +32,16 @@ spec:
         command: ["kratos"]
         args: ["migrate", "sql", "-e", "--yes"]
         env:
+          {{- if .Values.secret.enabled -}}
           - name: DSN
             valueFrom:
               secretKeyRef:
                 name: {{ include "kratos.secretname" . }}
                 key: dsn
+          {{- end}}
+          {{- if .Values.deployment.extraEnv }}
+{{ tpl .Values.deployment.extraEnv . | indent 10 }}
+          {{- end }}
         securityContext:
           {{- toYaml .Values.securityContext | nindent 10 }}
         {{- if .Values.deployment.extraVolumeMounts }}

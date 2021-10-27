@@ -64,7 +64,7 @@ spec:
                   name: {{ include "kratos.secretname" . }}
                   key: smtpConnectionURI
             {{- if .Values.deployment.extraEnv }}
-{{ toYaml .Values.deployment.extraEnv | indent 12 }}
+{{ tpl .Values.deployment.extraEnv . | indent 12 }}
             {{- end }}
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}

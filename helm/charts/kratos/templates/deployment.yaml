@@ -116,11 +116,13 @@ spec:
             {{- end }}
             {{- end }}
           env:
+            {{- if .Values.secret.enabled -}}
             - name: DSN
               valueFrom:
                 secretKeyRef:
                   name: {{ include "kratos.secretname" . }}
                   key: dsn
+            {{- end}}
             {{- if .Values.kratos.config.secrets.default }}
             - name: SECRETS_DEFAULT
               valueFrom:
@@ -163,7 +165,7 @@ spec:
             {{- end }}
             {{- end }}
             {{- if .Values.deployment.extraEnv }}
-{{ toYaml .Values.deployment.extraEnv | indent 12 }}
+{{ tpl .Values.deployment.extraEnv . | indent 12 }}
             {{- end }}
         {{- if .Values.deployment.environmentSecretsName }}
           envFrom:
