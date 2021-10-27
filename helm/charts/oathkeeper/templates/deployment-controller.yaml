@@ -55,6 +55,7 @@ spec:
         - name: {{ include "oathkeeper.name" . }}-secrets-volume
           secret:
             secretName: {{ empty .Values.secret.name | ternary (include "oathkeeper.fullname" .) (.Values.secret.name) }}
+      serviceAccountName: {{ include "oathkeeper.serviceAccountName" . }}
       automountServiceAccountToken: {{ .Values.deployment.automountServiceAccountToken }}
       containers:
         - name: {{ .Chart.Name }}
