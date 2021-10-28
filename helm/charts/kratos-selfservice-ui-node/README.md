@@ -1,6 +1,6 @@
 # kratos-selfservice-ui-node
 
-![Version: 0.20.0](https://img.shields.io/badge/Version-0.20.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.1.1-alpha.1](https://img.shields.io/badge/AppVersion-v0.1.1--alpha.1-informational?style=flat-square)
+![Version: 0.20.1](https://img.shields.io/badge/Version-0.20.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.7.6-alpha.1](https://img.shields.io/badge/AppVersion-v0.7.6--alpha.1-informational?style=flat-square)
 
 A Helm chart for ORY Kratos's example ui for Kubernetes
 
@@ -19,7 +19,7 @@ A Helm chart for ORY Kratos's example ui for Kubernetes
 | fullnameOverride | string | `""` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"oryd/kratos-selfservice-ui-node"` |  |
-| image.tag | string | `"latest"` |  |
+| image.tag | string | `"v0.7.6-alpha.1"` |  |
 | imagePullSecrets | list | `[]` |  |
 | ingress.annotations | object | `{}` |  |
 | ingress.className | string | `""` |  |
