@@ -25,6 +25,17 @@ If release name contains chart name it will be used as a full name.
 {{- end -}}
 
 {{/*
+Create a secret name which can be overridden.
+*/}}
+{{- define "oathkeeper.secretname" -}}
+{{- if .Values.secret.nameOverride -}}
+{{- .Values.secret.nameOverride | trunc 63 | trimSuffix "-" -}}
+{{- else -}}
+{{ include "oathkeeper.fullname" . }}
+{{- end -}}
+{{- end -}}
+
+{{/*
 Create chart name and version as used by the chart label.
 */}}
 {{- define "oathkeeper.chart" -}}

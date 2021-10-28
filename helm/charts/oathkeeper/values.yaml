@@ -141,14 +141,19 @@ oathkeeper:
   managedAccessRules: true
 
 secret:
-  # -- set to true for this helm chart to manage the secret
-  # -- set to false for this helm chart to NOT manage the secret
-  # -- defaults to true
-  manage: true
+  # -- switch to false to prevent creating the secret
+  enabled: true
 
-  # -- name of the secret to use. If empty, defaults to {{ include "oathkeeper.fullname" . }}
-  name: ""
-
+  # ... and choose a different name for a secret you provide like this
+  # nameOverride: "MyOtherName"
+  secretAnnotations:
+    # Create the secret before installation, and only then. This saves the secret from regenerating during an upgrade
+    # pre-upgrade is needed to upgrade from 0.7.0 to newer. Can be deleted afterwards.
+    helm.sh/hook-weight: "0"
+    helm.sh/hook: "pre-install, pre-upgrade"
+    helm.sh/hook-delete-policy: "before-hook-creation"
+    helm.sh/resource-policy: "keep"
+  
   # -- default mount path for the kubernetes secret
   mountPath: /etc/secrets
   # -- default filename of JWKS (mounted as secret)
