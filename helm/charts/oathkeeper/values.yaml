@@ -44,6 +44,8 @@ service:
     type: ClusterIP
     # -- The service port
     port: 4455
+    # -- The service port name
+    portName: http
     # -- If you do want to specify annotations, uncomment the following
     # lines, adjust them as necessary, and remove the curly braces after 'annotations:'.
     annotations: {}
