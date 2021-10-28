@@ -19,7 +19,7 @@ spec:
   type: {{ .Values.service.proxy.type }}
   ports:
     - port: {{ .Values.service.proxy.port }}
-      targetPort: http-proxy
+      targetPort: {{ .Values.service.proxy.portName }}-proxy
       protocol: TCP
       name: {{ .Values.service.proxy.portName }}
   selector:

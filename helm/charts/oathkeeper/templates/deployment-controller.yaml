@@ -99,20 +99,20 @@ spec:
               mountPath: {{ .Values.secret.mountPath }}
               readOnly: true
           ports:
-            - name: http-api
+            - name: {{ .Values.service.api.portName }}-api
               containerPort: {{ .Values.oathkeeper.config.serve.api.port }}
               protocol: TCP
-            - name: http-proxy
+            - name: {{ .Values.service.proxy.portName }}-proxy
               containerPort: {{ .Values.oathkeeper.config.serve.proxy.port }}
               protocol: TCP
           livenessProbe:
             httpGet:
               path: /health/alive
-              port: http-api
+              port: {{ .Values.service.api.portName }}-api
           readinessProbe:
             httpGet:
               path: /health/ready
-              port: http-api
+              port: {{ .Values.service.api.portName }}-api
           resources:
             {{- toYaml .Values.deployment.resources | nindent 12 }}
           securityContext:
