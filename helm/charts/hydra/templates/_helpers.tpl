@@ -70,8 +70,8 @@ memory
 Generate the name of the secret resource containing secrets
 */}}
 {{- define "hydra.secretname" -}}
-{{- if .Values.hydra.existingSecret -}}
-{{- .Values.hydra.existingSecret -}}
+{{- if .Values.secret.nameOverride -}}
+{{- .Values.secret.nameOverride | trunc 63 | trimSuffix "-" -}}
 {{- else -}}
 {{ include "hydra.fullname" . }}
 {{- end -}}
@@ -113,7 +113,6 @@ Generate the configmap data, redacting secrets
 {{- define "hydra.configmap" -}}
 {{- $config := unset .Values.hydra.config "dsn" -}}
 {{- $config := unset $config "secrets" -}}
-{{- $config := unset $config "secretAnnotations" -}}
 {{- toYaml $config -}}
 {{- end -}}
 
