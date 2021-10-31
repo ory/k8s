@@ -18,6 +18,14 @@ hydra:
         - "foo bar 123 456 lorem 3"
 maester:
   enabled: false
+
+deployment:
+  extraInitContainers: |
+    - name: "hello-world"
+      image: "alpine:latest"
+      command: ["/bin/sh"]
+      args: ["-c", "echo hello, world!"]
+
 # deployment:
 #  extraVolumes:
 #   - name: my-volume

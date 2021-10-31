@@ -284,6 +284,12 @@ deployment:
   # https://github.com/kubernetes/kubernetes/issues/57601
   automountServiceAccountToken: true
 
+  # -- If you want to add extra init containers.
+  extraInitContainers: {}
+  # extraInitContainers: |
+  #  - name: ...
+  #    image: ...
+
 job:
   annotations: {}
 
