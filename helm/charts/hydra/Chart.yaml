@@ -26,4 +26,5 @@ dependencies:
     version: 0.20.1
     condition: maester.enabled
     alias: hydra-maester
+    # repository: file://../hydra-maester
     repository: https://k8s.ory.sh/helm/charts
