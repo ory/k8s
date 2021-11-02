@@ -46,8 +46,10 @@ service:
 secret:
   # -- switch to false to prevent creating the secret
   enabled: true
-  # ... and choose a different name for a secret you provide like this
-  # nameOverride: "MyOtherName"
+  # -- Provide custom name of existing secret, or custom name of secret to be created
+  nameOverride: ""
+  # nameOverride: "myCustomSecret"
+  # -- Annotations to be added to secret. Annotations are added only when secret is being created. Existing secret will not be modified.
   secretAnnotations:
     # Create the secret before installation, and only then. This saves the secret from regenerating during an upgrade
     # pre-upgrade is needed to upgrade from 0.7.0 to newer. Can be deleted afterwards.
