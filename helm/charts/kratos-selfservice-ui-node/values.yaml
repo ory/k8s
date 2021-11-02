@@ -16,6 +16,8 @@ fullnameOverride: ""
 service:
   type: ClusterIP
   port: 80
+  # -- The service port name. Useful to set a custom service port name if it must follow a scheme (e.g. Istio)
+  name: http
 
 ingress:
   enabled: false

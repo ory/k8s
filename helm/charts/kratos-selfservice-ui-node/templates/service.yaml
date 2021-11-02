@@ -10,7 +10,7 @@ spec:
     - port: {{ .Values.service.port }}
       targetPort: http
       protocol: TCP
-      name: http
+      name: {{ .Values.service.name }}
   selector:
     app.kubernetes.io/name: {{ include "kratos-selfservice-ui-node.name" . }}
     app.kubernetes.io/instance: {{ .Release.Name }}
