@@ -11,7 +11,7 @@ kind get kubeconfig > "$cfg"
 
 cd "$( dirname "${BASH_SOURCE[0]}" )/.."
 
-release=$(echo "$1-$(date +%s)" | cut -c 1-15)
+release=$(echo "$1-$(date +%s)" | cut -c 1-31)
 
 echo "---> Installing $1"
 
