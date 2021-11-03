@@ -19,7 +19,7 @@ spec:
     - port: {{ .Values.service.admin.port }}
       targetPort: http-admin
       protocol: TCP
-      name: http
+      name: {{ .Values.service.admin.name }}
   selector:
     app.kubernetes.io/name: {{ include "hydra.name" . }}
     app.kubernetes.io/instance: {{ .Release.Name }}

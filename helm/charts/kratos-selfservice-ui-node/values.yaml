@@ -2,21 +2,29 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
+# -- Number of replicas in deployment
 replicaCount: 1
 
+# -- Deployment image settings
 image:
+  # SELFSERVICE image
   repository: oryd/kratos-selfservice-ui-node
-  tag: v0.7.6-alpha.1
+  # -- ORY KRATOS VERSION
+  tag: v0.8.0-alpha.3
   pullPolicy: IfNotPresent
 
 imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
 
+# -- Service configuration
 service:
   type: ClusterIP
   port: 80
+  # -- The service port name. Useful to set a custom service port name if it must follow a scheme (e.g. Istio)
+  name: http
 
+# -- Ingress configration
 ingress:
   enabled: false
   className: ""
@@ -33,6 +41,7 @@ ingress:
   #    hosts:
   #      - chart-example.local
 
+# -- Deployment level securityContext
 securityContext:
   capabilities:
     drop:
@@ -43,6 +52,7 @@ securityContext:
   allowPrivilegeEscalation: false
   privileged: false
 
+# -- Deployment configuration
 deployment:
   resources: {}
   #  We usually recommend not to specify default resources and to leave this as a conscious
