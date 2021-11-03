@@ -15,7 +15,7 @@ image:
   repository: oryd/kratos
   # -- ORY KRATOS VERSION
   # Alternative format: image: oryd/kratos:v0.6.3-alpha.1
-  tag: v0.6.3-alpha.1
+  tag: v0.8.0-alpha.3
   pullPolicy: IfNotPresent
   # imagePullPolicy: Always
 
@@ -28,6 +28,8 @@ service:
     enabled: true
     type: ClusterIP
     port: 80
+    # -- The service port name. Useful to set a custom service port name if it must follow a scheme (e.g. Istio)
+    name: http
     # -- If you do want to specify annotations, uncomment the following
     # lines, adjust them as necessary, and remove the curly braces after 'annotations:'.
     annotations: {}
@@ -37,6 +39,8 @@ service:
     enabled: true
     type: ClusterIP
     port: 80
+    # -- The service port name. Useful to set a custom service port name if it must follow a scheme (e.g. Istio)
+    name: http
     # -- If you do want to specify annotations, uncomment the following
     # lines, adjust them as necessary, and remove the curly braces after 'annotations:'.
     annotations: {}
@@ -94,16 +98,17 @@ kratos:
   # -- Enable the initialization job. Required to work with a DB
   autoMigrate: false
 
-# -- You can add multiple identity schemas here
-#  identitySchemas:
-#    "identity.default.schema.json": |
-#      {
-#        // ...
-#      }
-#    "identity.email.schema.json": |
-#      {
-#        // ...
-#      }
+  # -- You can add multiple identity schemas here
+  identitySchemas: {}
+  # identitySchemas:
+  #  "identity.default.schema.json": |
+  #    {
+  #      // ...
+  #    }
+  #  "identity.email.schema.json": |
+  #    {
+  #      // ...
+  #    }
 
 # -- You can customize the emails kratos is sending (also uncomment config.courier.template_override_path below)
 #  Note: If you are setting config.courier.template_override_path you need to supply overrides for all templates.

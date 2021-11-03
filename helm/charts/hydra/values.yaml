@@ -30,6 +30,8 @@ service:
     type: ClusterIP
     # -- The service port
     port: 4444
+    # -- The service port name. Useful to set a custom service port name if it must follow a scheme (e.g. Istio)
+    name: http
     # -- If you do want to specify annotations, uncomment the following lines, adjust them as necessary, and remove the curly braces after 'annotations:'.
     annotations: {}
     # kubernetes.io/ingress.class: nginx
@@ -46,6 +48,8 @@ service:
     type: ClusterIP
     # -- The service port
     port: 4445
+    # -- The service port name. Useful to set a custom service port name if it must follow a scheme (e.g. Istio)
+    name: http
     # -- If you do want to specify annotations, uncomment the following lines, adjust them as necessary, and remove the curly braces after 'annotations:'.
     annotations: {}
     # kubernetes.io/ingress.class: nginx

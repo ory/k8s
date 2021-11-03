@@ -11,7 +11,7 @@ kind get kubeconfig > "$cfg"
 
 cd "$( dirname "${BASH_SOURCE[0]}" )/.."
 
-release=$(echo "cci-$(date +%s)-$1-${CIRCLE_SHA1}" | cut -c 1-15)r
+release=$(echo "$1-$(date +%s)" | cut -c 1-31)
 
 helm dep update "./helm/charts/$1"
 

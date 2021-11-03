@@ -42,26 +42,19 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
-          -
-            name: KRATOS_PUBLIC_URL
+          - name: KRATOS_PUBLIC_URL
             value: {{ .Values.kratosPublicUrl | quote }}
-          -
-            name: KRATOS_BROWSER_URL
+          - name: KRATOS_BROWSER_URL
             value: {{ .Values.kratosBrowserUrl | quote }}
-          -
-            name: PROJECT_NAME
+          - name: PROJECT_NAME
             value: {{ .Values.projectName | quote }}
-          -
-            name: BASE_URL
+          - name: BASE_URL
             value: {{ .Values.baseUrl | quote }}
-          -
-            name: JWKS_URL
+          - name: JWKS_URL
             value: {{ .Values.jwksUrl | quote }}
-          -
-            name: KRATOS_ADMIN_URL
+          - name: KRATOS_ADMIN_URL
             value: {{ .Values.kratosAdminUrl | quote }}
-          -
-            name: SECURITY_MODE
+          - name: SECURITY_MODE
             value: {{ .Values.securityMode | quote }}
           ports:
             - name: http
@@ -69,11 +62,11 @@ spec:
               protocol: TCP
           livenessProbe:
             httpGet:
-              path: /health
+              path: /health/alive
               port: http
           readinessProbe:
             httpGet:
-              path: /health
+              path: /health/ready
               port: http
           resources:
             {{- toYaml .Values.deployment.resources | nindent 12 }}
