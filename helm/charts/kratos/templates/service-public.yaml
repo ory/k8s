@@ -16,7 +16,7 @@ spec:
     - port: {{ .Values.service.public.port }}
       targetPort: http-public
       protocol: TCP
-      name: http
+      name: {{ .Values.service.public.name }}
   selector:
     app.kubernetes.io/name: {{ include "kratos.name" . }}
     app.kubernetes.io/instance: {{ .Release.Name }}
