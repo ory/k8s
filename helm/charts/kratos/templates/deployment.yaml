@@ -90,11 +90,6 @@ spec:
         - name: {{ .Chart.Name }}
           image: {{ include "kratos.image" . }}
           imagePullPolicy: {{ include "kratos.imagePullPolicy" . }}
-          # command: 
-          #   - /bin/sh
-          #   - -c
-          #   - | 
-          #     tail -f /dev/null
           command: 
             - kratos
           args:
