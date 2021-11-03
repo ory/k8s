@@ -90,16 +90,21 @@ spec:
         - name: {{ .Chart.Name }}
           image: {{ include "kratos.image" . }}
           imagePullPolicy: {{ include "kratos.imagePullPolicy" . }}
-          command: ["kratos"]
-          args: [
-            "serve",
-            "all",
+          # command: 
+          #   - /bin/sh
+          #   - -c
+          #   - | 
+          #     tail -f /dev/null
+          command: 
+            - kratos
+          args:
+            - serve
+            - all
             {{- if .Values.kratos.development }}
-            "--dev",
-            {{- end}}
-            "--config",
-            "/etc/config/kratos.yaml"
-          ]
+            - --dev
+            {{- end }}
+            - --config
+            - /etc/config/kratos.yaml
           volumeMounts:
             {{- if .Values.deployment.extraVolumeMounts }}
 {{ toYaml .Values.deployment.extraVolumeMounts | indent 12 }}
