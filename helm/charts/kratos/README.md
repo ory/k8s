@@ -1,6 +1,6 @@
 # kratos
 
-![Version: 0.20.1](https://img.shields.io/badge/Version-0.20.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.7.6-alpha.1](https://img.shields.io/badge/AppVersion-v0.7.6--alpha.1-informational?style=flat-square)
+![Version: 0.20.2](https://img.shields.io/badge/Version-0.20.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.8.0-alpha.3](https://img.shields.io/badge/AppVersion-v0.8.0--alpha.3-informational?style=flat-square)
 
 A ORY Kratos Helm chart for Kubernetes
 
@@ -30,7 +30,7 @@ A ORY Kratos Helm chart for Kubernetes
 | fullnameOverride | string | `""` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"oryd/kratos"` | ORY KRATOS image |
-| image.tag | string | `"v0.7.6-alpha.1"` | ORY KRATOS VERSION Alternative format: image: oryd/kratos:v0.6.3-alpha.1 |
+| image.tag | string | `"v0.8.0-alpha.3"` | ORY KRATOS VERSION Alternative format: image: oryd/kratos:v0.6.3-alpha.1 |
 | imagePullSecrets | list | `[]` |  |
 | ingress.admin.annotations | object | `{}` |  |
 | ingress.admin.className | string | `""` |  |
@@ -48,8 +48,9 @@ A ORY Kratos Helm chart for Kubernetes
 | ingress.public.tls | list | `[]` |  |
 | job | object | `{"annotations":{},"ttlSecondsAfterFinished":60}` | Values for initialization job |
 | kratos.autoMigrate | bool | `false` | Enable the initialization job. Required to work with a DB |
-| kratos.config | object | `{"courier":{"smtp":{}},"secrets":{},"serve":{"admin":{"port":4434},"public":{"port":4433}}}` | You can add multiple identity schemas here  identitySchemas:    "identity.default.schema.json": |      {        // ...      }    "identity.email.schema.json": |      {        // ...      } -- You can customize the emails kratos is sending (also uncomment config.courier.template_override_path below)  Note: If you are setting config.courier.template_override_path you need to supply overrides for all templates.        It is currently not possible to overrides only selected methods.  emailTemplates:    recovery:      valid:        subject: Recover access to your account        body: |-          Hi, please recover access to your account by clicking the following link:          <a href="{{ .RecoveryURL }}">{{ .RecoveryURL }}</a>        plainBody: Hi, please recover access to your account by clicking the following link: {{ .RecoveryURL }}      invalid:        subject: Account access attempted        body: |-          Hi, you (or someone else) entered this email address when trying to recover access to an account.          However, this email address is not on our database of registered users and therefore the attempt has failed. If this was you, check if you signed up using a different address. If this was not you, please ignore this email.        plainBody: Hi, you (or someone else) entered this email address when trying to recover access to an account.    verification:      valid:        subject: Please verify your email address        body: |-          Hi, please verify your account by clicking the following link:          <a href="{{ .VerificationURL }}">{{ .VerificationURL }}</a>        plainBody: Hi, please verify your account by clicking the following link: {{ .VerificationURL }}      invalid:        subject:        body:        plainBody: |
+| kratos.config | object | `{"courier":{"smtp":{}},"secrets":{},"serve":{"admin":{"port":4434},"public":{"port":4433}}}` | You can customize the emails kratos is sending (also uncomment config.courier.template_override_path below)  Note: If you are setting config.courier.template_override_path you need to supply overrides for all templates.        It is currently not possible to overrides only selected methods.  emailTemplates:    recovery:      valid:        subject: Recover access to your account        body: |-          Hi, please recover access to your account by clicking the following link:          <a href="{{ .RecoveryURL }}">{{ .RecoveryURL }}</a>        plainBody: Hi, please recover access to your account by clicking the following link: {{ .RecoveryURL }}      invalid:        subject: Account access attempted        body: |-          Hi, you (or someone else) entered this email address when trying to recover access to an account.          However, this email address is not on our database of registered users and therefore the attempt has failed. If this was you, check if you signed up using a different address. If this was not you, please ignore this email.        plainBody: Hi, you (or someone else) entered this email address when trying to recover access to an account.    verification:      valid:        subject: Please verify your email address        body: |-          Hi, please verify your account by clicking the following link:          <a href="{{ .VerificationURL }}">{{ .VerificationURL }}</a>        plainBody: Hi, please verify your account by clicking the following link: {{ .VerificationURL }}      invalid:        subject:        body:        plainBody: |
 | kratos.development | bool | `false` |  |
+| kratos.identitySchemas | object | `{}` | You can add multiple identity schemas here |
 | nameOverride | string | `""` |  |
 | nodeSelector | object | `{}` | Node labels for pod assignment. |
 | pdb | object | `{"enabled":false,"spec":{"minAvailable":1}}` | PodDistributionBudget configuration |
@@ -67,10 +68,12 @@ A ORY Kratos Helm chart for Kubernetes
 | securityContext.runAsUser | int | `100` |  |
 | service.admin.annotations | object | `{}` | If you do want to specify annotations, uncomment the following lines, adjust them as necessary, and remove the curly braces after 'annotations:'. |
 | service.admin.enabled | bool | `true` |  |
+| service.admin.name | string | `"http"` | The service port name. Useful to set a custom service port name if it must follow a scheme (e.g. Istio) |
 | service.admin.port | int | `80` |  |
 | service.admin.type | string | `"ClusterIP"` |  |
 | service.public.annotations | object | `{}` | If you do want to specify annotations, uncomment the following lines, adjust them as necessary, and remove the curly braces after 'annotations:'. |
 | service.public.enabled | bool | `true` |  |
+| service.public.name | string | `"http"` | The service port name. Useful to set a custom service port name if it must follow a scheme (e.g. Istio) |
 | service.public.port | int | `80` |  |
 | service.public.type | string | `"ClusterIP"` |  |
 | statefulset.log.format | string | `"json"` |  |

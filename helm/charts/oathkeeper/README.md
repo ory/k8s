@@ -1,6 +1,6 @@
 # oathkeeper
 
-![Version: 0.20.1](https://img.shields.io/badge/Version-0.20.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.38.9-beta.1](https://img.shields.io/badge/AppVersion-v0.38.9--beta.1-informational?style=flat-square)
+![Version: 0.20.2](https://img.shields.io/badge/Version-0.20.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.38.9-beta.1](https://img.shields.io/badge/AppVersion-v0.38.9--beta.1-informational?style=flat-square)
 
 A Helm chart for deploying ORY Oathkeeper in Kubernetes
 
@@ -21,7 +21,7 @@ A Helm chart for deploying ORY Oathkeeper in Kubernetes
 
 | Repository | Name | Version |
 |------------|------|---------|
-| file://../oathkeeper-maester | oathkeeper-maester(oathkeeper-maester) | 0.20.1 |
+| file://../oathkeeper-maester | oathkeeper-maester(oathkeeper-maester) | 0.20.2 |
 
 ## Values
 
@@ -69,15 +69,17 @@ A Helm chart for deploying ORY Oathkeeper in Kubernetes
 | secret.manage | bool | `true` | set to true for this helm chart to manage the secret -- set to false for this helm chart to NOT manage the secret -- defaults to true |
 | secret.mountPath | string | `"/etc/secrets"` | default mount path for the kubernetes secret |
 | secret.name | string | `""` | name of the secret to use. If empty, defaults to {{ include "oathkeeper.fullname" . }} |
-| service | object | `{"api":{"annotations":{},"enabled":true,"labels":{},"port":4456,"type":"ClusterIP"},"proxy":{"annotations":{},"enabled":true,"labels":{},"port":4455,"type":"ClusterIP"}}` | Configures the Kubernetes service |
-| service.api | object | `{"annotations":{},"enabled":true,"labels":{},"port":4456,"type":"ClusterIP"}` | Configures the Kubernetes service for the api port. |
+| service | object | `{"api":{"annotations":{},"enabled":true,"labels":{},"name":"http","port":4456,"type":"ClusterIP"},"proxy":{"annotations":{},"enabled":true,"labels":{},"name":"http","port":4455,"type":"ClusterIP"}}` | Configures the Kubernetes service |
+| service.api | object | `{"annotations":{},"enabled":true,"labels":{},"name":"http","port":4456,"type":"ClusterIP"}` | Configures the Kubernetes service for the api port. |
 | service.api.annotations | object | `{}` | If you do want to specify annotations, uncomment the following lines, adjust them as necessary, and remove the curly braces after 'annotations:'. |
 | service.api.enabled | bool | `true` | En-/disable the service |
+| service.api.name | string | `"http"` | The service port name. Useful to set a custom service port name if it must follow a scheme (e.g. Istio) |
 | service.api.port | int | `4456` | The service port |
 | service.api.type | string | `"ClusterIP"` | The service type |
-| service.proxy | object | `{"annotations":{},"enabled":true,"labels":{},"port":4455,"type":"ClusterIP"}` | Configures the Kubernetes service for the proxy port. |
+| service.proxy | object | `{"annotations":{},"enabled":true,"labels":{},"name":"http","port":4455,"type":"ClusterIP"}` | Configures the Kubernetes service for the proxy port. |
 | service.proxy.annotations | object | `{}` | If you do want to specify annotations, uncomment the following lines, adjust them as necessary, and remove the curly braces after 'annotations:'. |
 | service.proxy.enabled | bool | `true` | En-/disable the service |
+| service.proxy.name | string | `"http"` | The service port name. Useful to set a custom service port name if it must follow a scheme (e.g. Istio) |
 | service.proxy.port | int | `4455` | The service port |
 | service.proxy.type | string | `"ClusterIP"` | The service type |
 | sidecar | object | `{"envs":{},"image":{"repository":"oryd/oathkeeper-maester","tag":"v0.1.2"}}` | Options for the sidecar |
