@@ -42,7 +42,7 @@ spec:
           emptyDir: {}
         - name: {{ include "oathkeeper.name" . }}-secrets-volume
           secret:
-            secretName: {{ empty .Values.secret.name | ternary (include "oathkeeper.fullname" .) (.Values.secret.name) }}
+            secretName: {{ include "oathkeeper.secretname" . }}
       initContainers:
         - name: init
           image: busybox:1

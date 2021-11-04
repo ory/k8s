@@ -1,6 +1,6 @@
 # hydra
 
-![Version: 0.20.1](https://img.shields.io/badge/Version-0.20.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v1.10.5](https://img.shields.io/badge/AppVersion-v1.10.5-informational?style=flat-square)
+![Version: 0.20.2](https://img.shields.io/badge/Version-0.20.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v1.10.5](https://img.shields.io/badge/AppVersion-v1.10.5-informational?style=flat-square)
 
 A Helm chart for deploying ORY Hydra in Kubernetes
 
@@ -21,7 +21,7 @@ A Helm chart for deploying ORY Hydra in Kubernetes
 
 | Repository | Name | Version |
 |------------|------|---------|
-| file://../hydra-maester | hydra-maester(hydra-maester) | 0.20.1 |
+| file://../hydra-maester | hydra-maester(hydra-maester) | 0.20.2 |
 
 ## Values
 
@@ -74,14 +74,16 @@ A Helm chart for deploying ORY Hydra in Kubernetes
 | nameOverride | string | `""` |  |
 | pdb | object | `{"enabled":false,"spec":{"minAvailable":1}}` | PodDistributionBudget configuration |
 | replicaCount | int | `1` | Number of ORY Hydra members |
-| service.admin | object | `{"annotations":{},"enabled":true,"labels":{},"port":4445,"type":"ClusterIP"}` | Configures the Kubernetes service for the api port. |
+| service.admin | object | `{"annotations":{},"enabled":true,"labels":{},"name":"http","port":4445,"type":"ClusterIP"}` | Configures the Kubernetes service for the api port. |
 | service.admin.annotations | object | `{}` | If you do want to specify annotations, uncomment the following lines, adjust them as necessary, and remove the curly braces after 'annotations:'. |
 | service.admin.enabled | bool | `true` | En-/disable the service |
+| service.admin.name | string | `"http"` | The service port name. Useful to set a custom service port name if it must follow a scheme (e.g. Istio) |
 | service.admin.port | int | `4445` | The service port |
 | service.admin.type | string | `"ClusterIP"` | The service type |
-| service.public | object | `{"annotations":{},"enabled":true,"labels":{},"port":4444,"type":"ClusterIP"}` | Configures the Kubernetes service for the proxy port. |
+| service.public | object | `{"annotations":{},"enabled":true,"labels":{},"name":"http","port":4444,"type":"ClusterIP"}` | Configures the Kubernetes service for the proxy port. |
 | service.public.annotations | object | `{}` | If you do want to specify annotations, uncomment the following lines, adjust them as necessary, and remove the curly braces after 'annotations:'. |
 | service.public.enabled | bool | `true` | En-/disable the service |
+| service.public.name | string | `"http"` | The service port name. Useful to set a custom service port name if it must follow a scheme (e.g. Istio) |
 | service.public.port | int | `4444` | The service port |
 | service.public.type | string | `"ClusterIP"` | The service type |
 | watcher | object | `{"enabled":false,"image":"oryd/k8s-toolbox:0.0.2","mountFile":""}` | Sidecar watcher configuration |
