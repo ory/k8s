@@ -230,6 +230,10 @@ deployment:
   # In some situations it is needed to provides specific permissions to Hydra deployments
   # Like for example installing Hydra on a cluster with a PosSecurityPolicy and Istio.
   # Uncoment if it is needed to provide a ServiceAccount for the Hydra deployment.
+  # -- Specify the serviceAccountName value.
+  # In some situations it is needed to provides specific permissions to Hydra deployments
+  # Like for example installing Hydra on a cluster with a PosSecurityPolicy and Istio.
+  # Uncoment if it is needed to provide a ServiceAccount for the Hydra deployment.
   serviceAccount:
     # -- Specifies whether a service account should be created
     create: true
