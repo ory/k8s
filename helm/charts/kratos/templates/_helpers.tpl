@@ -114,3 +114,13 @@ Generate imagePullPolicy
 {{- end -}}
 {{- end -}}
 
+{{/*
+Create the name of the service account to use
+*/}}
+{{- define "kratos.serviceAccountName" -}}
+{{- if .Values.deployment.serviceAccount.create }}
+{{- default (include "kratos.fullname" .) .Values.deployment.serviceAccount.name }}
+{{- else }}
+{{- default "default" .Values.deployment.serviceAccount.name }}
+{{- end }}
+{{- end }}

@@ -8,7 +8,7 @@ strategy:
   type: RollingUpdate
   rollingUpdate:
     maxSurge: 30%
-    maxUnavailable: 0 
+    maxUnavailable: 0
 
 image:
   # -- ORY KRATOS image
@@ -71,7 +71,7 @@ ingress:
       # kubernetes.io/tls-acme: "true"
     hosts:
       - host: kratos.admin.local.com
-        paths: 
+        paths:
           - path: /
             pathType: ImplementationSpecific
     tls: []
@@ -87,7 +87,7 @@ ingress:
     hosts:
       -
         host: kratos.public.local.com
-        paths: 
+        paths:
           - path: /
             pathType: ImplementationSpecific
     tls: []
@@ -264,6 +264,18 @@ deployment:
   # This secret is not created by the helm chart and must already exist in the namespace.
   # https://kubernetes.io/docs/tasks/inject-data-application/distribute-credentials-secure/#configure-all-key-value-pairs-in-a-secret-as-container-environment-variables
   # environmentSecretsName:
+
+  # -- Specify the serviceAccountName value.
+  # In some situations it is needed to provides specific permissions to Hydra deployments
+  # Like for example installing Hydra on a cluster with a PosSecurityPolicy and Istio.
+  # Uncoment if it is needed to provide a ServiceAccount for the Hydra deployment.
+  serviceAccount:
+    # -- Specifies whether a service account should be created
+    create: true
+    # -- Annotations to add to the service account
+    annotations: {}
+    # -- The name of the service account to use. If not set and create is true, a name is generated using the fullname template
+    name: ""
 
   # https://github.com/kubernetes/kubernetes/issues/57601
   automountServiceAccountToken: true

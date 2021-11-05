@@ -1,11 +1,16 @@
+{{- if .Values.deployment.serviceAccount.create -}}
 ---
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: {{ include "kratos.fullname" . }}
+  name: {{ include "kratos.serviceAccountName" . }}
   labels:
     {{- include "kratos.labels" . | nindent 4 }}
-
+  {{- with .Values.deployment.serviceAccount.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+  
 {{- if .Values.watcher.enabled }}
 ---
 apiVersion: rbac.authorization.k8s.io/v1
@@ -36,4 +41,5 @@ subjects:
   - kind: ServiceAccount
     name: {{ include "kratos.fullname" . }}
     namespace: {{ .Release.Namespace }}
+{{- end }}
 {{- end }}

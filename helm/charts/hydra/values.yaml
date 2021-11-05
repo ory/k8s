@@ -127,7 +127,7 @@ hydra:
         allow_termination_from:
           - 10.0.0.0/8
           - 172.16.0.0/12
-          - 192.168.0.0/16    
+          - 192.168.0.0/16
     # -- The secrets have to be provided as a string slice, example:
     # system:
     #   - "OG5XbmxXa3dYeGplQXpQanYxeEFuRUFa"
@@ -145,7 +145,7 @@ hydra:
   dangerousAllowInsecureRedirectUrls: false
 
 deployment:
-# -- We usually recommend not to specify default resources and to leave this as a conscious choice for the user. 
+# -- We usually recommend not to specify default resources and to leave this as a conscious choice for the user.
 #  This also increases chances charts run on environments with little
 #  resources, such as Minikube. If you do want to specify resources, uncomment the following
 #  lines, adjust them as necessary, and remove the curly braces after 'resources:'.
@@ -157,7 +157,7 @@ deployment:
 #  memory: 128Mi
   resources: {}
 
-  securityContext: 
+  securityContext:
     capabilities:
       drop:
       - ALL
@@ -185,15 +185,15 @@ deployment:
   # lines, adjust them as necessary, and remove the curly braces after 'nodeSelector:'.
   #   foo: bar
 
-  # -- If you want to use Jaeger with agents being deployed in a daemonset, you can 
-  # -- use the following ENV vars to configure the right endpoints using the IP 
-  # -- address of the node the pod has been deployed to. 
+  # -- If you want to use Jaeger with agents being deployed in a daemonset, you can
+  # -- use the following ENV vars to configure the right endpoints using the IP
+  # -- address of the node the pod has been deployed to.
   #
   # extraEnv:
   #   - name: JAEGER_AGENT_HOST
   #     valueFrom:
   #       fieldRef:
-  #         fieldPath: status.hostIP 
+  #         fieldPath: status.hostIP
   #   - name: TRACING_PROVIDERS_JAEGER_LOCAL_AGENT_ADDRESS
   #     value: $(JAEGER_AGENT_HOST):6831
   #   - name: TRACING_PROVIDERS_JAEGER_SAMPLING_SERVER_URL
@@ -230,7 +230,17 @@ deployment:
   # In some situations it is needed to provides specific permissions to Hydra deployments
   # Like for example installing Hydra on a cluster with a PosSecurityPolicy and Istio.
   # Uncoment if it is needed to provide a ServiceAccount for the Hydra deployment.
-  serviceAccountName: ""
+  # -- Specify the serviceAccountName value.
+  # In some situations it is needed to provides specific permissions to Hydra deployments
+  # Like for example installing Hydra on a cluster with a PosSecurityPolicy and Istio.
+  # Uncoment if it is needed to provide a ServiceAccount for the Hydra deployment.
+  serviceAccount:
+    # -- Specifies whether a service account should be created
+    create: true
+    # -- Annotations to add to the service account
+    annotations: {}
+    # -- The name of the service account to use. If not set and create is true, a name is generated using the fullname template
+    name: ""
 
   # -- If you want to mount external volume
   extraVolumes: []

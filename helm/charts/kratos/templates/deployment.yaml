@@ -62,8 +62,8 @@ spec:
             name: {{ include "kratos.fullname" $root }}-template-{{ $method }}-{{ $result }}
         {{- end }}
         {{- end }}
-      automountServiceAccountToken: {{ .Values.automountServiceAccountToken }}
-      serviceAccountName: {{ include "kratos.fullname" . }}
+      automountServiceAccountToken: {{ .Values.deployment.automountServiceAccountToken }}
+      serviceAccountName: {{ include "kratos.serviceAccountName" . }}
       containers:
         {{- if .Values.watcher.enabled }}
         - name: watcher
@@ -86,7 +86,7 @@ spec:
           {{- with .Values.deployment.extraVolumeMounts }}
             {{- toYaml . | nindent 12 }}
           {{- end }}
-        {{- end }}        
+        {{- end }}
         - name: {{ .Chart.Name }}
           image: {{ include "kratos.image" . }}
           imagePullPolicy: {{ include "kratos.imagePullPolicy" . }}

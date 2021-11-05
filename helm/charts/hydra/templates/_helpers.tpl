@@ -147,3 +147,14 @@ Check overrides consistency
 {{- $local := dict "first" true -}}
 {{- range $k, $v := . -}}{{- if not $local.first -}},{{- end -}}{{- $v -}}{{- $_ := set $local "first" false -}}{{- end -}}
 {{- end -}}
+
+{{/*
+Create the name of the service account to use
+*/}}
+{{- define "hydra.serviceAccountName" -}}
+{{- if .Values.deployment.serviceAccount.create }}
+{{- default (include "hydra.fullname" .) .Values.deployment.serviceAccount.name }}
+{{- else }}
+{{- default "default" .Values.deployment.serviceAccount.name }}
+{{- end }}
+{{- end }}

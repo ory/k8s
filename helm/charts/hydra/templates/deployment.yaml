@@ -45,7 +45,7 @@ spec:
         {{- if .Values.deployment.extraVolumes }}
 {{ toYaml .Values.deployment.extraVolumes | indent 8 }}
         {{- end }}
-      serviceAccountName: {{ .Values.deployment.serviceAccountName  | default ( include "hydra.fullname" . ) }}
+      serviceAccountName: {{ include "hydra.serviceAccountName" . }}
       automountServiceAccountToken: {{ .Values.deployment.automountServiceAccountToken }}
       containers:
         {{- if .Values.watcher.enabled }}

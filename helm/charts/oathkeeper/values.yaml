@@ -88,7 +88,7 @@ ingress:
 #     kubernetes.io/tls-acme: "true"
     hosts:
       - host: proxy.oathkeeper.localhost
-        paths: 
+        paths:
           - path: /
             pathType: ImplementationSpecific
 #    tls: []
@@ -113,7 +113,7 @@ ingress:
 #      kubernetes.io/tls-acme: "true"
     hosts:
       - host: api.oathkeeper.localhost
-        paths: 
+        paths:
           - path: /
             pathType: ImplementationSpecific
 #    tls: []
@@ -164,7 +164,7 @@ secret:
   # -- default filename of JWKS (mounted as secret)
   filename: mutator.id_token.jwks.json
 
-deployment: 
+deployment:
   resources: {}
   #  We usually recommend not to specify default resources and to leave this as a conscious
   #  choice for the user. This also increases chances charts run on environments with little
@@ -185,6 +185,18 @@ deployment:
     runAsUser: 1000
     allowPrivilegeEscalation: false
     privileged: false
+
+  # -- Specify the serviceAccountName value.
+  # In some situations it is needed to provides specific permissions to Hydra deployments
+  # Like for example installing Hydra on a cluster with a PosSecurityPolicy and Istio.
+  # Uncoment if it is needed to provide a ServiceAccount for the Hydra deployment.**
+  serviceAccount:
+    # -- Specifies whether a service account should be created
+    create: true
+    # -- Annotations to add to the service account
+    annotations: {}
+    # -- The name of the service account to use. If not set and create is true, a name is generated using the fullname template
+    name: ""
 
   # https://github.com/kubernetes/kubernetes/issues/57601
   automountServiceAccountToken: false
