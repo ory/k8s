@@ -56,6 +56,7 @@ A ORY Kratos Helm chart for Kubernetes
 | pdb | object | `{"enabled":false,"spec":{"minAvailable":1}}` | PodDistributionBudget configuration |
 | replicaCount | int | `1` |  |
 | secret.enabled | bool | `true` | switch to false to prevent creating the secret |
+| secret.nameOverride | string | `""` | Provide custom name of existing secret, or custom name of secret to be created |
 | secret.secretAnnotations."helm.sh/hook" | string | `"pre-install, pre-upgrade"` |  |
 | secret.secretAnnotations."helm.sh/hook-delete-policy" | string | `"before-hook-creation"` |  |
 | secret.secretAnnotations."helm.sh/hook-weight" | string | `"0"` |  |

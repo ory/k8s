@@ -65,10 +65,14 @@ A Helm chart for deploying ORY Oathkeeper in Kubernetes
 | oathkeeper.mutatorIdTokenJWKs | object | `{}` | If set, uses the given JSON Web Key Set as the signing key for the ID Token Mutator. |
 | pdb | object | `{"enabled":false,"spec":{"minAvailable":1}}` | PodDistributionBudget configuration |
 | replicaCount | int | `1` | Number of ORY Oathkeeper members |
+| secret.enabled | bool | `true` | switch to false to prevent creating the secret |
 | secret.filename | string | `"mutator.id_token.jwks.json"` | default filename of JWKS (mounted as secret) |
-| secret.manage | bool | `true` | set to true for this helm chart to manage the secret -- set to false for this helm chart to NOT manage the secret -- defaults to true |
 | secret.mountPath | string | `"/etc/secrets"` | default mount path for the kubernetes secret |
-| secret.name | string | `""` | name of the secret to use. If empty, defaults to {{ include "oathkeeper.fullname" . }} |
+| secret.nameOverride | string | `""` | Provide custom name of existing secret, or custom name of secret to be created |
+| secret.secretAnnotations."helm.sh/hook" | string | `"pre-install, pre-upgrade"` |  |
+| secret.secretAnnotations."helm.sh/hook-delete-policy" | string | `"before-hook-creation"` |  |
+| secret.secretAnnotations."helm.sh/hook-weight" | string | `"0"` |  |
+| secret.secretAnnotations."helm.sh/resource-policy" | string | `"keep"` |  |
 | service | object | `{"api":{"annotations":{},"enabled":true,"labels":{},"name":"http","port":4456,"type":"ClusterIP"},"proxy":{"annotations":{},"enabled":true,"labels":{},"name":"http","port":4455,"type":"ClusterIP"}}` | Configures the Kubernetes service |
 | service.api | object | `{"annotations":{},"enabled":true,"labels":{},"name":"http","port":4456,"type":"ClusterIP"}` | Configures the Kubernetes service for the api port. |
 | service.api.annotations | object | `{}` | If you do want to specify annotations, uncomment the following lines, adjust them as necessary, and remove the curly braces after 'annotations:'. |

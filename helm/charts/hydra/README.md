@@ -54,12 +54,11 @@ A Helm chart for deploying ORY Hydra in Kubernetes
 | deployment.tolerations | list | `[]` | Configure node tolerations. |
 | deployment.tracing | object | `{"datadog":{"enabled":false}}` | Configuration for tracing providers. Only datadog is currently supported through this block. -- If you need to use a different tracing provider, please manually set the configuration values via "hydra.config" or via "deployment.extraEnv". |
 | fullnameOverride | string | `""` | Full chart name override |
-| hydra | object | `{"autoMigrate":false,"config":{"existingSecret":"","secretAnnotations":{"helm.sh/hook":"pre-install","helm.sh/hook-delete-policy":"before-hook-creation"},"secrets":{},"serve":{"admin":{"port":4445},"public":{"port":4444},"tls":{"allow_termination_from":["10.0.0.0/8","172.16.0.0/12","192.168.0.0/16"]}},"urls":{"self":{}}},"dangerousAllowInsecureRedirectUrls":false,"dangerousForceHttp":false}` | Configure ORY Hydra itself |
+| hydra | object | `{"autoMigrate":false,"config":{"secrets":{},"serve":{"admin":{"port":4445},"public":{"port":4444},"tls":{"allow_termination_from":["10.0.0.0/8","172.16.0.0/12","192.168.0.0/16"]}},"urls":{"self":{}}},"dangerousAllowInsecureRedirectUrls":false,"dangerousForceHttp":false}` | Configure ORY Hydra itself |
 | hydra-maester | object | `{"adminService":{"name":"","port":null}}` | Values for the hydra admin service arguments to hydra-maester |
 | hydra-maester.adminService.name | string | `""` | The service name value may need to be set if you use `fullnameOverride` for the parent chart |
 | hydra-maester.adminService.port | string | `nil` | You only need to set this port if you change the value for `service.admin.port` in the parent chart |
-| hydra.config | object | `{"existingSecret":"","secretAnnotations":{"helm.sh/hook":"pre-install","helm.sh/hook-delete-policy":"before-hook-creation"},"secrets":{},"serve":{"admin":{"port":4445},"public":{"port":4444},"tls":{"allow_termination_from":["10.0.0.0/8","172.16.0.0/12","192.168.0.0/16"]}},"urls":{"self":{}}}` | The ORY Hydra configuration. For a full list of available settings, check:   https://github.com/ory/hydra/blob/master/docs/config.yaml |
-| hydra.config.existingSecret | string | `""` | Use a pre-existing secret (see secret.yaml for required fields) |
+| hydra.config | object | `{"secrets":{},"serve":{"admin":{"port":4445},"public":{"port":4444},"tls":{"allow_termination_from":["10.0.0.0/8","172.16.0.0/12","192.168.0.0/16"]}},"urls":{"self":{}}}` | The ORY Hydra configuration. For a full list of available settings, check:   https://github.com/ory/hydra/blob/master/docs/config.yaml |
 | hydra.config.secrets | object | `{}` | The secrets have to be provided as a string slice, example: system:   - "OG5XbmxXa3dYeGplQXpQanYxeEFuRUFa"   - "foo bar 123 456 lorem"   - "foo bar 123 456 lorem 1"   - "foo bar 123 456 lorem 2"   - "foo bar 123 456 lorem 3" |
 | image.pullPolicy | string | `"IfNotPresent"` | Image pull policy |
 | image.repository | string | `"oryd/hydra"` | ORY Hydra image |
@@ -74,6 +73,12 @@ A Helm chart for deploying ORY Hydra in Kubernetes
 | nameOverride | string | `""` |  |
 | pdb | object | `{"enabled":false,"spec":{"minAvailable":1}}` | PodDistributionBudget configuration |
 | replicaCount | int | `1` | Number of ORY Hydra members |
+| secret.enabled | bool | `true` | switch to false to prevent creating the secret |
+| secret.nameOverride | string | `""` | Provide custom name of existing secret, or custom name of secret to be created |
+| secret.secretAnnotations."helm.sh/hook" | string | `"pre-install, pre-upgrade"` |  |
+| secret.secretAnnotations."helm.sh/hook-delete-policy" | string | `"before-hook-creation"` |  |
+| secret.secretAnnotations."helm.sh/hook-weight" | string | `"0"` |  |
+| secret.secretAnnotations."helm.sh/resource-policy" | string | `"keep"` |  |
 | service.admin | object | `{"annotations":{},"enabled":true,"labels":{},"name":"http","port":4445,"type":"ClusterIP"}` | Configures the Kubernetes service for the api port. |
 | service.admin.annotations | object | `{}` | If you do want to specify annotations, uncomment the following lines, adjust them as necessary, and remove the curly braces after 'annotations:'. |
 | service.admin.enabled | bool | `true` | En-/disable the service |
