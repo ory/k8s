@@ -33,7 +33,7 @@ A Helm chart for deploying ORY Hydra in Kubernetes
 | deployment.autoscaling.enabled | bool | `false` |  |
 | deployment.autoscaling.maxReplicas | int | `3` |  |
 | deployment.autoscaling.minReplicas | int | `1` |  |
-| deployment.extraEnv | list | `[]` | If you want to use Jaeger with agents being deployed in a daemonset, you can  -- use the following ENV vars to configure the right endpoints using the IP  -- address of the node the pod has been deployed to.  extraEnv:   - name: JAEGER_AGENT_HOST     valueFrom:       fieldRef:         fieldPath: status.hostIP    - name: TRACING_PROVIDERS_JAEGER_LOCAL_AGENT_ADDRESS     value: $(JAEGER_AGENT_HOST):6831   - name: TRACING_PROVIDERS_JAEGER_SAMPLING_SERVER_URL     value: http://$(JAEGER_AGENT_HOST):5778 |
+| deployment.extraEnv | list | `[]` | If you want to use Jaeger with agents being deployed in a daemonset, you can -- use the following ENV vars to configure the right endpoints using the IP -- address of the node the pod has been deployed to. extraEnv:   - name: JAEGER_AGENT_HOST     valueFrom:       fieldRef:         fieldPath: status.hostIP   - name: TRACING_PROVIDERS_JAEGER_LOCAL_AGENT_ADDRESS     value: $(JAEGER_AGENT_HOST):6831   - name: TRACING_PROVIDERS_JAEGER_SAMPLING_SERVER_URL     value: http://$(JAEGER_AGENT_HOST):5778 |
 | deployment.extraVolumeMounts | list | `[]` |  |
 | deployment.extraVolumes | list | `[]` | If you want to mount external volume |
 | deployment.labels | object | `{}` |  |
@@ -43,14 +43,17 @@ A Helm chart for deploying ORY Hydra in Kubernetes
 | deployment.readinessProbe.failureThreshold | int | `5` |  |
 | deployment.readinessProbe.initialDelaySeconds | int | `30` |  |
 | deployment.readinessProbe.periodSeconds | int | `10` |  |
-| deployment.resources | object | `{}` | We usually recommend not to specify default resources and to leave this as a conscious choice for the user.   This also increases chances charts run on environments with little  resources, such as Minikube. If you do want to specify resources, uncomment the following  lines, adjust them as necessary, and remove the curly braces after 'resources:'.  limits:    cpu: 100m    memory: 128Mi  requests:    cpu: 100m  memory: 128Mi |
+| deployment.resources | object | `{}` | We usually recommend not to specify default resources and to leave this as a conscious choice for the user.  This also increases chances charts run on environments with little  resources, such as Minikube. If you do want to specify resources, uncomment the following  lines, adjust them as necessary, and remove the curly braces after 'resources:'.  limits:    cpu: 100m    memory: 128Mi  requests:    cpu: 100m  memory: 128Mi |
 | deployment.securityContext.allowPrivilegeEscalation | bool | `false` |  |
 | deployment.securityContext.capabilities.drop[0] | string | `"ALL"` |  |
 | deployment.securityContext.privileged | bool | `false` |  |
 | deployment.securityContext.readOnlyRootFilesystem | bool | `true` |  |
 | deployment.securityContext.runAsNonRoot | bool | `true` |  |
 | deployment.securityContext.runAsUser | int | `100` |  |
-| deployment.serviceAccountName | string | `""` | Specify the serviceAccountName value. In some situations it is needed to provides specific permissions to Hydra deployments Like for example installing Hydra on a cluster with a PosSecurityPolicy and Istio. Uncoment if it is needed to provide a ServiceAccount for the Hydra deployment. |
+| deployment.serviceAccount | object | `{"annotations":{},"create":true,"name":""}` | Specify the serviceAccountName value. In some situations it is needed to provides specific permissions to Hydra deployments Like for example installing Hydra on a cluster with a PosSecurityPolicy and Istio. Uncoment if it is needed to provide a ServiceAccount for the Hydra deployment. -- Specify the serviceAccountName value. In some situations it is needed to provides specific permissions to Hydra deployments Like for example installing Hydra on a cluster with a PosSecurityPolicy and Istio. Uncoment if it is needed to provide a ServiceAccount for the Hydra deployment. |
+| deployment.serviceAccount.annotations | object | `{}` | Annotations to add to the service account |
+| deployment.serviceAccount.create | bool | `true` | Specifies whether a service account should be created |
+| deployment.serviceAccount.name | string | `""` | The name of the service account to use. If not set and create is true, a name is generated using the fullname template |
 | deployment.tolerations | list | `[]` | Configure node tolerations. |
 | deployment.tracing | object | `{"datadog":{"enabled":false}}` | Configuration for tracing providers. Only datadog is currently supported through this block. -- If you need to use a different tracing provider, please manually set the configuration values via "hydra.config" or via "deployment.extraEnv". |
 | fullnameOverride | string | `""` | Full chart name override |

@@ -11,7 +11,7 @@ A ORY Kratos Helm chart for Kubernetes
 | affinity | object | `{}` | Configure node affinity |
 | autoscaling | object | `{"enabled":false,"maxReplicas":3,"minReplicas":1,"targetCPUUtilizationPercentage":80}` | Horizontal pod autoscaling configuration |
 | deployment.annotations | object | `{}` |  |
-| deployment.automountServiceAccountToken | bool | `true` | The secret specified here will be used to load environment variables with envFrom. This allows arbitrary environment variables to be provided to the application which is useful for sensitive values which should not be in a configMap. This secret is not created by the helm chart and must already exist in the namespace. https://kubernetes.io/docs/tasks/inject-data-application/distribute-credentials-secure/#configure-all-key-value-pairs-in-a-secret-as-container-environment-variables environmentSecretsName: https://github.com/kubernetes/kubernetes/issues/57601 |
+| deployment.automountServiceAccountToken | bool | `true` |  |
 | deployment.extraEnv | list | `[]` |  |
 | deployment.extraInitContainers | object | `{}` |  |
 | deployment.extraVolumeMounts | list | `[]` |  |
@@ -25,6 +25,10 @@ A ORY Kratos Helm chart for Kubernetes
 | deployment.readinessProbe.initialDelaySeconds | int | `30` |  |
 | deployment.readinessProbe.periodSeconds | int | `10` |  |
 | deployment.resources | object | `{}` |  |
+| deployment.serviceAccount | object | `{"annotations":{},"create":true,"name":""}` | The secret specified here will be used to load environment variables with envFrom. This allows arbitrary environment variables to be provided to the application which is useful for sensitive values which should not be in a configMap. This secret is not created by the helm chart and must already exist in the namespace. https://kubernetes.io/docs/tasks/inject-data-application/distribute-credentials-secure/#configure-all-key-value-pairs-in-a-secret-as-container-environment-variables environmentSecretsName: -- Specify the serviceAccountName value. In some situations it is needed to provides specific permissions to Hydra deployments Like for example installing Hydra on a cluster with a PosSecurityPolicy and Istio. Uncoment if it is needed to provide a ServiceAccount for the Hydra deployment. |
+| deployment.serviceAccount.annotations | object | `{}` | Annotations to add to the service account |
+| deployment.serviceAccount.create | bool | `true` | Specifies whether a service account should be created |
+| deployment.serviceAccount.name | string | `""` | The name of the service account to use. If not set and create is true, a name is generated using the fullname template |
 | deployment.tolerations | list | `[]` | Configure node tolerations. |
 | deployment.tracing | object | `{"datadog":{"enabled":false}}` | Configuration for tracing providers. Only datadog is currently supported through this block. If you need to use a different tracing provider, please manually set the configuration values via "kratos.config" or via "deployment.extraEnv". |
 | fullnameOverride | string | `""` |  |
