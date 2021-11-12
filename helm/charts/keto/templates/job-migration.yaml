@@ -34,7 +34,7 @@ spec:
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         command: [ "keto" ]
-        args: [ "migrate", "up", "-y", "--all-namespaces", "--config", "/etc/config/keto.yaml" ]
+        args: [ "migrate", "up", "-y", "--config", "/etc/config/keto.yaml" ]
         volumeMounts:
           - name: {{ include "keto.name" . }}-config-volume
             mountPath: /etc/config
