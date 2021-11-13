@@ -1,6 +1,6 @@
 # keto
 
-![Version: 0.20.2](https://img.shields.io/badge/Version-0.20.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.6.0](https://img.shields.io/badge/AppVersion-v0.6.0-informational?style=flat-square)
+![Version: 0.21.0](https://img.shields.io/badge/Version-0.21.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.7.0](https://img.shields.io/badge/AppVersion-v0.7.0-informational?style=flat-square)
 
 Access Control Policies as a Server
 
@@ -34,7 +34,7 @@ Access Control Policies as a Server
 | fullnameOverride | string | `""` |  |
 | image.pullPolicy | string | `"IfNotPresent"` | Default image pull policy |
 | image.repository | string | `"oryd/keto"` | Ory KETO image |
-| image.tag | string | `"v0.6.0-alpha.1-sqlite"` |  |
+| image.tag | string | `"v0.7.0-alpha.1-sqlite"` |  |
 | imagePullSecrets | list | `[]` |  |
 | ingress.read.annotations | object | `{}` |  |
 | ingress.read.className | string | `""` |  |
