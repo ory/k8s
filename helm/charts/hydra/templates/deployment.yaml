@@ -157,6 +157,10 @@ spec:
             {{- toYaml .Values.deployment.securityContext | nindent 12 }}
           lifecycle:
             {{- toYaml .Values.deployment.lifecycle | nindent 12 }}
+      {{- if .Values.deployment.extraInitContainers }}
+      initContainers:
+{{ tpl .Values.deployment.extraInitContainers . | indent 8 }}
+      {{- end }}
       {{- if .Values.priorityClassName }}
       priorityClassName: {{ .Values.priorityClassName }}
       {{- end }}
