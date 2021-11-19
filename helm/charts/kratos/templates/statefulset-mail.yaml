@@ -28,6 +28,10 @@ spec:
         app.kubernetes.io/name: {{ include "kratos.fullname" . }}-courier
         app.kubernetes.io/instance: {{ .Release.Name }}      
     spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
       containers:
         - name: {{ include "kratos.fullname" . }}-courier
           image: {{ include "kratos.image" . }}
