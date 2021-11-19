@@ -121,27 +121,23 @@ spec:
                 secretKeyRef:
                   name: {{ include "kratos.secretname" . }}
                   key: dsn
-            {{- if .Values.kratos.config.secrets.default }}
             - name: SECRETS_DEFAULT
               valueFrom:
                 secretKeyRef:
                   name: {{ include "kratos.secretname" . }}
                   key: secretsDefault
-            {{- end}}
-            {{- if .Values.kratos.config.secrets.cookie }}
+                  optional: true
             - name: SECRETS_COOKIE
               valueFrom:
                 secretKeyRef:
                   name: {{ include "kratos.secretname" . }}
                   key: secretsCookie
-            {{- end}}
-            {{- if .Values.kratos.config.courier.smtp.connection_uri }}
+                  optional: true
             - name: COURIER_SMTP_CONNECTION_URI
               valueFrom:
                 secretKeyRef:
                   name: {{ include "kratos.secretname" . }}
                   key: smtpConnectionURI
-            {{- end}}
             {{- if .Values.kratos.dev_disable_api_flow_enforcement }}
             - name: DEV_DISABLE_API_FLOW_ENFORCEMENT
               value: "true"
