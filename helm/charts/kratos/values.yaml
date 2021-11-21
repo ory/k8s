@@ -158,6 +158,9 @@ kratos:
 
     secrets: {}
 
+    # -- Opt out of software quality assurance (https://www.ory.sh/docs/ecosystem/sqa).
+    sqa-opt-out: false
+
 deployment:
    # -- Configure the probes for when the deployment is considered ready and ongoing health check
   livenessProbe:

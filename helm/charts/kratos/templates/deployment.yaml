@@ -90,13 +90,16 @@ spec:
         - name: {{ .Chart.Name }}
           image: {{ include "kratos.image" . }}
           imagePullPolicy: {{ include "kratos.imagePullPolicy" . }}
-          command: 
+          command:
             - kratos
           args:
             - serve
             - all
             {{- if .Values.kratos.development }}
             - --dev
+            {{- end }}
+            {{- if .Values.kratos.config.sqa-opt-out }}
+            - --sqa-opt-out
             {{- end }}
             - --config
             - /etc/config/kratos.yaml
