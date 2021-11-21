@@ -98,7 +98,7 @@ spec:
             {{- if .Values.kratos.development }}
             - --dev
             {{- end }}
-            {{- if .Values.kratos.config.sqa-opt-out }}
+            {{- if .Values.kratos.sqaOptOut }}
             - --sqa-opt-out
             {{- end }}
             - --config
