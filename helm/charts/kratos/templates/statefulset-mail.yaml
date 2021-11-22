@@ -62,6 +62,24 @@ spec:
                 secretKeyRef:
                   name: {{ include "kratos.secretname" . }}
                   key: dsn
+            - name: SECRETS_DEFAULT
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "kratos.secretname" . }}
+                  key: secretsDefault
+                  optional: true
+            - name: SECRETS_COOKIE
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "kratos.secretname" . }}
+                  key: secretsCookie
+                  optional: true
+            - name: SECRETS_CIPHER
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "kratos.secretname" . }}
+                  key: secretsCipher
+                  optional: true
             - name: COURIER_SMTP_CONNECTION_URI
               valueFrom:
                 secretKeyRef:

@@ -1,4 +1,4 @@
-SHELL=/bin/bash -euxo pipefail
+SHELL=/bin/bash -euo pipefail
 
 export PATH := .bin:${PATH}
 export PWD := $(shell pwd)

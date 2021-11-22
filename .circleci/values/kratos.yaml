@@ -41,6 +41,8 @@ kratos:
          }
       }
   config:
+    # ciphers: 
+    #   algorithm: aes
     dsn: "postgres://ory:ory@postgresql.default.svc.cluster.local/ory?sslmode=disable&max_conn_lifetime=10s"
     selfservice:
       default_browser_return_url: http://127.0.0.1:4455/

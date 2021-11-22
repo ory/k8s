@@ -68,6 +68,15 @@ Generate the secrets.cookie value
 {{- end -}}
 
 {{/*
+Generate the secrets.cipher value
+*/}}
+{{- define "kratos.secrets.cipher" -}}
+{{- if .Values.kratos.config.secrets.cipher -}}
+{{- .Values.kratos.config.secrets.cipher }}
+{{- end -}}
+{{- end -}}
+
+{{/*
 Generate the configmap data, redacting secrets
 */}}
 {{- define "kratos.configmap" -}}
