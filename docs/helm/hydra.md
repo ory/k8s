@@ -18,13 +18,13 @@ must be set:
 > `hydra.existingSecret` is empty, a secret is generated automatically. The
 > generated secret is cryptographically secure, and 32 signs long.
 
-If you wish to install ORY Hydra with an in-memory database, a cryptographically
+If you wish to install ORY Hydra with a postgres based database, a cryptographically
 strong secret, a Login and Consent provider located at `https://my-idp/` run:
 
 ```bash
 $ helm install \
     --set 'hydra.config.secrets.system=$(LC_ALL=C tr -dc 'A-Za-z0-9' < /dev/urandom | base64 | head -c 32)' \
-    --set 'hydra.config.dsn=memory' \
+    --set 'hydra.config.dsn=postgres://foo:bar@baz:1234/db' \
     --set 'hydra.config.urls.self.issuer=https://my-hydra/' \
     --set 'hydra.config.urls.login=https://my-idp/login' \
     --set 'hydra.config.urls.consent=https://my-idp/consent' \
@@ -67,6 +67,21 @@ $ helm install \
     ory/hydra
 ```
 
+### Local in memory mode
+
+You can also run ORY Hydra with a in memory database. However, this requires changing the image tag to the `-sqlite`, which supports this mode of operation.
+
+> **NOTE:*** This is recommended only for testing, and not intended for production use, as each replica will have its own db, and the data do not persist an application restart
+
+For example:
+
+```bash
+$ helm install \
+    --set 'hydra.config.dsn=memory' \
+    --set 'image.tag=latest-sqlite'
+    ory/hydra
+```
+
 ### With SQL Database
 
 To run ORY Hydra against a SQL database, set the connection string. For example:
@@ -74,7 +89,7 @@ To run ORY Hydra against a SQL database, set the connection string. For example:
 ```bash
 $ helm install \
     ...
-    --set 'dsn=postgres://foo:bar@baz:1234/db' \
+    --set 'hydra.config.dsn=postgres://foo:bar@baz:1234/db' \
     ory/hydra
 ```
 
@@ -102,7 +117,7 @@ documented
 ```bash
 $ helm install \
     ...
-    --set 'dsn=postgres://foo:bar@pg-sqlproxy-gcloud-sqlproxy:5432/db' \
+    --set 'hydra.config.dsn=postgres://foo:bar@pg-sqlproxy-gcloud-sqlproxy:5432/db' \
     ory/hydra
 ```
 
@@ -172,7 +187,7 @@ the ORY Hydra Helm Chart
 ```bash
 $ helm install \
     --set 'hydra.config.secrets.system=$(LC_ALL=C tr -dc 'A-Za-z0-9' < /dev/urandom | base64 | head -c 32)' \
-    --set 'hydra.config.dsn=memory' \
+    --set 'hydra.config.dsn=postgres://foo:bar@baz:1234/db' \
     --set 'hydra.config.urls.self.issuer=http://public.hydra.localhost/' \
     --set 'hydra.config.urls.login=http://example-idp.localhost/login' \
     --set 'hydra.config.urls.consent=http://example-idp.localhost/consent' \

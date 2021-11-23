@@ -52,7 +52,7 @@ kratos:
     log:
       level: debug
     secrets:
-      session:
+      default:
         - PLEASE-CHANGE-ME-I-AM-VERY-INSECURE
     hashers:
       argon2:
