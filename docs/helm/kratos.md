@@ -7,7 +7,7 @@ The ORY Kratos Helm Chart helps you deploy ORY Kratos on Kubernetes using Helm.
 To install ORY Kratos, the following values must be set
 ([documentation](https://www.ory.sh/kratos/docs/reference/configuration)):
 
-- `kratos.config.secrets.session`
+- `kratos.config.secrets.default`
 - `kratos.config.dsn`
 
 You can create a `values.yaml` file to set the required values, like so:
@@ -17,7 +17,7 @@ kratos:
   config:
     dsn: postgres://foo:bar@pg-sqlproxy-gcloud-sqlproxy:5432/db
     secrets:
-      session:
+      default:
         - dolore occaecat nostrud Ut
         - sit et commodoaute ut voluptate consectetur Duis
 ```
