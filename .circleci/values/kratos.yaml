@@ -77,3 +77,5 @@ deployment:
       image: "alpine:latest"
       command: ["/bin/sh"]
       args: ["-c", "echo hello, world!"]
+  extraArgs:
+    - --sqa-opt-out
