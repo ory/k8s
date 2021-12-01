@@ -12,7 +12,8 @@ A ORY Kratos Helm chart for Kubernetes
 | autoscaling | object | `{"enabled":false,"maxReplicas":3,"minReplicas":1,"targetCPUUtilizationPercentage":80}` | Horizontal pod autoscaling configuration |
 | deployment.annotations | object | `{}` |  |
 | deployment.automountServiceAccountToken | bool | `true` |  |
-| deployment.extraEnv | list | `[]` |  |
+| deployment.extraArgs | list | `[]` | Array of extra argumetns to be passed down to the deployment. Kubernetes args format is expected - --foo - --sqa-opt-out |
+| deployment.extraEnv | list | `[]` | Array of extra envs to be passed to the deployment. Kubernetes format is expected - name: FOO   value: BAR |
 | deployment.extraInitContainers | object | `{}` |  |
 | deployment.extraVolumeMounts | list | `[]` |  |
 | deployment.extraVolumes | list | `[]` | If you want to mount external volume For example, mount a secret containing Certificate root CA to verify database TLS connection. |

@@ -37,7 +37,7 @@ A Helm chart for deploying ORY Oathkeeper Rule Controller in Kubernetes
 | global | object | `{"ory":{"oathkeeper":{"maester":{"mode":"controller"}}}}` | Mode for oathkeeper controller -- Two possible modes are: controller or sidecar |
 | image.pullPolicy | string | `"IfNotPresent"` | Image pull policy |
 | image.repository | string | `"oryd/oathkeeper-maester"` | ORY Oathkeeper Rule Controller image |
-| image.tag | string | `"v0.1.5"` | ORY Oathkeeper Rule Controller version |
+| image.tag | string | `"v0.1.6"` | ORY Oathkeeper Rule Controller version |
 | pdb | object | `{"enabled":false,"spec":{"minAvailable":1}}` | PodDistributionBudget configuration |
 | replicaCount | int | `1` | Number of controller replicas in deployment mode |
 | rulesConfigmapNamespace | string | `""` |  |

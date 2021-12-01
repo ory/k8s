@@ -25,7 +25,7 @@ A Helm chart for Kubernetes
 | forwardedProto | string | `nil` |  |
 | image.pullPolicy | string | `"IfNotPresent"` | Image pull policy |
 | image.repository | string | `"oryd/hydra-maester"` | Ory Hydra-maester image |
-| image.tag | string | `"v0.0.24"` | Ory Hydra-maester version |
+| image.tag | string | `"v0.0.25"` | Ory Hydra-maester version |
 | pdb | object | `{"enabled":false,"spec":{"minAvailable":1}}` | PodDistributionBudget configuration |
 | priorityClassName | string | `""` | Pod priority |
 | replicaCount | int | `1` | Number of replicas in deployment |
