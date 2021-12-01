@@ -53,28 +53,53 @@ Generate the dsn value
 Generate the secrets.default value
 */}}
 {{- define "kratos.secrets.default" -}}
-{{- if .Values.kratos.config.secrets.default -}}
-{{- .Values.kratos.config.secrets.default }}
-{{- end -}}
+  {{- if .Values.kratos.config.secrets.default -}}
+    {{- if kindIs "slice" .Values.kratos.config.secrets.default -}}
+      {{- if gt (len .Values.kratos.config.secrets.default) 1 -}}
+        "{{- join "\",\"" .Values.kratos.config.secrets.default -}}"
+      {{- else -}}
+        {{- join "" .Values.kratos.config.secrets.default -}}
+      {{- end -}}
+    {{- else -}}
+      {{- fail "Expected kratos.config.secrets.default to be a list of strings" -}}
+    {{- end -}}
+  {{- end -}}
 {{- end -}}
 
 {{/*
 Generate the secrets.cookie value
 */}}
 {{- define "kratos.secrets.cookie" -}}
-{{- if .Values.kratos.config.secrets.cookie -}}
-{{- .Values.kratos.config.secrets.cookie }}
-{{- end -}}
+  {{- if .Values.kratos.config.secrets.cookie -}}
+    {{- if kindIs "slice" .Values.kratos.config.secrets.cookie -}}
+      {{- if gt (len .Values.kratos.config.secrets.cookie) 1 -}}
+        "{{- join "\",\"" .Values.kratos.config.secrets.cookie -}}"
+      {{- else -}}
+        {{- join "" .Values.kratos.config.secrets.cookie -}}
+      {{- end -}}
+    {{- else -}}
+      {{- fail "Expected kratos.config.secrets.cookie to be a list of strings" -}}
+    {{- end -}}
+  {{- end -}}  
 {{- end -}}
 
 {{/*
 Generate the secrets.cipher value
 */}}
 {{- define "kratos.secrets.cipher" -}}
-{{- if .Values.kratos.config.secrets.cipher -}}
-{{- .Values.kratos.config.secrets.cipher }}
+  {{- if .Values.kratos.config.secrets.cipher -}}
+    {{- if kindIs "slice" .Values.kratos.config.secrets.cipher -}}
+      {{- if gt (len .Values.kratos.config.secrets.cipher) 1 -}}
+        "{{- join "\",\"" .Values.kratos.config.secrets.cipher -}}"
+      {{- else -}}
+        {{- join "" .Values.kratos.config.secrets.cipher -}}
+      {{- end -}}
+    {{- else -}}
+      {{- fail "Expected kratos.config.secrets.cipher to be a list of strings" -}}
+    {{- end -}}
+  {{- end -}}  
 {{- end -}}
-{{- end -}}
+
 
 {{/*
 Generate the configmap data, redacting secrets
