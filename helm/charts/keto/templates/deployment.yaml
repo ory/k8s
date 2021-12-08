@@ -4,6 +4,9 @@ metadata:
   name: {{ include "keto.fullname" . }}
   labels:
     {{- include "keto.labels" . | nindent 4 }}
+    {{- with .Values.extraLabels }}
+      {{- toYaml . | nindent 4 }}
+    {{- end }}
 spec:
 {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
@@ -19,6 +22,9 @@ spec:
     {{- end }}
       labels:
         {{- include "keto.selectorLabels" . | nindent 8 }}
+        {{- with .Values.extraLabels }}
+          {{- toYaml . | nindent 8 }}
+        {{- end }}
     spec:
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
