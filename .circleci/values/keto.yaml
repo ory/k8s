@@ -8,3 +8,5 @@ ingress:
     enabled: true
   write:
     enabled: true
+extraLabels:
+  ory.sh/test: keto
