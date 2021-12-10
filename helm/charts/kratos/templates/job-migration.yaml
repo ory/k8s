@@ -9,6 +9,9 @@ metadata:
   {{- end }}
   labels:
 {{ include "kratos.labels" . | indent 4 }}
+  {{- with .Values.deployment.labels }}
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
   annotations:
     {{- with .Values.job.annotations }}
       {{- toYaml . | nindent 4 }}
@@ -18,11 +21,17 @@ metadata:
     helm.sh/hook-delete-policy: "before-hook-creation,hook-succeeded"
 spec:
   template:
-    {{- with .Values.job.annotations }}
     metadata: 
+      {{- with .Values.job.annotations }}
       annotations:
         {{- toYaml . | nindent 8 }}
-    {{- end }}
+      {{- end }}
+      labels:
+        app.kubernetes.io/name: {{ include "kratos.fullname" . }}-automigrate
+        app.kubernetes.io/instance: {{ .Release.Name }}
+        {{- with .Values.deployment.labels }}
+          {{- toYaml . | nindent 8 }}
+        {{- end }}
     spec:
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
