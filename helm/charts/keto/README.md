@@ -1,6 +1,6 @@
 # keto
 
-![Version: 0.21.2](https://img.shields.io/badge/Version-0.21.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.7.0](https://img.shields.io/badge/AppVersion-v0.7.0-informational?style=flat-square)
+![Version: 0.21.3](https://img.shields.io/badge/Version-0.21.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.7.0](https://img.shields.io/badge/AppVersion-v0.7.0-informational?style=flat-square)
 
 Access Control Policies as a Server
 
@@ -28,9 +28,10 @@ Access Control Policies as a Server
 | autoscaling.minReplicas | int | `1` |  |
 | autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
 | deployment | object | `{"livenessProbe":{"failureThreshold":5,"initialDelaySeconds":30,"periodSeconds":10},"readinessProbe":{"failureThreshold":5,"initialDelaySeconds":30,"periodSeconds":10}}` | Configure the probes for when the deployment is considered ready and ongoing health check |
-| extraEnv | list | `[]` |  |
-| extraVolumeMounts | list | `[]` |  |
-| extraVolumes | list | `[]` |  |
+| extraEnv | list | `[]` | Array of extra Envs to be added to the deployment. K8s format expected - name: FOO   value: BAR |
+| extraLabels | object | `{}` | Extra labels to be added to the deployment, and pods. K8s object format expected foo: bar my.special.label/type: value |
+| extraVolumeMounts | list | `[]` | Array of extra VolumeMounts to be added to the deployment. K8s format expected - name: my-volume   mountPath: /etc/secrets/my-secret   readOnly: true |
+| extraVolumes | list | `[]` | Array of extra Volumes to be added to the deployment. K8s format expected - name: my-volume   secret:     secretName: my-secret |
 | fullnameOverride | string | `""` |  |
 | image.pullPolicy | string | `"IfNotPresent"` | Default image pull policy |
 | image.repository | string | `"oryd/keto"` | Ory KETO image |
