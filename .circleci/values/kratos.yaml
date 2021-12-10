@@ -84,3 +84,5 @@ deployment:
       args: ["-c", "echo hello, world!"]
   extraArgs:
     - --sqa-opt-out
+  labels:
+    ory.sh/test: kratos
