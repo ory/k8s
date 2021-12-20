@@ -1,10 +1,10 @@
-# ORY Kratos Helm Chart
+# Ory Kratos Helm Chart
 
-The ORY Kratos Helm Chart helps you deploy ORY Kratos on Kubernetes using Helm.
+The Ory Kratos Helm Chart helps you deploy Ory Kratos on Kubernetes using Helm.
 
 ## Installation
 
-To install ORY Kratos, the following values must be set
+To install Ory Kratos, the following values must be set
 ([documentation](https://www.ory.sh/kratos/docs/reference/configuration)):
 
 - `kratos.config.secrets.default`
@@ -22,7 +22,7 @@ kratos:
         - sit et commodoaute ut voluptate consectetur Duis
 ```
 
-Install ORY Kratos by running this command:
+Install Ory Kratos by running this command:
 
 ```bash
 $ helm install \
@@ -31,10 +31,10 @@ $ helm install \
     ory/kratos
 ```
 
-## Configuration
+## Ory Kratos Configuration
 
 You can pass your
-[ORY Kratos configuration file](https://www.ory.sh/kratos/docs/reference/configuration)
+[Ory Kratos configuration file](https://www.ory.sh/kratos/docs/reference/configuration)
 by creating a yaml file with key `kratos.config`
 
 ```yaml
@@ -53,6 +53,10 @@ and passing that as a value override to helm:
 ```bash
 $ helm install -f ./path/to/kratos-config.yaml ory/kratos
 ```
+
+## Helm Chart Configuration
+
+Please go to [k8s.ory.sh/helm/kratos](https://k8s.ory.sh/helm/kratos.html) for the full documentation on the Ory Kratos Helm Chart.
 
 Additionally, the following extra settings are available:
 
