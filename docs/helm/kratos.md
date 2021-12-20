@@ -61,9 +61,19 @@ Additionally, the following extra settings are available:
 - `secret.nameOverride` (string): Lets you override the name of the secret to be used
 - `ingress.admin.enabled` (bool): If enabled, an ingress is created on admin endpoint
 - `ingress.public.enabled` (bool): If enabled, an ingress is created on public endpoint
-- `deployment.environmentSecretsName` (string): Allows you to set arbitrary environment variables from [a secret containing a list of keys and values](https://kubernetes.io/docs/tasks/inject-data-application/distribute-credentials-secure/#configure-all-key-value-pairs-in-a-secret-as-container-environment-variables). (This secret is not created by the Helm chart)
-
 Check values.yaml for more configuration options.
+
+### Custom Secrets
+
+```
+secret:
+  # -- switch to false to prevent creating the secret
+  enabled: false
+  # -- Provide custom name of existing secret, or custom name of secret to be created
+  nameOverride: "my-custom-secret"
+```
+
+>Remember: In this case, you are responsible for supplying the required values, which need to be in the same format that the created secret uses. For more details please take a look [here](https://github.com/ory/k8s/blob/master/helm/charts/kratos/templates/secrets.yaml#L15)
 
 ## Upgrade
 
