@@ -56,7 +56,7 @@ $ helm install -f ./path/to/kratos-config.yaml ory/kratos
 
 ## Helm Chart Configuration
 
-Have a look at the [Ory Kratos Helm Chart README](https://github.com/ory/k8s/tree/master/helm/charts/kratos) for the full list of Helm Chart values.
+For the full list of chart values, please refer to the [Ory Kratos Helm Chart README](https://github.com/ory/k8s/tree/master/helm/charts/kratos), or the [values.yaml](https://github.com/ory/k8s/blob/master/helm/charts/kratos/values.yaml) directly 
 
 Additionally, the following extra settings are available:
 
