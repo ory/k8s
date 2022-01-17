@@ -203,6 +203,9 @@ deployment:
     periodSeconds: 10
     failureThreshold: 5
 
+  # -- Add custom annotations to the deployment
+  annotations: {}
+
 # -- Watcher sidecar configuration
 watcher:
   enabled: false
