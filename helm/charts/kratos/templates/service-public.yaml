@@ -5,6 +5,7 @@ metadata:
   name: {{ include "kratos.fullname" . }}-public
   namespace: {{ .Release.Namespace }}
   labels:
+    app.kubernetes.io/component: public
 {{ include "kratos.labels" . | indent 4 }}
   {{- with .Values.service.public.annotations }}
   annotations:

@@ -5,6 +5,7 @@ metadata:
   name: {{ include "kratos.fullname" . }}-admin
   namespace: {{ .Release.Namespace }}
   labels:
+    app.kubernetes.io/component: admin
 {{ include "kratos.labels" . | indent 4 }}
   {{- with .Values.service.admin.annotations }}
   annotations:
