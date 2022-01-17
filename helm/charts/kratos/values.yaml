@@ -30,6 +30,8 @@ service:
     port: 80
     # -- The service port name. Useful to set a custom service port name if it must follow a scheme (e.g. Istio)
     name: http
+    # -- Provide custom labels. Use the same syntax as for annotations.
+    labels: {}
     # -- If you do want to specify annotations, uncomment the following
     # lines, adjust them as necessary, and remove the curly braces after 'annotations:'.
     annotations: {}
@@ -41,6 +43,8 @@ service:
     port: 80
     # -- The service port name. Useful to set a custom service port name if it must follow a scheme (e.g. Istio)
     name: http
+    # -- Provide custom labels. Use the same syntax as for annotations.
+    labels: {}
     # -- If you do want to specify annotations, uncomment the following
     # lines, adjust them as necessary, and remove the curly braces after 'annotations:'.
     annotations: {}
