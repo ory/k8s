@@ -7,6 +7,10 @@ metadata:
     {{- with .Values.extraLabels }}
       {{- toYaml . | nindent 4 }}
     {{- end }}
+  annotations:
+    {{- with .Values.deployment.annotations }}
+      {{- toYaml . | nindent 4 }}
+    {{- end }}
 spec:
 {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}

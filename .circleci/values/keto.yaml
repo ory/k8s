@@ -10,3 +10,6 @@ ingress:
     enabled: true
 extraLabels:
   ory.sh/test: keto
+deployment:
+  annotations:
+    ory.sh/test-annotations: "true"
