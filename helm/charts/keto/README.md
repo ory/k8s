@@ -27,7 +27,8 @@ Access Control Policies as a Server
 | autoscaling.maxReplicas | int | `100` |  |
 | autoscaling.minReplicas | int | `1` |  |
 | autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
-| deployment | object | `{"livenessProbe":{"failureThreshold":5,"initialDelaySeconds":30,"periodSeconds":10},"readinessProbe":{"failureThreshold":5,"initialDelaySeconds":30,"periodSeconds":10}}` | Configure the probes for when the deployment is considered ready and ongoing health check |
+| deployment | object | `{"annotations":{},"livenessProbe":{"failureThreshold":5,"initialDelaySeconds":30,"periodSeconds":10},"readinessProbe":{"failureThreshold":5,"initialDelaySeconds":30,"periodSeconds":10}}` | Configure the probes for when the deployment is considered ready and ongoing health check |
+| deployment.annotations | object | `{}` | Add custom annotations to the deployment |
 | extraEnv | list | `[]` | Array of extra Envs to be added to the deployment. K8s format expected - name: FOO   value: BAR |
 | extraLabels | object | `{}` | Extra labels to be added to the deployment, and pods. K8s object format expected foo: bar my.special.label/type: value |
 | extraVolumeMounts | list | `[]` | Array of extra VolumeMounts to be added to the deployment. K8s format expected - name: my-volume   mountPath: /etc/secrets/my-secret   readOnly: true |
