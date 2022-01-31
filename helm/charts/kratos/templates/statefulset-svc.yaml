@@ -8,6 +8,7 @@ metadata:
   namespace: {{ .Release.Namespace }}
   {{- end }}
   labels:
+    app.kubernetes.io/component: courier
 {{ include "kratos.labels" . | indent 4 }}
     {{- with .Values.deployment.labels }}
       {{- toYaml . | nindent 4 }}
