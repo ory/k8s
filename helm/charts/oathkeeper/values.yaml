@@ -48,13 +48,12 @@ service:
     name: http
     # -- If you do want to specify annotations, uncomment the following
     # lines, adjust them as necessary, and remove the curly braces after 'annotations:'.
-    annotations: {}
     # kubernetes.io/ingress.class: nginx
     # kubernetes.io/tls-acme: "true"
+    annotations: {}
+    # -- If you do want to specify additional labels, uncomment the following lines, adjust them as necessary, and remove the curly braces after 'labels:'.
+    # e.g.  app: oathkeeper
     labels: {}
-    #      If you do want to specify additional labels, uncomment the following
-    #      lines, adjust them as necessary, and remove the curly braces after 'labels:'.
-    #      e.g.  app: oathkeeper
 
   # -- Configures the Kubernetes service for the api port.
   api:
@@ -68,13 +67,31 @@ service:
     name: http
     # -- If you do want to specify annotations, uncomment the following
     # lines, adjust them as necessary, and remove the curly braces after 'annotations:'.
-    annotations: {}
     # kubernetes.io/ingress.class: nginx
     # kubernetes.io/tls-acme: "true"
+    annotations: {}
+    # -- If you do want to specify additional labels, uncomment the following lines, adjust them as necessary, and remove the curly braces after 'labels:'.
+    # e.g.  app: oathkeeper
     labels: {}
-    #      If you do want to specify additional labels, uncomment the following
-    #      lines, adjust them as necessary, and remove the curly braces after 'labels:'.
-    #      e.g.  app: oathkeeper
+
+  # -- Configures the Kubernetes service for the metrics port.
+  metrics:
+    # -- En-/disable the service
+    enabled: true
+    # -- The service type
+    type: ClusterIP
+    # -- The service port
+    port: 80
+    # -- The service port name. Useful to set a custom service port name if it must follow a scheme (e.g. Istio)
+    name: http
+    # -- If you do want to specify annotations, uncomment the following
+    # lines, adjust them as necessary, and remove the curly braces after 'annotations:'.
+    # kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
+    annotations: {}
+    # -- If you do want to specify additional labels, uncomment the following lines, adjust them as necessary, and remove the curly braces after 'labels:'.
+    # e.g.  app: oathkeeper
+    labels: {}
 
 # -- Configure ingress
 ingress:

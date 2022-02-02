@@ -106,6 +106,9 @@ spec:
             - name: http-proxy
               containerPort: {{ .Values.oathkeeper.config.serve.proxy.port }}
               protocol: TCP
+            - name: http-metrics
+              protocol: TCP
+              containerPort: 9000
           livenessProbe:
             httpGet:
               path: /health/alive

@@ -7,6 +7,7 @@ metadata:
   namespace: {{ .Release.Namespace }}
   {{- end }}
   labels:
+    app.kubernetes.io/component: api
 {{ include "oathkeeper.labels" . | indent 4 }}
     {{- with .Values.service.api.labels }}
       {{- toYaml . | nindent 4 }}
