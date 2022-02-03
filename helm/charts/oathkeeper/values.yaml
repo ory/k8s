@@ -151,6 +151,8 @@ oathkeeper:
         port: 4455
       api:
         port: 4456
+    prometheus:
+      port: 9000
   # -- If set, uses the given JSON Web Key Set as the signing key for the ID Token Mutator.
   mutatorIdTokenJWKs: {}
   # -- If set, uses the given access rules.

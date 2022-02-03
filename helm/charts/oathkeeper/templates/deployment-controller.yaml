@@ -108,7 +108,7 @@ spec:
               protocol: TCP
             - name: http-metrics
               protocol: TCP
-              containerPort: 9000
+              containerPort: {{ .Values.oathkeeper.config.prometheus.port }}
           livenessProbe:
             httpGet:
               path: /health/alive
