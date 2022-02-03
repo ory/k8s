@@ -1,3 +1,5 @@
-postgresqlUsername: ory
-postgresqlPassword: ory
-postgresqlDatabase: ory
+global:
+  postgresql:
+    auth:
+      database: ory
+      postgresPassword: ory
