@@ -1,0 +1,55 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "oathkeeper.fullname" . }}-metrics
+  {{- if .Release.Namespace }}
+  namespace: {{ .Release.Namespace }}
+  {{- end }}
+  labels:
+    app.kubernetes.io/component: metrics
+{{ include "oathkeeper.labels" . | indent 4 }}
+    {{- with .Values.service.metrics.labels }}
+      {{- toYaml . | nindent 4 }}
+    {{- end }}
+  {{- with .Values.service.metrics.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  type: {{ .Values.service.metrics.type }}
+  ports:
+    - port: {{ .Values.service.metrics.port }}
+      targetPort: http-metrics
+      protocol: TCP
+      name: {{ .Values.service.metrics.name }} 
+  selector:
+    app.kubernetes.io/name: {{ include "oathkeeper.name" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+{{- if .Capabilities.APIVersions.Has "monitoring.coreos.com/v1" }}
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: {{ include "oathkeeper.fullname" . }}-metrics
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app.kubernetes.io/component: metrics
+{{ include "oathkeeper.labels" . | indent 4 }}
+    {{- with .Values.service.metrics.labels }}
+      {{- toYaml . | nindent 4 }}
+    {{- end }}
+  {{- with .Values.service.metrics.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  endpoints:
+  - path: /metrics/prometheus
+    port: {{ .Values.service.metrics.name }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ include "oathkeeper.name" . }}
+      app.kubernetes.io/instance: {{ .Release.Name }}
+      app.kubernetes.io/component: metrics
+{{- end -}}
