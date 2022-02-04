@@ -25,7 +25,11 @@ deployment:
       image: "alpine:latest"
       command: ["/bin/sh"]
       args: ["-c", "echo hello, world!"]
-
+  extraContainers: |
+    - name: "hello-world-electric-boogaloo"
+      image: "alpine:latest"
+      command: ["/bin/sh"]
+      args: ["-c", "sleep infinity"]
 # deployment:
 #  extraVolumes:
 #   - name: my-volume
