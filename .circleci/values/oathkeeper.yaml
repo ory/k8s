@@ -22,6 +22,17 @@ ingress:
       kubernetes.io/tls-acme: "true"
   api:
     enabled: true
+deployment:
+  extraInitContainers: |
+    - name: "hello-world"
+      image: "alpine:latest"
+      command: ["/bin/sh"]
+      args: ["-c", "echo hello, world!"]
+  extraContainers: |
+    - name: "sidecar"
+      image: "alpine:latest"
+      command: ["/bin/sh"]
+      args: ["-c", "sleep 10"]
 oathkeeper:
   accessRules: |
     [

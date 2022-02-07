@@ -83,7 +83,7 @@ deployment:
       command: ["/bin/sh"]
       args: ["-c", "echo hello, world!"]
   extraContainers: |
-    - name: "hello-world-electric-boogaloo"
+    - name: "sidecar"
       image: "alpine:latest"
       command: ["/bin/sh"]
       args: ["-c", "sleep infinity"]
@@ -91,3 +91,12 @@ deployment:
     - --sqa-opt-out
   labels:
     ory.sh/test: kratos
+
+job:
+  extraContainers: |
+    - name: "sidecar"
+      image: "alpine:latest"
+      command: ["/bin/sh"]
+      args: ["-c", "sleep 10"]
+
+  shareProcessNamespace: true

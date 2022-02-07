@@ -50,12 +50,19 @@ spec:
               secretKeyRef:
                 name: {{ include "kratos.secretname" . }}
                 key: dsn
+      {{- if .Values.job.lifecycle }}
+        lifecycle:
+{{ tpl .Values.job.lifecycle . | indent 10 }}
+      {{- end }}
         securityContext:
           {{- toYaml .Values.securityContext | nindent 10 }}
         {{- if .Values.deployment.extraVolumeMounts }}
         volumeMounts:
 {{ toYaml .Values.deployment.extraVolumeMounts | indent 10 }}
          {{- end }}
+      {{- if .Values.job.extraContainers }}
+{{ tpl .Values.job.extraContainers . | indent 6 }}
+      {{- end }}
       restartPolicy: Never
       {{- if .Values.deployment.extraInitContainers }}
       initContainers:
@@ -65,5 +72,6 @@ spec:
       volumes:
 {{ toYaml .Values.deployment.extraVolumes | indent 8 }}
       {{- end }}
+      shareProcessNamespace: {{ .Values.job.shareProcessNamespace }}
   backoffLimit: 10
 {{- end }}

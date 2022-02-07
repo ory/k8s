@@ -26,20 +26,22 @@ deployment:
       command: ["/bin/sh"]
       args: ["-c", "echo hello, world!"]
   extraContainers: |
-    - name: "hello-world-electric-boogaloo"
+    - name: "sidecar"
       image: "alpine:latest"
       command: ["/bin/sh"]
       args: ["-c", "sleep infinity"]
-# deployment:
-#  extraVolumes:
-#   - name: my-volume
-#     secret:
-#       secretName: my-secret
-#   extraVolumeMounts:
-#   - name: my-volume
-#     mountPath: /etc/secrets/my-secret
-#     readOnly: true
 
-# watcher:
-#   enabled: true
-#   mountFile: /etc/secrets/my-secret/foo
+job:
+  extraInitContainers: |
+    - name: "hello-world"
+      image: "alpine:latest"
+      command: ["/bin/sh"]
+      args: ["-c", "echo hello, world!"]
+
+  extraContainers: |
+    - name: "sidecar"
+      image: "alpine:latest"
+      command: ["/bin/sh"]
+      args: ["-c", "sleep 10"]
+
+  shareProcessNamespace: true
