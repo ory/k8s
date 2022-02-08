@@ -78,6 +78,9 @@ spec:
             - name: http-write
               containerPort: {{ .Values.keto.config.serve.write.port }}
               protocol: TCP
+            - name: http-metrics
+              containerPort: {{ .Values.keto.config.serve.metrics.port }}
+              protocol: TCP
           livenessProbe:
             httpGet:
               path: /health/alive

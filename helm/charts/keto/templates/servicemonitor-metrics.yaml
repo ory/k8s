@@ -1,0 +1,24 @@
+{{- if and (.Capabilities.APIVersions.Has "monitoring.coreos.com/v1") (.Values.service.metrics.enabled) }}
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: {{ include "keto.fullname" . }}-metrics
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app.kubernetes.io/component: metrics
+{{ include "keto.labels" . | indent 4 }}
+  {{- with .Values.service.metrics.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  endpoints:
+  - path: /metrics/prometheus
+    port: {{ .Values.service.metrics.name }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ include "keto.name" . }}
+      app.kubernetes.io/instance: {{ .Release.Name }}
+      app.kubernetes.io/component: metrics
+{{- end -}}
