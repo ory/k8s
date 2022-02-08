@@ -240,6 +240,12 @@ deployment:
   #   mountPath: /etc/secrets/my-secret
   #   readOnly: true
 
+  # -- If you want to add extra sidecar containers. 
+  extraContainers: {}
+  # extraContainers: |
+  #  - name: ...
+  #    image: ...
+
   # -- Configuration for tracing providers. Only datadog is currently supported through this block.
   # If you need to use a different tracing provider, please manually set the configuration values
   # via "oathkeeper.config" or via "deployment.extraEnv".

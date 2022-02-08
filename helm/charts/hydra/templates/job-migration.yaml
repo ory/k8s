@@ -39,6 +39,10 @@ spec:
               secretKeyRef:
                 name: {{ include "hydra.secretname" . }}
                 key: dsn
+        {{- if .Values.job.lifecycle }}
+        lifecycle:
+{{ tpl .Values.job.lifecycle . | indent 10 }}
+        {{- end }}
         securityContext:
           {{- toYaml .Values.deployment.securityContext | nindent 10 }}
         {{- if .Values.deployment.extraVolumeMounts }}
@@ -46,10 +50,14 @@ spec:
 {{ toYaml .Values.deployment.extraVolumeMounts | indent 10 }}
          {{- end }}
       {{- if .Values.deployment.extraInitContainers }}
+      {{- if .Values.job.extraContainers }}
+{{ tpl .Values.job.extraContainers . | indent 6 }}
+        {{- end }}
       initContainers:
 {{ tpl .Values.deployment.extraInitContainers . | indent 8 }}
       {{- end }}
       restartPolicy: Never
+      shareProcessNamespace: {{ .Values.job.shareProcessNamespace }}
       {{- if .Values.deployment.extraVolumes }}
       volumes:
 {{ toYaml .Values.deployment.extraVolumes | indent 8 }}

@@ -13,3 +13,17 @@ extraLabels:
 deployment:
   annotations:
     ory.sh/test-annotations: "true"
+  extraContainers: |
+    - name: "sidecar"
+      image: "alpine:latest"
+      command: ["/bin/sh"]
+      args: ["-c", "sleep infinity"]
+
+job:
+  extraContainers: |
+    - name: "sidecar"
+      image: "alpine:latest"
+      command: ["/bin/sh"]
+      args: ["-c", "sleep 10"]
+      
+  shareProcessNamespace: true

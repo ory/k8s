@@ -45,8 +45,28 @@ securityContext:
   allowPrivilegeEscalation: false
   privileged: false
 
+# -- Values for initialization job
 job:
+  # -- If you do want to specify annotations, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'annotations:'.
   annotations: {}
+  # kubernetes.io/ingress.class: nginx
+  # kubernetes.io/tls-acme: "true"
+
+  # -- If you want to add extra sidecar containers. 
+  extraContainers: {}
+  # extraContainers: |
+  #  - name: ...
+  #    image: ...
+
+  # -- If you want to add lifecycle hooks. 
+  lifecycle: {}
+  # lifecycle: |
+  #   preStop:
+  #     exec:
+  #       command: [...]
+
+  shareProcessNamespace: false
 
 ingress:
   read:
@@ -141,6 +161,12 @@ autoscaling:
   # targetMemoryUtilizationPercentage: 80
 
 nodeSelector: {}
+
+# -- If you want to add extra sidecar containers. 
+extraContainers: {}
+# extraContainers: |
+#  - name: ...
+#    image: ...
 
 # -- Array of extra Envs to be added to the deployment. K8s format expected
 # - name: FOO

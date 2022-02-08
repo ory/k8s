@@ -124,6 +124,9 @@ spec:
               readOnly: false
           securityContext:
             {{- toYaml .Values.deployment.securityContext | nindent 12 }}
+        {{- if .Values.deployment.extraContainers }}
+{{ tpl .Values.deployment.extraContainers . | indent 8 }}
+        {{- end }}
       serviceAccountName: {{ default "maester" .Values.maester.nameOverride }}-account
       automountServiceAccountToken: {{ .Values.deployment.automountServiceAccountToken }}
       {{- with .Values.deployment.nodeSelector }}

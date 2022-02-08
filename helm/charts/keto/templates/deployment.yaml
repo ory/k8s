@@ -122,6 +122,9 @@ spec:
           {{- with .Values.extraVolumeMounts }}
             {{- toYaml . | nindent 12 }}
           {{- end }}
+        {{- if .Values.deployment.extraContainers }}
+{{ tpl .Values.deployment.extraContainers . | indent 8 }}
+        {{- end }}
       volumes:
         - name: {{ include "keto.name" . }}-config-volume
           configMap:

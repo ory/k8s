@@ -25,17 +25,23 @@ deployment:
       image: "alpine:latest"
       command: ["/bin/sh"]
       args: ["-c", "echo hello, world!"]
+  extraContainers: |
+    - name: "sidecar"
+      image: "alpine:latest"
+      command: ["/bin/sh"]
+      args: ["-c", "sleep infinity"]
 
-# deployment:
-#  extraVolumes:
-#   - name: my-volume
-#     secret:
-#       secretName: my-secret
-#   extraVolumeMounts:
-#   - name: my-volume
-#     mountPath: /etc/secrets/my-secret
-#     readOnly: true
+job:
+  extraInitContainers: |
+    - name: "hello-world"
+      image: "alpine:latest"
+      command: ["/bin/sh"]
+      args: ["-c", "echo hello, world!"]
 
-# watcher:
-#   enabled: true
-#   mountFile: /etc/secrets/my-secret/foo
+  extraContainers: |
+    - name: "sidecar"
+      image: "alpine:latest"
+      command: ["/bin/sh"]
+      args: ["-c", "sleep 10"]
+
+  shareProcessNamespace: true
