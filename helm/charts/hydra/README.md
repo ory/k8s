@@ -33,6 +33,7 @@ A Helm chart for deploying ORY Hydra in Kubernetes
 | deployment.autoscaling.enabled | bool | `false` |  |
 | deployment.autoscaling.maxReplicas | int | `3` |  |
 | deployment.autoscaling.minReplicas | int | `1` |  |
+| deployment.extraContainers | object | `{}` | If you want to add extra sidecar containers. |
 | deployment.extraEnv | list | `[]` | If you want to use Jaeger with agents being deployed in a daemonset, you can -- use the following ENV vars to configure the right endpoints using the IP -- address of the node the pod has been deployed to. extraEnv:   - name: JAEGER_AGENT_HOST     valueFrom:       fieldRef:         fieldPath: status.hostIP   - name: TRACING_PROVIDERS_JAEGER_LOCAL_AGENT_ADDRESS     value: $(JAEGER_AGENT_HOST):6831   - name: TRACING_PROVIDERS_JAEGER_SAMPLING_SERVER_URL     value: http://$(JAEGER_AGENT_HOST):5778 |
 | deployment.extraInitContainers | object | `{}` | If you want to add extra init containers. |
 | deployment.extraVolumeMounts | list | `[]` |  |
@@ -72,7 +73,10 @@ A Helm chart for deploying ORY Hydra in Kubernetes
 | ingress.admin.enabled | bool | `false` | En-/Disable the api ingress. |
 | ingress.public | object | `{"annotations":{},"className":"","enabled":false,"hosts":[{"host":"public.hydra.localhost","paths":[{"path":"/","pathType":"ImplementationSpecific"}]}]}` | Configure ingress for the proxy port. |
 | ingress.public.enabled | bool | `false` | En-/Disable the proxy ingress. |
-| job.annotations | object | `{}` |  |
+| job | object | `{"annotations":{},"extraContainers":{},"lifecycle":{},"shareProcessNamespace":false}` | Values for initialization job |
+| job.annotations | object | `{}` | If you do want to specify annotations, uncomment the following lines, adjust them as necessary, and remove the curly braces after 'annotations:'. |
+| job.extraContainers | object | `{}` | If you want to add extra sidecar containers.  |
+| job.lifecycle | object | `{}` | If you want to add lifecycle hooks.  |
 | maester | object | `{"enabled":true}` | Configures controller setup |
 | nameOverride | string | `""` |  |
 | pdb | object | `{"enabled":false,"spec":{"minAvailable":1}}` | PodDistributionBudget configuration |

@@ -31,6 +31,7 @@ A Helm chart for deploying ORY Oathkeeper in Kubernetes
 | demo | bool | `false` | If enabled, a demo deployment with exemplary access rules and JSON Web Key Secrets will be generated. |
 | deployment.annotations | object | `{}` |  |
 | deployment.automountServiceAccountToken | bool | `false` |  |
+| deployment.extraContainers | object | `{}` | If you want to add extra sidecar containers.  |
 | deployment.extraEnv | list | `[]` |  |
 | deployment.extraVolumeMounts | list | `[]` | Extra volume mounts, allows mounting the extraVolumes to the container. |
 | deployment.extraVolumes | list | `[]` | Extra volumes you can attach to the pod. |

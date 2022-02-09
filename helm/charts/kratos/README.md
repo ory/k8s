@@ -13,6 +13,7 @@ A ORY Kratos Helm chart for Kubernetes
 | deployment.annotations | object | `{}` |  |
 | deployment.automountServiceAccountToken | bool | `true` |  |
 | deployment.extraArgs | list | `[]` | Array of extra argumetns to be passed down to the deployment. Kubernetes args format is expected - --foo - --sqa-opt-out |
+| deployment.extraContainers | object | `{}` | If you want to add extra sidecar containers.  |
 | deployment.extraEnv | list | `[]` | Array of extra envs to be passed to the deployment. Kubernetes format is expected - name: FOO   value: BAR |
 | deployment.extraInitContainers | object | `{}` |  |
 | deployment.extraVolumeMounts | list | `[]` |  |
@@ -51,7 +52,10 @@ A ORY Kratos Helm chart for Kubernetes
 | ingress.public.hosts[0].paths[0].path | string | `"/"` |  |
 | ingress.public.hosts[0].paths[0].pathType | string | `"ImplementationSpecific"` |  |
 | ingress.public.tls | list | `[]` |  |
-| job | object | `{"annotations":{},"ttlSecondsAfterFinished":60}` | Values for initialization job |
+| job | object | `{"annotations":{},"extraContainers":{},"lifecycle":{},"shareProcessNamespace":false}` | Values for initialization job |
+| job.annotations | object | `{}` | If you do want to specify annotations, uncomment the following lines, adjust them as necessary, and remove the curly braces after 'annotations:'. |
+| job.extraContainers | object | `{}` | If you want to add extra sidecar containers.  |
+| job.lifecycle | object | `{}` | If you want to add lifecycle hooks.  |
 | kratos.autoMigrate | bool | `false` | Enable the initialization job. Required to work with a DB |
 | kratos.config | object | `{"courier":{"smtp":{}},"secrets":{},"serve":{"admin":{"port":4434},"public":{"port":4433}}}` | You can customize the emails kratos is sending (also uncomment config.courier.template_override_path below)  Note: If you are setting config.courier.template_override_path you need to supply overrides for all templates.        It is currently not possible to overrides only selected methods.  emailTemplates:    recovery:      valid:        subject: Recover access to your account        body: |-          Hi, please recover access to your account by clicking the following link:          <a href="{{ .RecoveryURL }}">{{ .RecoveryURL }}</a>        plainBody: Hi, please recover access to your account by clicking the following link: {{ .RecoveryURL }}      invalid:        subject: Account access attempted        body: |-          Hi, you (or someone else) entered this email address when trying to recover access to an account.          However, this email address is not on our database of registered users and therefore the attempt has failed. If this was you, check if you signed up using a different address. If this was not you, please ignore this email.        plainBody: Hi, you (or someone else) entered this email address when trying to recover access to an account.    verification:      valid:        subject: Please verify your email address        body: |-          Hi, please verify your account by clicking the following link:          <a href="{{ .VerificationURL }}">{{ .VerificationURL }}</a>        plainBody: Hi, please verify your account by clicking the following link: {{ .VerificationURL }}      invalid:        subject:        body:        plainBody: |
 | kratos.development | bool | `false` |  |

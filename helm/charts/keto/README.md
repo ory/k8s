@@ -29,6 +29,7 @@ Access Control Policies as a Server
 | autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
 | deployment | object | `{"annotations":{},"livenessProbe":{"failureThreshold":5,"initialDelaySeconds":30,"periodSeconds":10},"readinessProbe":{"failureThreshold":5,"initialDelaySeconds":30,"periodSeconds":10}}` | Configure the probes for when the deployment is considered ready and ongoing health check |
 | deployment.annotations | object | `{}` | Add custom annotations to the deployment |
+| extraContainers | object | `{}` | If you want to add extra sidecar containers.  |
 | extraEnv | list | `[]` | Array of extra Envs to be added to the deployment. K8s format expected - name: FOO   value: BAR |
 | extraLabels | object | `{}` | Extra labels to be added to the deployment, and pods. K8s object format expected foo: bar my.special.label/type: value |
 | extraVolumeMounts | list | `[]` | Array of extra VolumeMounts to be added to the deployment. K8s format expected - name: my-volume   mountPath: /etc/secrets/my-secret   readOnly: true |
@@ -52,7 +53,10 @@ Access Control Policies as a Server
 | ingress.write.hosts[0].paths[0].path | string | `"/write"` |  |
 | ingress.write.hosts[0].paths[0].pathType | string | `"Prefix"` |  |
 | ingress.write.tls | list | `[]` |  |
-| job.annotations | object | `{}` |  |
+| job | object | `{"annotations":{},"extraContainers":{},"lifecycle":{},"shareProcessNamespace":false}` | Values for initialization job |
+| job.annotations | object | `{}` | If you do want to specify annotations, uncomment the following lines, adjust them as necessary, and remove the curly braces after 'annotations:'. |
+| job.extraContainers | object | `{}` | If you want to add extra sidecar containers.  |
+| job.lifecycle | object | `{}` | If you want to add lifecycle hooks.  |
 | keto.autoMigrate | bool | `false` |  |
 | keto.config.dsn | string | `"memory"` |  |
 | keto.config.namespaces[0].id | int | `0` |  |
