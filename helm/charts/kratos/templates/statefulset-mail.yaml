@@ -93,8 +93,8 @@ spec:
             {{- end }}
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
-        {{- if .Values.job.extraContainers }}
-{{ tpl .Values.job.extraContainers . | indent 8 }}
+        {{- if .Values.deployment.extraContainers }}
+{{ tpl .Values.deployment.extraContainers . | indent 8 }}
         {{- end }}
       {{- if .Values.deployment.extraInitContainers }}
       initContainers:

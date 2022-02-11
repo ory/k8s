@@ -11,7 +11,7 @@ image:
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
   # -- Ory KETO version
-  tag: "v0.7.0-alpha.1-sqlite"
+  tag: "v0.8.0-alpha.0"
 
 imagePullSecrets: []
 nameOverride: ""
@@ -68,6 +68,7 @@ job:
 
   shareProcessNamespace: false
 
+# -- Ingress definitions
 ingress:
   read:
     enabled: false
@@ -100,18 +101,29 @@ ingress:
     #    hosts:
     #      - chart-example.local
 
+# -- Service configurations
 service:
+  # -- Read service
   read:
     enabled: true
     type: ClusterIP
     name: http-read
     port: 80
+  # -- Write service
   write:
     enabled: true
     type: ClusterIP
     name: http-write
     port: 80
+  # -- Metrics service
+  metrics:
+    enabled: false
+    type: ClusterIP
+    name: http-metrics
+    port: 80
+    annotations: {}
 
+# -- Secret management
 secret:
   # -- Switch to false to prevent creating the secret
   enabled: true
@@ -127,14 +139,16 @@ secret:
       helm.sh/hook-delete-policy: "before-hook-creation"
       helm.sh/resource-policy: "keep"
 
+# -- Main keto config. Full documentation can be found in https://www.ory.sh/keto/docs/reference/configuration
 keto:
-  # https://www.ory.sh/keto/docs/reference/configuration
   config:
     serve:
       read:
         port: 4466
       write:
         port: 4467
+      metrics:
+        port: 4468
     namespaces:
       - id: 0
         name: sample
@@ -153,6 +167,7 @@ resources: {}
   #   cpu: 100m
   #   memory: 128Mi
 
+# -- Autoscaling for keto deployment
 autoscaling:
   enabled: false
   minReplicas: 1
