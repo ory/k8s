@@ -32,7 +32,7 @@ deployment:
     - name: "sidecar"
       image: "alpine:latest"
       command: ["/bin/sh"]
-      args: ["-c", "sleep 10"]
+      args: ["-c", "sleep infinity"]
 oathkeeper:
   accessRules: |
     [
