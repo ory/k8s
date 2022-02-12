@@ -1,6 +1,6 @@
 # keto
 
-![Version: 0.21.7](https://img.shields.io/badge/Version-0.21.7-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.7.0](https://img.shields.io/badge/AppVersion-v0.7.0-informational?style=flat-square)
+![Version: 0.21.8](https://img.shields.io/badge/Version-0.21.8-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.8.0](https://img.shields.io/badge/AppVersion-v0.8.0-informational?style=flat-square)
 
 Access Control Policies as a Server
 
@@ -23,10 +23,7 @@ Access Control Policies as a Server
 |-----|------|---------|-------------|
 | affinity | object | `{}` |  |
 | automountServiceAccountToken | bool | `true` |  |
-| autoscaling.enabled | bool | `false` |  |
-| autoscaling.maxReplicas | int | `100` |  |
-| autoscaling.minReplicas | int | `1` |  |
-| autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
+| autoscaling | object | `{"enabled":false,"maxReplicas":100,"minReplicas":1,"targetCPUUtilizationPercentage":80}` | Autoscaling for keto deployment |
 | deployment | object | `{"annotations":{},"livenessProbe":{"failureThreshold":5,"initialDelaySeconds":30,"periodSeconds":10},"readinessProbe":{"failureThreshold":5,"initialDelaySeconds":30,"periodSeconds":10}}` | Configure the probes for when the deployment is considered ready and ongoing health check |
 | deployment.annotations | object | `{}` | Add custom annotations to the deployment |
 | extraContainers | object | `{}` | If you want to add extra sidecar containers.  |
@@ -37,32 +34,14 @@ Access Control Policies as a Server
 | fullnameOverride | string | `""` |  |
 | image.pullPolicy | string | `"IfNotPresent"` | Default image pull policy |
 | image.repository | string | `"oryd/keto"` | Ory KETO image |
-| image.tag | string | `"v0.7.0-alpha.1-sqlite"` |  |
+| image.tag | string | `"v0.8.0-alpha.0"` |  |
 | imagePullSecrets | list | `[]` |  |
-| ingress.read.annotations | object | `{}` |  |
-| ingress.read.className | string | `""` |  |
-| ingress.read.enabled | bool | `false` |  |
-| ingress.read.hosts[0].host | string | `"chart-example.local"` |  |
-| ingress.read.hosts[0].paths[0].path | string | `"/read"` |  |
-| ingress.read.hosts[0].paths[0].pathType | string | `"Prefix"` |  |
-| ingress.read.tls | list | `[]` |  |
-| ingress.write.annotations | object | `{}` |  |
-| ingress.write.className | string | `""` |  |
-| ingress.write.enabled | bool | `false` |  |
-| ingress.write.hosts[0].host | string | `"chart-example.local"` |  |
-| ingress.write.hosts[0].paths[0].path | string | `"/write"` |  |
-| ingress.write.hosts[0].paths[0].pathType | string | `"Prefix"` |  |
-| ingress.write.tls | list | `[]` |  |
+| ingress | object | `{"read":{"annotations":{},"className":"","enabled":false,"hosts":[{"host":"chart-example.local","paths":[{"path":"/read","pathType":"Prefix"}]}],"tls":[]},"write":{"annotations":{},"className":"","enabled":false,"hosts":[{"host":"chart-example.local","paths":[{"path":"/write","pathType":"Prefix"}]}],"tls":[]}}` | Ingress definitions |
 | job | object | `{"annotations":{},"extraContainers":{},"lifecycle":{},"shareProcessNamespace":false}` | Values for initialization job |
 | job.annotations | object | `{}` | If you do want to specify annotations, uncomment the following lines, adjust them as necessary, and remove the curly braces after 'annotations:'. |
 | job.extraContainers | object | `{}` | If you want to add extra sidecar containers.  |
 | job.lifecycle | object | `{}` | If you want to add lifecycle hooks.  |
-| keto.autoMigrate | bool | `false` |  |
-| keto.config.dsn | string | `"memory"` |  |
-| keto.config.namespaces[0].id | int | `0` |  |
-| keto.config.namespaces[0].name | string | `"sample"` |  |
-| keto.config.serve.read.port | int | `4466` |  |
-| keto.config.serve.write.port | int | `4467` |  |
+| keto | object | `{"autoMigrate":false,"config":{"dsn":"memory","namespaces":[{"id":0,"name":"sample"}],"serve":{"metrics":{"port":4468},"read":{"port":4466},"write":{"port":4467}}}}` | Main keto config. Full documentation can be found in https://www.ory.sh/keto/docs/reference/configuration |
 | nameOverride | string | `""` |  |
 | nodeSelector | object | `{}` |  |
 | pdb | object | `{"enabled":false,"spec":{"minAvailable":1}}` | PodDistributionBudget configuration |
@@ -70,21 +49,14 @@ Access Control Policies as a Server
 | podSecurityContext | object | `{}` |  |
 | replicaCount | int | `1` |  |
 | resources | object | `{}` |  |
+| secret | object | `{"enabled":true,"nameOverride":"","secretAnnotations":{"helm.sh/hook":"pre-install, pre-upgrade","helm.sh/hook-delete-policy":"before-hook-creation","helm.sh/hook-weight":"0","helm.sh/resource-policy":"keep"}}` | Secret management |
 | secret.enabled | bool | `true` | Switch to false to prevent creating the secret |
 | secret.nameOverride | string | `""` | Provide custom name of existing secret, or custom name of secret to be created |
-| secret.secretAnnotations."helm.sh/hook" | string | `"pre-install, pre-upgrade"` |  |
-| secret.secretAnnotations."helm.sh/hook-delete-policy" | string | `"before-hook-creation"` |  |
-| secret.secretAnnotations."helm.sh/hook-weight" | string | `"0"` |  |
-| secret.secretAnnotations."helm.sh/resource-policy" | string | `"keep"` |  |
 | securityContext | object | `{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"privileged":false,"readOnlyRootFilesystem":true,"runAsNonRoot":true,"runAsUser":100}` | Default security context configuration |
-| service.read.enabled | bool | `true` |  |
-| service.read.name | string | `"http-read"` |  |
-| service.read.port | int | `80` |  |
-| service.read.type | string | `"ClusterIP"` |  |
-| service.write.enabled | bool | `true` |  |
-| service.write.name | string | `"http-write"` |  |
-| service.write.port | int | `80` |  |
-| service.write.type | string | `"ClusterIP"` |  |
+| service | object | `{"metrics":{"annotations":{},"enabled":false,"name":"http-metrics","port":80,"type":"ClusterIP"},"read":{"enabled":true,"name":"http-read","port":80,"type":"ClusterIP"},"write":{"enabled":true,"name":"http-write","port":80,"type":"ClusterIP"}}` | Service configurations |
+| service.metrics | object | `{"annotations":{},"enabled":false,"name":"http-metrics","port":80,"type":"ClusterIP"}` | Metrics service |
+| service.read | object | `{"enabled":true,"name":"http-read","port":80,"type":"ClusterIP"}` | Read service |
+| service.write | object | `{"enabled":true,"name":"http-write","port":80,"type":"ClusterIP"}` | Write service |
 | serviceAccount.annotations | object | `{}` | Annotations to add to the service account |
 | serviceAccount.create | bool | `true` | Specifies whether a service account should be created |
 | serviceAccount.name | string | `""` | The name of the service account to use. If not set and create is true, a name is generated using the fullname template |
