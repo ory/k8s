@@ -1,2 +1,15 @@
 ingress:
   enabled: true
+
+deployment:
+  extraEnv:
+    - name: FOO
+      value: BAR
+
+  extraVolumes:
+    - name: dummy
+      emptyDir: {}
+
+  extraVolumeMounts:
+    - name: dummy
+      mountPath: /opt/dummy/
