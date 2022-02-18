@@ -66,6 +66,22 @@ deployment:
   #    cpu: 100m
   #  memory: 128Mi
 
+  # -- Array of extra envs to be passed to the deployment. Kubernetes format is expected
+  # - name: FOO
+  #   value: BAR
+  extraEnv: []
+  # -- If you want to mount external volume
+  # For example, mount a secret containing Certificate root CA to verify database
+  # TLS connection.
+  extraVolumes: []
+  # - name: my-volume
+  #   secret:
+  #     secretName: my-secret
+  extraVolumeMounts: []
+  # - name: my-volume
+  #   mountPath: /etc/secrets/my-secret
+  #   readOnly: true
+
   # -- Node labels for pod assignment.
   nodeSelector: {}
   # If you do want to specify node labels, uncomment the following

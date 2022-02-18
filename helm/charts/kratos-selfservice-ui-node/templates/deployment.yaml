@@ -37,6 +37,10 @@ spec:
         {{- toYaml . | nindent 8 }}
     {{- end }}
       automountServiceAccountToken: {{ .Values.deployment.automountServiceAccountToken }}
+      {{- with .Values.deployment.extraVolumes }}
+      volumes:
+{{ toYaml . | indent 6}}
+      {{- end }}
       containers:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
@@ -56,6 +60,13 @@ spec:
             value: {{ .Values.kratosAdminUrl | quote }}
           - name: SECURITY_MODE
             value: {{ .Values.securityMode | quote }}
+          {{- if .Values.deployment.extraEnv }}
+{{ toYaml .Values.deployment.extraEnv | indent 10 }}
+          {{- end }}
+          {{- with .Values.deployment.extraVolumeMounts }}
+          volumeMounts:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
           ports:
             - name: http
               containerPort: 3000
