@@ -86,3 +86,14 @@ Create the name of the service account to use
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
 {{- end }}
+
+{{/*
+Create the name of the service account for the Job to use
+*/}}
+{{- define "keto.job.serviceAccountName" -}}
+{{- if .Values.job.serviceAccount.create }}
+{{- printf "%s-job" (default (include "keto.fullname" .) .Values.job.serviceAccount.name) }}
+{{- else }}
+{{- include "keto.serviceAccountName" . }}
+{{- end }}
+{{- end }}
