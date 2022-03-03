@@ -15,6 +15,9 @@ image:
   # -- Image pull policy
   pullPolicy: IfNotPresent
 
+# -- Image pull secrets
+imagePullSecrets: []
+
 # -- Pod priority
 ## https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/
 priorityClassName: ""
