@@ -11,7 +11,13 @@ kind get kubeconfig > "$cfg"
 
 cd "$( dirname "${BASH_SOURCE[0]}" )/.."
 
-release=$(echo "$1-$(date +%s)" | cut -c 1-31)
+export release=$(echo "$1-$(date +%s)" | cut -c 1-31)
+
+function teardown() {
+    helm delete "${release}"
+}
+
+trap teardown HUP INT QUIT TERM EXIT
 
 echo "---> Installing $1"
 

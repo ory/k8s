@@ -37,7 +37,8 @@ spec:
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      automountServiceAccountToken: {{ .Values.automountServiceAccountToken }}
+      serviceAccountName: {{ include "kratos.job.serviceAccountName" . }}
+      automountServiceAccountToken: {{ .Values.job.automountServiceAccountToken }}
       containers:
       - name: {{ .Chart.Name }}-automigrate
         image: {{ include "kratos.image" . }}
@@ -73,5 +74,5 @@ spec:
 {{ toYaml .Values.deployment.extraVolumes | indent 8 }}
       {{- end }}
       shareProcessNamespace: {{ .Values.job.shareProcessNamespace }}
-  backoffLimit: 10
+  backoffLimit: {{ .Values.job.spec.backoffLimit }}
 {{- end }}

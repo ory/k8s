@@ -31,6 +31,8 @@ spec:
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
     {{- end }}
+      serviceAccountName: {{ include "hydra.job.serviceAccountName" . }}
+      automountServiceAccountToken: {{ .Values.job.automountServiceAccountToken }}
       containers:
       - name: {{ .Chart.Name }}-automigrate
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
@@ -66,5 +68,5 @@ spec:
       volumes:
 {{ toYaml .Values.deployment.extraVolumes | indent 8 }}
       {{- end }}
-  backoffLimit: 10
+  backoffLimit: {{ .Values.job.spec.backoffLimit }}
 {{- end }}
