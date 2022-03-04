@@ -73,10 +73,17 @@ A Helm chart for deploying ORY Hydra in Kubernetes
 | ingress.admin.enabled | bool | `false` | En-/Disable the api ingress. |
 | ingress.public | object | `{"annotations":{},"className":"","enabled":false,"hosts":[{"host":"public.hydra.localhost","paths":[{"path":"/","pathType":"ImplementationSpecific"}]}]}` | Configure ingress for the proxy port. |
 | ingress.public.enabled | bool | `false` | En-/Disable the proxy ingress. |
-| job | object | `{"annotations":{},"extraContainers":{},"lifecycle":{},"shareProcessNamespace":false}` | Values for initialization job |
+| job | object | `{"annotations":{},"automountServiceAccountToken":true,"extraContainers":{},"lifecycle":{},"serviceAccount":{"annotations":{"helm.sh/hook":"pre-install, pre-upgrade","helm.sh/hook-delete-policy":"before-hook-creation","helm.sh/hook-weight":"0"},"create":true,"name":""},"shareProcessNamespace":false,"spec":{"backoffLimit":10}}` | Values for initialization job |
 | job.annotations | object | `{}` | If you do want to specify annotations, uncomment the following lines, adjust them as necessary, and remove the curly braces after 'annotations:'. |
+| job.automountServiceAccountToken | bool | `true` | Set automounting of the SA token |
 | job.extraContainers | object | `{}` | If you want to add extra sidecar containers.  |
 | job.lifecycle | object | `{}` | If you want to add lifecycle hooks.  |
+| job.serviceAccount | object | `{"annotations":{"helm.sh/hook":"pre-install, pre-upgrade","helm.sh/hook-delete-policy":"before-hook-creation","helm.sh/hook-weight":"0"},"create":true,"name":""}` | Specify the serviceAccountName value. In some situations it is needed to provides specific permissions to Hydra deployments Like for example installing Hydra on a cluster with a PosSecurityPolicy and Istio. Uncoment if it is needed to provide a ServiceAccount for the Hydra deployment. |
+| job.serviceAccount.annotations | object | `{"helm.sh/hook":"pre-install, pre-upgrade","helm.sh/hook-delete-policy":"before-hook-creation","helm.sh/hook-weight":"0"}` | Annotations to add to the service account |
+| job.serviceAccount.create | bool | `true` | Specifies whether a service account should be created |
+| job.serviceAccount.name | string | `""` | The name of the service account to use. If not set and create is true, a name is generated using the fullname template |
+| job.shareProcessNamespace | bool | `false` | Set sharing process namespace  |
+| job.spec.backoffLimit | int | `10` | Set job back off limit |
 | maester | object | `{"enabled":true}` | Configures controller setup |
 | nameOverride | string | `""` |  |
 | pdb | object | `{"enabled":false,"spec":{"minAvailable":1}}` | PodDistributionBudget configuration |
