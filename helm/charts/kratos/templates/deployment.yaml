@@ -90,7 +90,7 @@ spec:
         - name: {{ .Chart.Name }}
           image: {{ include "kratos.image" . }}
           imagePullPolicy: {{ include "kratos.imagePullPolicy" . }}
-          command: 
+          command:
             - kratos
           args:
             - serve
@@ -187,7 +187,13 @@ spec:
           readinessProbe:
             {{- toYaml .Values.deployment.readinessProbe | nindent 12 }}
           resources:
-            {{- toYaml .Values.resources | nindent 12 }}
+            {{- if .Values.deployment.resources }}
+              {{- toYaml .Values.deployment.resources | nindent 12 }}
+            {{- else if .Values.resources }}
+              {{- toYaml .Values.resources | nindent 12 }}
+            {{- else }}
+              {}
+            {{- end }}
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
         {{- if .Values.deployment.extraContainers }}
