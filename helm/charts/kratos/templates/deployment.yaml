@@ -1,3 +1,5 @@
+{{- $resources := ternary .Values.deployment.resources .Values.resources (not (empty .Values.deployment.resources )) -}}
+
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -187,13 +189,7 @@ spec:
           readinessProbe:
             {{- toYaml .Values.deployment.readinessProbe | nindent 12 }}
           resources:
-            {{- if .Values.deployment.resources }}
-              {{- toYaml .Values.deployment.resources | nindent 12 }}
-            {{- else if .Values.resources }}
-              {{- toYaml .Values.resources | nindent 12 }}
-            {{- else }}
-              {}
-            {{- end }}
+            {{- toYaml $resources | nindent 12 }}  
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
         {{- if .Values.deployment.extraContainers }}
