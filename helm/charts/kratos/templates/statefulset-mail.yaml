@@ -1,3 +1,5 @@
+{{- $resources := ternary .Values.deployment.resources .Values.resources (not (empty .Values.deployment.resources )) -}}
+
 ---
 apiVersion: apps/v1
 kind: StatefulSet
@@ -91,6 +93,8 @@ spec:
             {{- if .Values.deployment.extraEnv }}
 {{ toYaml .Values.deployment.extraEnv | indent 12 }}
             {{- end }}
+          resources:
+              {{- toYaml $resources | nindent 12 }}
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
         {{- if .Values.deployment.extraContainers }}
