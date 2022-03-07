@@ -1,3 +1,20 @@
+{{- $podAnnotations := ternary .Values.deployment.podAnnotations .Values.podAnnotations (not (empty .Values.deployment.podAnnotations )) -}}
+{{- $podSecurityContext := ternary .Values.deployment.podSecurityContext .Values.podSecurityContext (not (empty .Values.deployment.podSecurityContext )) -}}
+{{- $automountServiceAccountToken := ternary .Values.deployment.automountServiceAccountToken .Values.automountServiceAccountToken (not (empty .Values.deployment.automountServiceAccountToken )) -}}
+{{- $livenessProbe := ternary .Values.deployment.livenessProbe .Values.livenessProbe (not (empty .Values.deployment.livenessProbe )) -}}
+{{- $readinessProbe := ternary .Values.deployment.readinessProbe .Values.readinessProbe (not (empty .Values.deployment.readinessProbe )) -}}
+{{- $autoscaling := ternary .Values.deployment.autoscaling .Values.autoscaling (not (empty .Values.deployment.autoscaling )) -}}
+{{- $tracing := ternary .Values.deployment.tracing .Values.tracing (not (empty .Values.deployment.tracing )) -}}
+{{- $resources := ternary .Values.deployment.resources .Values.resources (not (empty .Values.deployment.resources )) -}}
+{{- $extraContainers := ternary .Values.deployment.extraContainers .Values.extraContainers (not (empty .Values.deployment.extraContainers )) -}}
+{{- $extraLabels := ternary .Values.deployment.extraLabels .Values.extraLabels (not (empty .Values.deployment.extraLabels )) -}}
+{{- $extraVolumeMounts := ternary .Values.deployment.extraVolumeMounts .Values.extraVolumeMounts (not (empty .Values.deployment.extraVolumeMounts )) -}}
+{{- $extraEnv := ternary .Values.deployment.extraEnv .Values.extraEnv (not (empty .Values.deployment.extraEnv )) -}}
+{{- $extraVolumes := ternary .Values.deployment.extraVolumes .Values.extraVolumes (not (empty .Values.deployment.extraVolumes )) -}}
+{{- $nodeSelector := ternary .Values.deployment.nodeSelector .Values.nodeSelector (not (empty .Values.deployment.nodeSelector )) -}}
+{{- $affinity := ternary .Values.deployment.affinity .Values.affinity (not (empty .Values.deployment.affinity )) -}}
+{{- $tolerations := ternary .Values.deployment.tolerations .Values.tolerations (not (empty .Values.deployment.tolerations )) -}}
+
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -12,7 +29,7 @@ metadata:
       {{- toYaml . | nindent 4 }}
     {{- end }}
 spec:
-{{- if not .Values.autoscaling.enabled }}
+{{- if not $autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
 {{- end }}
   selector:
@@ -20,13 +37,13 @@ spec:
       {{- include "keto.selectorLabels" . | nindent 6 }}
   template:
     metadata:
-    {{- with .Values.podAnnotations }}
+    {{- with $podAnnotations }}
       annotations:
         {{- toYaml . | nindent 8 }}
     {{- end }}
       labels:
         {{- include "keto.selectorLabels" . | nindent 8 }}
-        {{- with .Values.extraLabels }}
+        {{- with $extraLabels }}
           {{- toYaml . | nindent 8 }}
         {{- end }}
     spec:
@@ -35,9 +52,9 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       serviceAccountName: {{ include "keto.serviceAccountName" . }}
-      automountServiceAccountToken: {{ .Values.automountServiceAccountToken }}
+      automountServiceAccountToken: {{ $automountServiceAccountToken }}
       securityContext:
-        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+        {{- toYaml $podSecurityContext | nindent 8 }}
       containers:
         {{- if .Values.watcher.enabled }}
         - name: watcher
@@ -57,7 +74,7 @@ spec:
             - name: DEPLOYMENT_SELECTOR
               value: 'app.kubernetes.io/name={{ include "keto.name" . }}'
           volumeMounts:
-          {{- with .Values.extraVolumeMounts }}
+          {{- with $extraVolumeMounts }}
             {{- toYaml . | nindent 12 }}
           {{- end }}
         {{- end }}
@@ -85,25 +102,25 @@ spec:
             httpGet:
               path: /health/alive
               port: http-write
-            {{- toYaml .Values.deployment.livenessProbe | nindent 12 }}
+            {{- toYaml $livenessProbe | nindent 12 }}
           readinessProbe:
             httpGet:
               path: /health/ready
               port: http-write
-          {{- toYaml .Values.deployment.readinessProbe | nindent 12 }}
+          {{- toYaml $readinessProbe | nindent 12 }}
           resources:
-            {{- toYaml .Values.resources | nindent 12 }}
+            {{- toYaml $resources | nindent 12 }}
           env:
-            {{- if .Values.tracing.datadog.enabled }}
+            {{- if $tracing.datadog.enabled }}
             - name: TRACING_PROVIDER
               value: datadog
             - name: DD_ENV
-              value: {{ .Values.tracing.datadog.env | default "none" | quote }}
+              value: {{ $tracing.datadog.env | default "none" | quote }}
             - name: DD_VERSION
-              value: {{ .Values.tracing.datadog.version | default .Chart.AppVersion | quote }}
+              value: {{ $tracing.datadog.version | default .Chart.AppVersion | quote }}
             - name: DD_SERVICE
-              value: {{ .Values.tracing.datadog.service | default "ory/keto" | quote }}
-            {{- if .Values.tracing.datadog.useHostIP }}
+              value: {{ $tracing.datadog.service | default "ory/keto" | quote }}
+            {{- if $tracing.datadog.useHostIP }}
             - name: DD_AGENT_HOST
               valueFrom:
                 fieldRef:
@@ -115,7 +132,7 @@ spec:
                 secretKeyRef:
                   name: {{ include "keto.secretname" . }}
                   key: dsn
-            {{- with .Values.extraEnv }}
+            {{- with $extraEnv }}
               {{- toYaml . | nindent 12 }}
             {{- end }}
           volumeMounts:
@@ -125,25 +142,25 @@ spec:
           {{- with .Values.extraVolumeMounts }}
             {{- toYaml . | nindent 12 }}
           {{- end }}
-        {{- if .Values.deployment.extraContainers }}
-{{ tpl .Values.deployment.extraContainers . | indent 8 }}
+        {{- if $extraContainers }}
+{{ tpl $extraContainers . | indent 8 }}
         {{- end }}
       volumes:
         - name: {{ include "keto.name" . }}-config-volume
           configMap:
             name: {{ include "keto.fullname" . }}-config
-      {{- with .Values.extraVolumes }}
+      {{- with $extraVolumes }}
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      {{- with .Values.nodeSelector }}
+      {{- with $nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      {{- with .Values.affinity }}
+      {{- with $affinity }}
       affinity:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      {{- with .Values.tolerations }}
+      {{- with $tolerations }}
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}

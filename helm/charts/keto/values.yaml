@@ -26,14 +26,6 @@ serviceAccount:
   # If not set and create is true, a name is generated using the fullname template
   name: ""
 
-podAnnotations: {}
-
-podSecurityContext: {}
-  # fsGroup: 2000
-
-# https://github.com/kubernetes/kubernetes/issues/57601
-automountServiceAccountToken: true
-
 # -- Default security context configuration
 securityContext:
   capabilities:
@@ -178,86 +170,19 @@ keto:
     dsn: memory
   autoMigrate: false
 
-resources: {}
-  # We usually recommend not to specify default resources and to leave this as a conscious
-  # choice for the user. This also increases chances charts run on environments with little
-  # resources, such as Minikube. If you do want to specify resources, uncomment the following
-  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
-  # limits:
-  #   cpu: 100m
-  #   memory: 128Mi
-  # requests:
-  #   cpu: 100m
-  #   memory: 128Mi
-
-# -- Autoscaling for keto deployment
-autoscaling:
-  enabled: false
-  minReplicas: 1
-  maxReplicas: 100
-  targetCPUUtilizationPercentage: 80
-  # targetMemoryUtilizationPercentage: 80
-
-nodeSelector: {}
-
-# -- If you want to add extra sidecar containers. 
-extraContainers: {}
-# extraContainers: |
-#  - name: ...
-#    image: ...
-
-# -- Array of extra Envs to be added to the deployment. K8s format expected
-# - name: FOO
-#   value: BAR
-extraEnv: []
-
-# -- Array of extra Volumes to be added to the deployment. K8s format expected
-# - name: my-volume
-#   secret:
-#     secretName: my-secret
-extraVolumes: []
-
-# -- Array of extra VolumeMounts to be added to the deployment. K8s format expected
-# - name: my-volume
-#   mountPath: /etc/secrets/my-secret
-#   readOnly: true
-extraVolumeMounts: []
-
-# -- Extra labels to be added to the deployment, and pods. K8s object format expected
-# foo: bar
-# my.special.label/type: value
-extraLabels: {}
-
-# -- Configuration for tracing providers. Only datadog is currently supported through this block.
-# If you need to use a different tracing provider, please manually set the configuration values
-# via "keto.config" or via "extraEnv".
-tracing:
-  datadog:
-    enabled: false
-
-    # Sets the datadog DD_ENV environment variable. This value indicates the environment where keto is running.
-    # Default value: "none".
-    # env: production
-
-    # Sets the datadog DD_VERSION environment variable. This value indicates the version that keto is running.
-    # Default value: .Chart.AppVersion (i.e. the tag used for the docker image).
-    # version: X.Y.Z
-
-    # Sets the datadog DD_SERVICE environment variable. This value indicates the name of the service running.
-    # Default value: "ory/keto".
-    # service: ory/keto
-
-    # Sets the datadog DD_AGENT_HOST environment variable. This value indicates the host address of the datadog agent.
-    # If set to true, this configuration will automatically set DD_AGENT_HOST to the field "status.hostIP" of the pod.
-    # Default value: false.
-    # useHostIP: true
-
-tolerations: []
-
-affinity: {}
-
 # -- Configure the probes for when the deployment is considered ready and ongoing health check
 deployment:
+
+  # -- Set custom pod annotations
+  podAnnotations: {}
+
+  # -- Set custom security context for pods
+  podSecurityContext: {}
+    # fsGroup: 2000
+
+  # https://github.com/kubernetes/kubernetes/issues/57601
+  automountServiceAccountToken: true
+
   livenessProbe:
     initialDelaySeconds: 30
     periodSeconds: 10
@@ -269,6 +194,85 @@ deployment:
 
   # -- Add custom annotations to the deployment
   annotations: {}
+
+  resources: {}
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
+
+  # -- Autoscaling for keto deployment
+  autoscaling:
+    enabled: false
+    minReplicas: 1
+    maxReplicas: 100
+    targetCPUUtilizationPercentage: 80
+    # targetMemoryUtilizationPercentage: 80
+
+  nodeSelector: {}
+
+  # -- If you want to add extra sidecar containers. 
+  extraContainers: {}
+  # extraContainers: |
+  #  - name: ...
+  #    image: ...
+
+  # -- Array of extra Envs to be added to the deployment. K8s format expected
+  # - name: FOO
+  #   value: BAR
+  extraEnv: []
+
+  # -- Array of extra Volumes to be added to the deployment. K8s format expected
+  # - name: my-volume
+  #   secret:
+  #     secretName: my-secret
+  extraVolumes: []
+
+  # -- Array of extra VolumeMounts to be added to the deployment. K8s format expected
+  # - name: my-volume
+  #   mountPath: /etc/secrets/my-secret
+  #   readOnly: true
+  extraVolumeMounts: []
+
+  # -- Extra labels to be added to the deployment, and pods. K8s object format expected
+  # foo: bar
+  # my.special.label/type: value
+  extraLabels: {}
+
+  # -- Configuration for tracing providers. Only datadog is currently supported through this block.
+  # If you need to use a different tracing provider, please manually set the configuration values
+  # via "keto.config" or via "extraEnv".
+  tracing:
+    datadog:
+      enabled: false
+
+      # Sets the datadog DD_ENV environment variable. This value indicates the environment where keto is running.
+      # Default value: "none".
+      # env: production
+
+      # Sets the datadog DD_VERSION environment variable. This value indicates the version that keto is running.
+      # Default value: .Chart.AppVersion (i.e. the tag used for the docker image).
+      # version: X.Y.Z
+
+      # Sets the datadog DD_SERVICE environment variable. This value indicates the name of the service running.
+      # Default value: "ory/keto".
+      # service: ory/keto
+
+      # Sets the datadog DD_AGENT_HOST environment variable. This value indicates the host address of the datadog agent.
+      # If set to true, this configuration will automatically set DD_AGENT_HOST to the field "status.hostIP" of the pod.
+      # Default value: false.
+      # useHostIP: true
+
+  tolerations: []
+
+  affinity: {}
+
 
 # -- Watcher sidecar configuration
 watcher:

@@ -91,6 +91,14 @@ spec:
             {{- if .Values.deployment.extraEnv }}
 {{ toYaml .Values.deployment.extraEnv | indent 12 }}
             {{- end }}
+          resources:
+            {{- if .Values.statefulSet.resources }}
+              {{- toYaml .Values.statefulSet.resources | nindent 12 }}
+            {{- else if .Values.resources }}
+              {{- toYaml .Values.resources | nindent 12 }}
+            {{- else }}
+              {}
+            {{- end }}
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
         {{- if .Values.deployment.extraContainers }}

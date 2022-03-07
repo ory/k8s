@@ -8,9 +8,9 @@ ingress:
     enabled: true
   write:
     enabled: true
-extraLabels:
-  ory.sh/test: keto
 deployment:
+  extraLabels:
+    ory.sh/test: keto
   annotations:
     ory.sh/test-annotations: "true"
   extraContainers: |
@@ -18,7 +18,6 @@ deployment:
       image: "alpine:latest"
       command: ["/bin/sh"]
       args: ["-c", "sleep infinity"]
-
 job:
   extraContainers: |
     - name: "sidecar"

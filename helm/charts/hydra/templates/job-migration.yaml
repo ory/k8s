@@ -55,12 +55,12 @@ spec:
         volumeMounts:
 {{ toYaml .Values.deployment.extraVolumeMounts | indent 10 }}
          {{- end }}
-      {{- if .Values.deployment.extraInitContainers }}
+      {{- if .Values.job.extraInitContainers }}
       {{- if .Values.job.extraContainers }}
 {{ tpl .Values.job.extraContainers . | indent 6 }}
         {{- end }}
       initContainers:
-{{ tpl .Values.deployment.extraInitContainers . | indent 8 }}
+{{ tpl .Values.job.extraInitContainers . | indent 8 }}
       {{- end }}
       restartPolicy: Never
       shareProcessNamespace: {{ .Values.job.shareProcessNamespace }}
