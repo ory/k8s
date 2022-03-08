@@ -1,6 +1,6 @@
 # kratos
 
-![Version: 0.21.8](https://img.shields.io/badge/Version-0.21.8-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.8.0-alpha.3](https://img.shields.io/badge/AppVersion-v0.8.0--alpha.3-informational?style=flat-square)
+![Version: 0.22.0](https://img.shields.io/badge/Version-0.22.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.8.0-alpha.3](https://img.shields.io/badge/AppVersion-v0.8.0--alpha.3-informational?style=flat-square)
 
 A ORY Kratos Helm chart for Kubernetes
 
@@ -95,6 +95,7 @@ A ORY Kratos Helm chart for Kubernetes
 | service.public.name | string | `"http"` | The service port name. Useful to set a custom service port name if it must follow a scheme (e.g. Istio) |
 | service.public.port | int | `80` |  |
 | service.public.type | string | `"ClusterIP"` |  |
+| statefulSet.resources | object | `{}` |  |
 | statefulset.log.format | string | `"json"` |  |
 | statefulset.log.level | string | `"trace"` |  |
 | strategy | object | `{"rollingUpdate":{"maxSurge":"30%","maxUnavailable":0},"type":"RollingUpdate"}` | Deployment update strategy |
