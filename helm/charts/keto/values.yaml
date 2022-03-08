@@ -41,7 +41,10 @@ securityContext:
 job:
   # -- If you do want to specify annotations, uncomment the following
   # lines, adjust them as necessary, and remove the curly braces after 'annotations:'.
-  annotations: {}
+  annotations:
+    helm.sh/hook-weight: "1"
+    helm.sh/hook: "pre-install, pre-upgrade"
+    helm.sh/hook-delete-policy: "before-hook-creation,hook-succeeded"
   # kubernetes.io/ingress.class: nginx
   # kubernetes.io/tls-acme: "true"
 
