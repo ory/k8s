@@ -21,7 +21,7 @@ metadata:
   name: {{ include "keto.fullname" . }}
   labels:
     {{- include "keto.labels" . | nindent 4 }}
-    {{- with .Values.extraLabels }}
+    {{- with $extraLabels }}
       {{- toYaml . | nindent 4 }}
     {{- end }}
   annotations:
@@ -139,7 +139,7 @@ spec:
             - name: {{ include "keto.name" . }}-config-volume
               mountPath: /etc/config
               readOnly: true
-          {{- with .Values.extraVolumeMounts }}
+          {{- with $extraVolumeMounts }}
             {{- toYaml . | nindent 12 }}
           {{- end }}
         {{- if $extraContainers }}
