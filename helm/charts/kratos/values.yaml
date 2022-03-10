@@ -167,14 +167,14 @@ deployment:
    # -- Configure the probes for when the deployment is considered ready and ongoing health check
   livenessProbe:
     httpGet:
-      path: /health/alive
+      path: /admin/health/alive
       port: http-admin
     initialDelaySeconds: 30
     periodSeconds: 10
     failureThreshold: 5
   readinessProbe:
     httpGet:
-      path: /health/ready
+      path: /admin/health/ready
       port: http-admin
     initialDelaySeconds: 30
     periodSeconds: 10
