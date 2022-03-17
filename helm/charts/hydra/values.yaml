@@ -304,6 +304,8 @@ job:
   # kubernetes.io/ingress.class: nginx
   # kubernetes.io/tls-acme: "true"
 
+  extraEnv: []
+
   # -- If you want to add extra sidecar containers. 
   extraContainers: {}
   # extraContainers: |
