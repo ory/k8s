@@ -40,11 +40,14 @@ spec:
         command: ["hydra"]
         args: ["migrate", "sql", "-e", "--yes"]
         env:
+          {{- $dsn := include "hydra.dsn" . -}}
+          {{- if $dsn }}
           - name: DSN
             valueFrom:
               secretKeyRef:
                 name: {{ include "hydra.secretname" . }}
                 key: dsn
+          {{- end }}
         {{- if .Values.job.lifecycle }}
         lifecycle:
 {{ tpl .Values.job.lifecycle . | indent 10 }}
