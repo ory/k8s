@@ -133,11 +133,14 @@ spec:
             - name: URLS_SELF_ISSUER
               value: {{ $issuer | quote }}
             {{- end }}
+            {{- $dsn := include "hydra.dsn" . -}}
+            {{- if $dsn }}
             - name: DSN
               valueFrom:
                 secretKeyRef:
                   name: {{ include "hydra.secretname" . }}
                   key: dsn
+            {{- end }}
             - name: SECRETS_SYSTEM
               valueFrom:
                 secretKeyRef:
