@@ -45,7 +45,7 @@ spec:
                   name: http-admin
               {{- else }}
               serviceName: {{ $fullName }}-admin
-              servicePort: http
+              servicePort: http-admin
               {{- end }}
           {{- end }}
     {{- end }}

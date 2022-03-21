@@ -45,7 +45,7 @@ spec:
                   name: http-public
               {{- else }}
               serviceName: {{ $fullName }}-public
-              servicePort: http
+              servicePort: http-public
               {{- end }}
           {{- end }}
     {{- end }}
