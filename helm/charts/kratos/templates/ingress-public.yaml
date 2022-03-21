@@ -42,7 +42,7 @@ spec:
               service:
                 name: {{ $fullName }}-public
                 port:
-                  name: http-public 
+                  name: http-public
               {{- else }}
               serviceName: {{ $fullName }}-public
               servicePort: http
