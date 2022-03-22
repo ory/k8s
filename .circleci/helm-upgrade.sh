@@ -6,6 +6,7 @@ cfg=$(mktemp)
 export cfg
 export KUBECONFIG="$cfg"
 export TIMEOUT="120s"
+export BASE_BRANCH="master"
 
 kind get kubeconfig > "$cfg"
 
@@ -19,10 +20,10 @@ function teardown() {
 
 trap teardown HUP INT QUIT TERM EXIT
 
-echo "---> Installing $1"
+echo "---> Installing $1 from ${BASE_BRANCH}"
 
 set +e
-helm install -f ".circleci/values/$1.yaml" "${release}" "ory/$1" --wait --timeout="${TIMEOUT}"
+helm install -f "https://raw.githubusercontent.com/ory/k8s/${BASE_BRANCH}/.circleci/values/$1.yaml" "${release}" "ory/$1" --wait --timeout="${TIMEOUT}"
 export INSTALLATION_STATUS=$?
 set -e
 

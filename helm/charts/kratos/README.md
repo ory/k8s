@@ -19,10 +19,10 @@ A ORY Kratos Helm chart for Kubernetes
 | deployment.extraVolumeMounts | list | `[]` |  |
 | deployment.extraVolumes | list | `[]` | If you want to mount external volume For example, mount a secret containing Certificate root CA to verify database TLS connection. |
 | deployment.labels | object | `{}` |  |
-| deployment.livenessProbe | object | `{"failureThreshold":5,"httpGet":{"path":"/health/alive","port":"http-admin"},"initialDelaySeconds":30,"periodSeconds":10}` | Configure the probes for when the deployment is considered ready and ongoing health check |
+| deployment.livenessProbe | object | `{"failureThreshold":5,"httpGet":{"path":"/admin/health/alive","port":"http-admin"},"initialDelaySeconds":30,"periodSeconds":10}` | Configure the probes for when the deployment is considered ready and ongoing health check |
 | deployment.nodeSelector | object | `{}` | Node labels for pod assignment. |
 | deployment.readinessProbe.failureThreshold | int | `5` |  |
-| deployment.readinessProbe.httpGet.path | string | `"/health/ready"` |  |
+| deployment.readinessProbe.httpGet.path | string | `"/admin/health/ready"` |  |
 | deployment.readinessProbe.httpGet.port | string | `"http-admin"` |  |
 | deployment.readinessProbe.initialDelaySeconds | int | `30` |  |
 | deployment.readinessProbe.periodSeconds | int | `10` |  |
