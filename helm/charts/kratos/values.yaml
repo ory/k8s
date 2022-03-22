@@ -185,6 +185,13 @@ deployment:
   # - --sqa-opt-out
   extraArgs: []
 
+  # Set these to override the entrypoint of the deployment container
+  # (e.g. to source dynamic secrets or export environment dynamic variables)
+  overrideArgs:
+    command: []
+    args: []
+
+
   # -- Array of extra envs to be passed to the deployment. Kubernetes format is expected
   # - name: FOO
   #   value: BAR

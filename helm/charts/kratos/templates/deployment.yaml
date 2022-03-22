@@ -93,8 +93,15 @@ spec:
           image: {{ include "kratos.image" . }}
           imagePullPolicy: {{ include "kratos.imagePullPolicy" . }}
           command:
+          {{ if not (empty .Values.deployment.overrideArgs.command) }}
+{{ toYaml .Values.deployment.overrideArgs.command | indent 12 }}
+          {{ else }}
             - kratos
+          {{ end }}
           args:
+          {{ if not (empty .Values.deployment.overrideArgs.args) }}
+{{ toYaml .Values.deployment.overrideArgs.args | indent 12 }}
+          {{ else }}
             - serve
             - all
             {{- if .Values.kratos.development }}
@@ -103,6 +110,7 @@ spec:
             - --config
             - /etc/config/kratos.yaml
             {{- if .Values.deployment.extraArgs }}
+          {{ end }}
 {{ toYaml .Values.deployment.extraArgs | indent 12 }}
             {{- end }}
           volumeMounts:
