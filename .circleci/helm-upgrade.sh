@@ -1,7 +1,6 @@
 #!/bin/bash
 
 set -Eeuo pipefail
-set -x
 cfg=$(mktemp)
 export cfg
 export KUBECONFIG="$cfg"
