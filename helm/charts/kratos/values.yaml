@@ -187,9 +187,9 @@ deployment:
 
   # Set these to override the entrypoint of the deployment container
   # (e.g. to source dynamic secrets or export environment dynamic variables)
-  overrideArgs:
-    command: []
-    args: []
+  # This can be a multiline string with templating to be parsed as a YAML array
+  customCommand: ""
+  customArgs: ""
 
 
   # -- Array of extra envs to be passed to the deployment. Kubernetes format is expected
@@ -379,6 +379,12 @@ job:
       helm.sh/hook-delete-policy: "before-hook-creation"
     # -- The name of the service account to use. If not set and create is true, a name is generated using the fullname template
     name: ""
+
+  # Set these to override the entrypoint of the job container
+  # (e.g. to source dynamic secrets or export environment dynamic variables)
+  # This can be a multiline string with templating to be parsed as a YAML array
+  customCommand: ""
+  customArgs: ""
 
   spec:
     # -- Set job back off limit

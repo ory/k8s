@@ -93,14 +93,14 @@ spec:
           image: {{ include "kratos.image" . }}
           imagePullPolicy: {{ include "kratos.imagePullPolicy" . }}
           command:
-          {{ if not (empty .Values.deployment.overrideArgs.command) }}
-{{ toYaml .Values.deployment.overrideArgs.command | indent 12 }}
+          {{ if .Values.deployment.customCommand }}
+{{ tpl .Values.deployment.customCommand . | indent 12 }}
           {{ else }}
             - kratos
           {{ end }}
           args:
-          {{ if not (empty .Values.deployment.overrideArgs.args) }}
-{{ toYaml .Values.deployment.overrideArgs.args | indent 12 }}
+          {{ if .Values.deployment.customArgs }}
+{{ tpl .Values.deployment.customArgs . | indent 12 }}
           {{ else }}
             - serve
             - all

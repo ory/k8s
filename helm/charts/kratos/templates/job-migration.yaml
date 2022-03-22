@@ -43,8 +43,18 @@ spec:
       - name: {{ .Chart.Name }}-automigrate
         image: {{ include "kratos.image" . }}
         imagePullPolicy: {{ include "kratos.imagePullPolicy" . }}
+        {{ if .Values.job.customCommand }}
+        command:
+{{ tpl .Values.job.customCommand . | indent 10 }}
+        {{ else }}
         command: ["kratos"]
+        {{ end }}
+        {{ if .Values.job.customArgs }}
+        args:
+{{ tpl .Values.job.customArgs . | indent 10 }}
+        {{ else }}
         args: ["migrate", "sql", "-e", "--yes"]
+        {{ end }}
         env:
           - name: DSN
             valueFrom:
