@@ -42,10 +42,10 @@ spec:
               service:
                 name: {{ $fullName }}-public
                 port:
-                  name: http
+                  name: http-public
               {{- else }}
               serviceName: {{ $fullName }}-public
-              servicePort: http
+              servicePort: http-public
               {{- end }}
           {{- end }}
     {{- end }}
