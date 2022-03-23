@@ -111,8 +111,9 @@ Generate the secrets.cookie value
 Generate the configmap data, redacting secrets
 */}}
 {{- define "hydra.configmap" -}}
-{{- $config := unset .Values.hydra.config "dsn" -}}
-{{- $config := unset $config "secrets" -}}
+{{- $config := .Values.hydra.config | deepCopy -}}
+{{- $_ := unset $config "dsn" -}}
+{{- $_ := unset $config "secrets" -}}
 {{- toYaml $config -}}
 {{- end -}}
 
