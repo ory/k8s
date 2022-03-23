@@ -69,8 +69,10 @@ spec:
       containers:
         {{- if .Values.watcher.enabled }}
         - name: watcher
+          {{- if .Values.securityContext }}
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
+          {{- end }}
           image: {{ .Values.watcher.image }}
           command:
             - /bin/bash
@@ -190,8 +192,10 @@ spec:
             {{- toYaml .Values.deployment.readinessProbe | nindent 12 }}
           resources:
             {{- toYaml $resources | nindent 12 }}  
+          {{- if .Values.securityContext }}
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
+          {{- end }}
         {{- if .Values.deployment.extraContainers }}
 {{ tpl .Values.deployment.extraContainers . | indent 8 }}
         {{- end }}
