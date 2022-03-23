@@ -119,8 +119,10 @@ spec:
               port: http-api
           resources:
             {{- toYaml .Values.deployment.resources | nindent 12 }}
+          {{- if .Values.deployment.securityContext }}
           securityContext:
             {{- toYaml .Values.deployment.securityContext | nindent 12 }}
+          {{- end }}
         {{- if .Values.deployment.extraContainers }}
 {{ tpl .Values.deployment.extraContainers . | indent 8 }}
         {{- end }}

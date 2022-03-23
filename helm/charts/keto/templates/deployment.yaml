@@ -58,8 +58,10 @@ spec:
       containers:
         {{- if .Values.watcher.enabled }}
         - name: watcher
+          {{- if .Values.securityContext }}
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
+          {{- end }}
           image: {{ .Values.watcher.image }}
           command:
             - /bin/bash
@@ -79,8 +81,10 @@ spec:
           {{- end }}
         {{- end }}
         - name: {{ .Chart.Name }}
+          {{- if .Values.securityContext }}
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
+          {{- end }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           command: [ "keto" ]

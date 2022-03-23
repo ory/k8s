@@ -56,8 +56,10 @@ spec:
             - |
               touch /etc/rules/access-rules.json
               chmod 666 /etc/rules/access-rules.json
+          {{- if .Values.deployment.securityContext }}
           securityContext:
             {{- toYaml .Values.deployment.securityContext | nindent 12 }}
+          {{- end }}
       containers:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
@@ -98,8 +100,10 @@ spec:
               port: http-api
           resources:
             {{- toYaml .Values.deployment.resources | nindent 12 }}
+          {{- if .Values.deployment.securityContext }}
           securityContext:
             {{- toYaml .Values.deployment.securityContext | nindent 12 }}
+          {{- end }}
         - name: {{ .Chart.Name }}-maester
           image: "{{ .Values.sidecar.image.repository }}:{{ .Values.sidecar.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
@@ -122,8 +126,10 @@ spec:
             - name: {{ include "oathkeeper.name" . }}-rules-volume
               mountPath: /etc/rules
               readOnly: false
+          {{- if .Values.deployment.securityContext }}
           securityContext:
             {{- toYaml .Values.deployment.securityContext | nindent 12 }}
+          {{- end }}
         {{- if .Values.deployment.extraContainers }}
 {{ tpl .Values.deployment.extraContainers . | indent 8 }}
         {{- end }}

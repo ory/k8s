@@ -55,8 +55,10 @@ spec:
         lifecycle:
 {{ tpl .Values.job.lifecycle . | indent 10 }}
       {{- end }}
+        {{- if .Values.securityContext }}
         securityContext:
           {{- toYaml .Values.securityContext | nindent 10 }}
+        {{- end }}
         {{- if .Values.deployment.extraVolumeMounts }}
         volumeMounts:
 {{ toYaml .Values.deployment.extraVolumeMounts | indent 10 }}
