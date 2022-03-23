@@ -1,6 +1,6 @@
 # kratos
 
-![Version: 0.22.2](https://img.shields.io/badge/Version-0.22.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.8.0-alpha.3](https://img.shields.io/badge/AppVersion-v0.8.0--alpha.3-informational?style=flat-square)
+![Version: 0.22.2](https://img.shields.io/badge/Version-0.22.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.9.0-alpha.2](https://img.shields.io/badge/AppVersion-v0.9.0--alpha.2-informational?style=flat-square)
 
 A ORY Kratos Helm chart for Kubernetes
 
@@ -36,7 +36,7 @@ A ORY Kratos Helm chart for Kubernetes
 | fullnameOverride | string | `""` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"oryd/kratos"` | ORY KRATOS image |
-| image.tag | string | `"v0.8.0-alpha.3"` | ORY KRATOS VERSION Alternative format: image: oryd/kratos:v0.6.3-alpha.1 |
+| image.tag | string | `"v0.9.0-alpha.2"` | ORY KRATOS VERSION Alternative format: image: oryd/kratos:v0.6.3-alpha.1 |
 | imagePullSecrets | list | `[]` |  |
 | ingress.admin.annotations | object | `{}` |  |
 | ingress.admin.className | string | `""` |  |
