@@ -5,7 +5,8 @@ cfg=$(mktemp)
 export cfg
 export KUBECONFIG="$cfg"
 export TIMEOUT="120s"
-export BASE_RELEASE=$(curl -s https://api.github.com/repos/ory/k8s/releases/latest | grep "tag_name" | cut -d ':' -f 2 | tr -d '", ')
+
+export BASE_RELEASE=$(helm search repo "ory/$1" | awk '{print $2}' | head -2 | tail -1)
 
 kind get kubeconfig > "$cfg"
 
@@ -19,10 +20,10 @@ function teardown() {
 
 trap teardown HUP INT QUIT TERM EXIT
 
-echo "---> Installing $1 from ${BASE_RELEASE}"
+echo "---> Installing $1 from v${BASE_RELEASE}"
 
 set +e
-helm install -f "https://raw.githubusercontent.com/ory/k8s/${BASE_RELEASE}/.circleci/values/$1.yaml" "${release}" "ory/$1" --wait --timeout="${TIMEOUT}"
+helm install -f "https://raw.githubusercontent.com/ory/k8s/v${BASE_RELEASE}/.circleci/values/$1.yaml" "${release}" "ory/$1" --wait --timeout="${TIMEOUT}"
 export INSTALLATION_STATUS=$?
 set -e
 
