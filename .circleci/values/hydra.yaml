@@ -42,3 +42,9 @@ job:
       command: ["/bin/sh"]
       args: ["-c", "sleep 10"]
   shareProcessNamespace: true
+
+serviceMonitor:
+  labels:
+    release: "prometheus"
+  tlsConfig:
+    insecureSkipVerify: true

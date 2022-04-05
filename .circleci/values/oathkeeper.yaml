@@ -83,3 +83,15 @@ oathkeeper:
         }
       ]
     }
+
+service:
+  metrics:
+    labels:
+      app.kubernetes.io/component: "metrics"
+      release: "metrics"
+
+serviceMonitor:
+  labels:
+    release: "prometheus"
+  tlsConfig: 
+    insecureSkipVerify: true

@@ -8,6 +8,9 @@ metadata:
   labels:
     app.kubernetes.io/component: metrics
 {{ include "keto.labels" . | indent 4 }}
+  {{- with .Values.serviceMonitor.labels }}
+      {{- toYaml . | nindent 4 }}
+  {{- end }}
   {{- with .Values.service.metrics.annotations }}
   annotations:
     {{- toYaml . | nindent 4 }}
@@ -16,6 +19,13 @@ spec:
   endpoints:
   - path: /metrics/prometheus
     port: {{ .Values.service.metrics.name }}
+    scheme: {{ .Values.serviceMonitor.scheme }}
+    interval: {{ .Values.serviceMonitor.scrapeInterval }}
+    scrapeTimeout: {{ .Values.serviceMonitor.scrapeTimeout }}
+    {{- with .Values.serviceMonitor.tlsConfig }}
+    tlsConfig:
+      {{- toYaml . | nindent 6 }}
+    {{- end }}
   selector:
     matchLabels:
       app.kubernetes.io/name: {{ include "keto.name" . }}
