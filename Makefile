@@ -45,11 +45,17 @@ postgresql:
 	helm repo update
 	helm install postgresql bitnami/postgresql -f .circleci/values/postgres.yaml
 
+prometheus:
+	helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+	helm repo update
+	kubectl create ns prometheus --dry-run=client -o yaml | kubectl apply -f -
+	helm install prometheus prometheus-community/kube-prometheus-stack -f .circleci/values/prometheus.yaml
+
 ory-repo:
 	helm repo add ory https://k8s.ory.sh/helm/charts
 	helm repo update
 
-kind-test: kind-start postgresql
+kind-test: kind-start postgresql prometheus
 	.circleci/helm-test.sh oathkeeper
 	.circleci/helm-test.sh oathkeeper-maester
 	.circleci/helm-test.sh hydra
@@ -58,7 +64,7 @@ kind-test: kind-start postgresql
 	.circleci/helm-test.sh keto
 	.circleci/helm-test.sh kratos-selfservice-ui-node
 
-kind-upgrade: kind-start postgresql ory-repo
+kind-upgrade: kind-start postgresql ory-repo prometheus
 	.circleci/helm-upgrade.sh oathkeeper
 	.circleci/helm-upgrade.sh oathkeeper-maester
 	.circleci/helm-upgrade.sh hydra

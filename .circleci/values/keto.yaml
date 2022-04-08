@@ -25,6 +25,7 @@ job:
       command: ["/bin/sh"]
       args: ["-c", "sleep 10"]
   shareProcessNamespace: true
+
 service:
   metrics:
     enabled: true
