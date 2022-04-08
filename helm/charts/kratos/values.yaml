@@ -314,9 +314,9 @@ statefulSet:
     #  memory: 128Mi
 
     extraEnv: []
-      # -- If you want to mount external volume
-      # For example, mount a secret containing Certificate root CA to verify database
-      # TLS connection.
+    # -- If you want to mount external volume
+    # For example, mount a secret containing Certificate root CA to verify database
+    # TLS connection.
     extraVolumes: []
     # - name: my-volume
     #   secret:
@@ -334,9 +334,9 @@ statefulSet:
 
     # -- If you want to add extra sidecar containers.
     extraContainers: {}
-      # extraContainers: |
-      #  - name: ...
-      #    image: ...
+    # extraContainers: |
+    #  - name: ...
+    #    image: ...
 
     annotations: {}
     #      If you do want to specify annotations, uncomment the following
