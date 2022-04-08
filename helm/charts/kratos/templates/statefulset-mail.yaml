@@ -1,5 +1,11 @@
 {{- $resources := ternary .Values.deployment.resources .Values.resources (not (empty .Values.deployment.resources )) -}}
-
+{{- $annotations := ternary .Values.statefulSet.annotations .Values.deployment.annotations (not (empty .Values.statefulSet.annotations )) -}}
+{{- $labels := ternary .Values.statefulSet.labels .Values.deployment.labels (not (empty .Values.statefulSet.labels )) -}}
+{{- $extraVolumeMounts := ternary .Values.statefulSet.extraVolumeMounts .Values.deployment.extraVolumeMounts (not (empty .Values.statefulSet.extraVolumeMounts )) -}}
+{{- $extraEnv := ternary .Values.statefulSet.extraEnv .Values.deployment.extraEnv (not (empty .Values.statefulSet.extraEnv )) -}}
+{{- $extraContainers := ternary .Values.statefulSet.extraContainers .Values.deployment.extraContainers (not (empty .Values.statefulSet.extraContainers )) -}}
+{{- $extraInitContainers := ternary .Values.statefulSet.extraInitContainers .Values.deployment.extraInitContainers (not (empty .Values.statefulSet.extraInitContainers )) -}}
+{{- $extraVolumes := ternary .Values.statefulSet.extraVolumes .Values.deployment.extraVolumes (not (empty .Values.statefulSet.extraVolumes )) -}}
 ---
 apiVersion: apps/v1
 kind: StatefulSet
@@ -10,11 +16,11 @@ metadata:
   {{- end }}
   labels:
 {{ include "kratos.labels" . | indent 4 }}
-    {{- with .Values.deployment.labels }}
+    {{- with $labels }}
       {{- toYaml . | nindent 4 }}
     {{- end }}
   annotations:
-    {{- with .Values.deployment.annotations }}
+    {{- with $annotations }}
       {{- toYaml . | nindent 4 }}
     {{- end }}
 spec:
@@ -29,11 +35,11 @@ spec:
       labels:
         app.kubernetes.io/name: {{ include "kratos.fullname" . }}-courier
         app.kubernetes.io/instance: {{ .Release.Name }}
-        {{- with .Values.deployment.labels }}
+        {{- with $labels }}
           {{- toYaml . | nindent 8 }}
         {{- end }}
       annotations:
-        {{- with .Values.deployment.annotations }}
+        {{- with $annotations }}
           {{- toYaml . | nindent 8 }}
         {{- end }}
     spec:
@@ -50,8 +56,8 @@ spec:
             - name: {{ include "kratos.fullname" . }}-config-volume
               mountPath: /etc/config
               readOnly: true
-            {{- if .Values.deployment.extraVolumeMounts }}
-{{ toYaml .Values.deployment.extraVolumeMounts | indent 12 }}
+            {{- if $extraVolumeMounts }}
+{{ toYaml $extraVolumeMounts | indent 12 }}
             {{- end }}
             {{- $root := . -}}
             {{- range $method, $methodEntry := .Values.kratos.emailTemplates }}
@@ -94,8 +100,8 @@ spec:
                 secretKeyRef:
                   name: {{ include "kratos.secretname" . }}
                   key: smtpConnectionURI
-            {{- if .Values.deployment.extraEnv }}
-{{ toYaml .Values.deployment.extraEnv | indent 12 }}
+            {{- if $extraEnv }}
+{{ toYaml $extraEnv | indent 12 }}
             {{- end }}
           resources:
               {{- toYaml $resources | nindent 12 }}
@@ -103,19 +109,19 @@ spec:
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
           {{- end }}
-        {{- if .Values.deployment.extraContainers }}
-{{ tpl .Values.deployment.extraContainers . | indent 8 }}
+        {{- if $extraContainers }}
+{{ tpl $extraContainers . | indent 8 }}
         {{- end }}
-      {{- if .Values.deployment.extraInitContainers }}
+      {{- if $extraInitContainers }}
       initContainers:
-{{ tpl .Values.deployment.extraInitContainers . | indent 8 }}
+{{ tpl $extraInitContainers . | indent 8 }}
       {{- end }}
       volumes:
         - name: {{ include "kratos.fullname" . }}-config-volume
           configMap:
             name: {{ include "kratos.fullname" . }}-config
-        {{- if .Values.deployment.extraVolumes }}
-{{ toYaml .Values.deployment.extraVolumes | indent 8 }}
+        {{- if $extraVolumes }}
+{{ toYaml $extraVolumes | indent 8 }}
         {{- end }}
         {{- $root := . -}}
         {{- range $method, $methodEntry := .Values.kratos.emailTemplates }}
