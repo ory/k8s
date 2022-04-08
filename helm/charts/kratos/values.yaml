@@ -180,7 +180,7 @@ deployment:
     periodSeconds: 10
     failureThreshold: 5
 
-  # -- Array of extra argumetns to be passed down to the deployment. Kubernetes args format is expected
+  # -- Array of extra arguments to be passed down to the deployment. Kubernetes args format is expected
   # - --foo
   # - --sqa-opt-out
   extraArgs: []
@@ -261,7 +261,7 @@ deployment:
   # -- Node labels for pod assignment.
   nodeSelector: {}
   # If you do want to specify node labels, uncomment the following
-  # lines, adjust them as necessary, and remove the curly braces after 'annotations:'.
+  # lines, adjust them as necessary, and remove the curly braces after 'nodeSelector:'.
   #   foo: bar
 
   # -- Configure node tolerations.
@@ -285,9 +285,9 @@ deployment:
   # environmentSecretsName:
 
   # -- Specify the serviceAccountName value.
-  # In some situations it is needed to provides specific permissions to Hydra deployments
-  # Like for example installing Hydra on a cluster with a PosSecurityPolicy and Istio.
-  # Uncoment if it is needed to provide a ServiceAccount for the Hydra deployment.
+  # In some situations it is needed to provide specific permissions to Kratos deployments.
+  # Like for example installing Kratos on a cluster with a PosSecurityPolicy and Istio.
+  # Uncomment if it is needed to provide a ServiceAccount for the Kratos deployment.
   serviceAccount:
     # -- Specifies whether a service account should be created
     create: true
@@ -312,6 +312,41 @@ statefulSet:
     #  requests:
     #    cpu: 100m
     #  memory: 128Mi
+
+    extraEnv: []
+    # -- If you want to mount external volume
+    # For example, mount a secret containing Certificate root CA to verify database
+    # TLS connection.
+    extraVolumes: []
+    # - name: my-volume
+    #   secret:
+    #     secretName: my-secret
+    extraVolumeMounts: []
+    # - name: my-volume
+    #   mountPath: /etc/secrets/my-secret
+    #   readOnly: true
+
+    # -- If you want to add extra init containers. These are processed before the migration init container.
+    extraInitContainers: {}
+    # extraInitContainers: |
+    #  - name: ...
+    #    image: ...
+
+    # -- If you want to add extra sidecar containers.
+    extraContainers: {}
+    # extraContainers: |
+    #  - name: ...
+    #    image: ...
+
+    annotations: {}
+    #      If you do want to specify annotations, uncomment the following
+    #      lines, adjust them as necessary, and remove the curly braces after 'annotations:'.
+    #      e.g.  sidecar.istio.io/rewriteAppHTTPProbers: "true"
+
+    labels: {}
+    #      If you do want to specify additional labels, uncomment the following
+    #      lines, adjust them as necessary, and remove the curly braces after 'labels:'.
+    #      e.g.  type: app
 
 securityContext:
   capabilities:
