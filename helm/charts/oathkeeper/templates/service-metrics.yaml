@@ -1,3 +1,4 @@
+{{- if .Values.service.metrics.enabled }}
 ---
 apiVersion: v1
 kind: Service
@@ -36,7 +37,7 @@ metadata:
   labels:
     app.kubernetes.io/component: metrics
 {{ include "oathkeeper.labels" . | indent 4 }}
-    {{- with .Values.service.metrics.labels }}
+    {{- with merge .Values.serviceMonitor.labels .Values.service.metrics.labels }}
       {{- toYaml . | nindent 4 }}
     {{- end }}
   {{- with .Values.service.metrics.annotations }}
@@ -47,9 +48,17 @@ spec:
   endpoints:
   - path: /metrics/prometheus
     port: {{ .Values.service.metrics.name }}
+    scheme: {{ .Values.serviceMonitor.scheme }}
+    interval: {{ .Values.serviceMonitor.scrapeInterval }}
+    scrapeTimeout: {{ .Values.serviceMonitor.scrapeTimeout }}
+    {{- with .Values.serviceMonitor.tlsConfig }}
+    tlsConfig:
+      {{- toYaml . | nindent 6 }}
+    {{- end }}
   selector:
     matchLabels:
       app.kubernetes.io/name: {{ include "oathkeeper.name" . }}
       app.kubernetes.io/instance: {{ .Release.Name }}
       app.kubernetes.io/component: metrics
+{{- end -}}
 {{- end -}}
