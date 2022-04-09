@@ -1,6 +1,6 @@
 # hydra
 
-![Version: 0.23.0](https://img.shields.io/badge/Version-0.23.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v1.10.5](https://img.shields.io/badge/AppVersion-v1.10.5-informational?style=flat-square)
+![Version: 0.23.1](https://img.shields.io/badge/Version-0.23.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v1.10.5](https://img.shields.io/badge/AppVersion-v1.10.5-informational?style=flat-square)
 
 A Helm chart for deploying ORY Hydra in Kubernetes
 
@@ -21,7 +21,7 @@ A Helm chart for deploying ORY Hydra in Kubernetes
 
 | Repository | Name | Version |
 |------------|------|---------|
-| file://../hydra-maester | hydra-maester(hydra-maester) | 0.23.0 |
+| file://../hydra-maester | hydra-maester(hydra-maester) | 0.23.1 |
 
 ## Values
 
@@ -107,6 +107,13 @@ A Helm chart for deploying ORY Hydra in Kubernetes
 | service.public.name | string | `"http"` | The service port name. Useful to set a custom service port name if it must follow a scheme (e.g. Istio) |
 | service.public.port | int | `4444` | The service port |
 | service.public.type | string | `"ClusterIP"` | The service type |
+| serviceMonitor | object | `{"enabled":true,"labels":{},"scheme":"https","scrapeInterval":"60s","scrapeTimeout":"30s","tlsConfig":{}}` | Parameters for the Prometheus ServiceMonitor objects.  Reference: https://docs.openshift.com/container-platform/4.6/rest_api/monitoring_apis/servicemonitor-monitoring-coreos-com-v1.html |
+| serviceMonitor.enabled | bool | `true` | switch to false to prevent creating the ServiceMonitor |
+| serviceMonitor.labels | object | `{}` | Provide additionnal labels to the ServiceMonitor ressource metadata |
+| serviceMonitor.scheme | string | `"https"` | HTTP scheme to use for scraping. |
+| serviceMonitor.scrapeInterval | string | `"60s"` | Interval at which metrics should be scraped |
+| serviceMonitor.scrapeTimeout | string | `"30s"` | Timeout after which the scrape is ended |
+| serviceMonitor.tlsConfig | object | `{}` | TLS configuration to use when scraping the endpoint |
 | watcher | object | `{"enabled":false,"image":"oryd/k8s-toolbox:0.0.2","mountFile":""}` | Sidecar watcher configuration |
 
 ----------------------------------------------

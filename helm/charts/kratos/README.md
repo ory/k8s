@@ -1,6 +1,6 @@
 # kratos
 
-![Version: 0.23.0](https://img.shields.io/badge/Version-0.23.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.9.0-alpha.2](https://img.shields.io/badge/AppVersion-v0.9.0--alpha.2-informational?style=flat-square)
+![Version: 0.23.1](https://img.shields.io/badge/Version-0.23.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.9.0-alpha.2](https://img.shields.io/badge/AppVersion-v0.9.0--alpha.2-informational?style=flat-square)
 
 A ORY Kratos Helm chart for Kubernetes
 
@@ -12,7 +12,7 @@ A ORY Kratos Helm chart for Kubernetes
 | autoscaling | object | `{"enabled":false,"maxReplicas":3,"minReplicas":1,"targetCPUUtilizationPercentage":80}` | Horizontal pod autoscaling configuration |
 | deployment.annotations | object | `{}` |  |
 | deployment.automountServiceAccountToken | bool | `true` |  |
-| deployment.extraArgs | list | `[]` | Array of extra argumetns to be passed down to the deployment. Kubernetes args format is expected - --foo - --sqa-opt-out |
+| deployment.extraArgs | list | `[]` | Array of extra arguments to be passed down to the deployment. Kubernetes args format is expected - --foo - --sqa-opt-out |
 | deployment.extraContainers | object | `{}` | If you want to add extra sidecar containers.  |
 | deployment.extraEnv | list | `[]` | Array of extra envs to be passed to the deployment. Kubernetes format is expected - name: FOO   value: BAR |
 | deployment.extraInitContainers | object | `{}` |  |
@@ -27,7 +27,7 @@ A ORY Kratos Helm chart for Kubernetes
 | deployment.readinessProbe.initialDelaySeconds | int | `30` |  |
 | deployment.readinessProbe.periodSeconds | int | `10` |  |
 | deployment.resources | object | `{}` |  |
-| deployment.serviceAccount | object | `{"annotations":{},"create":true,"name":""}` | The secret specified here will be used to load environment variables with envFrom. This allows arbitrary environment variables to be provided to the application which is useful for sensitive values which should not be in a configMap. This secret is not created by the helm chart and must already exist in the namespace. https://kubernetes.io/docs/tasks/inject-data-application/distribute-credentials-secure/#configure-all-key-value-pairs-in-a-secret-as-container-environment-variables environmentSecretsName: -- Specify the serviceAccountName value. In some situations it is needed to provides specific permissions to Hydra deployments Like for example installing Hydra on a cluster with a PosSecurityPolicy and Istio. Uncoment if it is needed to provide a ServiceAccount for the Hydra deployment. |
+| deployment.serviceAccount | object | `{"annotations":{},"create":true,"name":""}` | The secret specified here will be used to load environment variables with envFrom. This allows arbitrary environment variables to be provided to the application which is useful for sensitive values which should not be in a configMap. This secret is not created by the helm chart and must already exist in the namespace. https://kubernetes.io/docs/tasks/inject-data-application/distribute-credentials-secure/#configure-all-key-value-pairs-in-a-secret-as-container-environment-variables environmentSecretsName: -- Specify the serviceAccountName value. In some situations it is needed to provide specific permissions to Kratos deployments. Like for example installing Kratos on a cluster with a PosSecurityPolicy and Istio. Uncomment if it is needed to provide a ServiceAccount for the Kratos deployment. |
 | deployment.serviceAccount.annotations | object | `{}` | Annotations to add to the service account |
 | deployment.serviceAccount.create | bool | `true` | Specifies whether a service account should be created |
 | deployment.serviceAccount.name | string | `""` | The name of the service account to use. If not set and create is true, a name is generated using the fullname template |
@@ -95,6 +95,20 @@ A ORY Kratos Helm chart for Kubernetes
 | service.public.name | string | `"http"` | The service port name. Useful to set a custom service port name if it must follow a scheme (e.g. Istio) |
 | service.public.port | int | `80` |  |
 | service.public.type | string | `"ClusterIP"` |  |
+| serviceMonitor | object | `{"enabled":true,"labels":{},"scheme":"https","scrapeInterval":"60s","scrapeTimeout":"30s","tlsConfig":{}}` | Parameters for the Prometheus ServiceMonitor objects.  Reference: https://docs.openshift.com/container-platform/4.6/rest_api/monitoring_apis/servicemonitor-monitoring-coreos-com-v1.html |
+| serviceMonitor.enabled | bool | `true` | switch to false to prevent creating the ServiceMonitor |
+| serviceMonitor.labels | object | `{}` | Provide additionnal labels to the ServiceMonitor ressource metadata |
+| serviceMonitor.scheme | string | `"https"` | HTTP scheme to use for scraping. |
+| serviceMonitor.scrapeInterval | string | `"60s"` | Interval at which metrics should be scraped |
+| serviceMonitor.scrapeTimeout | string | `"30s"` | Timeout after which the scrape is ended |
+| serviceMonitor.tlsConfig | object | `{}` | TLS configuration to use when scraping the endpoint |
+| statefulSet.annotations | object | `{}` |  |
+| statefulSet.extraContainers | object | `{}` | If you want to add extra sidecar containers. |
+| statefulSet.extraEnv | list | `[]` |  |
+| statefulSet.extraInitContainers | object | `{}` | If you want to add extra init containers. These are processed before the migration init container. |
+| statefulSet.extraVolumeMounts | list | `[]` |  |
+| statefulSet.extraVolumes | list | `[]` | If you want to mount external volume For example, mount a secret containing Certificate root CA to verify database TLS connection. |
+| statefulSet.labels | object | `{}` |  |
 | statefulSet.resources | object | `{}` |  |
 | statefulset.log.format | string | `"json"` |  |
 | statefulset.log.level | string | `"trace"` |  |
