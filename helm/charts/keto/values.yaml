@@ -294,7 +294,7 @@ pdb:
 # Reference: https://docs.openshift.com/container-platform/4.6/rest_api/monitoring_apis/servicemonitor-monitoring-coreos-com-v1.html
 serviceMonitor:
   # -- HTTP scheme to use for scraping.
-  scheme: https
+  scheme: http
   # -- Interval at which metrics should be scraped
   scrapeInterval: 60s
   # -- Timeout after which the scrape is ended

@@ -445,7 +445,7 @@ serviceMonitor:
   # -- switch to false to prevent creating the ServiceMonitor
   enabled: true
   # -- HTTP scheme to use for scraping.
-  scheme: https
+  scheme: http
   # -- Interval at which metrics should be scraped
   scrapeInterval: 60s
   # -- Timeout after which the scrape is ended
