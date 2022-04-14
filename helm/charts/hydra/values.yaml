@@ -73,6 +73,8 @@ secret:
     helm.sh/hook: "pre-install, pre-upgrade"
     helm.sh/hook-delete-policy: "before-hook-creation"
     helm.sh/resource-policy: "keep"
+  # -- switch to false to prevent checksum annotations being maintained and propogated to the pods
+  hashSumEnabled: true
 
 # -- Configure ingress
 ingress:
@@ -145,22 +147,22 @@ hydra:
   dangerousAllowInsecureRedirectUrls: false
 
 deployment:
-# -- We usually recommend not to specify default resources and to leave this as a conscious choice for the user.
-#  This also increases chances charts run on environments with little
-#  resources, such as Minikube. If you do want to specify resources, uncomment the following
-#  lines, adjust them as necessary, and remove the curly braces after 'resources:'.
-#  limits:
-#    cpu: 100m
-#    memory: 128Mi
-#  requests:
-#    cpu: 100m
-#  memory: 128Mi
+  # -- We usually recommend not to specify default resources and to leave this as a conscious choice for the user.
+  #  This also increases chances charts run on environments with little
+  #  resources, such as Minikube. If you do want to specify resources, uncomment the following
+  #  lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  #  limits:
+  #    cpu: 100m
+  #    memory: 128Mi
+  #  requests:
+  #    cpu: 100m
+  #  memory: 128Mi
   resources: {}
 
   securityContext:
     capabilities:
       drop:
-      - ALL
+        - ALL
     readOnlyRootFilesystem: true
     runAsNonRoot: true
     runAsUser: 100
@@ -304,7 +306,7 @@ job:
   # kubernetes.io/ingress.class: nginx
   # kubernetes.io/tls-acme: "true"
 
-  # -- If you want to add extra sidecar containers. 
+  # -- If you want to add extra sidecar containers.
   extraContainers: {}
   # extraContainers: |
   #  - name: ...
@@ -316,7 +318,7 @@ job:
   #    image: ...
   extraInitContainers: {}
 
-  # -- If you want to add lifecycle hooks. 
+  # -- If you want to add lifecycle hooks.
   lifecycle: {}
   # lifecycle: |
   #   preStop:
@@ -326,7 +328,7 @@ job:
   # -- Set automounting of the SA token
   automountServiceAccountToken: true
 
-  # -- Set sharing process namespace 
+  # -- Set sharing process namespace
   shareProcessNamespace: false
 
   # -- Specify the serviceAccountName value.
@@ -337,7 +339,7 @@ job:
     # -- Specifies whether a service account should be created
     create: true
     # -- Annotations to add to the service account
-    annotations: 
+    annotations:
       helm.sh/hook-weight: "0"
       helm.sh/hook: "pre-install, pre-upgrade"
       helm.sh/hook-delete-policy: "before-hook-creation"
@@ -350,7 +352,6 @@ job:
 
 # -- Configure node affinity
 affinity: {}
-
 
 # -- Configures controller setup
 maester:
@@ -368,7 +369,7 @@ hydra-maester:
 watcher:
   enabled: false
   image: oryd/k8s-toolbox:0.0.2
-  mountFile: ''
+  mountFile: ""
   # mountFile: /etc/secrets/my-secret/foo
 
 # -- PodDistributionBudget configuration
@@ -377,7 +378,7 @@ pdb:
   spec:
     minAvailable: 1
 
-# -- Parameters for the Prometheus ServiceMonitor objects. 
+# -- Parameters for the Prometheus ServiceMonitor objects.
 # Reference: https://docs.openshift.com/container-platform/4.6/rest_api/monitoring_apis/servicemonitor-monitoring-coreos-com-v1.html
 serviceMonitor:
   # -- switch to false to prevent creating the ServiceMonitor
@@ -392,3 +393,7 @@ serviceMonitor:
   labels: {}
   # -- TLS configuration to use when scraping the endpoint
   tlsConfig: {}
+
+configmap:
+  # -- switch to false to prevent checksum annotations being maintained and propogated to the pods
+  hashSumEnabled: true

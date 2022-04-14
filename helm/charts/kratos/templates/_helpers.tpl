@@ -53,7 +53,7 @@ Generate the dsn value
 Generate the secrets.default value
 */}}
 {{- define "kratos.secrets.default" -}}
-  {{- if .Values.kratos.config.secrets.default -}}
+  {{- if (.Values.kratos.config.secrets).default -}}
     {{- if kindIs "slice" .Values.kratos.config.secrets.default -}}
       {{- if gt (len .Values.kratos.config.secrets.default) 1 -}}
         "{{- join "\",\"" .Values.kratos.config.secrets.default -}}"
@@ -70,7 +70,7 @@ Generate the secrets.default value
 Generate the secrets.cookie value
 */}}
 {{- define "kratos.secrets.cookie" -}}
-  {{- if .Values.kratos.config.secrets.cookie -}}
+  {{- if (.Values.kratos.config.secrets).cookie -}}
     {{- if kindIs "slice" .Values.kratos.config.secrets.cookie -}}
       {{- if gt (len .Values.kratos.config.secrets.cookie) 1 -}}
         "{{- join "\",\"" .Values.kratos.config.secrets.cookie -}}"
@@ -87,7 +87,7 @@ Generate the secrets.cookie value
 Generate the secrets.cipher value
 */}}
 {{- define "kratos.secrets.cipher" -}}
-  {{- if .Values.kratos.config.secrets.cipher -}}
+  {{- if (.Values.kratos.config.secrets).cipher -}}
     {{- if kindIs "slice" .Values.kratos.config.secrets.cipher -}}
       {{- if gt (len .Values.kratos.config.secrets.cipher) 1 -}}
         "{{- join "\",\"" .Values.kratos.config.secrets.cipher -}}"
@@ -105,10 +105,9 @@ Generate the secrets.cipher value
 Generate the configmap data, redacting secrets
 */}}
 {{- define "kratos.configmap" -}}
-{{- $config := unset .Values.kratos.config "dsn" -}}
-{{- $config := unset $config "secrets" -}}
-{{- if .Values.kratos.config.courier.smtp.connection_uri -}}
-{{- $config = set $config "courier" (set $config.courier "smtp" (unset $config.courier.smtp "connection_uri")) -}}
+{{- $config := omit .Values.kratos.config "dsn" "secrets" | deepCopy -}}
+{{- if $config.courier.smtp.connection_uri -}}
+{{- $config = set $config "courier" (set $config.courier "smtp" (omit $config.courier.smtp "connection_uri")) -}}
 {{- end -}}
 {{- toYaml $config -}}
 {{- end -}}
@@ -167,5 +166,18 @@ Create the name of the service account for the Job to use
 {{- printf "%s-job" (default (include "kratos.fullname" .) .Values.job.serviceAccount.name) }}
 {{- else }}
 {{- include "kratos.serviceAccountName" . }}
+{{- end }}
+{{- end }}
+
+{{/*
+Checksum annotations generated from configmaps and secrets
+*/}}
+{{- define "kratos.annotations.checksum" -}}
+{{- if .Values.configmap.hashSumEnabled }}
+checksum/kratos-config: {{ include (print $.Template.BasePath "/configmap-config.yaml") . | sha256sum }}
+checksum/kratos-templates: {{ include (print $.Template.BasePath "/configmap-templates.yaml") . | sha256sum }}
+{{- end }}
+{{- if and .Values.secret.enabled .Values.secret.hashSumEnabled }}
+checksum/kratos-secrets: {{ include (print $.Template.BasePath "/secrets.yaml") . | sha256sum }}
 {{- end }}
 {{- end }}
