@@ -37,10 +37,11 @@ spec:
       {{- include "keto.selectorLabels" . | nindent 6 }}
   template:
     metadata:
-    {{- with $podAnnotations }}
       annotations:
-        {{- toYaml . | nindent 8 }}
-    {{- end }}
+        {{- include "keto.annotations.checksum" . | indent 8 -}}
+        {{- with $podAnnotations }}
+          {{- toYaml . | nindent 8 }}
+        {{- end }}
       labels:
         {{- include "keto.selectorLabels" . | nindent 8 }}
         {{- with $extraLabels }}

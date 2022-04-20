@@ -65,12 +65,15 @@ secret:
     helm.sh/hook: "pre-install, pre-upgrade"
     helm.sh/hook-delete-policy: "before-hook-creation"
     helm.sh/resource-policy: "keep"
+  # -- switch to false to prevent checksum annotations being maintained and propogated to the pods
+  hashSumEnabled: true
 
 ingress:
   admin:
     enabled: false
     className: ""
-    annotations: {}
+    annotations:
+      {}
       # kubernetes.io/ingress.class: nginx
       # kubernetes.io/tls-acme: "true"
     hosts:
@@ -85,12 +88,12 @@ ingress:
   public:
     enabled: false
     className: ""
-    annotations: {}
+    annotations:
+      {}
       # kubernetes.io/ingress.class: nginx
       # kubernetes.io/tls-acme: "true"
     hosts:
-      -
-        host: kratos.public.local.com
+      - host: kratos.public.local.com
         paths:
           - path: /
             pathType: ImplementationSpecific
@@ -116,38 +119,38 @@ kratos:
   #      // ...
   #    }
 
-# -- You can customize the emails kratos is sending (also uncomment config.courier.template_override_path below)
-#  Note: If you are setting config.courier.template_override_path you need to supply overrides for all templates.
-#        It is currently not possible to overrides only selected methods.
-#
-#  emailTemplates:
-#    recovery:
-#      valid:
-#        subject: Recover access to your account
-#        body: |-
-#          Hi, please recover access to your account by clicking the following link:
-#
-#          <a href="{{ .RecoveryURL }}">{{ .RecoveryURL }}</a>
-#        plainBody: Hi, please recover access to your account by clicking the following link: {{ .RecoveryURL }}
-#      invalid:
-#        subject: Account access attempted
-#        body: |-
-#          Hi, you (or someone else) entered this email address when trying to recover access to an account.
-#
-#          However, this email address is not on our database of registered users and therefore the attempt has failed. If this was you, check if you signed up using a different address. If this was not you, please ignore this email.
-#        plainBody: Hi, you (or someone else) entered this email address when trying to recover access to an account.
-#    verification:
-#      valid:
-#        subject: Please verify your email address
-#        body: |-
-#          Hi, please verify your account by clicking the following link:
-#
-#          <a href="{{ .VerificationURL }}">{{ .VerificationURL }}</a>
-#        plainBody: Hi, please verify your account by clicking the following link: {{ .VerificationURL }}
-#      invalid:
-#        subject:
-#        body:
-#        plainBody:
+  # -- You can customize the emails kratos is sending (also uncomment config.courier.template_override_path below)
+  #  Note: If you are setting config.courier.template_override_path you need to supply overrides for all templates.
+  #        It is currently not possible to overrides only selected methods.
+  #
+  #  emailTemplates:
+  #    recovery:
+  #      valid:
+  #        subject: Recover access to your account
+  #        body: |-
+  #          Hi, please recover access to your account by clicking the following link:
+  #
+  #          <a href="{{ .RecoveryURL }}">{{ .RecoveryURL }}</a>
+  #        plainBody: Hi, please recover access to your account by clicking the following link: {{ .RecoveryURL }}
+  #      invalid:
+  #        subject: Account access attempted
+  #        body: |-
+  #          Hi, you (or someone else) entered this email address when trying to recover access to an account.
+  #
+  #          However, this email address is not on our database of registered users and therefore the attempt has failed. If this was you, check if you signed up using a different address. If this was not you, please ignore this email.
+  #        plainBody: Hi, you (or someone else) entered this email address when trying to recover access to an account.
+  #    verification:
+  #      valid:
+  #        subject: Please verify your email address
+  #        body: |-
+  #          Hi, please verify your account by clicking the following link:
+  #
+  #          <a href="{{ .VerificationURL }}">{{ .VerificationURL }}</a>
+  #        plainBody: Hi, please verify your account by clicking the following link: {{ .VerificationURL }}
+  #      invalid:
+  #        subject:
+  #        body:
+  #        plainBody:
 
   config:
     courier:
@@ -164,7 +167,7 @@ kratos:
 
 ## -- Configuration options for the k8s deployment
 deployment:
-   # -- Configure the probes for when the deployment is considered ready and ongoing health check
+  # -- Configure the probes for when the deployment is considered ready and ongoing health check
   livenessProbe:
     httpGet:
       path: /admin/health/alive
@@ -216,7 +219,7 @@ deployment:
   #  - name: ...
   #    image: ...
 
-  # -- If you want to add extra sidecar containers. 
+  # -- If you want to add extra sidecar containers.
   extraContainers: {}
   # extraContainers: |
   #  - name: ...
@@ -301,57 +304,57 @@ deployment:
 
 ## -- Configuration options for the k8s statefulSet
 statefulSet:
-    resources: {}
-    #  We usually recommend not to specify default resources and to leave this as a conscious
-    #  choice for the user. This also increases chances charts run on environments with little
-    #  resources, such as Minikube. If you do want to specify resources, uncomment the following
-    #  lines, adjust them as necessary, and remove the curly braces after 'resources:'.
-    #  limits:
-    #    cpu: 100m
-    #    memory: 128Mi
-    #  requests:
-    #    cpu: 100m
-    #  memory: 128Mi
+  resources: {}
+  #  We usually recommend not to specify default resources and to leave this as a conscious
+  #  choice for the user. This also increases chances charts run on environments with little
+  #  resources, such as Minikube. If you do want to specify resources, uncomment the following
+  #  lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  #  limits:
+  #    cpu: 100m
+  #    memory: 128Mi
+  #  requests:
+  #    cpu: 100m
+  #  memory: 128Mi
 
-    extraEnv: []
-    # -- If you want to mount external volume
-    # For example, mount a secret containing Certificate root CA to verify database
-    # TLS connection.
-    extraVolumes: []
-    # - name: my-volume
-    #   secret:
-    #     secretName: my-secret
-    extraVolumeMounts: []
-    # - name: my-volume
-    #   mountPath: /etc/secrets/my-secret
-    #   readOnly: true
+  extraEnv: []
+  # -- If you want to mount external volume
+  # For example, mount a secret containing Certificate root CA to verify database
+  # TLS connection.
+  extraVolumes: []
+  # - name: my-volume
+  #   secret:
+  #     secretName: my-secret
+  extraVolumeMounts: []
+  # - name: my-volume
+  #   mountPath: /etc/secrets/my-secret
+  #   readOnly: true
 
-    # -- If you want to add extra init containers. These are processed before the migration init container.
-    extraInitContainers: {}
-    # extraInitContainers: |
-    #  - name: ...
-    #    image: ...
+  # -- If you want to add extra init containers. These are processed before the migration init container.
+  extraInitContainers: {}
+  # extraInitContainers: |
+  #  - name: ...
+  #    image: ...
 
-    # -- If you want to add extra sidecar containers.
-    extraContainers: {}
-    # extraContainers: |
-    #  - name: ...
-    #    image: ...
+  # -- If you want to add extra sidecar containers.
+  extraContainers: {}
+  # extraContainers: |
+  #  - name: ...
+  #    image: ...
 
-    annotations: {}
-    #      If you do want to specify annotations, uncomment the following
-    #      lines, adjust them as necessary, and remove the curly braces after 'annotations:'.
-    #      e.g.  sidecar.istio.io/rewriteAppHTTPProbers: "true"
+  annotations: {}
+  #      If you do want to specify annotations, uncomment the following
+  #      lines, adjust them as necessary, and remove the curly braces after 'annotations:'.
+  #      e.g.  sidecar.istio.io/rewriteAppHTTPProbers: "true"
 
-    labels: {}
-    #      If you do want to specify additional labels, uncomment the following
-    #      lines, adjust them as necessary, and remove the curly braces after 'labels:'.
-    #      e.g.  type: app
+  labels: {}
+  #      If you do want to specify additional labels, uncomment the following
+  #      lines, adjust them as necessary, and remove the curly braces after 'labels:'.
+  #      e.g.  type: app
 
 securityContext:
   capabilities:
     drop:
-    - ALL
+      - ALL
   readOnlyRootFilesystem: true
   runAsNonRoot: true
   runAsUser: 100
@@ -374,13 +377,13 @@ job:
   # kubernetes.io/ingress.class: nginx
   # kubernetes.io/tls-acme: "true"
 
-  # -- If you want to add extra sidecar containers. 
+  # -- If you want to add extra sidecar containers.
   extraContainers: {}
   # extraContainers: |
   #  - name: ...
   #    image: ...
 
-  # -- If you want to add lifecycle hooks. 
+  # -- If you want to add lifecycle hooks.
   lifecycle: {}
   # lifecycle: |
   #   preStop:
@@ -390,7 +393,7 @@ job:
   # -- Set automounting of the SA token
   automountServiceAccountToken: true
 
-  # -- Set sharing process namespace 
+  # -- Set sharing process namespace
   shareProcessNamespace: false
 
   # -- Specify the serviceAccountName value.
@@ -401,7 +404,7 @@ job:
     # -- Specifies whether a service account should be created
     create: true
     # -- Annotations to add to the service account
-    annotations: 
+    annotations:
       helm.sh/hook-weight: "0"
       helm.sh/hook: "pre-install, pre-upgrade"
       helm.sh/hook-delete-policy: "before-hook-creation"
@@ -430,7 +433,7 @@ tolerations: []
 watcher:
   enabled: false
   image: oryd/k8s-toolbox:0.0.2
-  mountFile: ''
+  mountFile: ""
   # mountFile: /etc/secrets/my-secret/foo
 
 # -- PodDistributionBudget configuration
@@ -439,7 +442,7 @@ pdb:
   spec:
     minAvailable: 1
 
-# -- Parameters for the Prometheus ServiceMonitor objects. 
+# -- Parameters for the Prometheus ServiceMonitor objects.
 # Reference: https://docs.openshift.com/container-platform/4.6/rest_api/monitoring_apis/servicemonitor-monitoring-coreos-com-v1.html
 serviceMonitor:
   # -- switch to false to prevent creating the ServiceMonitor
@@ -455,3 +458,6 @@ serviceMonitor:
   # -- TLS configuration to use when scraping the endpoint
   tlsConfig: {}
 
+configmap:
+  # -- switch to false to prevent checksum annotations being maintained and propogated to the pods
+  hashSumEnabled: true

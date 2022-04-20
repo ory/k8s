@@ -81,7 +81,7 @@ Generate the name of the secret resource containing secrets
 Generate the secrets.system value
 */}}
 {{- define "hydra.secrets.system" -}}
-  {{- if .Values.hydra.config.secrets.system -}}
+  {{- if (.Values.hydra.config.secrets).system -}}
     {{- if kindIs "slice" .Values.hydra.config.secrets.system -}}
       {{- if gt (len .Values.hydra.config.secrets.system) 1 -}}
         "{{- join "\",\"" .Values.hydra.config.secrets.system -}}"
@@ -100,7 +100,7 @@ Generate the secrets.system value
 Generate the secrets.cookie value
 */}}
 {{- define "hydra.secrets.cookie" -}}
-{{- if .Values.hydra.config.secrets.cookie -}}
+{{- if (.Values.hydra.config.secrets).cookie -}}
 {{- .Values.hydra.config.secrets.cookie }}
 {{- else -}}
 {{- include "hydra.secrets.system" . }}
@@ -111,8 +111,7 @@ Generate the secrets.cookie value
 Generate the configmap data, redacting secrets
 */}}
 {{- define "hydra.configmap" -}}
-{{- $config := unset .Values.hydra.config "dsn" -}}
-{{- $config := unset $config "secrets" -}}
+{{- $config := omit .Values.hydra.config "dsn" "secrets" -}}
 {{- toYaml $config -}}
 {{- end -}}
 
@@ -167,5 +166,17 @@ Create the name of the service account for the Job to use
 {{- printf "%s-job" (default (include "hydra.fullname" .) .Values.job.serviceAccount.name) }}
 {{- else }}
 {{- include "hydra.serviceAccountName" . }}
+{{- end }}
+{{- end }}
+
+{{/*
+Checksum annotations generated from configmaps and secrets
+*/}}
+{{- define "hydra.annotations.checksum" -}}
+{{- if .Values.configmap.hashSumEnabled }}
+checksum/hydra-config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
+{{- end }}
+{{- if and .Values.secret.enabled .Values.secret.hashSumEnabled }}
+checksum/hydra-secrets: {{ include (print $.Template.BasePath "/secrets.yaml") . | sha256sum }}
 {{- end }}
 {{- end }}

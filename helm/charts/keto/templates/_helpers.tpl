@@ -52,7 +52,7 @@ Generate the dsn value
 Generate the configmap data, redacting secrets
 */}}
 {{- define "keto.configmap" -}}
-{{- $config := unset .Values.keto.config "dsn" -}}
+{{- $config := omit .Values.keto.config "dsn" -}}
 {{- toYaml $config -}}
 {{- end -}}
 
@@ -95,5 +95,18 @@ Create the name of the service account for the Job to use
 {{- printf "%s-job" (default (include "keto.fullname" .) .Values.job.serviceAccount.name) }}
 {{- else }}
 {{- include "keto.serviceAccountName" . }}
+{{- end }}
+{{- end }}
+
+
+{{/*
+Checksum annotations generated from configmaps and secrets
+*/}}
+{{- define "keto.annotations.checksum" -}}
+{{- if .Values.configmap.hashSumEnabled }}
+checksum/keto-config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
+{{- end }}
+{{- if and .Values.secret.enabled .Values.secret.hashSumEnabled }}
+checksum/keto-secrets: {{ include (print $.Template.BasePath "/secrets.yaml") . | sha256sum }}
 {{- end }}
 {{- end }}

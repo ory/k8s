@@ -30,7 +30,7 @@ serviceAccount:
 securityContext:
   capabilities:
     drop:
-    - ALL
+      - ALL
   readOnlyRootFilesystem: true
   runAsNonRoot: true
   runAsUser: 100
@@ -48,13 +48,13 @@ job:
   # kubernetes.io/ingress.class: nginx
   # kubernetes.io/tls-acme: "true"
 
-  # -- If you want to add extra sidecar containers. 
+  # -- If you want to add extra sidecar containers.
   extraContainers: {}
   # extraContainers: |
   #  - name: ...
   #    image: ...
 
-  # -- If you want to add lifecycle hooks. 
+  # -- If you want to add lifecycle hooks.
   lifecycle: {}
   # lifecycle: |
   #   preStop:
@@ -64,7 +64,7 @@ job:
   # -- Set automounting of the SA token
   automountServiceAccountToken: true
 
-  # -- Set sharing process namespace 
+  # -- Set sharing process namespace
   shareProcessNamespace: false
 
   # -- Specify the serviceAccountName value.
@@ -75,7 +75,7 @@ job:
     # -- Specifies whether a service account should be created
     create: true
     # -- Annotations to add to the service account
-    annotations: 
+    annotations:
       helm.sh/hook-weight: "0"
       helm.sh/hook: "pre-install, pre-upgrade"
       helm.sh/hook-delete-policy: "before-hook-creation"
@@ -96,7 +96,7 @@ ingress:
     # kubernetes.io/tls-acme: "true"
     hosts:
       - host: chart-example.local
-        paths: 
+        paths:
           - path: /read
             pathType: Prefix
     tls: []
@@ -111,7 +111,7 @@ ingress:
     # kubernetes.io/tls-acme: "true"
     hosts:
       - host: chart-example.local
-        paths: 
+        paths:
           - path: /write
             pathType: Prefix
     tls: []
@@ -152,10 +152,12 @@ secret:
   secretAnnotations:
     # Create the secret before installation, and only then. This saves the secret from regenerating during an upgrade
     # pre-upgrade is needed to upgrade from 0.7.0 to newer. Can be deleted afterwards.
-      helm.sh/hook-weight: "0"
-      helm.sh/hook: "pre-install, pre-upgrade"
-      helm.sh/hook-delete-policy: "before-hook-creation"
-      helm.sh/resource-policy: "keep"
+    helm.sh/hook-weight: "0"
+    helm.sh/hook: "pre-install, pre-upgrade"
+    helm.sh/hook-delete-policy: "before-hook-creation"
+    helm.sh/resource-policy: "keep"
+  # -- switch to false to prevent checksum annotations being maintained and propogated to the pods
+  hashSumEnabled: true
 
 # -- Main keto config. Full documentation can be found in https://www.ory.sh/keto/docs/reference/configuration
 keto:
@@ -175,12 +177,12 @@ keto:
 
 # -- Configure the probes for when the deployment is considered ready and ongoing health check
 deployment:
-
   # -- Set custom pod annotations
   podAnnotations: {}
 
   # -- Set custom security context for pods
-  podSecurityContext: {}
+  podSecurityContext:
+    {}
     # fsGroup: 2000
 
   # https://github.com/kubernetes/kubernetes/issues/57601
@@ -220,7 +222,7 @@ deployment:
 
   nodeSelector: {}
 
-  # -- If you want to add extra sidecar containers. 
+  # -- If you want to add extra sidecar containers.
   extraContainers: {}
   # extraContainers: |
   #  - name: ...
@@ -276,12 +278,11 @@ deployment:
 
   affinity: {}
 
-
 # -- Watcher sidecar configuration
 watcher:
   enabled: false
   image: oryd/k8s-toolbox:0.0.2
-  mountFile: ''
+  mountFile: ""
   # mountFile: /etc/secrets/my-secret/foo
 
 # -- PodDistributionBudget configuration
@@ -290,7 +291,7 @@ pdb:
   spec:
     minAvailable: 1
 
-# -- Parameters for the Prometheus ServiceMonitor objects. 
+# -- Parameters for the Prometheus ServiceMonitor objects.
 # Reference: https://docs.openshift.com/container-platform/4.6/rest_api/monitoring_apis/servicemonitor-monitoring-coreos-com-v1.html
 serviceMonitor:
   # -- HTTP scheme to use for scraping.
@@ -303,3 +304,7 @@ serviceMonitor:
   labels: {}
   # -- TLS configuration to use when scraping the endpoint
   tlsConfig: {}
+
+configmap:
+  # -- switch to false to prevent checksum annotations being maintained and propogated to the pods
+  hashSumEnabled: true

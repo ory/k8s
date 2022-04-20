@@ -78,3 +78,17 @@ Create the name of the service account to use
 {{- default "default" .Values.deployment.serviceAccount.name }}
 {{- end }}
 {{- end }}
+
+{{/*
+Checksum annotations generated from configmaps and secrets
+*/}}
+{{- define "oathkeeper.annotations.checksum" -}}
+{{- if .Values.configmap.hashSumEnabled }}
+{{- $oathkeeperConfigMapFile := ternary "/configmap-config-demo.yaml" "/configmap-config.yaml" (.Values.demo) }}
+checksum/oathkeeper-config: {{ include (print $.Template.BasePath $oathkeeperConfigMapFile) . | sha256sum }}
+checksum/oathkeeper-rules: {{ include (print $.Template.BasePath "/configmap-rules.yaml") . | sha256sum }}
+{{- end }}
+{{- if and .Values.secret.enabled .Values.secret.hashSumEnabled }}
+checksum/oauthkeeper-secrets: {{ include (print $.Template.BasePath "/secrets.yaml") . | sha256sum }}
+{{- end }}
+{{- end }}
