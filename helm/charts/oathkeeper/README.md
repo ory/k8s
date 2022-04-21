@@ -28,10 +28,11 @@ A Helm chart for deploying ORY Oathkeeper in Kubernetes
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | affinity | object | `{}` | Configure node affinity |
+| configmap.hashSumEnabled | bool | `true` | switch to false to prevent checksum annotations being maintained and propogated to the pods |
 | demo | bool | `false` | If enabled, a demo deployment with exemplary access rules and JSON Web Key Secrets will be generated. |
 | deployment.annotations | object | `{}` |  |
 | deployment.automountServiceAccountToken | bool | `false` |  |
-| deployment.extraContainers | object | `{}` | If you want to add extra sidecar containers.  |
+| deployment.extraContainers | object | `{}` | If you want to add extra sidecar containers. |
 | deployment.extraEnv | list | `[]` |  |
 | deployment.extraVolumeMounts | list | `[]` | Extra volume mounts, allows mounting the extraVolumes to the container. |
 | deployment.extraVolumes | list | `[]` | Extra volumes you can attach to the pod. |
@@ -59,7 +60,6 @@ A Helm chart for deploying ORY Oathkeeper in Kubernetes
 | ingress | object | `{"api":{"annotations":{},"className":"","enabled":false,"hosts":[{"host":"api.oathkeeper.localhost","paths":[{"path":"/","pathType":"ImplementationSpecific"}]}]},"proxy":{"annotations":{},"className":"","defaultBackend":{},"enabled":false,"hosts":[{"host":"proxy.oathkeeper.localhost","paths":[{"path":"/","pathType":"ImplementationSpecific"}]}]}}` | Configure ingress |
 | ingress.api.enabled | bool | `false` | En-/Disable the api ingress. |
 | ingress.proxy | object | `{"annotations":{},"className":"","defaultBackend":{},"enabled":false,"hosts":[{"host":"proxy.oathkeeper.localhost","paths":[{"path":"/","pathType":"ImplementationSpecific"}]}]}` | Configure ingress for the proxy port. |
-| ingress.proxy.defaultBackend | object | `{}` | Configuration for custom default service. This service will be used to handle the response when the configured service in the Ingress rule does not have any active endpoints |
 | ingress.proxy.enabled | bool | `false` | En-/Disable the proxy ingress. |
 | maester | object | `{"enabled":true}` | Configures controller setup |
 | nameOverride | string | `""` | Chart name override |
@@ -72,6 +72,7 @@ A Helm chart for deploying ORY Oathkeeper in Kubernetes
 | replicaCount | int | `1` | Number of ORY Oathkeeper members |
 | secret.enabled | bool | `true` | switch to false to prevent creating the secret |
 | secret.filename | string | `"mutator.id_token.jwks.json"` | default filename of JWKS (mounted as secret) |
+| secret.hashSumEnabled | bool | `true` | switch to false to prevent checksum annotations being maintained and propogated to the pods |
 | secret.mountPath | string | `"/etc/secrets"` | default mount path for the kubernetes secret |
 | secret.nameOverride | string | `""` | Provide custom name of existing secret, or custom name of secret to be created |
 | secret.secretAnnotations."helm.sh/hook" | string | `"pre-install, pre-upgrade"` |  |
@@ -100,7 +101,7 @@ A Helm chart for deploying ORY Oathkeeper in Kubernetes
 | service.proxy.name | string | `"http"` | The service port name. Useful to set a custom service port name if it must follow a scheme (e.g. Istio) |
 | service.proxy.port | int | `4455` | The service port |
 | service.proxy.type | string | `"ClusterIP"` | The service type |
-| serviceMonitor | object | `{"labels":{},"scheme":"http","scrapeInterval":"60s","scrapeTimeout":"30s","tlsConfig":{}}` | Parameters for the Prometheus ServiceMonitor objects.  Reference: https://docs.openshift.com/container-platform/4.6/rest_api/monitoring_apis/servicemonitor-monitoring-coreos-com-v1.html |
+| serviceMonitor | object | `{"labels":{},"scheme":"http","scrapeInterval":"60s","scrapeTimeout":"30s","tlsConfig":{}}` | Parameters for the Prometheus ServiceMonitor objects. Reference: https://docs.openshift.com/container-platform/4.6/rest_api/monitoring_apis/servicemonitor-monitoring-coreos-com-v1.html |
 | serviceMonitor.labels | object | `{}` | Provide additionnal labels to the ServiceMonitor ressource metadata |
 | serviceMonitor.scheme | string | `"http"` | HTTP scheme to use for scraping. |
 | serviceMonitor.scrapeInterval | string | `"60s"` | Interval at which metrics should be scraped |

@@ -28,6 +28,7 @@ A Helm chart for deploying ORY Hydra in Kubernetes
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | affinity | object | `{}` | Configure node affinity |
+| configmap.hashSumEnabled | bool | `true` | switch to false to prevent checksum annotations being maintained and propogated to the pods |
 | deployment.annotations | object | `{}` |  |
 | deployment.automountServiceAccountToken | bool | `true` |  |
 | deployment.autoscaling.enabled | bool | `false` |  |
@@ -76,20 +77,21 @@ A Helm chart for deploying ORY Hydra in Kubernetes
 | job | object | `{"annotations":{},"automountServiceAccountToken":true,"extraContainers":{},"extraInitContainers":{},"lifecycle":{},"serviceAccount":{"annotations":{"helm.sh/hook":"pre-install, pre-upgrade","helm.sh/hook-delete-policy":"before-hook-creation","helm.sh/hook-weight":"0"},"create":true,"name":""},"shareProcessNamespace":false,"spec":{"backoffLimit":10}}` | Values for initialization job |
 | job.annotations | object | `{}` | If you do want to specify annotations, uncomment the following lines, adjust them as necessary, and remove the curly braces after 'annotations:'. |
 | job.automountServiceAccountToken | bool | `true` | Set automounting of the SA token |
-| job.extraContainers | object | `{}` | If you want to add extra sidecar containers.  |
+| job.extraContainers | object | `{}` | If you want to add extra sidecar containers. |
 | job.extraInitContainers | object | `{}` | If you want to add extra init containers. extraInitContainers: |  - name: ...    image: ... |
-| job.lifecycle | object | `{}` | If you want to add lifecycle hooks.  |
+| job.lifecycle | object | `{}` | If you want to add lifecycle hooks. |
 | job.serviceAccount | object | `{"annotations":{"helm.sh/hook":"pre-install, pre-upgrade","helm.sh/hook-delete-policy":"before-hook-creation","helm.sh/hook-weight":"0"},"create":true,"name":""}` | Specify the serviceAccountName value. In some situations it is needed to provides specific permissions to Hydra deployments Like for example installing Hydra on a cluster with a PosSecurityPolicy and Istio. Uncoment if it is needed to provide a ServiceAccount for the Hydra deployment. |
 | job.serviceAccount.annotations | object | `{"helm.sh/hook":"pre-install, pre-upgrade","helm.sh/hook-delete-policy":"before-hook-creation","helm.sh/hook-weight":"0"}` | Annotations to add to the service account |
 | job.serviceAccount.create | bool | `true` | Specifies whether a service account should be created |
 | job.serviceAccount.name | string | `""` | The name of the service account to use. If not set and create is true, a name is generated using the fullname template |
-| job.shareProcessNamespace | bool | `false` | Set sharing process namespace  |
+| job.shareProcessNamespace | bool | `false` | Set sharing process namespace |
 | job.spec.backoffLimit | int | `10` | Set job back off limit |
 | maester | object | `{"enabled":true}` | Configures controller setup |
 | nameOverride | string | `""` |  |
 | pdb | object | `{"enabled":false,"spec":{"minAvailable":1}}` | PodDistributionBudget configuration |
 | replicaCount | int | `1` | Number of ORY Hydra members |
 | secret.enabled | bool | `true` | switch to false to prevent creating the secret |
+| secret.hashSumEnabled | bool | `true` | switch to false to prevent checksum annotations being maintained and propogated to the pods |
 | secret.nameOverride | string | `""` | Provide custom name of existing secret, or custom name of secret to be created |
 | secret.secretAnnotations."helm.sh/hook" | string | `"pre-install, pre-upgrade"` |  |
 | secret.secretAnnotations."helm.sh/hook-delete-policy" | string | `"before-hook-creation"` |  |
@@ -107,7 +109,7 @@ A Helm chart for deploying ORY Hydra in Kubernetes
 | service.public.name | string | `"http"` | The service port name. Useful to set a custom service port name if it must follow a scheme (e.g. Istio) |
 | service.public.port | int | `4444` | The service port |
 | service.public.type | string | `"ClusterIP"` | The service type |
-| serviceMonitor | object | `{"enabled":true,"labels":{},"scheme":"http","scrapeInterval":"60s","scrapeTimeout":"30s","tlsConfig":{}}` | Parameters for the Prometheus ServiceMonitor objects.  Reference: https://docs.openshift.com/container-platform/4.6/rest_api/monitoring_apis/servicemonitor-monitoring-coreos-com-v1.html |
+| serviceMonitor | object | `{"enabled":true,"labels":{},"scheme":"http","scrapeInterval":"60s","scrapeTimeout":"30s","tlsConfig":{}}` | Parameters for the Prometheus ServiceMonitor objects. Reference: https://docs.openshift.com/container-platform/4.6/rest_api/monitoring_apis/servicemonitor-monitoring-coreos-com-v1.html |
 | serviceMonitor.enabled | bool | `true` | switch to false to prevent creating the ServiceMonitor |
 | serviceMonitor.labels | object | `{}` | Provide additionnal labels to the ServiceMonitor ressource metadata |
 | serviceMonitor.scheme | string | `"http"` | HTTP scheme to use for scraping. |
