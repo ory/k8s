@@ -351,6 +351,12 @@ statefulSet:
   #      lines, adjust them as necessary, and remove the curly braces after 'labels:'.
   #      e.g.  type: app
 
+  # -- Node labels for pod assignment.
+  nodeSelector: {}
+  # If you do want to specify node labels, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'nodeSelector:'.
+  #   foo: bar
+
 securityContext:
   capabilities:
     drop:
