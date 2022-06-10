@@ -1,4 +1,5 @@
 {{- $resources := ternary .Values.deployment.resources .Values.resources (not (empty .Values.deployment.resources )) -}}
+{{- $nodeSelector := ternary .Values.deployment.nodeSelector .Values.nodeSelector (not (empty .Values.deployment.nodeSelector )) -}}
 
 apiVersion: apps/v1
 kind: Deployment
@@ -202,7 +203,7 @@ spec:
         {{- if .Values.deployment.extraContainers }}
 {{ tpl .Values.deployment.extraContainers . | indent 8 }}
         {{- end }}
-      {{- with .Values.nodeSelector }}
+      {{- with $nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
       {{- end }}
