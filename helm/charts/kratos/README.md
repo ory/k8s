@@ -111,6 +111,7 @@ A ORY Kratos Helm chart for Kubernetes
 | statefulSet.extraVolumeMounts | list | `[]` |  |
 | statefulSet.extraVolumes | list | `[]` | If you want to mount external volume For example, mount a secret containing Certificate root CA to verify database TLS connection. |
 | statefulSet.labels | object | `{}` |  |
+| statefulSet.nodeSelector | object | `{}` | Node labels for pod assignment. |
 | statefulSet.resources | object | `{}` |  |
 | statefulset.log.format | string | `"json"` |  |
 | statefulset.log.level | string | `"trace"` |  |
