@@ -52,6 +52,12 @@ spec:
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+      {{- if .Values.deployment.extraInitContainers}}
+      initContainers:
+        {{- if .Values.deployment.extraInitContainers }}
+{{ tpl .Values.deployment.extraInitContainers . | indent 8 }}
+        {{- end }}
+      {{- end }}
       serviceAccountName: {{ include "keto.serviceAccountName" . }}
       automountServiceAccountToken: {{ $automountServiceAccountToken }}
       securityContext:
