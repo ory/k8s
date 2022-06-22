@@ -245,6 +245,12 @@ deployment:
   #   readOnly: true
   extraVolumeMounts: []
 
+  # -- If you want to add extra init containers.
+  extraInitContainers: {}
+  # extraInitContainers: |
+  #  - name: ...
+  #    image: ...
+
   # -- Extra labels to be added to the deployment, and pods. K8s object format expected
   # foo: bar
   # my.special.label/type: value
