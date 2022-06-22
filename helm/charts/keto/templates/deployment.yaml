@@ -6,6 +6,7 @@
 {{- $autoscaling := ternary .Values.deployment.autoscaling .Values.autoscaling (not (empty .Values.deployment.autoscaling )) -}}
 {{- $tracing := ternary .Values.deployment.tracing .Values.tracing (not (empty .Values.deployment.tracing )) -}}
 {{- $resources := ternary .Values.deployment.resources .Values.resources (not (empty .Values.deployment.resources )) -}}
+{{- $extraInitContainers := ternary .Values.deployment.extraInitContainers .Values.extraInitContainers (not (empty .Values.deployment.extraInitContainers )) -}}
 {{- $extraContainers := ternary .Values.deployment.extraContainers .Values.extraContainers (not (empty .Values.deployment.extraContainers )) -}}
 {{- $extraLabels := ternary .Values.deployment.extraLabels .Values.extraLabels (not (empty .Values.deployment.extraLabels )) -}}
 {{- $extraVolumeMounts := ternary .Values.deployment.extraVolumeMounts .Values.extraVolumeMounts (not (empty .Values.deployment.extraVolumeMounts )) -}}
@@ -52,11 +53,9 @@ spec:
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      {{- if .Values.deployment.extraInitContainers}}
+      {{- if $extraInitContainers}}
       initContainers:
-        {{- if .Values.deployment.extraInitContainers }}
-{{ tpl .Values.deployment.extraInitContainers . | indent 8 }}
-        {{- end }}
+{{- tpl $extraInitContainers . | nindent 8 }}
       {{- end }}
       serviceAccountName: {{ include "keto.serviceAccountName" . }}
       automountServiceAccountToken: {{ $automountServiceAccountToken }}
@@ -154,7 +153,7 @@ spec:
             {{- toYaml . | nindent 12 }}
           {{- end }}
         {{- if $extraContainers }}
-{{ tpl $extraContainers . | indent 8 }}
+{{- tpl $extraContainers . | nindent 8 }}
         {{- end }}
       volumes:
         - name: {{ include "keto.name" . }}-config-volume
