@@ -99,24 +99,24 @@ spec:
             - --config
             - /etc/config/keto.yaml
           ports:
-            - name: http-read
+            - name: {{ .Values.service.read.name }}
               containerPort: {{ .Values.keto.config.serve.read.port }}
               protocol: TCP
-            - name: http-write
+            - name: {{ .Values.service.write.name }}
               containerPort: {{ .Values.keto.config.serve.write.port }}
               protocol: TCP
-            - name: http-metrics
+            - name: {{ .Values.service.metrics.name }}
               containerPort: {{ .Values.keto.config.serve.metrics.port }}
               protocol: TCP
           livenessProbe:
             httpGet:
               path: /health/alive
-              port: http-write
+              port: {{ .Values.service.write.name }}
             {{- toYaml $livenessProbe | nindent 12 }}
           readinessProbe:
             httpGet:
               path: /health/ready
-              port: http-write
+              port: {{ .Values.service.write.name }}
           {{- toYaml $readinessProbe | nindent 12 }}
           resources:
             {{- toYaml $resources | nindent 12 }}

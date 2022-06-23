@@ -42,10 +42,10 @@ spec:
               service:
                 name: {{ $fullName }}
                 port:
-                  name: http-write
+                  name: {{ $.Values.service.write.name }}
               {{- else }}
               serviceName: {{ $fullName }}
-              servicePort: http-write
+              servicePort: {{ $.Values.service.write.name }}
               {{- end }}
           {{- end }}
     {{- end }}
