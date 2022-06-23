@@ -42,10 +42,10 @@ spec:
               service:
                 name: {{ $fullName }}
                 port:
-                  name: http-read
+                  name: {{ $.Values.service.read.name }}
               {{- else }}
               serviceName: {{ $fullName }}
-              servicePort: http-read
+              servicePort: {{ $.Values.service.read.name }}
               {{- end }}
           {{- end }}
     {{- end }}

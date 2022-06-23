@@ -13,7 +13,7 @@ spec:
   type: {{ .Values.service.read.type }}
   ports:
     - port: {{ .Values.service.read.port }}
-      targetPort: http-read
+      targetPort: {{ .Values.service.read.name }}
       protocol: TCP
       name: {{ .Values.service.read.name }}
   selector:

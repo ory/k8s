@@ -13,7 +13,7 @@ spec:
   type: {{ .Values.service.write.type }}
   ports:
     - port: {{ .Values.service.write.port }}
-      targetPort: http-write
+      targetPort: {{ .Values.service.write.name }}
       protocol: TCP
       name: {{ .Values.service.write.name }}
   selector:

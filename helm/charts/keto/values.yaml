@@ -125,13 +125,13 @@ service:
   read:
     enabled: true
     type: ClusterIP
-    name: http-read
+    name: grpc-read
     port: 80
   # -- Write service
   write:
     enabled: true
     type: ClusterIP
-    name: http-write
+    name: grpc-write
     port: 80
   # -- Metrics service
   metrics:
