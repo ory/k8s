@@ -22,11 +22,12 @@ Access Control Policies as a Server
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | configmap.hashSumEnabled | bool | `true` | switch to false to prevent checksum annotations being maintained and propogated to the pods |
-| deployment | object | `{"affinity":{},"annotations":{},"automountServiceAccountToken":true,"autoscaling":{"enabled":false,"maxReplicas":100,"minReplicas":1,"targetCPUUtilizationPercentage":80},"extraContainers":{},"extraEnv":[],"extraLabels":{},"extraVolumeMounts":[],"extraVolumes":[],"livenessProbe":{"failureThreshold":5,"initialDelaySeconds":30,"periodSeconds":10},"nodeSelector":{},"podAnnotations":{},"podSecurityContext":{},"readinessProbe":{"failureThreshold":5,"initialDelaySeconds":30,"periodSeconds":10},"resources":{},"tolerations":[],"tracing":{"datadog":{"enabled":false}}}` | Configure the probes for when the deployment is considered ready and ongoing health check |
+| deployment | object | `{"affinity":{},"annotations":{},"automountServiceAccountToken":true,"autoscaling":{"enabled":false,"maxReplicas":100,"minReplicas":1,"targetCPUUtilizationPercentage":80},"extraContainers":{},"extraEnv":[],"extraInitContainers":{},"extraLabels":{},"extraVolumeMounts":[],"extraVolumes":[],"livenessProbe":{"failureThreshold":5,"initialDelaySeconds":30,"periodSeconds":10},"nodeSelector":{},"podAnnotations":{},"podSecurityContext":{},"readinessProbe":{"failureThreshold":5,"initialDelaySeconds":30,"periodSeconds":10},"resources":{},"tolerations":[],"tracing":{"datadog":{"enabled":false}}}` | Configure the probes for when the deployment is considered ready and ongoing health check |
 | deployment.annotations | object | `{}` | Add custom annotations to the deployment |
 | deployment.autoscaling | object | `{"enabled":false,"maxReplicas":100,"minReplicas":1,"targetCPUUtilizationPercentage":80}` | Autoscaling for keto deployment |
 | deployment.extraContainers | object | `{}` | If you want to add extra sidecar containers. |
 | deployment.extraEnv | list | `[]` | Array of extra Envs to be added to the deployment. K8s format expected - name: FOO   value: BAR |
+| deployment.extraInitContainers | object | `{}` | If you want to add extra init containers. |
 | deployment.extraLabels | object | `{}` | Extra labels to be added to the deployment, and pods. K8s object format expected foo: bar my.special.label/type: value |
 | deployment.extraVolumeMounts | list | `[]` | Array of extra VolumeMounts to be added to the deployment. K8s format expected - name: my-volume   mountPath: /etc/secrets/my-secret   readOnly: true |
 | deployment.extraVolumes | list | `[]` | Array of extra Volumes to be added to the deployment. K8s format expected - name: my-volume   secret:     secretName: my-secret |
