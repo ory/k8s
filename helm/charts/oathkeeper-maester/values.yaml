@@ -25,7 +25,7 @@ image:
   # -- ORY Oathkeeper Rule Controller image
   repository: oryd/oathkeeper-maester
   # -- ORY Oathkeeper Rule Controller version
-  tag: "v0.1.6"
+  tag: "v0.1.7"
   # -- Image pull policy
   pullPolicy: IfNotPresent
 
