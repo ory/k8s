@@ -14,16 +14,10 @@ cd "$( dirname "${BASH_SOURCE[0]}" )/.."
 
 export release=$(echo "$1-$(date +%s)" | cut -c 1-31)
 
-function teardown() {
-    helm delete "${release}"
-}
-
-trap teardown HUP INT QUIT TERM EXIT
-
 echo "---> Installing $1 from v${BASE_RELEASE}"
 
 set +e
-helm install -f "https://raw.githubusercontent.com/ory/k8s/v${BASE_RELEASE}/.circleci/values/$1.yaml" "${release}" "ory/$1" --wait --timeout="${TIMEOUT}"
+helm install -f "https://raw.githubusercontent.com/ory/k8s/v${BASE_RELEASE}/.circleci/values/$1.yaml" "${release}" "ory/$1" --wait --atomic --timeout="${TIMEOUT}"
 export INSTALLATION_STATUS=$?
 set -e
 

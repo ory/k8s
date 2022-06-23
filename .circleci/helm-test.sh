@@ -15,16 +15,10 @@ export release=$(echo "$1-$(date +%s)" | cut -c 1-31)
 
 helm dep update "./helm/charts/$1"
 
-function teardown() {
-    helm delete "${release}"
-}
-
-trap teardown HUP INT QUIT TERM EXIT
-
 echo "---> Installing $1"
 
 set +e
-helm install -f ".circleci/values/$1.yaml" "${release}" "./helm/charts/$1" --wait --debug --timeout="${TIMEOUT}"
+helm install -f ".circleci/values/$1.yaml" "${release}" "./helm/charts/$1" --wait --debug --atomic --timeout="${TIMEOUT}"
 export INSTALLATION_STATUS=$?
 set -e
 
