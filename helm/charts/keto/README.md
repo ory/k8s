@@ -1,6 +1,6 @@
 # keto
 
-![Version: 0.23.2](https://img.shields.io/badge/Version-0.23.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.8.0](https://img.shields.io/badge/AppVersion-v0.8.0-informational?style=flat-square)
+![Version: 0.23.3](https://img.shields.io/badge/Version-0.23.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.8.0](https://img.shields.io/badge/AppVersion-v0.8.0-informational?style=flat-square)
 
 Access Control Policies as a Server
 
@@ -60,10 +60,10 @@ Access Control Policies as a Server
 | secret.hashSumEnabled | bool | `true` | switch to false to prevent checksum annotations being maintained and propogated to the pods |
 | secret.nameOverride | string | `""` | Provide custom name of existing secret, or custom name of secret to be created |
 | securityContext | object | `{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"privileged":false,"readOnlyRootFilesystem":true,"runAsNonRoot":true,"runAsUser":100}` | Default security context configuration |
-| service | object | `{"metrics":{"annotations":{},"enabled":false,"name":"http-metrics","port":80,"type":"ClusterIP"},"read":{"enabled":true,"name":"http-read","port":80,"type":"ClusterIP"},"write":{"enabled":true,"name":"http-write","port":80,"type":"ClusterIP"}}` | Service configurations |
+| service | object | `{"metrics":{"annotations":{},"enabled":false,"name":"http-metrics","port":80,"type":"ClusterIP"},"read":{"enabled":true,"name":"grpc-read","port":80,"type":"ClusterIP"},"write":{"enabled":true,"name":"grpc-write","port":80,"type":"ClusterIP"}}` | Service configurations |
 | service.metrics | object | `{"annotations":{},"enabled":false,"name":"http-metrics","port":80,"type":"ClusterIP"}` | Metrics service |
-| service.read | object | `{"enabled":true,"name":"http-read","port":80,"type":"ClusterIP"}` | Read service |
-| service.write | object | `{"enabled":true,"name":"http-write","port":80,"type":"ClusterIP"}` | Write service |
+| service.read | object | `{"enabled":true,"name":"grpc-read","port":80,"type":"ClusterIP"}` | Read service |
+| service.write | object | `{"enabled":true,"name":"grpc-write","port":80,"type":"ClusterIP"}` | Write service |
 | serviceAccount.annotations | object | `{}` | Annotations to add to the service account |
 | serviceAccount.create | bool | `true` | Specifies whether a service account should be created |
 | serviceAccount.name | string | `""` | The name of the service account to use. If not set and create is true, a name is generated using the fullname template |
