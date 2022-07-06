@@ -105,7 +105,15 @@ ingress:
 kratos:
   development: false
   # -- Enable the initialization job. Required to work with a DB
-  autoMigrate: false
+
+  # -- Enables database migration
+  automigration:
+    enabled: false
+    # -- Configure the way to execute database migration. Possible values: job, initContainer
+    # When set to job, the migration will be executed as a job on release or upgrade.
+    # When set to initContainer, the migration will be executed when kratos pod is created
+    # Defaults to job  
+    type: job
 
   # -- You can add multiple identity schemas here
   identitySchemas: {}

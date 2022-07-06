@@ -1,0 +1,80 @@
+{{- if and  ( .Values.kratos.automigration.enabled ) ( eq .Values.kratos.automigration.type "job" ) }}
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ include "kratos.fullname" . }}-automigrate
+  {{- if .Release.Namespace }}
+  namespace: {{ .Release.Namespace }}
+  {{- end }}
+  labels:
+{{ include "kratos.labels" . | indent 4 }}
+  {{- with .Values.deployment.labels }}
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+  annotations:
+    {{- with .Values.job.annotations }}
+      {{- toYaml . | nindent 4 }}
+    {{- end }}
+    helm.sh/hook-weight: "1"
+    helm.sh/hook: "pre-install, pre-upgrade"
+    helm.sh/hook-delete-policy: "before-hook-creation,hook-succeeded"
+spec:
+  template:
+    metadata: 
+      {{- with .Values.job.annotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        app.kubernetes.io/name: {{ include "kratos.fullname" . }}-automigrate
+        app.kubernetes.io/instance: {{ .Release.Name }}
+        {{- with .Values.deployment.labels }}
+          {{- toYaml . | nindent 8 }}
+        {{- end }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "kratos.job.serviceAccountName" . }}
+      automountServiceAccountToken: {{ .Values.job.automountServiceAccountToken }}
+      containers:
+      - name: {{ .Chart.Name }}-automigrate
+        image: {{ include "kratos.image" . }}
+        imagePullPolicy: {{ include "kratos.imagePullPolicy" . }}
+        command: ["kratos"]
+        args: ["migrate", "sql", "-e", "--yes"]
+        env:
+          - name: DSN
+            valueFrom:
+              secretKeyRef:
+                name: {{ include "kratos.secretname" . }}
+                key: dsn
+      {{- if .Values.job.lifecycle }}
+        lifecycle:
+{{ tpl .Values.job.lifecycle . | indent 10 }}
+      {{- end }}
+        {{- if .Values.securityContext }}
+        securityContext:
+          {{- toYaml .Values.securityContext | nindent 10 }}
+        {{- end }}
+        {{- if .Values.deployment.extraVolumeMounts }}
+        volumeMounts:
+{{ toYaml .Values.deployment.extraVolumeMounts | indent 10 }}
+         {{- end }}
+      {{- if .Values.job.extraContainers }}
+{{ tpl .Values.job.extraContainers . | indent 6 }}
+      {{- end }}
+      restartPolicy: Never
+      {{- if .Values.deployment.extraInitContainers }}
+      initContainers:
+{{ tpl .Values.deployment.extraInitContainers . | indent 8 }}
+      {{- end }}
+      {{- if .Values.deployment.extraVolumes }}
+      volumes:
+{{ toYaml .Values.deployment.extraVolumes | indent 8 }}
+      {{- end }}
+      shareProcessNamespace: {{ .Values.job.shareProcessNamespace }}
+  backoffLimit: {{ .Values.job.spec.backoffLimit }}
+{{- end }}

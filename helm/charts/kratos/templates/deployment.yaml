@@ -45,11 +45,9 @@ spec:
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
     {{- end }}
-    
-    {{- if or .Values.deployment.extraInitContainers  .Values.kratos.autoMigrate  }}
+          
       initContainers:
-    {{- end}}
-      {{- if .Values.kratos.autoMigrate }}
+      {{- if and ( .Values.kratos.automigration.enabled ) ( eq .Values.kratos.automigration.type "initContainer" ) }}
         - name: {{ .Chart.Name }}-automigrate
           image: {{ include "kratos.image" . }}
           imagePullPolicy: {{ include "kratos.imagePullPolicy" . }}
