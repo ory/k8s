@@ -69,7 +69,7 @@ spec:
       restartPolicy: Never
       {{- if .Values.deployment.extraInitContainers }}
       initContainers:
-{{ tpl .Values.deployment.extraInitContainers . | indent 8 }}
+{{ toYaml .Values.deployment.extraInitContainers | indent 8 }}
       {{- end }}
       {{- if .Values.deployment.extraVolumes }}
       volumes:
