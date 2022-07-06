@@ -2,7 +2,8 @@
 autoscaling:
   enabled: false
 kratos:
-  autoMigrate: true
+  automigration:
+      enabled: true
   identitySchemas:
     "identity.default.schema.json": |
       {
@@ -80,7 +81,7 @@ ingress:
   public:
     enabled: true
 deployment:
-  extraInitContainers: |
+  extraInitContainers: 
     - name: "hello-world"
       image: "alpine:latest"
       command: ["/bin/sh"]
