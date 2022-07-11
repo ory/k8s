@@ -42,10 +42,10 @@ spec:
               service:
                 name: {{ $fullName }}-admin
                 port:
-                  name: http-admin
+                  name: {{ $.Values.service.admin.name }}
               {{- else }}
               serviceName: {{ $fullName }}-admin
-              servicePort: http-admin
+              servicePort: {{ $.Values.service.admin.name }}
               {{- end }}
           {{- end }}
     {{- end }}
