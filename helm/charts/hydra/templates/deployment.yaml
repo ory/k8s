@@ -87,12 +87,8 @@ spec:
           args: [
             "serve",
             "all",
-            {{- if .Values.hydra.dangerousForceHttp }}
-            "--dangerous-force-http",
-            {{- end}}
-            {{- if .Values.hydra.dangerousAllowInsecureRedirectUrls }}
-            "--dangerous-allow-insecure-redirect-urls",
-            {{ include "hydra.utils.joinListWithComma" .Values.hydra.dangerousAllowInsecureRedirectUrls | quote }},
+            {{- if .Values.hydra.dev }}
+            "--dev",
             {{- end}}
             "--config",
             "/etc/config/config.yaml"
