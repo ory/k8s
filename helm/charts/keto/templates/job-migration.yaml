@@ -1,5 +1,5 @@
 {{- if .Values.keto.autoMigrate }}
-{{- $extraLabels := ternary .Values.deployment.extraLabels .Values.extraLabels (not (empty .Values.deployment.extraLabels )) -}}
+{{- $extraLabels := ternary .Values.deployment.extraLabels .Values.extraLabels (not (empty .Values.deployment.labels )) -}}
 {{- $extraVolumeMounts := ternary .Values.deployment.extraVolumeMounts .Values.extraVolumeMounts (not (empty .Values.deployment.extraVolumeMounts )) -}}
 {{- $extraEnv := ternary .Values.deployment.extraEnv .Values.extraEnv (not (empty .Values.deployment.extraEnv )) -}}
 {{- $extraVolumes := ternary .Values.deployment.extraVolumes .Values.extraVolumes (not (empty .Values.deployment.extraVolumes )) -}}
