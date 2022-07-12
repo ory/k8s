@@ -1,4 +1,8 @@
 {{- if .Values.hydra.autoMigrate }}
+{{- $extraLabels := ternary .Values.deployment.extraLabels .Values.extraLabels (not (empty .Values.deployment.extraLabels )) -}}
+{{- $extraVolumeMounts := ternary .Values.deployment.extraVolumeMounts .Values.extraVolumeMounts (not (empty .Values.deployment.extraVolumeMounts )) -}}
+{{- $extraEnv := ternary .Values.deployment.extraEnv .Values.extraEnv (not (empty .Values.deployment.extraEnv )) -}}
+{{- $extraVolumes := ternary .Values.deployment.extraVolumes .Values.extraVolumes (not (empty .Values.deployment.extraVolumes )) -}}
 ---
 apiVersion: batch/v1
 kind: Job
@@ -9,7 +13,7 @@ metadata:
   {{- end }}
   labels:
 {{ include "hydra.labels" . | indent 4 }}
-    {{- with .Values.deployment.labels }}
+    {{- with $extraLabels }}
       {{- toYaml . | nindent 4 }}
     {{- end }}
   annotations:
@@ -21,54 +25,59 @@ metadata:
     helm.sh/hook-delete-policy: "before-hook-creation,hook-succeeded"
 spec:
   template:
-    {{- with .Values.job.annotations }}
-    metadata: 
+    metadata:
       annotations:
+      {{- with .Values.job.annotations }}
         {{- toYaml . | nindent 8 }}
-    {{- end }}
+      {{- end }}
+      labels:
+        {{- with $extraLabels }}
+          {{- toYaml . | nindent 8 }}
+        {{- end }}
     spec:
-    {{- with .Values.imagePullSecrets }}
+      {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
-    {{- end }}
+      {{- end }}
       serviceAccountName: {{ include "hydra.job.serviceAccountName" . }}
       automountServiceAccountToken: {{ .Values.job.automountServiceAccountToken }}
       containers:
       - name: {{ .Chart.Name }}-automigrate
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
         imagePullPolicy: {{ .Values.image.pullPolicy }}
-        command: ["hydra"]
-        args: ["migrate", "sql", "-e", "--yes"]
+        command: [ "hydra" ]
+        args: [ "migrate", "up", "-y", "-e" ]
+        {{- if .Values.job.lifecycle }}
+{{ tpl .Values.job.lifecycle . | indent 8 }}
+        {{- end }}
+        volumeMounts:
+        {{- with $extraVolumeMounts }}
+          {{- toYaml . | nindent 10 }}
+        {{- end }}
         env:
           - name: DSN
             valueFrom:
               secretKeyRef:
                 name: {{ include "hydra.secretname" . }}
                 key: dsn
-        {{- if .Values.job.lifecycle }}
-        lifecycle:
-{{ tpl .Values.job.lifecycle . | indent 10 }}
-        {{- end }}
-        {{- if .Values.deployment.securityContext }}
+          {{- with $extraEnv }}
+            {{- toYaml . | nindent 10 }}
+          {{- end }}
+        {{- if .Values.securityContext }}
         securityContext:
-          {{- toYaml .Values.deployment.securityContext | nindent 10 }}
+          {{- toYaml .Values.securityContext | nindent 10 }}
         {{- end }}
-        {{- if .Values.deployment.extraVolumeMounts }}
-        volumeMounts:
-{{ toYaml .Values.deployment.extraVolumeMounts | indent 10 }}
-         {{- end }}
-      {{- if .Values.job.extraInitContainers }}
       {{- if .Values.job.extraContainers }}
 {{ tpl .Values.job.extraContainers . | indent 6 }}
-        {{- end }}
-      initContainers:
-{{ tpl .Values.job.extraInitContainers . | indent 8 }}
       {{- end }}
       restartPolicy: Never
-      shareProcessNamespace: {{ .Values.job.shareProcessNamespace }}
-      {{- if .Values.deployment.extraVolumes }}
       volumes:
-{{ toYaml .Values.deployment.extraVolumes | indent 8 }}
+        - name: {{ include "hydra.name" . }}-config-volume
+          configMap:
+            name: {{ include "hydra.fullname" . }}-migrate
+      {{- with $extraVolumes }}
+        {{- toYaml . | nindent 8 }}
       {{- end }}
+      shareProcessNamespace: {{ .Values.job.shareProcessNamespace }}
   backoffLimit: {{ .Values.job.spec.backoffLimit }}
 {{- end }}
