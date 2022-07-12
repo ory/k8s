@@ -180,3 +180,25 @@ checksum/hydra-config: {{ include (print $.Template.BasePath "/configmap.yaml") 
 checksum/hydra-secrets: {{ include (print $.Template.BasePath "/secrets.yaml") . | sha256sum }}
 {{- end }}
 {{- end }}
+
+{{/*
+Generate image
+*/}}
+{{- define "hydra.image" -}}
+{{- if eq "string" ( typeOf .Values.image ) }}
+{{- printf "%s" .Values.image -}}
+{{- else -}}
+{{- printf "%s:%s" .Values.image.repository .Values.image.tag -}}
+{{- end -}}
+{{- end -}}
+
+{{/*
+Generate imagePullPolicy
+*/}}
+{{- define "hydra.imagePullPolicy" -}}
+{{- if eq "string" ( typeOf .Values.image ) }}
+{{- printf "%s" .Values.imagePullPolicy -}}
+{{- else -}}
+{{- printf "%s" .Values.image.pullPolicy -}}
+{{- end -}}
+{{- end -}}

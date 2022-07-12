@@ -35,8 +35,8 @@ spec:
       automountServiceAccountToken: {{ .Values.job.automountServiceAccountToken }}
       containers:
       - name: {{ .Chart.Name }}-automigrate
-        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
-        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        image: {{ include "hydra.image" . }}
+        imagePullPolicy: {{ include "hydra.imagePullPolicy" . }}
         command: ["hydra"]
         args: ["migrate", "sql", "-e", "--yes"]
         env:

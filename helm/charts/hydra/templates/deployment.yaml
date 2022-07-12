@@ -74,8 +74,8 @@ spec:
           {{- end }}
         {{- end }}
         - name: {{ .Chart.Name }}
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          image: {{ include "hydra.image" . }}
+          imagePullPolicy: {{ include "hydra.imagePullPolicy" . }}
           command: ["hydra"]
           volumeMounts:
             - name: {{ include "hydra.name" . }}-config-volume
