@@ -57,3 +57,10 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
+
+# -- Set of values for the app deployment
+deployment:
+  # -- Array of extra Envs to be added to the deployment. K8s format expected
+  # - name: FOO
+  #   value: BAR
+  extraEnv: []
