@@ -116,7 +116,7 @@ spec:
         {{- end }}
         {{- if .Values.deployment.extraInitContainers }}
       initContainers:
-{{- toYaml .Values.deployment.extraInitContainers | nindent 8 }}
+{{- tpl .Values.deployment.extraInitContainers . | nindent 8 }}
         {{- end }}
       volumes:
         - name: {{ include "kratos.fullname" . }}-config-volume

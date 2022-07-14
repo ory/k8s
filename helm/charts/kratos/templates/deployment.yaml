@@ -62,7 +62,7 @@ spec:
                   key: dsn
       {{- end }}
       {{- if .Values.deployment.extraInitContainers  }}
-{{ toYaml .Values.deployment.extraInitContainers | indent 8 }}
+{{ tpl  .Values.deployment.extraInitContainers . | indent 8 }}
       {{- end }}
     
       volumes:
