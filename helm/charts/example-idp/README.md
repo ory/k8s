@@ -9,6 +9,8 @@ A Helm chart for deploying the reference implementation for the User Login and C
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | affinity | object | `{}` |  |
+| deployment | object | `{"extraEnv":[]}` | Set of values for the app deployment |
+| deployment.extraEnv | list | `[]` | Array of extra Envs to be added to the deployment. K8s format expected - name: FOO   value: BAR |
 | fullnameOverride | string | `""` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"oryd/hydra-login-consent-node"` |  |
