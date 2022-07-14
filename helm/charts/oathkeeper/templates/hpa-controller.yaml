@@ -1,4 +1,4 @@
-{{- if and (eq .Values.global.ory.oathkeeper.maester.mode "controller") .Values.deployment.autoscaling.enabled }}
+{{- if .Values.deployment.autoscaling.enabled }}
 apiVersion: autoscaling/v2beta1
 kind: HorizontalPodAutoscaler
 metadata:
