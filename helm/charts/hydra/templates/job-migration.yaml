@@ -16,9 +16,15 @@ metadata:
     {{- with .Values.job.annotations }}
       {{- toYaml . | nindent 4 }}
     {{- end }}
+    {{- if .Values.usebyArgoCd }}
+    argocd.argoproj.io/sync-wave: "1"
+    argocd.argoproj.io/hook: PreSync
+    argocd.argoproj.io/hook-delete-policy: BeforeHookCreation,HookSucceeded
+    {{- else }}
     helm.sh/hook-weight: "1"
     helm.sh/hook: "pre-install, pre-upgrade"
     helm.sh/hook-delete-policy: "before-hook-creation,hook-succeeded"
+    {{- end }}
 spec:
   template:
     {{- with .Values.job.annotations }}
@@ -40,11 +46,38 @@ spec:
         command: ["hydra"]
         args: ["migrate", "sql", "-e", "--yes"]
         env:
+        {{- if .Values.database.isCrunchyDataOperator }}
+          - name: DB_USER
+            valueFrom:
+              secretKeyRef:
+                name: {{ tpl .Values.global.databaseSecretName . }}
+                key: user
+          - name: DB_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: {{ tpl .Values.global.databaseSecretName . }}
+                key: password
+          - name: DB_HOST
+            valueFrom:
+              secretKeyRef:
+                name: {{ tpl .Values.global.databaseSecretName . }}
+                key: host
+          - name: DB_PORT
+            valueFrom:
+              secretKeyRef:
+                name: {{ tpl .Values.global.databaseSecretName . }}
+                key: port
+          - name: DB_NAME
+            value: {{ .Values.database.databaseName }}
+          - name: DSN
+            value: postgres://$(DB_USER):$(DB_PASSWORD)@$(DB_HOST):$(DB_PORT)/$(DB_NAME)
+            {{- else }}
           - name: DSN
             valueFrom:
               secretKeyRef:
                 name: {{ include "hydra.secretname" . }}
                 key: dsn
+            {{- end }}
         {{- if .Values.job.lifecycle }}
         lifecycle:
 {{ tpl .Values.job.lifecycle . | indent 10 }}
