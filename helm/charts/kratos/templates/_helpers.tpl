@@ -181,3 +181,14 @@ checksum/kratos-templates: {{ include (print $.Template.BasePath "/configmap-tem
 checksum/kratos-secrets: {{ include (print $.Template.BasePath "/secrets.yaml") . | sha256sum }}
 {{- end }}
 {{- end }}
+
+{{/*
+Check the migration type value and fail if unexpected 
+*/}}
+{{- define "kratos.automigration.typeVerification" -}}
+{{- if and .Values.kratos.automigration.enabled  .Values.kratos.automigration.type }}
+  {{- if and (ne .Values.kratos.automigration.type "initContainer") (ne .Values.kratos.automigration.type "job") }}
+    {{- fail "kratos.automigration.type must be either 'initContainer' or 'job'" -}}
+  {{- end }}  
+{{- end }}
+{{- end }}

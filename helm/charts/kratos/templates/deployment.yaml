@@ -1,5 +1,6 @@
 {{- $resources := ternary .Values.deployment.resources .Values.resources (not (empty .Values.deployment.resources )) -}}
 {{- $nodeSelector := ternary .Values.deployment.nodeSelector .Values.nodeSelector (not (empty .Values.deployment.nodeSelector )) -}}
+{{- include "kratos.automigration.typeVerification" . -}}
 
 apiVersion: apps/v1
 kind: Deployment
@@ -45,12 +46,25 @@ spec:
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
     {{- end }}
-    {{- if .Values.deployment.extraInitContainers}}
+          
       initContainers:
-        {{- if .Values.deployment.extraInitContainers }}
-{{ tpl .Values.deployment.extraInitContainers . | indent 8 }}
-        {{- end }}
-    {{- end }}
+      {{- if and ( .Values.kratos.automigration.enabled ) ( eq .Values.kratos.automigration.type "initContainer" ) }}
+        - name: {{ .Chart.Name }}-automigrate
+          image: {{ include "kratos.image" . }}
+          imagePullPolicy: {{ include "kratos.imagePullPolicy" . }}
+          command: ["kratos"]
+          args: ["migrate", "sql", "-e", "--yes"]
+          env:
+            - name: DSN
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "kratos.secretname" . }}
+                  key: dsn
+      {{- end }}
+      {{- if .Values.deployment.extraInitContainers  }}
+{{ tpl  .Values.deployment.extraInitContainers . | indent 8 }}
+      {{- end }}
+    
       volumes:
         {{- if .Values.deployment.extraVolumes }}
 {{ toYaml .Values.deployment.extraVolumes | indent 8 }}
