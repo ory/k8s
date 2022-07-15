@@ -4,6 +4,7 @@
 {{- $extraVolumeMounts := ternary .Values.statefulSet.extraVolumeMounts .Values.deployment.extraVolumeMounts (not (empty .Values.statefulSet.extraVolumeMounts )) -}}
 {{- $extraEnv := ternary .Values.statefulSet.extraEnv .Values.deployment.extraEnv (not (empty .Values.statefulSet.extraEnv )) -}}
 {{- $extraContainers := ternary .Values.statefulSet.extraContainers .Values.deployment.extraContainers (not (empty .Values.statefulSet.extraContainers )) -}}
+{{- $extraInitContainers := ternary .Values.statefulSet.extraInitContainers .Values.deployment.extraInitContainers (not (empty .Values.statefulSet.extraInitContainers )) -}}
 {{- $extraVolumes := ternary .Values.statefulSet.extraVolumes .Values.deployment.extraVolumes (not (empty .Values.statefulSet.extraVolumes )) -}}
 {{- $nodeSelector := ternary .Values.statefulSet.nodeSelector .Values.nodeSelector (not (empty .Values.statefulSet.nodeSelector )) -}}
 ---
@@ -114,10 +115,10 @@ spec:
         {{- if $extraContainers }}
 {{ tpl $extraContainers . | indent 8 }}
         {{- end }}
-        {{- if .Values.deployment.extraInitContainers }}
+      {{- if $extraInitContainers }}
       initContainers:
-{{- tpl .Values.deployment.extraInitContainers . | nindent 8 }}
-        {{- end }}
+{{ tpl $extraInitContainers . | indent 8 }}
+      {{- end }}
       volumes:
         - name: {{ include "kratos.fullname" . }}-config-volume
           configMap:
