@@ -1,11 +1,9 @@
-global:
-  databaseSecretName: "{{ .Release.Name }}-database-pguser-internal"
-
 useByArgoCd: true
 
 database:
   isCrunchyDataOperator: true
   databaseName: oauth
+  databaseSecretName:  "{{ .Release.Name }}-database-pguser-oauth"
 
 # -- Number of ORY Hydra members
 replicaCount: 1
