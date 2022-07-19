@@ -88,7 +88,7 @@ spec:
             {{- end }}
           args:
             - serve
-            - all"
+            - all
             {{- if .Values.hydra.dangerousForceHttp }}
             - --dangerous-force-http
             {{- end}}
