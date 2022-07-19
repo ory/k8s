@@ -1,4 +1,5 @@
-{{- if .Values.keto.autoMigrate }}
+{{- include "keto.automigration.typeVerification" . -}}
+{{- if and  ( .Values.keto.automigration.enabled ) ( eq .Values.keto.automigration.type "job" ) }}
 {{- $extraLabels := ternary .Values.deployment.extraLabels .Values.extraLabels (not (empty .Values.deployment.extraLabels )) -}}
 {{- $extraVolumeMounts := ternary .Values.deployment.extraVolumeMounts .Values.extraVolumeMounts (not (empty .Values.deployment.extraVolumeMounts )) -}}
 {{- $extraEnv := ternary .Values.deployment.extraEnv .Values.extraEnv (not (empty .Values.deployment.extraEnv )) -}}

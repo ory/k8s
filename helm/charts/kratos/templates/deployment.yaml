@@ -1,7 +1,6 @@
+{{- include "kratos.automigration.typeVerification" . -}}
 {{- $resources := ternary .Values.deployment.resources .Values.resources (not (empty .Values.deployment.resources )) -}}
 {{- $nodeSelector := ternary .Values.deployment.nodeSelector .Values.nodeSelector (not (empty .Values.deployment.nodeSelector )) -}}
-{{- include "kratos.automigration.typeVerification" . -}}
-
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -46,7 +45,6 @@ spec:
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
     {{- end }}
-          
       initContainers:
       {{- if and ( .Values.kratos.automigration.enabled ) ( eq .Values.kratos.automigration.type "initContainer" ) }}
         - name: {{ .Chart.Name }}-automigrate
@@ -54,6 +52,13 @@ spec:
           imagePullPolicy: {{ include "kratos.imagePullPolicy" . }}
           command: ["kratos"]
           args: ["migrate", "sql", "-e", "--yes"]
+          volumeMounts:
+            - name: {{ include "kratos.name" . }}-config-volume
+              mountPath: /etc/config
+              readOnly: true
+          {{- with .Values.deployment.extraVolumeMounts }}
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
           env:
             - name: DSN
               valueFrom:
@@ -94,7 +99,7 @@ spec:
             - /bin/bash
             - -c
             - |
-{{ .Files.Get "files/watch.sh" | printf "%s" | indent 14 }}
+              {{- .Files.Get "files/watch.sh" | printf "%s" | nindent 14 }}
           env:
             - name: NAMESPACE
               value: {{ .Release.Namespace | quote }}
@@ -121,11 +126,11 @@ spec:
             - --config
             - /etc/config/kratos.yaml
             {{- if .Values.deployment.extraArgs }}
-{{ toYaml .Values.deployment.extraArgs | indent 12 }}
+              {{- toYaml .Values.deployment.extraArgs | nindent 12 }}
             {{- end }}
           volumeMounts:
             {{- if .Values.deployment.extraVolumeMounts }}
-{{ toYaml .Values.deployment.extraVolumeMounts | indent 12 }}
+              {{- toYaml .Values.deployment.extraVolumeMounts | nindent 12 }}
             {{- end }}
             - name: {{ include "kratos.name" . }}-config-volume
               mountPath: /etc/config

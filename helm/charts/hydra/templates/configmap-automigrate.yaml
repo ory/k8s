@@ -1,0 +1,16 @@
+{{- if and  ( .Values.hydra.automigration.enabled ) ( eq .Values.hydra.automigration.type "job" ) }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "hydra.fullname" . }}-migrate
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "hydra.labels" . | nindent 4 }}
+  annotations:
+    helm.sh/hook-weight: "0"
+    helm.sh/hook: "pre-install, pre-upgrade"
+    helm.sh/hook-delete-policy: "before-hook-creation"
+data:
+  "hydra.yaml": |
+    {{- include "hydra.configmap" . | nindent 4 }}
+{{- end }}

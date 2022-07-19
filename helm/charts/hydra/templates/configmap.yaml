@@ -6,5 +6,5 @@ metadata:
   labels:
 {{ include "hydra.labels" . | indent 4 }}
 data:
-  "config.yaml": |
+  "hydra.yaml": |
 {{ include "hydra.configmap" . | nindent 4 }}

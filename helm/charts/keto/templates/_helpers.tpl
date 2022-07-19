@@ -110,3 +110,14 @@ checksum/keto-config: {{ include (print $.Template.BasePath "/configmap.yaml") .
 checksum/keto-secrets: {{ include (print $.Template.BasePath "/secrets.yaml") . | sha256sum }}
 {{- end }}
 {{- end }}
+
+{{/*
+Check the migration type value and fail if unexpected 
+*/}}
+{{- define "keto.automigration.typeVerification" -}}
+{{- if and .Values.keto.automigration.enabled  .Values.keto.automigration.type }}
+  {{- if and (ne .Values.keto.automigration.type "initContainer") (ne .Values.keto.automigration.type "job") }}
+    {{- fail "keto.automigration.type must be either 'initContainer' or 'job'" -}}
+  {{- end }}  
+{{- end }}
+{{- end }}

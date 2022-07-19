@@ -142,7 +142,14 @@ hydra:
     urls:
       self: {}
 
-  autoMigrate: false
+    # -- Enables database migration
+  automigration:
+    enabled: false
+    # -- Configure the way to execute database migration. Possible values: job, initContainer
+    # When set to job, the migration will be executed as a job on release or upgrade.
+    # When set to initContainer, the migration will be executed when kratos pod is created
+    # Defaults to job  
+    type: job
   dangerousForceHttp: false
   dangerousAllowInsecureRedirectUrls: false
 
