@@ -9,7 +9,7 @@ metadata:
   annotations:
     helm.sh/hook-weight: "0"
     helm.sh/hook: "pre-install, pre-upgrade"
-    helm.sh/hook-delete-policy: "before-hook-creation,hook-succeeded"
+    helm.sh/hook-delete-policy: "before-hook-creation"
 data:
   "hydra.yaml": |
     {{- include "hydra.configmap" . | nindent 4 }}

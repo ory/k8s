@@ -1,7 +1,6 @@
+{{- include "kratos.automigration.typeVerification" . -}}
 {{- $resources := ternary .Values.deployment.resources .Values.resources (not (empty .Values.deployment.resources )) -}}
 {{- $nodeSelector := ternary .Values.deployment.nodeSelector .Values.nodeSelector (not (empty .Values.deployment.nodeSelector )) -}}
-{{- include "kratos.automigration.typeVerification" . -}}
-
 apiVersion: apps/v1
 kind: Deployment
 metadata:
