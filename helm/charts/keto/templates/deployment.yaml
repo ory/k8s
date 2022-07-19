@@ -53,9 +53,32 @@ spec:
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      {{- if $extraInitContainers}}
       initContainers:
-{{- tpl $extraInitContainers . | nindent 8 }}
+      {{- if and ( .Values.keto.automigration.enabled ) ( eq .Values.keto.automigration.type "initContainer" ) }}
+        - name: {{ .Chart.Name }}-automigrate
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          command: [ "keto" ]
+          args: [ "migrate", "up", "-y", "--config", "/etc/config/keto.yaml" ]
+          volumeMounts:
+            - name: {{ include "keto.name" . }}-config-volume
+              mountPath: /etc/config
+              readOnly: true
+          {{- with $extraVolumeMounts }}
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          env:
+            - name: DSN
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "keto.secretname" . }}
+                  key: dsn
+            {{- with $extraEnv }}
+              {{- toYaml . | nindent 12 }}
+            {{- end }}
+      {{- end }}
+      {{- if $extraInitContainers}}
+        {{- tpl $extraInitContainers . | nindent 8 }}
       {{- end }}
       serviceAccountName: {{ include "keto.serviceAccountName" . }}
       automountServiceAccountToken: {{ $automountServiceAccountToken }}
