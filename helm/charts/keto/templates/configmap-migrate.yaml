@@ -1,4 +1,4 @@
-{{- if .Values.keto.autoMigrate }}
+{{- if and  ( .Values.keto.automigration.enabled ) ( eq .Values.keto.automigration.type "job" ) }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
