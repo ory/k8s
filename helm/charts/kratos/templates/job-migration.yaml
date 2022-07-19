@@ -76,10 +76,10 @@ spec:
         {{- tpl .Values.deployment.extraInitContainers . | nindent 8 }}
       {{- end }}
       volumes:
-      {{- if .Values.deployment.extraVolumes }}
         - name: {{ include "kratos.name" . }}-config-volume
           configMap:
             name: {{ include "kratos.fullname" . }}-migrate
+      {{- if .Values.deployment.extraVolumes }}
         {{- toYaml .Values.deployment.extraVolumes | nindent 8 }}
       {{- end }}
       shareProcessNamespace: {{ .Values.job.shareProcessNamespace }}
