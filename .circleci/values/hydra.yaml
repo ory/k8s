@@ -5,7 +5,8 @@ ingress:
     enabled: true
 
 hydra:
-  autoMigrate: true
+  automigration:
+    enabled: true
   dangerousForceHttp: true
   config:
     dsn: "postgres://postgres:ory@postgresql.default.svc.cluster.local/ory?sslmode=disable&max_conn_lifetime=10s"

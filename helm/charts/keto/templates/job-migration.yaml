@@ -3,6 +3,7 @@
 {{- $extraVolumeMounts := ternary .Values.deployment.extraVolumeMounts .Values.extraVolumeMounts (not (empty .Values.deployment.extraVolumeMounts )) -}}
 {{- $extraEnv := ternary .Values.deployment.extraEnv .Values.extraEnv (not (empty .Values.deployment.extraEnv )) -}}
 {{- $extraVolumes := ternary .Values.deployment.extraVolumes .Values.extraVolumes (not (empty .Values.deployment.extraVolumes )) -}}
+{{- include "keto.automigration.typeVerification" . -}}
 ---
 apiVersion: batch/v1
 kind: Job

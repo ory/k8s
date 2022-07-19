@@ -1,4 +1,5 @@
-{{- if .Values.hydra.autoMigrate }}
+{{- if and  ( .Values.hydra.automigration.enabled ) ( eq .Values.hydra.automigration.type "job" ) }}
+{{- include "hydra.automigration.typeVerification" . -}}
 ---
 apiVersion: batch/v1
 kind: Job
