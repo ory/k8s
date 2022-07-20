@@ -7,7 +7,7 @@ ingress:
 hydra:
   automigration:
     enabled: true
-    type: initContainer
+    # type: initContainer
   dangerousForceHttp: true
   config:
     dsn: "postgres://postgres:ory@postgresql.default.svc.cluster.local/ory?sslmode=disable&max_conn_lifetime=10s"
@@ -32,6 +32,9 @@ deployment:
       image: "alpine:latest"
       command: ["/bin/sh"]
       args: ["-c", "sleep infinity"]
+  extraEnv:
+    - name: FOO
+      value: BAR
 job:
   extraInitContainers: |
     - name: "hello-world"
