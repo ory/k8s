@@ -1,0 +1,40 @@
+name: 'Dependencies setup'
+description: 'Sets up dependencies, uses cache to speedup execution'
+runs:
+  using: "composite"
+  steps:
+    - name: Extract branch name
+      shell: bash
+      run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+      id: extract_branch
+
+    - uses: actions/cache@v2
+      id: cache-packages
+      with:
+        path: |
+          ~/go/pkg/mod
+          ~/go/bin
+          ~/.helm/plugins
+          .bin
+          node_modules
+        key: ${{ runner.os }}-${{ steps.extract_branch.outputs.branch }}-${{ hashFiles('**/go.sum', './package.json') }}
+        restore-keys: |
+          ${{ runner.os }}-${{ steps.extract_branch.outputs.branch }}-
+    - name: Setup dependencies
+      if: steps.cache-packages.outputs.cache-hit != 'true'
+      shell: bash
+      run: | 
+        # Export .bin into PATH so k3d doesn't fail when installing
+        export PATH=".bin:$PATH"
+
+        echo "Downloading 'helm' 3...."
+        curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | HELM_INSTALL_DIR=./.bin bash
+        echo "Installing kubeval helm plugin"
+        helm plugin install https://github.com/instrumenta/helm-kubeval
+        
+        echo "Installing kubectl + k3d"
+        curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
+        curl -s https://raw.githubusercontent.com/k3d-io/k3d/v5.4.4/install.sh | USE_SUDO="false" K3D_INSTALL_DIR=".bin" bash
+
+        chmod +x ./kubectl
+        mv ./kubectl .bin/kubectl

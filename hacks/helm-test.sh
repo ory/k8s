@@ -2,12 +2,7 @@
 
 set -Eeuo pipefail
 
-cfg=$(mktemp)
-export cfg
-export KUBECONFIG="$cfg"
 export TIMEOUT="120s"
-
-kind get kubeconfig > "$cfg"
 
 cd "$( dirname "${BASH_SOURCE[0]}" )/.."
 
@@ -18,7 +13,7 @@ helm dep update "./helm/charts/$1"
 echo "---> Installing $1"
 
 set +e
-helm install -f ".circleci/values/$1.yaml" "${release}" "./helm/charts/$1" --wait --debug --atomic --timeout="${TIMEOUT}"
+helm install -f "hacks/values/$1.yaml" "${release}" "./helm/charts/$1" --wait --debug --atomic --timeout="${TIMEOUT}"
 export INSTALLATION_STATUS=$?
 set -e
 
