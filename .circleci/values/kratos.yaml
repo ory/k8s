@@ -95,6 +95,9 @@ deployment:
     - --sqa-opt-out
   labels:
     ory.sh/test: kratos
+  extraEnv:
+    - name: FOO
+      value: BAR
 
 job:
   extraContainers: |

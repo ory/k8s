@@ -65,11 +65,13 @@ spec:
                 secretKeyRef:
                   name: {{ include "kratos.secretname" . }}
                   key: dsn
+          {{- if .Values.deployment.extraEnv }}
+            {{- toYaml .Values.deployment.extraEnv | nindent 12 }}
+          {{- end }}
       {{- end }}
       {{- if .Values.deployment.extraInitContainers  }}
 {{ tpl  .Values.deployment.extraInitContainers . | indent 8 }}
       {{- end }}
-    
       volumes:
         {{- if .Values.deployment.extraVolumes }}
 {{ toYaml .Values.deployment.extraVolumes | indent 8 }}
