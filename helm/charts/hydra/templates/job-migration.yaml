@@ -1,5 +1,6 @@
 {{- include "hydra.automigration.typeVerification" . -}}
 {{- if and  ( .Values.hydra.automigration.enabled ) ( eq .Values.hydra.automigration.type "job" ) }}
+{{- $nodeSelector := ternary .Values.job.nodeSelector .Values.deployment.nodeSelector (not (empty .Values.job.nodeSelector )) -}}
 ---
 apiVersion: batch/v1
 kind: Job
@@ -80,5 +81,9 @@ spec:
         {{- if .Values.deployment.extraVolumes }}
           {{- toYaml .Values.deployment.extraVolumes | nindent 8 }}
         {{- end }}
+      {{- with $nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
   backoffLimit: {{ .Values.job.spec.backoffLimit }}
 {{- end }}

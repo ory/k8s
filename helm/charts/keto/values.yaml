@@ -54,6 +54,12 @@ job:
   #  - name: ...
   #    image: ...
 
+  # -- Node labels for pod assignment.
+  nodeSelector: {}
+  # If you do want to specify node labels, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'nodeSelector:'.
+  #   foo: bar
+
   # -- If you want to add lifecycle hooks.
   lifecycle: {}
   # lifecycle: |

@@ -1,5 +1,6 @@
 {{- if and  ( .Values.kratos.automigration.enabled ) ( eq .Values.kratos.automigration.type "job" ) }}
 {{- include "kratos.automigration.typeVerification" . -}}
+{{- $nodeSelector := ternary .Values.job.nodeSelector .Values.deployment.nodeSelector (not (empty .Values.job.nodeSelector )) -}}
 ---
 apiVersion: batch/v1
 kind: Job
@@ -84,6 +85,10 @@ spec:
             name: {{ include "kratos.fullname" . }}-migrate
       {{- if .Values.deployment.extraVolumes }}
         {{- toYaml .Values.deployment.extraVolumes | nindent 8 }}
+      {{- end }}
+      {{- with $nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
       {{- end }}
       shareProcessNamespace: {{ .Values.job.shareProcessNamespace }}
   backoffLimit: {{ .Values.job.spec.backoffLimit }}
