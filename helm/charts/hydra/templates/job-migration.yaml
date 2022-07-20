@@ -47,7 +47,7 @@ spec:
                 name: {{ include "hydra.secretname" . }}
                 key: dsn
         {{- with .Values.deployment.extraEnv }}
-          {{- toYaml . | nindent 12 }}
+          {{- toYaml . | nindent 10 }}
         {{- end }}
         {{- if .Values.job.lifecycle }}
         lifecycle:

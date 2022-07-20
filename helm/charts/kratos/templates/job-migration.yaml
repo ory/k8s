@@ -52,6 +52,9 @@ spec:
               secretKeyRef:
                 name: {{ include "kratos.secretname" . }}
                 key: dsn
+          {{- if .Values.deployment.extraEnv }}
+            {{- toYaml .Values.deployment.extraEnv | nindent 10 }}
+          {{- end }}
       {{- if .Values.job.lifecycle }}
         lifecycle:
           {{- tpl .Values.job.lifecycle . | nindent 10 }}
