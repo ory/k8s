@@ -14,13 +14,17 @@ runs:
         path: |
           ~/go/pkg/mod
           ~/go/bin
-          ~/.helm/plugins
+          ~/helm/plugins
           .bin
           node_modules
         key: ${{ runner.os }}-${{ steps.extract_branch.outputs.branch }}-${{ hashFiles('**/go.sum', './package.json') }}
         restore-keys: |
           ${{ runner.os }}-${{ steps.extract_branch.outputs.branch }}-
+
     - name: Setup dependencies
+      env:
+        K3D_VERSION: "v5.4.4"
+        KUBECTL_VERSION: "v1.24.3" 
       if: steps.cache-packages.outputs.cache-hit != 'true'
       shell: bash
       run: | 
@@ -33,8 +37,8 @@ runs:
         helm plugin install https://github.com/instrumenta/helm-kubeval
         
         echo "Installing kubectl + k3d"
-        curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
-        curl -s https://raw.githubusercontent.com/k3d-io/k3d/v5.4.4/install.sh | USE_SUDO="false" K3D_INSTALL_DIR=".bin" bash
+        curl -LO https://storage.googleapis.com/kubernetes-release/release/${KUBECTL_VERSION}/bin/linux/amd64/kubectl
+        curl -s https://raw.githubusercontent.com/k3d-io/k3d/${K3D_VERSION}/install.sh | USE_SUDO="false" K3D_INSTALL_DIR=".bin" bash
 
         chmod +x ./kubectl
         mv ./kubectl .bin/kubectl

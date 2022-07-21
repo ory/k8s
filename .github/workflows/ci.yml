@@ -32,6 +32,8 @@ jobs:
           base: master
           # `-helm` suffix aims that we can easily filter helm charts
           filters: |
+            example-idp-helm:
+              - 'helm/charts/example-idp/**'
             hydra-helm:
               - 'helm/charts/hydra/**'
             hydra-maester-helm:
