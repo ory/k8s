@@ -188,7 +188,7 @@ deployment:
   #      lines, adjust them as necessary, and remove the curly braces after 'annotations:'.
   #      e.g.  sidecar.istio.io/rewriteAppHTTPProbers: "true"
 
-  # Node labels for pod assignment.
+  # -- Node labels for pod assignment.
   nodeSelector: {}
   # If you do want to specify node labels, uncomment the following
   # lines, adjust them as necessary, and remove the curly braces after 'nodeSelector:'.
@@ -324,6 +324,12 @@ job:
   #  - name: ...
   #    image: ...
   extraInitContainers: {}
+
+  # -- Node labels for pod assignment.
+  nodeSelector: {}
+  # If you do want to specify node labels, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'nodeSelector:'.
+  #   foo: bar
 
   # -- If you want to add lifecycle hooks.
   lifecycle: {}
