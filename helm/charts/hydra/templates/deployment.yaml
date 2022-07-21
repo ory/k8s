@@ -189,13 +189,6 @@ spec:
             {{- with .Values.deployment.extraEnv }}
               {{- toYaml . | nindent 12 }}
             {{- end }}
-          volumeMounts:
-            - name: {{ include "hydra.name" . }}-config-volume
-              mountPath: /etc/config
-              readOnly: true
-            {{- if .Values.deployment.extraVolumeMounts }}
-              {{- toYaml .Values.deployment.extraVolumeMounts | nindent 14 }}
-           {{- end }}
       {{- end }}
       {{- if .Values.deployment.extraInitContainers }}
         {{- tpl .Values.deployment.extraInitContainers . | nindent 8 }}
