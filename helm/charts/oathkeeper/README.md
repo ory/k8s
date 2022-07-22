@@ -1,6 +1,6 @@
 # oathkeeper
 
-![Version: 0.24.1](https://img.shields.io/badge/Version-0.24.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.38.19-beta.1](https://img.shields.io/badge/AppVersion-v0.38.19--beta.1-informational?style=flat-square)
+![Version: 0.24.2](https://img.shields.io/badge/Version-0.24.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.39.0](https://img.shields.io/badge/AppVersion-v0.39.0-informational?style=flat-square)
 
 A Helm chart for deploying ORY Oathkeeper in Kubernetes
 
@@ -21,7 +21,7 @@ A Helm chart for deploying ORY Oathkeeper in Kubernetes
 
 | Repository | Name | Version |
 |------------|------|---------|
-| file://../oathkeeper-maester | oathkeeper-maester(oathkeeper-maester) | 0.24.1 |
+| file://../oathkeeper-maester | oathkeeper-maester(oathkeeper-maester) | 0.24.2 |
 
 ## Values
 
@@ -56,7 +56,7 @@ A Helm chart for deploying ORY Oathkeeper in Kubernetes
 | global | object | `{"ory":{"oathkeeper":{"maester":{"mode":"controller"}}}}` | Mode for oathkeeper controller -- Two possible modes are: controller or sidecar |
 | image.pullPolicy | string | `"IfNotPresent"` | Image pull policy |
 | image.repository | string | `"oryd/oathkeeper"` | ORY Oathkeeper image |
-| image.tag | string | `"v0.38.19-beta.1"` | ORY Oathkeeper version |
+| image.tag | string | `"v0.39.0"` | ORY Oathkeeper version |
 | imagePullSecrets | list | `[]` | Image pull secrets |
 | ingress | object | `{"api":{"annotations":{},"className":"","enabled":false,"hosts":[{"host":"api.oathkeeper.localhost","paths":[{"path":"/","pathType":"ImplementationSpecific"}]}]},"proxy":{"annotations":{},"className":"","defaultBackend":{},"enabled":false,"hosts":[{"host":"proxy.oathkeeper.localhost","paths":[{"path":"/","pathType":"ImplementationSpecific"}]}]}}` | Configure ingress |
 | ingress.api.enabled | bool | `false` | En-/Disable the api ingress. |

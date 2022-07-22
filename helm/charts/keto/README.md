@@ -1,6 +1,6 @@
 # keto
 
-![Version: 0.24.1](https://img.shields.io/badge/Version-0.24.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.8.0](https://img.shields.io/badge/AppVersion-v0.8.0-informational?style=flat-square)
+![Version: 0.24.2](https://img.shields.io/badge/Version-0.24.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.8.0-alpha.2](https://img.shields.io/badge/AppVersion-v0.8.0--alpha.2-informational?style=flat-square)
 
 Access Control Policies as a Server
 
@@ -37,14 +37,15 @@ Access Control Policies as a Server
 | fullnameOverride | string | `""` |  |
 | image.pullPolicy | string | `"IfNotPresent"` | Default image pull policy |
 | image.repository | string | `"oryd/keto"` | Ory KETO image |
-| image.tag | string | `"v0.8.0-alpha.0"` |  |
+| image.tag | string | `"v0.8.0-alpha.2"` |  |
 | imagePullSecrets | list | `[]` |  |
 | ingress | object | `{"read":{"annotations":{},"className":"","enabled":false,"hosts":[{"host":"chart-example.local","paths":[{"path":"/read","pathType":"Prefix"}]}],"tls":[]},"write":{"annotations":{},"className":"","enabled":false,"hosts":[{"host":"chart-example.local","paths":[{"path":"/write","pathType":"Prefix"}]}],"tls":[]}}` | Ingress definitions |
-| job | object | `{"annotations":{"helm.sh/hook":"pre-install, pre-upgrade","helm.sh/hook-delete-policy":"before-hook-creation,hook-succeeded","helm.sh/hook-weight":"1"},"automountServiceAccountToken":true,"extraContainers":{},"lifecycle":{},"serviceAccount":{"annotations":{"helm.sh/hook":"pre-install, pre-upgrade","helm.sh/hook-delete-policy":"before-hook-creation","helm.sh/hook-weight":"0"},"create":true,"name":""},"shareProcessNamespace":false,"spec":{"backoffLimit":10}}` | Values for initialization job |
+| job | object | `{"annotations":{"helm.sh/hook":"pre-install, pre-upgrade","helm.sh/hook-delete-policy":"before-hook-creation,hook-succeeded","helm.sh/hook-weight":"1"},"automountServiceAccountToken":true,"extraContainers":{},"lifecycle":{},"nodeSelector":{},"serviceAccount":{"annotations":{"helm.sh/hook":"pre-install, pre-upgrade","helm.sh/hook-delete-policy":"before-hook-creation","helm.sh/hook-weight":"0"},"create":true,"name":""},"shareProcessNamespace":false,"spec":{"backoffLimit":10}}` | Values for initialization job |
 | job.annotations | object | `{"helm.sh/hook":"pre-install, pre-upgrade","helm.sh/hook-delete-policy":"before-hook-creation,hook-succeeded","helm.sh/hook-weight":"1"}` | If you do want to specify annotations, uncomment the following lines, adjust them as necessary, and remove the curly braces after 'annotations:'. |
 | job.automountServiceAccountToken | bool | `true` | Set automounting of the SA token |
 | job.extraContainers | object | `{}` | If you want to add extra sidecar containers. |
 | job.lifecycle | object | `{}` | If you want to add lifecycle hooks. |
+| job.nodeSelector | object | `{}` | Node labels for pod assignment. |
 | job.serviceAccount | object | `{"annotations":{"helm.sh/hook":"pre-install, pre-upgrade","helm.sh/hook-delete-policy":"before-hook-creation","helm.sh/hook-weight":"0"},"create":true,"name":""}` | Specify the serviceAccountName value. In some situations it is needed to provides specific permissions to Hydra deployments Like for example installing Hydra on a cluster with a PosSecurityPolicy and Istio. Uncoment if it is needed to provide a ServiceAccount for the Hydra deployment. |
 | job.serviceAccount.annotations | object | `{"helm.sh/hook":"pre-install, pre-upgrade","helm.sh/hook-delete-policy":"before-hook-creation","helm.sh/hook-weight":"0"}` | Annotations to add to the service account |
 | job.serviceAccount.create | bool | `true` | Specifies whether a service account should be created |
