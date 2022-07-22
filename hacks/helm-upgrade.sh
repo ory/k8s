@@ -1,7 +1,7 @@
 #!/bin/bash
 
 set -Eeuo pipefail
-export TIMEOUT="120s"
+export TIMEOUT="180s"
 
 export BASE_RELEASE=$(helm search repo "ory/$1" | awk '{print $2}' | head -2 | tail -1)
 

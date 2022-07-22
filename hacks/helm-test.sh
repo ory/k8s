@@ -2,7 +2,7 @@
 
 set -Eeuo pipefail
 
-export TIMEOUT="120s"
+export TIMEOUT="180s"
 
 cd "$( dirname "${BASH_SOURCE[0]}" )/.."
 

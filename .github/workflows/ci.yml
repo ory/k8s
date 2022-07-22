@@ -1,13 +1,17 @@
 name: CI
 on:
+  create:
+    tags:
+      - "v*"
   push:
+    branches:
+      - "master"
   pull_request:
 
 jobs:
-
   dependencies:
     name: Prepare Dependencies
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -19,7 +23,7 @@ jobs:
 
   detect-repo-changes:
     name: Detected Repo Changes
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     outputs:
       helms-changed: ${{ steps.changed_charts.outputs.matrix }}
       no-changes: ${{ steps.changed_charts.outputs.no_changes}}
@@ -67,16 +71,17 @@ jobs:
   
   check:
     name: Check Helm Chart '${{ matrix.chart }}'
-    if: ${{ needs.detect-repo-changes.outputs.no-changes != 'true' }}
+    if: ${{ needs.detect-repo-changes.outputs.no-changes != 'true' && github.ref != 'ref/heads/master' }}
     needs: [dependencies, detect-repo-changes]
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     env:
+      HELM_PLUGINS: ${{ github.workspace }}/.bin/plugins
       HELM_CHART: ${{ matrix.chart }}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Installing kubeval
-        run: helm plugin install https://github.com/instrumenta/helm-kubeval
+      - name: Checkout dependencies
+        uses: ./.github/actions/deps-setup
       - name: Lint helm chart 
         run: make helm-lint
       - name: Validate helm chart 
@@ -87,18 +92,17 @@ jobs:
  
   # test-upgrade:
   #   name: Upgrade Helm Chart '${{ matrix.chart }}'
-  #   if: ${{ needs.detect-repo-changes.outputs.no-changes != 'true' }}
+  #   if: ${{ needs.detect-repo-changes.outputs.no-changes != 'true' && github.ref != 'ref/heads/master' }}
   #   needs: [check, detect-repo-changes, dependencies]
-  #   runs-on: ubuntu-20.04
+  #   runs-on: ubuntu-22.04
   #   env:
+  #     HELM_PLUGINS: ${{ github.workspace }}/.bin/plugins
   #     HELM_CHART: ${{ matrix.chart }}
   #   steps:
   #     - name: Checkout
   #       uses: actions/checkout@v2
-  #     - name: Install k3d 
-  #       run: |
-  #         export PATH=".bin:$PATH"
-  #         curl -s https://raw.githubusercontent.com/k3d-io/k3d/v5.4.4/install.sh | USE_SUDO="false" K3D_INSTALL_DIR=".bin" bash
+  #     - name: Checkout dependencies
+  #       uses: ./.github/actions/deps-setup
   #     - name: Test upgrade for helm chart 
   #       run: make helm-upgrade
   #   strategy:
@@ -106,42 +110,61 @@ jobs:
  
   test-install:
     name: Install Helm Chart '${{ matrix.chart }}'
-    if: ${{ needs.detect-repo-changes.outputs.no-changes != 'true' }}
+    if: ${{ needs.detect-repo-changes.outputs.no-changes != 'true' && github.ref != 'ref/heads/master' }}
     needs: [check, detect-repo-changes, dependencies]
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     env:
+      HELM_PLUGINS: ${{ github.workspace }}/.bin/plugins
       HELM_CHART: ${{ matrix.chart }}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Install k3d 
-        run: |
-          export PATH=".bin:$PATH"
-          curl -s https://raw.githubusercontent.com/k3d-io/k3d/v5.4.4/install.sh | USE_SUDO="false" K3D_INSTALL_DIR=".bin" bash
+      - name: Checkout dependencies
+        uses: ./.github/actions/deps-setup
       - name: Test install for helm chart 
         run: make helm-test
     strategy:
       matrix: ${{ fromJson(needs.detect-repo-changes.outputs.helms-changed) }}
 
+  helm-docs:
+    name: Generate documentation
+    runs-on: ubuntu-22.04
+    if: github.ref == 'refs/heads/master' 
+    env:
+      HELM_DOCS_VERSION: "1.5.0"
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Generate documentation 
+        run: |
+            pushd .bin
+            curl -L https://github.com/norwoodj/helm-docs/releases/download/v${HELM_DOCS_VERSION}/helm-docs_${HELM_DOCS_VERSION}_Linux_x86_64.tar.gz -o helm-docs.tar.gz
+            tar -xvf helm-docs.tar.gz
+            ./helm-docs -c ../helm/charts
+            popd
+      - name: Push commit for release 
+        run: |
+          git config --global user.email "aeneas@ory.sh"
+          git config --global user.name "aeneasr"
+          git checkout -b make-release HEAD
+          git add -A 
+          git commit -m "Regenerate helm docs
+          
+          [skip ci]" || echo "No changes to commit"
+
+          git push origin HEAD:master
+
   release:
     name: Release
-    if: ${{ github.ref_type == 'tag' }}
+    if: github.ref_type == 'tag'
     # needs: [test-install, test-upgrade]
     needs: [test-install]
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     steps:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Define current tag version
         run: echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
-
-      - name: Generate documentation 
-        run: |
-            pushd .bin
-            curl -L https://github.com/norwoodj/helm-docs/releases/download/v1.5.0/helm-docs_1.5.0_Linux_x86_64.tar.gz -o helm-docs.tar.gz
-            tar -xvf helm-docs.tar.gz
-            ./helm-docs -c ../helm/charts
-            popd
       - name: Release helm charts
         run: make release
       - name: Push commit for release 
@@ -152,6 +175,6 @@ jobs:
           git add -A 
           git commit -a -m "Release ${RELEASE_VERSION}
           
-          [skip ci]"
+          [skip ci]" || echo "No changes to commit"
 
           git push origin HEAD:master

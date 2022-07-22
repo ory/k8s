@@ -14,10 +14,11 @@ runs:
         path: |
           ~/go/pkg/mod
           ~/go/bin
-          ~/helm/plugins
-          .bin
-          node_modules
-        key: ${{ runner.os }}-${{ steps.extract_branch.outputs.branch }}-${{ hashFiles('**/go.sum', './package.json') }}
+          ~/.config/helm
+          ~/.local/share/helm
+          ~/.cache/helm
+          ${{ github.workspace }}/.bin
+        key: ${{ runner.os }}-${{ steps.extract_branch.outputs.branch }}-${{ hashFiles('**/go.sum') }}
         restore-keys: |
           ${{ runner.os }}-${{ steps.extract_branch.outputs.branch }}-
 
@@ -27,18 +28,28 @@ runs:
         KUBECTL_VERSION: "v1.24.3" 
       if: steps.cache-packages.outputs.cache-hit != 'true'
       shell: bash
+      env:
+        HELM_INSTALL_DIR: ${{ github.workspace }}/.bin
+        HELM_PLUGINS: ${{ github.workspace }}/.bin/plugins
+        K3D_INSTALL_DIR: ${{ github.workspace }}/.bin
+        KUBECTL_VERSION: "1.24.3"
+        K3D_VERSION: "5.4.4"
       run: | 
         # Export .bin into PATH so k3d doesn't fail when installing
         export PATH=".bin:$PATH"
+        echo "PATH=.bin:$PATH" >> $GITHUB_ENV
 
         echo "Downloading 'helm' 3...."
-        curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | HELM_INSTALL_DIR=./.bin bash
+        curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
         echo "Installing kubeval helm plugin"
+        mkdir .bin/plugins
         helm plugin install https://github.com/instrumenta/helm-kubeval
         
-        echo "Installing kubectl + k3d"
-        curl -LO https://storage.googleapis.com/kubernetes-release/release/${KUBECTL_VERSION}/bin/linux/amd64/kubectl
-        curl -s https://raw.githubusercontent.com/k3d-io/k3d/${K3D_VERSION}/install.sh | USE_SUDO="false" K3D_INSTALL_DIR=".bin" bash
-
+        echo "Installing k3d"
+        curl -s https://raw.githubusercontent.com/k3d-io/k3d/v${K3D_VERSION}/install.sh | USE_SUDO="false" bash
+        
+        echo "Installing kubectl"
+        pushd .bin
+        curl -LO https://storage.googleapis.com/kubernetes-release/release/v${KUBECTL_VERSION}/bin/linux/amd64/kubectl
         chmod +x ./kubectl
-        mv ./kubectl .bin/kubectl
+        popd
