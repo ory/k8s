@@ -35,6 +35,12 @@ deployment:
   extraEnv:
     - name: FOO
       value: BAR
+  extraVolumeMounts:
+    - mountPath: /testdir
+      name: test-volume
+  extraVolumes:
+    - name: test-volume
+      emptyDir: {}
 job:
   extraInitContainers: |
     - name: "hello-world"
