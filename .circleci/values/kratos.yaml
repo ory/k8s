@@ -91,6 +91,12 @@ deployment:
       image: "alpine:latest"
       command: ["/bin/sh"]
       args: ["-c", "sleep infinity"]
+  extraVolumeMounts:
+    - mountPath: /testdir
+      name: test-volume
+  extraVolumes:
+    - name: test-volume
+      emptyDir: {}
   extraArgs:
     - --sqa-opt-out
   labels:
