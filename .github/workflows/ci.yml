@@ -1,0 +1,180 @@
+name: CI
+on:
+  create:
+    tags:
+      - "v*"
+  push:
+    branches:
+      - "master"
+  pull_request:
+
+jobs:
+  dependencies:
+    name: Prepare Dependencies
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - uses: actions/setup-go@v2
+        with:
+          go-version: '1.17'
+      - name: Setup dependencies
+        uses: ./.github/actions/deps-setup
+
+  detect-repo-changes:
+    name: Detected Repo Changes
+    runs-on: ubuntu-22.04
+    outputs:
+      helms-changed: ${{ steps.changed_charts.outputs.matrix }}
+      no-changes: ${{ steps.changed_charts.outputs.no_changes}}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - uses: dorny/paths-filter@v2.9.1
+        id: filter
+        with:
+          base: master
+          # `-helm` suffix aims that we can easily filter helm charts
+          filters: |
+            example-idp-helm:
+              - 'helm/charts/example-idp/**'
+            hydra-helm:
+              - 'helm/charts/hydra/**'
+            hydra-maester-helm:
+              - 'helm/charts/hydra-maester/**'
+            keto-helm:
+              - 'helm/charts/keto/**'
+            kratos-helm:
+              - 'helm/charts/kratos/**'
+            kratos-selfservice-ui-node-helm:
+              - 'helm/charts/kratos-selfservice-ui-node/**'
+            oathkeeper-helm:
+              - 'helm/charts/oathkeeper/**'
+            oathkeeper-maester-helm:
+              - 'helm/charts/oathkeeper-maester/**'
+      # This step will take output from paths-filter and then process it in order to get what helm charts have been updated
+      # It allows us to do matrix in validating & testing process
+      - name: Generate helm chart matrix to be validated
+        id: changed_charts
+        env:
+          FILTER_OUTPUT: ${{ toJson(steps.filter.outputs) }}
+        run: |
+           updated_charts=$(echo "$FILTER_OUTPUT" | jq -r 'to_entries | map(select((.key | endswith("-helm")) and .value == "true")) | map(.key)')
+           updated_charts=$(echo "$updated_charts" | sed "s/-helm//g")
+
+           if [[ "$updated_charts" == "[]" ]]; then 
+            echo ::set-output name=no_changes::"true"
+           fi
+           echo ::set-output name=matrix::{\"chart\":$(echo $updated_charts)}\"
+           
+           echo "Charts array to run CI on: $updated_charts"
+  
+  check:
+    name: Check Helm Chart '${{ matrix.chart }}'
+    if: ${{ needs.detect-repo-changes.outputs.no-changes != 'true' && github.ref != 'ref/heads/master' }}
+    needs: [dependencies, detect-repo-changes]
+    runs-on: ubuntu-22.04
+    env:
+      HELM_PLUGINS: ${{ github.workspace }}/.bin/plugins
+      HELM_CHART: ${{ matrix.chart }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Checkout dependencies
+        uses: ./.github/actions/deps-setup
+      - name: Lint helm chart 
+        run: make helm-lint
+      - name: Validate helm chart 
+        run: make helm-validate
+    strategy:
+      matrix: ${{ fromJson(needs.detect-repo-changes.outputs.helms-changed) }}
+
+ 
+  # test-upgrade:
+  #   name: Upgrade Helm Chart '${{ matrix.chart }}'
+  #   if: ${{ needs.detect-repo-changes.outputs.no-changes != 'true' && github.ref != 'ref/heads/master' }}
+  #   needs: [check, detect-repo-changes, dependencies]
+  #   runs-on: ubuntu-22.04
+  #   env:
+  #     HELM_PLUGINS: ${{ github.workspace }}/.bin/plugins
+  #     HELM_CHART: ${{ matrix.chart }}
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v2
+  #     - name: Checkout dependencies
+  #       uses: ./.github/actions/deps-setup
+  #     - name: Test upgrade for helm chart 
+  #       run: make helm-upgrade
+  #   strategy:
+  #     matrix: ${{ fromJson(needs.detect-repo-changes.outputs.helms-changed) }}
+ 
+  test-install:
+    name: Install Helm Chart '${{ matrix.chart }}'
+    if: ${{ needs.detect-repo-changes.outputs.no-changes != 'true' && github.ref != 'ref/heads/master' }}
+    needs: [check, detect-repo-changes, dependencies]
+    runs-on: ubuntu-22.04
+    env:
+      HELM_PLUGINS: ${{ github.workspace }}/.bin/plugins
+      HELM_CHART: ${{ matrix.chart }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Checkout dependencies
+        uses: ./.github/actions/deps-setup
+      - name: Test install for helm chart 
+        run: make helm-test
+    strategy:
+      matrix: ${{ fromJson(needs.detect-repo-changes.outputs.helms-changed) }}
+
+  helm-docs:
+    name: Generate documentation
+    runs-on: ubuntu-22.04
+    if: github.ref == 'refs/heads/master' 
+    env:
+      HELM_DOCS_VERSION: "1.5.0"
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Generate documentation 
+        run: |
+            pushd .bin
+            curl -L https://github.com/norwoodj/helm-docs/releases/download/v${HELM_DOCS_VERSION}/helm-docs_${HELM_DOCS_VERSION}_Linux_x86_64.tar.gz -o helm-docs.tar.gz
+            tar -xvf helm-docs.tar.gz
+            ./helm-docs -c ../helm/charts
+            popd
+      - name: Push commit for release 
+        run: |
+          git config --global user.email "aeneas@ory.sh"
+          git config --global user.name "aeneasr"
+          git checkout -b make-release HEAD
+          git add -A 
+          git commit -m "Regenerate helm docs
+          
+          [skip ci]" || echo "No changes to commit"
+
+          git push origin HEAD:master
+
+  release:
+    name: Release
+    if: github.ref_type == 'tag'
+    # needs: [test-install, test-upgrade]
+    needs: [test-install]
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Define current tag version
+        run: echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
+      - name: Release helm charts
+        run: make release
+      - name: Push commit for release 
+        run: |
+          git config --global user.email "aeneas@ory.sh"
+          git config --global user.name "aeneasr"
+          git checkout -b make-release HEAD
+          git add -A 
+          git commit -a -m "Release ${RELEASE_VERSION}
+          
+          [skip ci]" || echo "No changes to commit"
+
+          git push origin HEAD:master
