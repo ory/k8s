@@ -23,9 +23,6 @@ runs:
           ${{ runner.os }}-${{ steps.extract_branch.outputs.branch }}-
 
     - name: Setup dependencies
-      env:
-        K3D_VERSION: "v5.4.4"
-        KUBECTL_VERSION: "v1.24.3" 
       if: steps.cache-packages.outputs.cache-hit != 'true'
       shell: bash
       env:
