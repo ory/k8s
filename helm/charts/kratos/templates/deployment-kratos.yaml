@@ -189,7 +189,7 @@ spec:
               protocol: TCP
           livenessProbe:
             httpGet:
-              path: /admin/health/alive
+              path: /admin/health/ready
               port: {{ .Values.kratos.config.serve.admin.port }}
             {{- toYaml .Values.deployment.livenessProbe | nindent 12 }}
           readinessProbe:

@@ -179,7 +179,7 @@ deployment:
   livenessProbe:
     initialDelaySeconds: 30
     periodSeconds: 10
-    failureThreshold: 1
+    failureThreshold: 5
   readinessProbe:
     initialDelaySeconds: 30
     periodSeconds: 10
