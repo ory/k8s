@@ -96,7 +96,8 @@ deployment:
       name: test-volume
   extraVolumes:
     - name: test-volume
-      emptyDir: {}
+      configMap:
+        name: cm-sample
   extraArgs:
     - --sqa-opt-out
   labels:
@@ -113,9 +114,9 @@ job:
       args: ["-c", "sleep 10"]
   shareProcessNamespace: true
 
-watcher:
-  enabled: true
-  mountFile: "/etc/os-release"
+# watcher:
+#   enabled: true
+#   mountFile: "/testdir/sample.txt"
 
 serviceMonitor:
   labels:

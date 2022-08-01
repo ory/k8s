@@ -31,7 +31,7 @@ spec:
   template:
     metadata:
       labels:
-{{ include "kratos.labels" . | indent 8 }}
+        {{- include "kratos.labels" . | nindent 8 }}
         {{- with .Values.deployment.labels }}
           {{- toYaml . | nindent 8 }}
         {{- end }}
@@ -90,35 +90,6 @@ spec:
       automountServiceAccountToken: {{ .Values.deployment.automountServiceAccountToken }}
       serviceAccountName: {{ include "kratos.serviceAccountName" . }}
       containers:
-        {{- if .Values.watcher.enabled }}
-        - name: watcher
-          {{- if .Values.securityContext }}
-          securityContext:
-            {{- toYaml .Values.securityContext | nindent 12 }}
-          {{- end }}
-          image: {{ .Values.watcher.image }}
-          command:
-            - /bin/bash
-            - -c
-            - |
-              {{- .Files.Get "files/watch.sh" | printf "%s" | nindent 14 }}
-          env:
-            - name: NAMESPACE
-              value: {{ .Release.Namespace | quote }}
-            - name: WATCH_FILE
-              value: {{ .Values.watcher.mountFile | quote }}
-            - name: DEPLOYMENT_SELECTOR
-              value: 'app.kubernetes.io/name={{ include "kratos.name" . }}'
-          livenessProbe:
-            httpGet:
-              path: /admin/health/alive
-              port: {{ .Values.kratos.config.serve.admin.port }}
-            {{- toYaml .Values.deployment.livenessProbe | nindent 12 }}
-          volumeMounts:
-          {{- with .Values.deployment.extraVolumeMounts }}
-            {{- toYaml . | nindent 12 }}
-          {{- end }}
-        {{- end }}
         - name: {{ .Chart.Name }}
           image: {{ include "kratos.image" . }}
           imagePullPolicy: {{ include "kratos.imagePullPolicy" . }}
