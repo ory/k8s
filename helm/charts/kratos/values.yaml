@@ -450,14 +450,6 @@ watcher:
   image: oryd/k8s-toolbox:0.0.4
   mountFile: ""
   # mountFile: /etc/secrets/my-secret/foo
-  # -- The sidecar copies the livenessProve of the kratos container to be marked as unhealthy together with the main container.
-  livenessProbe:
-    httpGet:
-      path: /admin/health/alive
-      port: 4434
-    initialDelaySeconds: 30
-    periodSeconds: 10
-    failureThreshold: 1
 
 # -- PodDistributionBudget configuration
 pdb:
