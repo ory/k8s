@@ -144,7 +144,7 @@ jobs:
             popd
       - name: Push commit for release 
         run: |
-          git config --global user.email "60093411+ory-bot@users.noreply.github.co"
+          git config --global user.email "60093411+ory-bot@users.noreply.github.com"
           git config --global user.name "ory-bot"
           git checkout -b make-release HEAD
           git add -A 
@@ -169,7 +169,7 @@ jobs:
         run: make release
       - name: Push commit for release 
         run: |
-          git config --global user.email "60093411+ory-bot@users.noreply.github.co"
+          git config --global user.email "60093411+ory-bot@users.noreply.github.com"
           git config --global user.name "ory-bot"
           git checkout -b make-release HEAD
           git add -A 
