@@ -70,6 +70,11 @@ spec:
               value: {{ .Values.watcher.mountFile | quote }}
             - name: DEPLOYMENT_SELECTOR
               value: 'app.kubernetes.io/name={{ include "hydra.name" . }}'
+          livenessProbe:
+            httpGet:
+              path: /health/alive
+              port: 4445
+            {{- toYaml .Values.deployment.livenessProbe | nindent 12 }}
           volumeMounts:
           {{- with .Values.deployment.extraVolumeMounts }}
             {{- toYaml . | nindent 12 }}
@@ -108,12 +113,12 @@ spec:
           livenessProbe:
             httpGet:
               path: /health/alive
-              port: http-admin
+              port: 4445
             {{- toYaml .Values.deployment.livenessProbe | nindent 12 }}
           readinessProbe:
             httpGet:
               path: /health/ready
-              port: http-admin
+              port: 4445
             {{- toYaml .Values.deployment.readinessProbe | nindent 12 }}
           env:
             {{- if .Values.deployment.tracing.datadog.enabled }}

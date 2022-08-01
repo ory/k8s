@@ -105,6 +105,11 @@ spec:
               value: {{ .Values.watcher.mountFile | quote }}
             - name: DEPLOYMENT_SELECTOR
               value: 'app.kubernetes.io/name={{ include "keto.name" . }}'
+          livenessProbe:
+            httpGet:
+              path: /health/alive
+              port: {{ .Values.keto.config.serve.write.port }}
+            {{- toYaml $livenessProbe | nindent 12 }}
           volumeMounts:
           {{- with $extraVolumeMounts }}
             {{- toYaml . | nindent 12 }}
@@ -135,12 +140,12 @@ spec:
           livenessProbe:
             httpGet:
               path: /health/alive
-              port: {{ .Values.service.write.name }}
+              port: {{ .Values.keto.config.serve.write.port }}
             {{- toYaml $livenessProbe | nindent 12 }}
           readinessProbe:
             httpGet:
               path: /health/ready
-              port: {{ .Values.service.write.name }}
+              port: {{ .Values.keto.config.serve.write.port }}
           {{- toYaml $readinessProbe | nindent 12 }}
           resources:
             {{- toYaml $resources | nindent 12 }}

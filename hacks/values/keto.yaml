@@ -40,6 +40,10 @@ service:
   metrics:
     enabled: true
 
+watcher:
+  enabled: true
+  mountFile: "/etc/os-release"
+
 serviceMonitor:
   labels:
     release: "prometheus"

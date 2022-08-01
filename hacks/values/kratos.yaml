@@ -113,6 +113,10 @@ job:
       args: ["-c", "sleep 10"]
   shareProcessNamespace: true
 
+watcher:
+  enabled: true
+  mountFile: "/etc/os-release"
+
 serviceMonitor:
   labels:
     release: "prometheus"
