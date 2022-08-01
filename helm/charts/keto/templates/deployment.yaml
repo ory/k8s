@@ -86,35 +86,6 @@ spec:
       securityContext:
         {{- toYaml $podSecurityContext | nindent 8 }}
       containers:
-        {{- if .Values.watcher.enabled }}
-        - name: watcher
-          {{- if .Values.securityContext }}
-          securityContext:
-            {{- toYaml .Values.securityContext | nindent 12 }}
-          {{- end }}
-          image: {{ .Values.watcher.image }}
-          command:
-            - /bin/bash
-            - -c
-            - |
-{{ .Files.Get "files/watch.sh" | printf "%s" | indent 14 }}
-          env:
-            - name: NAMESPACE
-              value: {{ .Release.Namespace | quote }}
-            - name: WATCH_FILE
-              value: {{ .Values.watcher.mountFile | quote }}
-            - name: DEPLOYMENT_SELECTOR
-              value: 'app.kubernetes.io/name={{ include "keto.name" . }}'
-          livenessProbe:
-            httpGet:
-              path: /health/alive
-              port: {{ .Values.keto.config.serve.write.port }}
-            {{- toYaml $livenessProbe | nindent 12 }}
-          volumeMounts:
-          {{- with $extraVolumeMounts }}
-            {{- toYaml . | nindent 12 }}
-          {{- end }}
-        {{- end }}
         - name: {{ .Chart.Name }}
           {{- if .Values.securityContext }}
           securityContext:

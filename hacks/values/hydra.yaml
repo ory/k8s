@@ -40,7 +40,8 @@ deployment:
       name: test-volume
   extraVolumes:
     - name: test-volume
-      emptyDir: {}
+      configMap:
+        name: cm-sample
 job:
   extraInitContainers: |
     - name: "hello-world"
@@ -56,7 +57,7 @@ job:
 
 watcher:
   enabled: true
-  mountFile: "/etc/os-release"
+  mountFile: "/testdir/sample.txt"
 
 serviceMonitor:
   labels:

@@ -114,9 +114,9 @@ job:
       args: ["-c", "sleep 10"]
   shareProcessNamespace: true
 
-# watcher:
-#   enabled: true
-#   mountFile: "/testdir/sample.txt"
+watcher:
+  enabled: true
+  mountFile: "/testdir/sample.txt"
 
 serviceMonitor:
   labels:

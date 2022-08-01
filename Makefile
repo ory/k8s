@@ -39,6 +39,8 @@ k3d-up:
 		--k3s-arg=--kube-apiserver-arg="enable-admission-plugins=NodeRestriction,ServiceAccount@server:0" \
 		--k3s-arg=feature-gates="NamespaceDefaultLabelName=true@server:0";
 
+		kubectl apply -R -f hacks/manifests
+
 k3d-down:
 	k3d cluster delete ory-k8s || true
 

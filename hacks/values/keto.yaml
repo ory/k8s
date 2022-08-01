@@ -27,7 +27,8 @@ deployment:
       name: test-volume
   extraVolumes:
     - name: test-volume
-      emptyDir: {}
+      configMap:
+        name: cm-sample
 job:
   extraContainers: |
     - name: "sidecar"
@@ -42,7 +43,7 @@ service:
 
 watcher:
   enabled: true
-  mountFile: "/etc/os-release"
+  mountFile: "/testdir/sample.txt"
 
 serviceMonitor:
   labels:
