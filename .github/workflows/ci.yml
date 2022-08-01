@@ -129,7 +129,7 @@ jobs:
   helm-docs:
     name: Generate documentation
     runs-on: ubuntu-22.04
-    if: github.ref == 'refs/heads/master' 
+    if: ${{ always() &&  github.ref == 'refs/heads/master' }}
     env:
       HELM_DOCS_VERSION: "1.5.0"
     steps:
