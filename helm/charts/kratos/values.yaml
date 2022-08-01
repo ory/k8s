@@ -175,15 +175,21 @@ kratos:
 
 # -- Configuration options for the k8s deployment
 deployment:
-  # -- Configure the probes for when the deployment is considered ready and ongoing health check
+  # -- Configure the livenessProbe parameters
   livenessProbe:
     initialDelaySeconds: 30
     periodSeconds: 10
     failureThreshold: 5
+  # -- Configure the readinessProbe parameters
   readinessProbe:
     initialDelaySeconds: 30
     periodSeconds: 10
     failureThreshold: 5
+
+  # -- Configure a custom livenessProbe. This overwrites the default object
+  customLivenessProbe: {}
+  # -- Configure a custom readinessProbe. This overwrites the default object
+  customReadinessProbe: {}
 
   # -- Array of extra arguments to be passed down to the deployment. Kubernetes args format is expected
   # - --foo
