@@ -1,4 +1,5 @@
-set -eu
+set -Eeuo pipefail
+set -x
 
 function rollOut() {
   DEPLOY=$(kubectl get deploy -n "${NAMESPACE}" -l "${1}" -o name)
@@ -6,8 +7,11 @@ function rollOut() {
   kubectl rollout status -n $NAMESPACE ${DEPLOY}
 }
 
-inotifywait -e DELETE_SELF -m "${WATCH_FILE}" |
-   while read path _ file; do
-       echo "---> $path$file modified"
-       rollOut "${DEPLOYMENT_SELECTOR}"
-   done
+while true; do
+    # After change in the CM the symlink is recreated, so we need to restart the monitor
+    inotifywait --event DELETE_SELF "${WATCH_FILE}" |
+        while read path _ file; do
+           echo "---> $path$file modified"
+           rollOut "${DEPLOYMENT_SELECTOR}"
+        done
+done

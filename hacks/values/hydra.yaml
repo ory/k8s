@@ -40,7 +40,8 @@ deployment:
       name: test-volume
   extraVolumes:
     - name: test-volume
-      emptyDir: {}
+      configMap:
+        name: cm-sample
 job:
   extraInitContainers: |
     - name: "hello-world"
@@ -53,6 +54,10 @@ job:
       command: ["/bin/sh"]
       args: ["-c", "sleep 10"]
   shareProcessNamespace: true
+
+watcher:
+  enabled: true
+  mountFile: "/testdir/sample.txt"
 
 serviceMonitor:
   labels:

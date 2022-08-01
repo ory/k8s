@@ -16,8 +16,8 @@ nameOverride: ""
 # -- Full chart name override
 fullnameOverride: ""
 
-## -- Pod priority
-## https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/
+# -- Pod priority
+# https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/
 # priorityClassName: ""
 
 # -- Configures the Kubernetes service
@@ -381,7 +381,7 @@ hydra-maester:
 # -- Sidecar watcher configuration
 watcher:
   enabled: false
-  image: oryd/k8s-toolbox:0.0.2
+  image: oryd/k8s-toolbox:0.0.4
   mountFile: ""
   # mountFile: /etc/secrets/my-secret/foo
 

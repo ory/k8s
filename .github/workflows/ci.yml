@@ -156,7 +156,7 @@ jobs:
 
   release:
     name: Release
-    if: github.ref_type == 'tag'
+    if: ${{ always() && github.ref_type == 'tag' }}
     # needs: [test-install, test-upgrade]
     needs: [test-install]
     runs-on: ubuntu-22.04

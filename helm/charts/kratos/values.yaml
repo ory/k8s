@@ -173,20 +173,14 @@ kratos:
 
     secrets: {}
 
-## -- Configuration options for the k8s deployment
+# -- Configuration options for the k8s deployment
 deployment:
   # -- Configure the probes for when the deployment is considered ready and ongoing health check
   livenessProbe:
-    httpGet:
-      path: /admin/health/alive
-      port: http-admin
     initialDelaySeconds: 30
     periodSeconds: 10
     failureThreshold: 5
   readinessProbe:
-    httpGet:
-      path: /admin/health/ready
-      port: http-admin
     initialDelaySeconds: 30
     periodSeconds: 10
     failureThreshold: 5
@@ -450,9 +444,10 @@ nodeSelector: {}
 # Configure node tolerations.
 tolerations: []
 
+# -- Configuration of the watcher sidecar
 watcher:
   enabled: false
-  image: oryd/k8s-toolbox:0.0.2
+  image: oryd/k8s-toolbox:0.0.4
   mountFile: ""
   # mountFile: /etc/secrets/my-secret/foo
 
