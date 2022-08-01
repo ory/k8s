@@ -73,7 +73,7 @@ spec:
           livenessProbe:
             httpGet:
               path: /health/alive
-              port: 4445
+              port: {{ .Values.service.admin.port }}
             {{- toYaml .Values.deployment.livenessProbe | nindent 12 }}
           volumeMounts:
           {{- with .Values.deployment.extraVolumeMounts }}
@@ -105,20 +105,20 @@ spec:
             - /etc/config/hydra.yaml
           ports:
             - name: http-public
-              containerPort: 4444
+              containerPort: {{ .Values.service.public.port }}
               protocol: TCP
             - name: http-admin
-              containerPort: 4445
+              containerPort: {{ .Values.service.admin.port }}
               protocol: TCP
           livenessProbe:
             httpGet:
               path: /health/alive
-              port: 4445
+              port: {{ .Values.service.admin.port }}
             {{- toYaml .Values.deployment.livenessProbe | nindent 12 }}
           readinessProbe:
             httpGet:
               path: /health/ready
-              port: 4445
+              port: {{ .Values.service.admin.port }}
             {{- toYaml .Values.deployment.readinessProbe | nindent 12 }}
           env:
             {{- if .Values.deployment.tracing.datadog.enabled }}
