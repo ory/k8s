@@ -144,8 +144,8 @@ jobs:
             popd
       - name: Push commit for release 
         run: |
-          git config --global user.email "aeneas@ory.sh"
-          git config --global user.name "aeneasr"
+          git config --global user.email "60093411+ory-bot@users.noreply.github.com"
+          git config --global user.name "ory-bot"
           git checkout -b make-release HEAD
           git add -A 
           git commit -m "Regenerate helm docs
@@ -169,8 +169,8 @@ jobs:
         run: make release
       - name: Push commit for release 
         run: |
-          git config --global user.email "aeneas@ory.sh"
-          git config --global user.name "aeneasr"
+          git config --global user.email "60093411+ory-bot@users.noreply.github.com"
+          git config --global user.name "ory-bot"
           git checkout -b make-release HEAD
           git add -A 
           git commit -a -m "Release ${RELEASE_VERSION}
