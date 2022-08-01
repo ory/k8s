@@ -105,6 +105,31 @@ deployment:
   extraEnv:
     - name: FOO
       value: BAR
+  customLivenessProbe:
+    failureThreshold: 5
+    exec:
+      command:
+        - /bin/sh
+        - -c
+        - |-
+          wget -S http://127.0.0.1:4434/admin/health/ready -O -
+    initialDelaySeconds: 10
+    periodSeconds: 10
+    successThreshold: 1
+    timeoutSeconds: 1
+  customReadinessProbe:
+    failureThreshold: 5
+    exec:
+      command:
+        - /bin/sh
+        - -c
+        - |-
+          wget -S http://127.0.0.1:4434/admin/health/ready -O -
+    initialDelaySeconds: 10
+    periodSeconds: 10
+    successThreshold: 1
+    timeoutSeconds: 1
+
 
 job:
   extraContainers: |

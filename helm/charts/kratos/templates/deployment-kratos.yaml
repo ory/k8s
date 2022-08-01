@@ -188,15 +188,23 @@ spec:
               containerPort: {{ .Values.kratos.config.serve.public.port }}
               protocol: TCP
           livenessProbe:
+          {{- if .Values.deployment.customLivenessProbe }}
+            {{- toYaml .Values.deployment.customLivenessProbe | nindent 12 }}
+          {{- else }}
             httpGet:
               path: /admin/health/ready
               port: {{ .Values.kratos.config.serve.admin.port }}
             {{- toYaml .Values.deployment.livenessProbe | nindent 12 }}
+          {{- end }}
           readinessProbe:
+          {{- if .Values.deployment.customReadinessProbe }}
+            {{- toYaml .Values.deployment.customReadinessProbe | nindent 12 }}
+          {{- else }}
             httpGet:
               path: /admin/health/ready
               port: {{ .Values.kratos.config.serve.admin.port }}
             {{- toYaml .Values.deployment.readinessProbe | nindent 12 }}
+          {{- end }}
           resources:
             {{- toYaml $resources | nindent 12 }}  
           {{- if .Values.securityContext }}
