@@ -58,9 +58,15 @@ jobs:
         id: changed_charts
         env:
           FILTER_OUTPUT: ${{ toJson(steps.filter.outputs) }}
+          GITHUB_REF_TYPE: ${{ github.ref_type }}
         run: |
            updated_charts=$(echo "$FILTER_OUTPUT" | jq -r 'to_entries | map(select((.key | endswith("-helm")) and .value == "true")) | map(.key)')
            updated_charts=$(echo "$updated_charts" | sed "s/-helm//g")
+           
+           if [[ "$GITHUB_REF_TYPE" == "tag" ]]; then 
+            echo "Forcing tests to be running on every charts as CI running in release context"
+            updated_charts=$(ls ${{ github.workspace }}/helm/charts/ | tr -d " " | jq --raw-input --slurp 'split("\n") | map(select(. != ""))')
+           fi
 
            if [[ "$updated_charts" == "[]" ]]; then 
             echo ::set-output name=no_changes::"true"
@@ -90,23 +96,23 @@ jobs:
       matrix: ${{ fromJson(needs.detect-repo-changes.outputs.helms-changed) }}
 
  
-  # test-upgrade:
-  #   name: Upgrade Helm Chart '${{ matrix.chart }}'
-  #   if: ${{ needs.detect-repo-changes.outputs.no-changes != 'true' && github.ref != 'ref/heads/master' }}
-  #   needs: [check, detect-repo-changes, dependencies]
-  #   runs-on: ubuntu-22.04
-  #   env:
-  #     HELM_PLUGINS: ${{ github.workspace }}/.bin/plugins
-  #     HELM_CHART: ${{ matrix.chart }}
-  #   steps:
-  #     - name: Checkout
-  #       uses: actions/checkout@v2
-  #     - name: Checkout dependencies
-  #       uses: ./.github/actions/deps-setup
-  #     - name: Test upgrade for helm chart 
-  #       run: make helm-upgrade
-  #   strategy:
-  #     matrix: ${{ fromJson(needs.detect-repo-changes.outputs.helms-changed) }}
+  test-upgrade:
+    name: Upgrade Helm Chart '${{ matrix.chart }}'
+    if: ${{ needs.detect-repo-changes.outputs.no-changes != 'true' && github.ref != 'ref/heads/master' }}
+    needs: [check, detect-repo-changes, dependencies]
+    runs-on: ubuntu-22.04
+    env:
+      HELM_PLUGINS: ${{ github.workspace }}/.bin/plugins
+      HELM_CHART: ${{ matrix.chart }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Checkout dependencies
+        uses: ./.github/actions/deps-setup
+      - name: Test upgrade for helm chart 
+        run: make helm-upgrade
+    strategy:
+      matrix: ${{ fromJson(needs.detect-repo-changes.outputs.helms-changed) }}
  
   test-install:
     name: Install Helm Chart '${{ matrix.chart }}'
@@ -129,7 +135,7 @@ jobs:
   helm-docs:
     name: Generate documentation
     runs-on: ubuntu-22.04
-    if: ${{ always() &&  github.ref == 'refs/heads/master' }}
+    if: ${{ always() && github.ref == 'refs/heads/master' }}
     env:
       HELM_DOCS_VERSION: "1.5.0"
     steps:
@@ -156,9 +162,8 @@ jobs:
 
   release:
     name: Release
-    if: ${{ always() && github.ref_type == 'tag' }}
-    # needs: [test-install, test-upgrade]
-    needs: [test-install]
+    if: ${{ github.ref_type == 'tag' }}
+    needs: [test-install, test-upgrade]
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout
