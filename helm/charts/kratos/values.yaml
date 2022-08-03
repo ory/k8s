@@ -482,3 +482,6 @@ serviceMonitor:
 configmap:
   # -- switch to false to prevent checksum annotations being maintained and propogated to the pods
   hashSumEnabled: true
+  # -- If you do want to specify annotations for configmap, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'annotations:'.
+  annotations: {}

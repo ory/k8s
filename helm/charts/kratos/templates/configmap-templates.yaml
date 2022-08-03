@@ -9,6 +9,8 @@ metadata:
   namespace: {{ $root.Release.Namespace }}
   labels:
 {{ include "kratos.labels" $root | indent 4 }}
+  annotations: 
+{{- toYaml .Values.configmap.annotations | indent 4 }}
 data:
   {{- if $resultEntry.subject }}
   "email.subject.gotmpl": |
