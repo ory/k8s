@@ -38,31 +38,37 @@ jobs:
           filters: |
             example-idp-helm:
               - 'helm/charts/example-idp/**'
+              - 'hacks/values/example-idp.yaml'
             hydra-helm:
               - 'helm/charts/hydra/**'
+              - 'hacks/values/hydra-maester.yaml'
             hydra-maester-helm:
               - 'helm/charts/hydra-maester/**'
+              - 'hacks/values/hydra-maester.yaml'
             keto-helm:
               - 'helm/charts/keto/**'
+              - 'hacks/values/keto.yaml'
             kratos-helm:
               - 'helm/charts/kratos/**'
+              - 'hacks/values/kratos.yaml'
             kratos-selfservice-ui-node-helm:
               - 'helm/charts/kratos-selfservice-ui-node/**'
+              - 'hacks/values/kratos-selfservice-ui-node.yaml'
             oathkeeper-helm:
               - 'helm/charts/oathkeeper/**'
+              - 'hacks/values/oathkeeper.yaml'
             oathkeeper-maester-helm:
               - 'helm/charts/oathkeeper-maester/**'
+              - 'hacks/values/oathkeeper-maester.yaml'
             ci-definitions:
               - '.github/workflows/**'
-            helm-test-values:
-              - 'hack/values/**'
       # This step will take output from paths-filter and then process it in order to get what helm charts have been updated
       # It allows us to do matrix in validating & testing process
       - name: Generate helm chart matrix to be validated
         id: changed_charts
         env:
           FILTER_OUTPUT: ${{ toJson(steps.filter.outputs) }}
-          FORCE_FULL_RUN: ${{ github.ref_type == 'tag' || steps.filter.outputs['ci-definitions'] == 'true' || steps.filter.outputs['helm-test-values'] == 'true' }}
+          FORCE_FULL_RUN: ${{ github.ref_type == 'tag' || steps.filter.outputs['ci-definitions'] == 'true' }}
         run: |
            updated_charts=$(echo "$FILTER_OUTPUT" | jq -r 'to_entries | map(select((.key | endswith("-helm")) and .value == "true")) | map(.key)')
            updated_charts=$(echo "$updated_charts" | sed "s/-helm//g")
