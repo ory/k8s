@@ -10,7 +10,9 @@ metadata:
   labels:
 {{ include "kratos.labels" $root | indent 4 }}
   annotations: 
-{{- toYaml .Values.configmap.annotations | indent 4 }}
+    {{- with .Values.configmap.annotations }}
+      {{- toYaml . | indent 4 }}
+    {{- end }}
 data:
   {{- if $resultEntry.subject }}
   "email.subject.gotmpl": |
