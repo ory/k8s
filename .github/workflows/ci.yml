@@ -52,17 +52,17 @@ jobs:
               - 'helm/charts/oathkeeper/**'
             oathkeeper-maester-helm:
               - 'helm/charts/oathkeeper-maester/**'
-            githubaction:
+            ci-definitions:
               - '.github/workflows/**'
             helm-test-values:
-              - 'helm/charts/**'
+              - 'hack/values/**'
       # This step will take output from paths-filter and then process it in order to get what helm charts have been updated
       # It allows us to do matrix in validating & testing process
       - name: Generate helm chart matrix to be validated
         id: changed_charts
         env:
           FILTER_OUTPUT: ${{ toJson(steps.filter.outputs) }}
-          FORCE_FULL_RUN: ${{ github.ref_type == 'tag' || steps.filter.outputs['githubaction'] == 'true' || steps.filter.outputs['helm-test-values'] == 'true' }}
+          FORCE_FULL_RUN: ${{ github.ref_type == 'tag' || steps.filter.outputs['ci-definitions'] == 'true' || steps.filter.outputs['helm-test-values'] == 'true' }}
         run: |
            updated_charts=$(echo "$FILTER_OUTPUT" | jq -r 'to_entries | map(select((.key | endswith("-helm")) and .value == "true")) | map(.key)')
            updated_charts=$(echo "$updated_charts" | sed "s/-helm//g")
