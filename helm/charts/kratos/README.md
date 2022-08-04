@@ -10,6 +10,7 @@ A ORY Kratos Helm chart for Kubernetes
 |-----|------|---------|-------------|
 | affinity | object | `{}` | Configure node affinity |
 | autoscaling | object | `{"enabled":false,"maxReplicas":3,"minReplicas":1,"targetCPUUtilizationPercentage":80}` | Horizontal pod autoscaling configuration |
+| configmap.annotations | object | `{}` | If you do want to specify annotations for configmap, uncomment the following lines, adjust them as necessary, and remove the curly braces after 'annotations:'. |
 | configmap.hashSumEnabled | bool | `true` | switch to false to prevent checksum annotations being maintained and propogated to the pods |
 | deployment | object | `{"annotations":{},"automountServiceAccountToken":true,"customLivenessProbe":{},"customReadinessProbe":{},"extraArgs":[],"extraContainers":{},"extraEnv":[],"extraInitContainers":{},"extraVolumeMounts":[],"extraVolumes":[],"labels":{},"livenessProbe":{"failureThreshold":5,"initialDelaySeconds":30,"periodSeconds":10},"nodeSelector":{},"readinessProbe":{"failureThreshold":5,"initialDelaySeconds":30,"periodSeconds":10},"resources":{},"serviceAccount":{"annotations":{},"create":true,"name":""},"tolerations":[],"tracing":{"datadog":{"enabled":false}}}` | Configuration options for the k8s deployment |
 | deployment.customLivenessProbe | object | `{}` | Configure a custom livenessProbe. This overwrites the default object |
