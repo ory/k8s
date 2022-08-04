@@ -6,6 +6,10 @@ metadata:
   namespace: {{ .Release.Namespace }}
   labels:
 {{ include "kratos.labels" . | indent 4 }}
+  annotations:
+    {{- with .Values.configmap.annotations }}
+      {{- toYaml . | nindent 4 }}
+    {{- end }}
 data:
   # Render the kratos config:
   "kratos.yaml": |
