@@ -8,7 +8,7 @@ metadata:
 {{ include "kratos.labels" . | indent 4 }}
   annotations:
     {{- with .Values.configmap.annotations }}
-      {{- toYaml . | indent 4 }}
+      {{- toYaml . | nindent 4 }}
     {{- end }}
 data:
   # Render the kratos config:

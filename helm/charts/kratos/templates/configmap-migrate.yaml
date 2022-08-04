@@ -11,7 +11,7 @@ metadata:
     helm.sh/hook: "pre-install, pre-upgrade"
     helm.sh/hook-delete-policy: "before-hook-creation"
     {{- with .Values.configmap.annotations }}
-      {{- toYaml . | indent 4 }}
+      {{- toYaml . | nindent 4 }}
     {{- end }}
 data:
   # Render the kratos config:
