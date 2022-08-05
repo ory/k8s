@@ -319,6 +319,8 @@ serviceMonitor:
   labels: {}
   # -- TLS configuration to use when scraping the endpoint
   tlsConfig: {}
+  # -- Additional metric labels
+  targetLabels: []
 
 configmap:
   # -- switch to false to prevent checksum annotations being maintained and propogated to the pods
