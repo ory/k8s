@@ -89,9 +89,12 @@ service:
     labels:
       app.kubernetes.io/component: "metrics"
       release: "metrics"
+      app: oathkeeper
 
 serviceMonitor:
   labels:
     release: "prometheus"
   tlsConfig: 
     insecureSkipVerify: true
+  targetLabels:
+   - app
