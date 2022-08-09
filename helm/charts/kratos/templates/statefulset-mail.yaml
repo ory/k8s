@@ -124,7 +124,7 @@ spec:
           configMap:
             name: {{ include "kratos.fullname" . }}-config
         {{- if $extraVolumes }}
-{{ toYaml $extraVolumes | indent 8 }}
+{{ tpl (toYaml $extraVolumes) . | indent 8 }}
         {{- end }}
         {{- $root := . -}}
         {{- range $method, $methodEntry := .Values.kratos.emailTemplates }}

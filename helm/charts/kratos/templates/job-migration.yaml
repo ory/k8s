@@ -111,7 +111,7 @@ spec:
           configMap:
             name: {{ include "kratos.fullname" . }}-migrate
       {{- if .Values.deployment.extraVolumes }}
-        {{- toYaml .Values.deployment.extraVolumes | nindent 8 }}
+        {{- tpl (toYaml .Values.deployment.extraVolumes) . | nindent 8 }}
       {{- end }}
       {{- with $nodeSelector }}
       nodeSelector:

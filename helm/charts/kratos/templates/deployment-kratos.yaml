@@ -57,7 +57,7 @@ spec:
               mountPath: /etc/config
               readOnly: true
           {{- with .Values.deployment.extraVolumeMounts }}
-            {{- toYaml . | nindent 12 }}
+            {{- tpl (toYaml .) $ | nindent 12 }}
           {{- end }}
           env:
           {{- if .Values.database.isCrunchyDataOperator }}
@@ -101,7 +101,7 @@ spec:
       {{- end }}
       volumes:
         {{- if .Values.deployment.extraVolumes }}
-{{ toYaml .Values.deployment.extraVolumes | indent 8 }}
+{{ tpl (toYaml .Values.deployment.extraVolumes) . | indent 8 }}
         {{- end }}
         - name: {{ include "kratos.name" . }}-config-volume
           configMap:
@@ -135,7 +135,7 @@ spec:
             {{- end }}
           volumeMounts:
             {{- if .Values.deployment.extraVolumeMounts }}
-              {{- tpl (toYaml .Values.deployment.extraVolumeMounts) . | nindent 12 }}
+              {{- toYaml .Values.deployment.extraVolumeMounts | nindent 12 }}
             {{- end }}
             - name: {{ include "kratos.name" . }}-config-volume
               mountPath: /etc/config
@@ -149,11 +149,38 @@ spec:
             {{- end }}
             {{- end }}
           env:
+          {{- if .Values.database.isCrunchyDataOperator }}
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: {{ tpl .Values.database.databaseSecretName . }}
+                  key: user
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ tpl .Values.database.databaseSecretName . }}
+                  key: password
+            - name: DB_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: {{ tpl .Values.database.databaseSecretName . }}
+                  key: host
+            - name: DB_PORT
+              valueFrom:
+                secretKeyRef:
+                  name: {{ tpl .Values.database.databaseSecretName . }}
+                  key: port
+            - name: DB_NAME
+              value: {{ .Values.database.databaseName }}
+            - name: DSN
+              value: postgres://$(DB_USER):$(DB_PASSWORD)@$(DB_HOST):$(DB_PORT)/$(DB_NAME)
+          {{- else }}
             - name: DSN
               valueFrom:
                 secretKeyRef:
                   name: {{ include "kratos.secretname" . }}
                   key: dsn
+          {{- end }}
             - name: SECRETS_DEFAULT
               valueFrom:
                 secretKeyRef:

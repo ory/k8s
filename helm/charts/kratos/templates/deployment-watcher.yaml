@@ -57,6 +57,6 @@ spec:
           {{- end }}
       volumes:
         {{- if .Values.deployment.extraVolumes }}
-          {{- toYaml .Values.deployment.extraVolumes | nindent 8 }}
+          {{- tpl (toYaml .Values.deployment.extraVolumes) . | nindent 8 }}
         {{- end }}
 {{- end }}
