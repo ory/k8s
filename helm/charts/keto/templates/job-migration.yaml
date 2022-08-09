@@ -1,8 +1,10 @@
-{{- if .Values.keto.autoMigrate }}
+{{- include "keto.automigration.typeVerification" . -}}
+{{- if and  ( .Values.keto.automigration.enabled ) ( eq .Values.keto.automigration.type "job" ) }}
 {{- $extraLabels := ternary .Values.deployment.extraLabels .Values.extraLabels (not (empty .Values.deployment.extraLabels )) -}}
 {{- $extraVolumeMounts := ternary .Values.deployment.extraVolumeMounts .Values.extraVolumeMounts (not (empty .Values.deployment.extraVolumeMounts )) -}}
 {{- $extraEnv := ternary .Values.deployment.extraEnv .Values.extraEnv (not (empty .Values.deployment.extraEnv )) -}}
 {{- $extraVolumes := ternary .Values.deployment.extraVolumes .Values.extraVolumes (not (empty .Values.deployment.extraVolumes )) -}}
+{{- $nodeSelector := ternary .Values.job.nodeSelector .Values.deployment.nodeSelector (not (empty .Values.job.nodeSelector )) -}}
 ---
 apiVersion: batch/v1
 kind: Job
@@ -76,6 +78,10 @@ spec:
           configMap:
             name: {{ include "keto.fullname" . }}-migrate
       {{- with $extraVolumes }}
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with $nodeSelector }}
+      nodeSelector:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       shareProcessNamespace: {{ .Values.job.shareProcessNamespace }}

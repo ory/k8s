@@ -13,7 +13,7 @@ image:
   # -- ORY Oathkeeper image
   repository: oryd/oathkeeper
   # -- ORY Oathkeeper version
-  tag: v0.38.19-beta.1
+  tag: v0.39.0
   # -- Image pull policy
   pullPolicy: IfNotPresent
 
@@ -286,6 +286,13 @@ deployment:
   #      lines, adjust them as necessary, and remove the curly braces after 'annotations:'.
   #      e.g.  sidecar.istio.io/rewriteAppHTTPProbers: "true"
 
+  # -- Configure horizontal pod autoscaler for deployment
+  autoscaling:
+    enabled: false
+    minReplicas: 1
+    maxReplicas: 5
+    targetCPUUtilizationPercentage: 80
+  # targetMemoryUtilizationPercentage: 80
 # -- Configure node affinity
 affinity: {}
 
@@ -312,6 +319,8 @@ serviceMonitor:
   labels: {}
   # -- TLS configuration to use when scraping the endpoint
   tlsConfig: {}
+  # -- Additional metric labels
+  targetLabels: []
 
 configmap:
   # -- switch to false to prevent checksum annotations being maintained and propogated to the pods

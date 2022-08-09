@@ -1,6 +1,6 @@
 # keto
 
-![Version: 0.23.3](https://img.shields.io/badge/Version-0.23.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.8.0](https://img.shields.io/badge/AppVersion-v0.8.0-informational?style=flat-square)
+![Version: 0.24.5](https://img.shields.io/badge/Version-0.24.5-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.8.0-alpha.2](https://img.shields.io/badge/AppVersion-v0.8.0--alpha.2-informational?style=flat-square)
 
 Access Control Policies as a Server
 
@@ -37,21 +37,25 @@ Access Control Policies as a Server
 | fullnameOverride | string | `""` |  |
 | image.pullPolicy | string | `"IfNotPresent"` | Default image pull policy |
 | image.repository | string | `"oryd/keto"` | Ory KETO image |
-| image.tag | string | `"v0.8.0-alpha.0"` |  |
+| image.tag | string | `"v0.8.0-alpha.2"` |  |
 | imagePullSecrets | list | `[]` |  |
 | ingress | object | `{"read":{"annotations":{},"className":"","enabled":false,"hosts":[{"host":"chart-example.local","paths":[{"path":"/read","pathType":"Prefix"}]}],"tls":[]},"write":{"annotations":{},"className":"","enabled":false,"hosts":[{"host":"chart-example.local","paths":[{"path":"/write","pathType":"Prefix"}]}],"tls":[]}}` | Ingress definitions |
-| job | object | `{"annotations":{"helm.sh/hook":"pre-install, pre-upgrade","helm.sh/hook-delete-policy":"before-hook-creation,hook-succeeded","helm.sh/hook-weight":"1"},"automountServiceAccountToken":true,"extraContainers":{},"lifecycle":{},"serviceAccount":{"annotations":{"helm.sh/hook":"pre-install, pre-upgrade","helm.sh/hook-delete-policy":"before-hook-creation","helm.sh/hook-weight":"0"},"create":true,"name":""},"shareProcessNamespace":false,"spec":{"backoffLimit":10}}` | Values for initialization job |
+| job | object | `{"annotations":{"helm.sh/hook":"pre-install, pre-upgrade","helm.sh/hook-delete-policy":"before-hook-creation,hook-succeeded","helm.sh/hook-weight":"1"},"automountServiceAccountToken":true,"extraContainers":{},"lifecycle":{},"nodeSelector":{},"serviceAccount":{"annotations":{"helm.sh/hook":"pre-install, pre-upgrade","helm.sh/hook-delete-policy":"before-hook-creation","helm.sh/hook-weight":"0"},"create":true,"name":""},"shareProcessNamespace":false,"spec":{"backoffLimit":10}}` | Values for initialization job |
 | job.annotations | object | `{"helm.sh/hook":"pre-install, pre-upgrade","helm.sh/hook-delete-policy":"before-hook-creation,hook-succeeded","helm.sh/hook-weight":"1"}` | If you do want to specify annotations, uncomment the following lines, adjust them as necessary, and remove the curly braces after 'annotations:'. |
 | job.automountServiceAccountToken | bool | `true` | Set automounting of the SA token |
 | job.extraContainers | object | `{}` | If you want to add extra sidecar containers. |
 | job.lifecycle | object | `{}` | If you want to add lifecycle hooks. |
+| job.nodeSelector | object | `{}` | Node labels for pod assignment. |
 | job.serviceAccount | object | `{"annotations":{"helm.sh/hook":"pre-install, pre-upgrade","helm.sh/hook-delete-policy":"before-hook-creation","helm.sh/hook-weight":"0"},"create":true,"name":""}` | Specify the serviceAccountName value. In some situations it is needed to provides specific permissions to Hydra deployments Like for example installing Hydra on a cluster with a PosSecurityPolicy and Istio. Uncoment if it is needed to provide a ServiceAccount for the Hydra deployment. |
 | job.serviceAccount.annotations | object | `{"helm.sh/hook":"pre-install, pre-upgrade","helm.sh/hook-delete-policy":"before-hook-creation","helm.sh/hook-weight":"0"}` | Annotations to add to the service account |
 | job.serviceAccount.create | bool | `true` | Specifies whether a service account should be created |
 | job.serviceAccount.name | string | `""` | The name of the service account to use. If not set and create is true, a name is generated using the fullname template |
 | job.shareProcessNamespace | bool | `false` | Set sharing process namespace |
 | job.spec.backoffLimit | int | `10` | Set job back off limit |
-| keto | object | `{"autoMigrate":false,"config":{"dsn":"memory","namespaces":[{"id":0,"name":"sample"}],"serve":{"metrics":{"port":4468},"read":{"port":4466},"write":{"port":4467}}}}` | Main keto config. Full documentation can be found in https://www.ory.sh/keto/docs/reference/configuration |
+| keto | object | `{"automigration":{"enabled":false,"type":"job"},"config":{"dsn":"memory","namespaces":[{"id":0,"name":"sample"}],"serve":{"metrics":{"port":4468},"read":{"port":4466},"write":{"port":4467}}}}` | Main application config. |
+| keto.automigration | object | `{"enabled":false,"type":"job"}` | Enables database migration |
+| keto.automigration.type | string | `"job"` | Configure the way to execute database migration. Possible values: job, initContainer When set to job, the migration will be executed as a job on release or upgrade. When set to initContainer, the migration will be executed when kratos pod is created Defaults to job   |
+| keto.config | object | `{"dsn":"memory","namespaces":[{"id":0,"name":"sample"}],"serve":{"metrics":{"port":4468},"read":{"port":4466},"write":{"port":4467}}}` | Direct keto config. Full documentation can be found in https://www.ory.sh/keto/docs/reference/configuration |
 | nameOverride | string | `""` |  |
 | pdb | object | `{"enabled":false,"spec":{"minAvailable":1}}` | PodDistributionBudget configuration |
 | replicaCount | int | `1` |  |
@@ -73,7 +77,7 @@ Access Control Policies as a Server
 | serviceMonitor.scrapeInterval | string | `"60s"` | Interval at which metrics should be scraped |
 | serviceMonitor.scrapeTimeout | string | `"30s"` | Timeout after which the scrape is ended |
 | serviceMonitor.tlsConfig | object | `{}` | TLS configuration to use when scraping the endpoint |
-| watcher | object | `{"enabled":false,"image":"oryd/k8s-toolbox:0.0.2","mountFile":""}` | Watcher sidecar configuration |
+| watcher | object | `{"enabled":false,"image":"oryd/k8s-toolbox:0.0.4","mountFile":""}` | Watcher sidecar configuration |
 
 ----------------------------------------------
 Autogenerated from chart metadata using [helm-docs v1.5.0](https://github.com/norwoodj/helm-docs/releases/v1.5.0)

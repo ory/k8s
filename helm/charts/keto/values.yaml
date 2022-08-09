@@ -11,7 +11,7 @@ image:
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
   # -- Ory KETO version
-  tag: "v0.8.0-alpha.0"
+  tag: "v0.8.0-alpha.2"
 
 imagePullSecrets: []
 nameOverride: ""
@@ -53,6 +53,12 @@ job:
   # extraContainers: |
   #  - name: ...
   #    image: ...
+
+  # -- Node labels for pod assignment.
+  nodeSelector: {}
+  # If you do want to specify node labels, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'nodeSelector:'.
+  #   foo: bar
 
   # -- If you want to add lifecycle hooks.
   lifecycle: {}
@@ -159,8 +165,17 @@ secret:
   # -- switch to false to prevent checksum annotations being maintained and propogated to the pods
   hashSumEnabled: true
 
-# -- Main keto config. Full documentation can be found in https://www.ory.sh/keto/docs/reference/configuration
+# -- Main application config.
 keto:
+  # -- Enables database migration
+  automigration:
+    enabled: false
+    # -- Configure the way to execute database migration. Possible values: job, initContainer
+    # When set to job, the migration will be executed as a job on release or upgrade.
+    # When set to initContainer, the migration will be executed when kratos pod is created
+    # Defaults to job  
+    type: job
+  # -- Direct keto config. Full documentation can be found in https://www.ory.sh/keto/docs/reference/configuration
   config:
     serve:
       read:
@@ -173,7 +188,6 @@ keto:
       - id: 0
         name: sample
     dsn: memory
-  autoMigrate: false
 
 # -- Configure the probes for when the deployment is considered ready and ongoing health check
 deployment:
@@ -287,7 +301,7 @@ deployment:
 # -- Watcher sidecar configuration
 watcher:
   enabled: false
-  image: oryd/k8s-toolbox:0.0.2
+  image: oryd/k8s-toolbox:0.0.4
   mountFile: ""
   # mountFile: /etc/secrets/my-secret/foo
 

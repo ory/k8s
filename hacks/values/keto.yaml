@@ -1,6 +1,7 @@
 ---
 keto:
-  autoMigrate: true
+  automigration: 
+    enabled: true
   config:
     dsn: "postgres://postgres:ory@postgresql.default.svc.cluster.local/ory?sslmode=disable&max_conn_lifetime=10s"
 ingress:
@@ -18,6 +19,16 @@ deployment:
       image: "alpine:latest"
       command: ["/bin/sh"]
       args: ["-c", "sleep infinity"]
+  extraEnv:
+    - name: FOO
+      value: BAR
+  extraVolumeMounts:
+    - mountPath: /testdir
+      name: test-volume
+  extraVolumes:
+    - name: test-volume
+      configMap:
+        name: cm-sample
 job:
   extraContainers: |
     - name: "sidecar"
@@ -29,6 +40,10 @@ job:
 service:
   metrics:
     enabled: true
+
+watcher:
+  enabled: true
+  mountFile: "/testdir/sample.txt"
 
 serviceMonitor:
   labels:

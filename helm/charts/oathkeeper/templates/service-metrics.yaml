@@ -60,5 +60,9 @@ spec:
       app.kubernetes.io/name: {{ include "oathkeeper.name" . }}
       app.kubernetes.io/instance: {{ .Release.Name }}
       app.kubernetes.io/component: metrics
+  {{- with .Values.serviceMonitor.targetLabels }}
+  targetLabels:
+    {{- toYaml . | nindent 2 }}
+  {{- end }}
 {{- end -}}
 {{- end -}}

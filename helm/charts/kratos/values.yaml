@@ -15,7 +15,7 @@ image:
   repository: oryd/kratos
   # -- ORY KRATOS VERSION
   # Alternative format: image: oryd/kratos:v0.6.3-alpha.1
-  tag: v0.9.0-alpha.2
+  tag: v0.10.1
   pullPolicy: IfNotPresent
   # imagePullPolicy: Always
 
@@ -105,7 +105,15 @@ ingress:
 kratos:
   development: false
   # -- Enable the initialization job. Required to work with a DB
-  autoMigrate: false
+
+  # -- Enables database migration
+  automigration:
+    enabled: false
+    # -- Configure the way to execute database migration. Possible values: job, initContainer
+    # When set to job, the migration will be executed as a job on release or upgrade.
+    # When set to initContainer, the migration will be executed when kratos pod is created
+    # Defaults to job  
+    type: job
 
   # -- You can add multiple identity schemas here
   identitySchemas: {}
@@ -165,23 +173,23 @@ kratos:
 
     secrets: {}
 
-## -- Configuration options for the k8s deployment
+# -- Configuration options for the k8s deployment
 deployment:
-  # -- Configure the probes for when the deployment is considered ready and ongoing health check
+  # -- Configure the livenessProbe parameters
   livenessProbe:
-    httpGet:
-      path: /admin/health/alive
-      port: http-admin
     initialDelaySeconds: 30
     periodSeconds: 10
     failureThreshold: 5
+  # -- Configure the readinessProbe parameters
   readinessProbe:
-    httpGet:
-      path: /admin/health/ready
-      port: http-admin
     initialDelaySeconds: 30
     periodSeconds: 10
     failureThreshold: 5
+
+  # -- Configure a custom livenessProbe. This overwrites the default object
+  customLivenessProbe: {}
+  # -- Configure a custom readinessProbe. This overwrites the default object
+  customReadinessProbe: {}
 
   # -- Array of extra arguments to be passed down to the deployment. Kubernetes args format is expected
   # - --foo
@@ -389,6 +397,12 @@ job:
   #  - name: ...
   #    image: ...
 
+  # -- Node labels for pod assignment.
+  nodeSelector: {}
+  # If you do want to specify node labels, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'nodeSelector:'.
+  #   foo: bar
+
   # -- If you want to add lifecycle hooks.
   lifecycle: {}
   # lifecycle: |
@@ -436,9 +450,10 @@ nodeSelector: {}
 # Configure node tolerations.
 tolerations: []
 
+# -- Configuration of the watcher sidecar
 watcher:
   enabled: false
-  image: oryd/k8s-toolbox:0.0.2
+  image: oryd/k8s-toolbox:0.0.4
   mountFile: ""
   # mountFile: /etc/secrets/my-secret/foo
 
@@ -467,3 +482,6 @@ serviceMonitor:
 configmap:
   # -- switch to false to prevent checksum annotations being maintained and propogated to the pods
   hashSumEnabled: true
+  # -- If you do want to specify annotations for configmap, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'annotations:'.
+  annotations: {}

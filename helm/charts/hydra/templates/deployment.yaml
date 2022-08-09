@@ -1,3 +1,5 @@
+{{- include "hydra.automigration.typeVerification" . -}}
+
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -6,7 +8,7 @@ metadata:
   namespace: {{ .Release.Namespace }}
   {{- end }}
   labels:
-{{ include "hydra.labels" . | indent 4 }}
+    {{- include "hydra.labels" . | nindent 4 }}
     {{- with .Values.deployment.labels }}
       {{- toYaml . | nindent 4 }}
     {{- end }}
@@ -25,12 +27,12 @@ spec:
   template:
     metadata:
       labels:
-{{ include "hydra.labels" . | indent 8 }}
+        {{- include "hydra.labels" . | nindent 8 }}
         {{- with .Values.deployment.labels }}
           {{- toYaml . | nindent 8 }}
         {{- end }}
       annotations:
-        {{- include "hydra.annotations.checksum" . | indent 8 -}}
+        {{- include "hydra.annotations.checksum" . | nindent 8 -}}
         {{- with .Values.deployment.annotations }}
           {{- toYaml . | nindent 8 }}
         {{- end }}
@@ -44,35 +46,11 @@ spec:
           configMap:
             name: {{ include "hydra.fullname" . }}
         {{- if .Values.deployment.extraVolumes }}
-{{ toYaml .Values.deployment.extraVolumes | indent 8 }}
+          {{- toYaml .Values.deployment.extraVolumes | nindent 8 }}
         {{- end }}
       serviceAccountName: {{ include "hydra.serviceAccountName" . }}
       automountServiceAccountToken: {{ .Values.deployment.automountServiceAccountToken }}
       containers:
-        {{- if .Values.watcher.enabled }}
-        - name: watcher
-          {{- if .Values.deployment.securityContext }}
-          securityContext:
-            {{- toYaml .Values.deployment.securityContext | nindent 12 }}
-          {{- end }}
-          image: {{ .Values.watcher.image }}
-          command:
-            - /bin/bash
-            - -c
-            - |
-{{ .Files.Get "files/watch.sh" | printf "%s" | indent 14 }}
-          env:
-            - name: NAMESPACE
-              value: {{ .Release.Namespace | quote }}
-            - name: WATCH_FILE
-              value: {{ .Values.watcher.mountFile | quote }}
-            - name: DEPLOYMENT_SELECTOR
-              value: 'app.kubernetes.io/name={{ include "hydra.name" . }}'
-          volumeMounts:
-          {{- with .Values.deployment.extraVolumeMounts }}
-            {{- toYaml . | nindent 12 }}
-          {{- end }}
-        {{- end }}
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
@@ -82,37 +60,36 @@ spec:
               mountPath: /etc/config
               readOnly: true
             {{- if .Values.deployment.extraVolumeMounts }}
-{{ toYaml .Values.deployment.extraVolumeMounts | indent 12 }}
+              {{- toYaml .Values.deployment.extraVolumeMounts | nindent 12 }}
             {{- end }}
-          args: [
-            "serve",
-            "all",
+          args:
+            - serve
+            - all
             {{- if .Values.hydra.dangerousForceHttp }}
-            "--dangerous-force-http",
-            {{- end}}
+            - --dangerous-force-http
+            {{- end }}
             {{- if .Values.hydra.dangerousAllowInsecureRedirectUrls }}
-            "--dangerous-allow-insecure-redirect-urls",
-            {{ include "hydra.utils.joinListWithComma" .Values.hydra.dangerousAllowInsecureRedirectUrls | quote }},
-            {{- end}}
-            "--config",
-            "/etc/config/config.yaml"
-          ]
+            - --dangerous-allow-insecure-redirect-urls
+            - {{ include "hydra.utils.joinListWithComma" .Values.hydra.dangerousAllowInsecureRedirectUrls | quote }}
+            {{- end }}
+            - --config
+            - /etc/config/hydra.yaml
           ports:
             - name: http-public
-              containerPort: 4444
+              containerPort: {{ .Values.hydra.config.serve.public.port }}
               protocol: TCP
             - name: http-admin
-              containerPort: 4445
+              containerPort: {{ .Values.hydra.config.serve.admin.port }}
               protocol: TCP
           livenessProbe:
             httpGet:
               path: /health/alive
-              port: http-admin
+              port: {{ .Values.hydra.config.serve.admin.port }}
             {{- toYaml .Values.deployment.livenessProbe | nindent 12 }}
           readinessProbe:
             httpGet:
               path: /health/ready
-              port: http-admin
+              port: {{ .Values.hydra.config.serve.admin.port }}
             {{- toYaml .Values.deployment.readinessProbe | nindent 12 }}
           env:
             {{- if .Values.deployment.tracing.datadog.enabled }}
@@ -190,11 +167,34 @@ spec:
           lifecycle:
             {{- toYaml .Values.deployment.lifecycle | nindent 12 }}
         {{- if .Values.deployment.extraContainers }}
-{{ tpl .Values.deployment.extraContainers . | indent 8 }}
+          {{- tpl .Values.deployment.extraContainers . | nindent 8 }}
         {{- end }}
-      {{- if .Values.deployment.extraInitContainers }}
       initContainers:
-{{ tpl .Values.deployment.extraInitContainers . | indent 8 }}
+      {{- if and ( .Values.hydra.automigration.enabled ) ( eq .Values.hydra.automigration.type "initContainer" ) }}
+        - name: {{ .Chart.Name }}-automigrate
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          command: ["hydra"]
+          args: ["migrate", "sql", "-e", "--yes", "--config", "/etc/config/hydra.yaml"]
+          volumeMounts:
+            - name: {{ include "hydra.name" . }}-config-volume
+              mountPath: /etc/config
+              readOnly: true
+          {{- with .Values.deployment.extraVolumeMounts }}
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          env:
+            - name: DSN
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "hydra.secretname" . }}
+                  key: dsn
+            {{- with .Values.deployment.extraEnv }}
+              {{- toYaml . | nindent 12 }}
+            {{- end }}
+      {{- end }}
+      {{- if .Values.deployment.extraInitContainers }}
+        {{- tpl .Values.deployment.extraInitContainers . | nindent 8 }}
       {{- end }}
       {{- if .Values.priorityClassName }}
       priorityClassName: {{ .Values.priorityClassName }}

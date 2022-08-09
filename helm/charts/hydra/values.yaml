@@ -12,7 +12,7 @@ image:
   # -- ORY Hydra image
   repository: oryd/hydra
   # -- ORY Hydra version
-  tag: v1.10.5
+  tag: v1.11.8
   # -- Image pull policy
   pullPolicy: IfNotPresent
 
@@ -23,8 +23,8 @@ nameOverride: ""
 # -- Full chart name override
 fullnameOverride: ""
 
-## -- Pod priority
-## https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/
+# -- Pod priority
+# https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/
 # priorityClassName: ""
 
 # -- Configures the Kubernetes service
@@ -149,7 +149,14 @@ hydra:
     urls:
       self: {}
 
-  autoMigrate: false
+    # -- Enables database migration
+  automigration:
+    enabled: false
+    # -- Configure the way to execute database migration. Possible values: job, initContainer
+    # When set to job, the migration will be executed as a job on release or upgrade.
+    # When set to initContainer, the migration will be executed when kratos pod is created
+    # Defaults to job  
+    type: job
   dangerousForceHttp: false
   dangerousAllowInsecureRedirectUrls: false
 
@@ -188,7 +195,7 @@ deployment:
   #      lines, adjust them as necessary, and remove the curly braces after 'annotations:'.
   #      e.g.  sidecar.istio.io/rewriteAppHTTPProbers: "true"
 
-  # Node labels for pod assignment.
+  # -- Node labels for pod assignment.
   nodeSelector: {}
   # If you do want to specify node labels, uncomment the following
   # lines, adjust them as necessary, and remove the curly braces after 'nodeSelector:'.
@@ -325,6 +332,12 @@ job:
   #    image: ...
   extraInitContainers: {}
 
+  # -- Node labels for pod assignment.
+  nodeSelector: {}
+  # If you do want to specify node labels, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'nodeSelector:'.
+  #   foo: bar
+
   # -- If you want to add lifecycle hooks.
   lifecycle: {}
   # lifecycle: |
@@ -375,7 +388,7 @@ hydra-maester:
 # -- Sidecar watcher configuration
 watcher:
   enabled: false
-  image: oryd/k8s-toolbox:0.0.2
+  image: oryd/k8s-toolbox:0.0.4
   mountFile: ""
   # mountFile: /etc/secrets/my-secret/foo
 

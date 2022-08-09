@@ -2,8 +2,8 @@ SHELL=/bin/bash -euo pipefail
 
 export PATH := .bin:${PATH}
 export PWD := $(shell pwd)
-export CIRCLE_TAG := ${CIRCLE_TAG}
-export VERSION=$(shell echo ${CIRCLE_TAG} | sed s/v//g)
+export VERSION=$(shell echo ${RELEASE_VERSION} | sed s/v//g)
+export K3SIMAGE := docker.io/rancher/k3s:v1.22.5-k3s1
 
 .bin/yq: go.mod
 	go build -o .bin/yq github.com/mikefarah/yq/v3
@@ -34,62 +34,58 @@ release: .bin/yq .bin/helm
 		helm package -d docs/helm/charts/ ./helm/charts/kratos-selfservice-ui-node/ --version "${VERSION}"; \
 		helm repo index docs/helm/charts/
 
-kind-start:
-	kind create cluster --wait 2m
+k3d-up:
+		k3d cluster create --image $${K3SIMAGE} ory-k8s -p "8080:80@server:0" \
+		--k3s-arg=--kube-apiserver-arg="enable-admission-plugins=NodeRestriction,ServiceAccount@server:0" \
+		--k3s-arg=feature-gates="NamespaceDefaultLabelName=true@server:0";
 
-kind-stop:
-	kind delete cluster
+		kubectl apply -R -f hacks/manifests
+
+k3d-down:
+	k3d cluster delete ory-k8s || true
 
 postgresql:
 	helm repo add bitnami https://charts.bitnami.com/bitnami
 	helm repo update
-	helm install postgresql bitnami/postgresql -f .circleci/values/postgres.yaml
+	helm install postgresql bitnami/postgresql -f hacks/values/postgres.yaml
 
 prometheus:
 	helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
 	helm repo update
 	kubectl create ns prometheus --dry-run=client -o yaml | kubectl apply -f -
-	helm install prometheus prometheus-community/kube-prometheus-stack -f .circleci/values/prometheus.yaml
+	helm install prometheus prometheus-community/kube-prometheus-stack -f hacks/values/prometheus.yaml
 
 ory-repo:
 	helm repo add ory https://k8s.ory.sh/helm/charts
 	helm repo update
 
-kind-test: kind-start postgresql prometheus
-	.circleci/helm-test.sh oathkeeper
-	.circleci/helm-test.sh oathkeeper-maester
-	.circleci/helm-test.sh hydra
-	.circleci/helm-test.sh hydra-maester
-	.circleci/helm-test.sh kratos
-	.circleci/helm-test.sh keto
-	.circleci/helm-test.sh kratos-selfservice-ui-node
+helm-test: k3d-up postgresql prometheus
+	@if [ ! "${HELM_CHART}" ]; then \
+		echo 'No helm chart specified, cancelling, please specify HELM_CHART'; \
+		exit 1; \
+	fi; \
+	hacks/helm-test.sh ${HELM_CHART}
+	make k3d-down
 
-kind-upgrade: kind-start postgresql ory-repo prometheus
-	.circleci/helm-upgrade.sh oathkeeper
-	.circleci/helm-upgrade.sh oathkeeper-maester
-	.circleci/helm-upgrade.sh hydra
-	.circleci/helm-upgrade.sh hydra-maester
-	.circleci/helm-upgrade.sh kratos
-	.circleci/helm-upgrade.sh keto
-	.circleci/helm-upgrade.sh kratos-selfservice-ui-node
+helm-upgrade: k3d-up postgresql ory-repo prometheus
+	@if [ ! "${HELM_CHART}" ]; then \
+		echo 'No helm chart specified, cancelling, please specify HELM_CHART'; \
+		exit 1; \
+	fi; \
+	hacks/helm-upgrade.sh ${HELM_CHART}
+	make k3d-down
 
-lint:
-	helm lint ./helm/charts/oathkeeper/
-	helm lint ./helm/charts/oathkeeper-maester/
-	helm lint ./helm/charts/keto/
-	helm lint ./helm/charts/hydra/
-	helm lint ./helm/charts/hydra-maester/
-	helm lint ./helm/charts/kratos/
-	helm lint ./helm/charts/example-idp/
-	helm lint ./helm/charts/kratos-selfservice-ui-node/
+helm-lint:
+	@if [ ! "${HELM_CHART}" ]; then \
+		echo 'No helm chart specified, cancelling, please specify HELM_CHART'; \
+		exit 1; \
+	fi; \
+	helm lint ./helm/charts/${HELM_CHART}/
 
-validate:
-	.circleci/helm-validate.sh oathkeeper
-	.circleci/helm-validate.sh oathkeeper-maester
-	.circleci/helm-validate.sh keto
-	.circleci/helm-validate.sh hydra
-	.circleci/helm-validate.sh hydra-maester
-	.circleci/helm-validate.sh kratos
-	.circleci/helm-validate.sh example-idp
-	.circleci/helm-validate.sh kratos-selfservice-ui-node
+helm-validate:
+	@if [ ! "${HELM_CHART}" ]; then \
+		echo 'No helm chart specified, cancelling, please specify HELM_CHART'; \
+		exit 1; \
+	fi; \
+	hacks/helm-validate.sh ${HELM_CHART}
 

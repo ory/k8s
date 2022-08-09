@@ -2,7 +2,8 @@
 autoscaling:
   enabled: false
 kratos:
-  autoMigrate: true
+  automigration:
+      enabled: true
   identitySchemas:
     "identity.default.schema.json": |
       {
@@ -90,10 +91,45 @@ deployment:
       image: "alpine:latest"
       command: ["/bin/sh"]
       args: ["-c", "sleep infinity"]
+  extraVolumeMounts:
+    - mountPath: /testdir
+      name: test-volume
+  extraVolumes:
+    - name: test-volume
+      configMap:
+        name: cm-sample
   extraArgs:
     - --sqa-opt-out
   labels:
     ory.sh/test: kratos
+  extraEnv:
+    - name: FOO
+      value: BAR
+  customLivenessProbe:
+    failureThreshold: 5
+    exec:
+      command:
+        - /bin/sh
+        - -c
+        - |-
+          wget -S http://127.0.0.1:4434/admin/health/ready -O -
+    initialDelaySeconds: 10
+    periodSeconds: 10
+    successThreshold: 1
+    timeoutSeconds: 1
+  customReadinessProbe:
+    failureThreshold: 5
+    exec:
+      command:
+        - /bin/sh
+        - -c
+        - |-
+          wget -S http://127.0.0.1:4434/admin/health/ready -O -
+    initialDelaySeconds: 10
+    periodSeconds: 10
+    successThreshold: 1
+    timeoutSeconds: 1
+
 
 job:
   extraContainers: |
@@ -102,6 +138,10 @@ job:
       command: ["/bin/sh"]
       args: ["-c", "sleep 10"]
   shareProcessNamespace: true
+
+watcher:
+  enabled: true
+  mountFile: "/testdir/sample.txt"
 
 serviceMonitor:
   labels:

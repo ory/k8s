@@ -1,6 +1,6 @@
 # oathkeeper
 
-![Version: 0.23.3](https://img.shields.io/badge/Version-0.23.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.38.19-beta.1](https://img.shields.io/badge/AppVersion-v0.38.19--beta.1-informational?style=flat-square)
+![Version: 0.24.5](https://img.shields.io/badge/Version-0.24.5-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.39.0](https://img.shields.io/badge/AppVersion-v0.39.0-informational?style=flat-square)
 
 A Helm chart for deploying ORY Oathkeeper in Kubernetes
 
@@ -21,7 +21,7 @@ A Helm chart for deploying ORY Oathkeeper in Kubernetes
 
 | Repository | Name | Version |
 |------------|------|---------|
-| file://../oathkeeper-maester | oathkeeper-maester(oathkeeper-maester) | 0.23.3 |
+| file://../oathkeeper-maester | oathkeeper-maester(oathkeeper-maester) | 0.24.5 |
 
 ## Values
 
@@ -32,6 +32,7 @@ A Helm chart for deploying ORY Oathkeeper in Kubernetes
 | demo | bool | `false` | If enabled, a demo deployment with exemplary access rules and JSON Web Key Secrets will be generated. |
 | deployment.annotations | object | `{}` |  |
 | deployment.automountServiceAccountToken | bool | `false` |  |
+| deployment.autoscaling | object | `{"enabled":false,"maxReplicas":5,"minReplicas":1,"targetCPUUtilizationPercentage":80}` | Configure horizontal pod autoscaler for deployment |
 | deployment.extraContainers | object | `{}` | If you want to add extra sidecar containers. |
 | deployment.extraEnv | list | `[]` |  |
 | deployment.extraVolumeMounts | list | `[]` | Extra volume mounts, allows mounting the extraVolumes to the container. |
@@ -55,7 +56,7 @@ A Helm chart for deploying ORY Oathkeeper in Kubernetes
 | global | object | `{"ory":{"oathkeeper":{"maester":{"mode":"controller"}}}}` | Mode for oathkeeper controller -- Two possible modes are: controller or sidecar |
 | image.pullPolicy | string | `"IfNotPresent"` | Image pull policy |
 | image.repository | string | `"oryd/oathkeeper"` | ORY Oathkeeper image |
-| image.tag | string | `"v0.38.19-beta.1"` | ORY Oathkeeper version |
+| image.tag | string | `"v0.39.0"` | ORY Oathkeeper version |
 | imagePullSecrets | list | `[]` | Image pull secrets |
 | ingress | object | `{"api":{"annotations":{},"className":"","enabled":false,"hosts":[{"host":"api.oathkeeper.localhost","paths":[{"path":"/","pathType":"ImplementationSpecific"}]}]},"proxy":{"annotations":{},"className":"","defaultBackend":{},"enabled":false,"hosts":[{"host":"proxy.oathkeeper.localhost","paths":[{"path":"/","pathType":"ImplementationSpecific"}]}]}}` | Configure ingress |
 | ingress.api.enabled | bool | `false` | En-/Disable the api ingress. |
@@ -101,11 +102,12 @@ A Helm chart for deploying ORY Oathkeeper in Kubernetes
 | service.proxy.name | string | `"http"` | The service port name. Useful to set a custom service port name if it must follow a scheme (e.g. Istio) |
 | service.proxy.port | int | `4455` | The service port |
 | service.proxy.type | string | `"ClusterIP"` | The service type |
-| serviceMonitor | object | `{"labels":{},"scheme":"http","scrapeInterval":"60s","scrapeTimeout":"30s","tlsConfig":{}}` | Parameters for the Prometheus ServiceMonitor objects. Reference: https://docs.openshift.com/container-platform/4.6/rest_api/monitoring_apis/servicemonitor-monitoring-coreos-com-v1.html |
+| serviceMonitor | object | `{"labels":{},"scheme":"http","scrapeInterval":"60s","scrapeTimeout":"30s","targetLabels":[],"tlsConfig":{}}` | Parameters for the Prometheus ServiceMonitor objects. Reference: https://docs.openshift.com/container-platform/4.6/rest_api/monitoring_apis/servicemonitor-monitoring-coreos-com-v1.html |
 | serviceMonitor.labels | object | `{}` | Provide additionnal labels to the ServiceMonitor ressource metadata |
 | serviceMonitor.scheme | string | `"http"` | HTTP scheme to use for scraping. |
 | serviceMonitor.scrapeInterval | string | `"60s"` | Interval at which metrics should be scraped |
 | serviceMonitor.scrapeTimeout | string | `"30s"` | Timeout after which the scrape is ended |
+| serviceMonitor.targetLabels | list | `[]` | Additional metric labels |
 | serviceMonitor.tlsConfig | object | `{}` | TLS configuration to use when scraping the endpoint |
 | sidecar | object | `{"envs":{},"image":{"repository":"oryd/oathkeeper-maester","tag":"v0.1.2"}}` | Options for the sidecar |
 

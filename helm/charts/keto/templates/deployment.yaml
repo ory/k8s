@@ -15,6 +15,7 @@
 {{- $nodeSelector := ternary .Values.deployment.nodeSelector .Values.nodeSelector (not (empty .Values.deployment.nodeSelector )) -}}
 {{- $affinity := ternary .Values.deployment.affinity .Values.affinity (not (empty .Values.deployment.affinity )) -}}
 {{- $tolerations := ternary .Values.deployment.tolerations .Values.tolerations (not (empty .Values.deployment.tolerations )) -}}
+{{- include "keto.automigration.typeVerification" . -}}
 
 apiVersion: apps/v1
 kind: Deployment
@@ -53,39 +54,38 @@ spec:
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      {{- if $extraInitContainers}}
       initContainers:
-{{- tpl $extraInitContainers . | nindent 8 }}
+      {{- if and ( .Values.keto.automigration.enabled ) ( eq .Values.keto.automigration.type "initContainer" ) }}
+        - name: {{ .Chart.Name }}-automigrate
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          command: [ "keto" ]
+          args: [ "migrate", "up", "-y", "--config", "/etc/config/keto.yaml" ]
+          volumeMounts:
+            - name: {{ include "keto.name" . }}-config-volume
+              mountPath: /etc/config
+              readOnly: true
+          {{- with $extraVolumeMounts }}
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          env:
+            - name: DSN
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "keto.secretname" . }}
+                  key: dsn
+            {{- with $extraEnv }}
+              {{- toYaml . | nindent 12 }}
+            {{- end }}
+      {{- end }}
+      {{- if $extraInitContainers}}
+        {{- tpl $extraInitContainers . | nindent 8 }}
       {{- end }}
       serviceAccountName: {{ include "keto.serviceAccountName" . }}
       automountServiceAccountToken: {{ $automountServiceAccountToken }}
       securityContext:
         {{- toYaml $podSecurityContext | nindent 8 }}
       containers:
-        {{- if .Values.watcher.enabled }}
-        - name: watcher
-          {{- if .Values.securityContext }}
-          securityContext:
-            {{- toYaml .Values.securityContext | nindent 12 }}
-          {{- end }}
-          image: {{ .Values.watcher.image }}
-          command:
-            - /bin/bash
-            - -c
-            - |
-{{ .Files.Get "files/watch.sh" | printf "%s" | indent 14 }}
-          env:
-            - name: NAMESPACE
-              value: {{ .Release.Namespace | quote }}
-            - name: WATCH_FILE
-              value: {{ .Values.watcher.mountFile | quote }}
-            - name: DEPLOYMENT_SELECTOR
-              value: 'app.kubernetes.io/name={{ include "keto.name" . }}'
-          volumeMounts:
-          {{- with $extraVolumeMounts }}
-            {{- toYaml . | nindent 12 }}
-          {{- end }}
-        {{- end }}
         - name: {{ .Chart.Name }}
           {{- if .Values.securityContext }}
           securityContext:
@@ -111,12 +111,12 @@ spec:
           livenessProbe:
             httpGet:
               path: /health/alive
-              port: {{ .Values.service.write.name }}
+              port: {{ .Values.keto.config.serve.write.port }}
             {{- toYaml $livenessProbe | nindent 12 }}
           readinessProbe:
             httpGet:
               path: /health/ready
-              port: {{ .Values.service.write.name }}
+              port: {{ .Values.keto.config.serve.write.port }}
           {{- toYaml $readinessProbe | nindent 12 }}
           resources:
             {{- toYaml $resources | nindent 12 }}

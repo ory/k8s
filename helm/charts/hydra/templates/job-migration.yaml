@@ -1,4 +1,6 @@
-{{- if .Values.hydra.autoMigrate }}
+{{- include "hydra.automigration.typeVerification" . -}}
+{{- if and  ( .Values.hydra.automigration.enabled ) ( eq .Values.hydra.automigration.type "job" ) }}
+{{- $nodeSelector := ternary .Values.job.nodeSelector .Values.deployment.nodeSelector (not (empty .Values.job.nodeSelector )) -}}
 ---
 apiVersion: batch/v1
 kind: Job
@@ -44,7 +46,7 @@ spec:
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         command: ["hydra"]
-        args: ["migrate", "sql", "-e", "--yes"]
+        args: ["migrate", "sql", "-e", "--yes", "--config", "/etc/config/hydra.yaml"]
         env:
         {{- if .Values.database.isCrunchyDataOperator }}
           - name: DB_USER
@@ -78,6 +80,9 @@ spec:
                 name: {{ include "hydra.secretname" . }}
                 key: dsn
             {{- end }}
+        {{- with .Values.deployment.extraEnv }}
+          {{- toYaml . | nindent 10 }}
+        {{- end }}
         {{- if .Values.job.lifecycle }}
         lifecycle:
 {{ tpl .Values.job.lifecycle . | indent 10 }}
@@ -86,22 +91,32 @@ spec:
         securityContext:
           {{- toYaml .Values.deployment.securityContext | nindent 10 }}
         {{- end }}
-        {{- if .Values.deployment.extraVolumeMounts }}
         volumeMounts:
-{{ toYaml .Values.deployment.extraVolumeMounts | indent 10 }}
+          - name: {{ include "hydra.name" . }}-config-volume
+            mountPath: /etc/config
+            readOnly: true
+          {{- if .Values.deployment.extraVolumeMounts }}
+            {{- toYaml .Values.deployment.extraVolumeMounts | nindent 10 }}
          {{- end }}
       {{- if .Values.job.extraInitContainers }}
       {{- if .Values.job.extraContainers }}
-{{ tpl .Values.job.extraContainers . | indent 6 }}
+{{- tpl .Values.job.extraContainers . | nindent 6 }}
         {{- end }}
       initContainers:
-{{ tpl .Values.job.extraInitContainers . | indent 8 }}
+        {{- tpl .Values.job.extraInitContainers . | nindent 8 }}
       {{- end }}
       restartPolicy: Never
       shareProcessNamespace: {{ .Values.job.shareProcessNamespace }}
-      {{- if .Values.deployment.extraVolumes }}
       volumes:
-{{ toYaml .Values.deployment.extraVolumes | indent 8 }}
+        - name: {{ include "hydra.name" . }}-config-volume
+          configMap:
+            name: {{ include "hydra.fullname" . }}-migrate
+        {{- if .Values.deployment.extraVolumes }}
+          {{- toYaml .Values.deployment.extraVolumes | nindent 8 }}
+        {{- end }}
+      {{- with $nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
       {{- end }}
   backoffLimit: {{ .Values.job.spec.backoffLimit }}
 {{- end }}

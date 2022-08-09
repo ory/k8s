@@ -1,0 +1,24 @@
+{{- if and  ( .Values.kratos.automigration.enabled ) ( eq .Values.kratos.automigration.type "job" ) }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "kratos.fullname" . }}-migrate
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "kratos.labels" . | nindent 4 }}
+  annotations:
+    helm.sh/hook-weight: "0"
+    helm.sh/hook: "pre-install, pre-upgrade"
+    helm.sh/hook-delete-policy: "before-hook-creation"
+    {{- with .Values.configmap.annotations }}
+      {{- toYaml . | nindent 4 }}
+    {{- end }}
+data:
+  # Render the kratos config:
+  "kratos.yaml": |
+    {{- include "kratos.configmap" . | nindent 4 }}
+  # Render the identity schemas to disk:
+  {{- with .Values.kratos.identitySchemas }}
+    {{- toYaml . | nindent 2 }}
+  {{- end }}
+{{- end }}
