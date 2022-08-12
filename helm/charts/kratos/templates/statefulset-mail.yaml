@@ -60,7 +60,7 @@ spec:
             - --config
             - /etc/config/kratos.yaml
             {{- if .Values.statefulset.extraArgs }}
-              {{- toYaml .Values.deployment.extraArgs | nindent 12 }}
+              {{- toYaml .Values.statefulset.extraArgs | nindent 12 }}
             {{- end }}
           volumeMounts:
             - name: {{ include "kratos.fullname" . }}-config-volume
