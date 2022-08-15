@@ -324,6 +324,11 @@ statefulSet:
   #    cpu: 100m
   #  memory: 128Mi
 
+  extraArgs: []
+  # -- Array of extra arguments to be passed down to the StatefulSet. Kubernetes args format is expected
+  # - --foo
+  # - --sqa-opt-out
+
   extraEnv: []
   # -- If you want to mount external volume
   # For example, mount a secret containing Certificate root CA to verify database
@@ -364,6 +369,10 @@ statefulSet:
   # If you do want to specify node labels, uncomment the following
   # lines, adjust them as necessary, and remove the curly braces after 'nodeSelector:'.
   #   foo: bar
+
+  log:
+    format: json
+    level: trace
 
 securityContext:
   capabilities:
@@ -434,11 +443,6 @@ job:
   spec:
     # -- Set job back off limit
     backoffLimit: 10
-
-statefulset:
-  log:
-    format: json
-    level: trace
 
 # -- Configure node affinity
 affinity: {}
