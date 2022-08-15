@@ -130,6 +130,10 @@ deployment:
     successThreshold: 1
     timeoutSeconds: 1
 
+statefulSet:
+  extraArgs:
+    - --expose-metrics-port
+    - 8080
 
 job:
   extraContainers: |
