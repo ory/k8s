@@ -133,7 +133,7 @@ deployment:
 statefulSet:
   extraArgs:
     - --expose-metrics-port
-    - 8080
+    - "8080"
 
 job:
   extraContainers: |
