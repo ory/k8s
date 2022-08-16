@@ -324,8 +324,8 @@ statefulSet:
   #    cpu: 100m
   #  memory: 128Mi
 
-  extraArgs: []
   # -- Array of extra arguments to be passed down to the StatefulSet. Kubernetes args format is expected
+  extraArgs: []
   # - --foo
   # - --sqa-opt-out
 
