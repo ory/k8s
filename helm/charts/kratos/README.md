@@ -100,18 +100,18 @@ A ORY Kratos Helm chart for Kubernetes
 | serviceMonitor.scrapeInterval | string | `"60s"` | Interval at which metrics should be scraped |
 | serviceMonitor.scrapeTimeout | string | `"30s"` | Timeout after which the scrape is ended |
 | serviceMonitor.tlsConfig | object | `{}` | TLS configuration to use when scraping the endpoint |
-| statefulset.annotations | object | `{}` |  |
-| statefulset.extraContainers | object | `{}` | If you want to add extra sidecar containers. |
-| statefulset.extraEnv | list | `[]` |  |
-| statefulset.extraArgs | list | `[]` | Array of extra arguments to be passed down to the statefulset. Kubernetes args format is expected - --foo - --sqa-opt-out |
-| statefulset.extraInitContainers | object | `{}` | If you want to add extra init containers. These are processed before the migration init container. |
-| statefulset.extraVolumeMounts | list | `[]` |  |
-| statefulset.extraVolumes | list | `[]` | If you want to mount external volume For example, mount a secret containing Certificate root CA to verify database TLS connection. |
-| statefulset.labels | object | `{}` |  |
-| statefulset.nodeSelector | object | `{}` | Node labels for pod assignment. |
-| statefulset.resources | object | `{}` |  |
-| statefulset.log.format | string | `"json"` |  |
-| statefulset.log.level | string | `"trace"` |  |
+| statefulSet.annotations | object | `{}` |  |
+| statefulSet.extraArgs | list | `[]` | Array of extra arguments to be passed down to the StatefulSet. Kubernetes args format is expected |
+| statefulSet.extraContainers | object | `{}` | If you want to add extra sidecar containers. |
+| statefulSet.extraEnv | list | `[]` |  |
+| statefulSet.extraInitContainers | object | `{}` | If you want to add extra init containers. These are processed before the migration init container. |
+| statefulSet.extraVolumeMounts | list | `[]` |  |
+| statefulSet.extraVolumes | list | `[]` | If you want to mount external volume For example, mount a secret containing Certificate root CA to verify database TLS connection. |
+| statefulSet.labels | object | `{}` |  |
+| statefulSet.log.format | string | `"json"` |  |
+| statefulSet.log.level | string | `"trace"` |  |
+| statefulSet.nodeSelector | object | `{}` | Node labels for pod assignment. |
+| statefulSet.resources | object | `{}` |  |
 | strategy | object | `{"rollingUpdate":{"maxSurge":"30%","maxUnavailable":0},"type":"RollingUpdate"}` | Deployment update strategy |
 | tolerations | list | `[]` | If you do want to specify node labels, uncomment the following lines, adjust them as necessary, and remove the curly braces after 'annotations:'.   foo: bar Configure node tolerations. |
 | watcher | object | `{"enabled":false,"image":"oryd/k8s-toolbox:0.0.4","mountFile":""}` | Configuration of the watcher sidecar |
