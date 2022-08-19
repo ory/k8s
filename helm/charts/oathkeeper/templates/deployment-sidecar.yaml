@@ -91,6 +91,11 @@ spec:
             - name: http-metrics
               protocol: TCP
               containerPort: {{ .Values.oathkeeper.config.serve.prometheus.port }}
+            {{- if .Values.service.check.enabled }}
+            - name: grpc-check
+              protocol: TCP
+              containerPort: {{ .Values.oathkeeper.config.serve.check.port }}
+            {{- end }}
           livenessProbe:
             httpGet:
               path: /health/alive

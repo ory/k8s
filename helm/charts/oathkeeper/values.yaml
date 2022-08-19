@@ -74,6 +74,25 @@ service:
     # e.g.  app: oathkeeper
     labels: {}
 
+  # -- Configures the Kubernetes service for the check port.
+  check:
+    # -- En-/disable the service
+    enabled: false
+    # -- The service type
+    type: ClusterIP
+    # -- The service port
+    port: 4457
+    # -- The service port name. Useful to set a custom service port name if it must follow a scheme (e.g. Istio)
+    name: grpc
+    # -- If you do want to specify annotations, uncomment the following
+    # lines, adjust them as necessary, and remove the curly braces after 'annotations:'.
+    # kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
+    annotations: {}
+    # -- If you do want to specify additional labels, uncomment the following lines, adjust them as necessary, and remove the curly braces after 'labels:'.
+    # e.g.  app: oathkeeper
+    labels: {}
+
   # -- Configures the Kubernetes service for the metrics port.
   metrics:
     # -- En-/disable the service
@@ -152,6 +171,8 @@ oathkeeper:
         port: 4455
       api:
         port: 4456
+      check:
+        port: 4457
       prometheus:
         port: 9000
   # -- If set, uses the given JSON Web Key Set as the signing key for the ID Token Mutator.
