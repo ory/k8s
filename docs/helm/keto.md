@@ -4,6 +4,13 @@ The ORY Keto Helm Chart helps you deploy ORY Keto on Kubernetes using Helm.
 
 ## Installation
 
+Add the helm repository
+
+```bash
+$ helm repo add ory https://k8s.ory.sh/helm/charts
+$ helm repo update
+```
+
 To install ORY Keto, the following values must be set
 ([documentation](https://www.ory.sh/keto/docs/reference/configuration)):
 

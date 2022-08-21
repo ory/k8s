@@ -4,6 +4,13 @@ The Ory Kratos Helm Chart helps you deploy Ory Kratos on Kubernetes using Helm.
 
 ## Installation
 
+Add the helm repository
+
+```bash
+$ helm repo add ory https://k8s.ory.sh/helm/charts
+$ helm repo update
+```
+
 To install Ory Kratos, the following values must be set
 ([documentation](https://www.ory.sh/kratos/docs/reference/configuration)):
 
