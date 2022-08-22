@@ -4,6 +4,13 @@ The ORY Oathkeeper Helm Chart helps you deploy ORY Oathkeeper on Kubernetes usin
 
 ## Installation
 
+Add the helm repository
+
+```bash
+$ helm repo add ory https://k8s.ory.sh/helm/charts
+$ helm repo update
+```
+
 Installing ORY Oathkeeper using Helm with
 
 ```bash
