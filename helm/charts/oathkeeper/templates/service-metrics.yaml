@@ -50,6 +50,8 @@ spec:
     port: {{ .Values.service.metrics.name }}
     scheme: {{ .Values.serviceMonitor.scheme }}
     interval: {{ .Values.serviceMonitor.scrapeInterval }}
+    metricRelabelings: {{ .Values.serviceMonitor.metricRelabelings }}
+    relabelings: {{ .Values.serviceMonitor.relabelings }}
     scrapeTimeout: {{ .Values.serviceMonitor.scrapeTimeout }}
     {{- with .Values.serviceMonitor.tlsConfig }}
     tlsConfig:
