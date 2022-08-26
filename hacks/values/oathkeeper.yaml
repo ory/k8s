@@ -34,10 +34,6 @@ deployment:
       command: ["/bin/sh"]
       args: ["-c", "sleep infinity"]
 oathkeeper:
-  config:
-    authenticators:
-      noop:
-        enabled: true
   accessRules: |
     [
       {
