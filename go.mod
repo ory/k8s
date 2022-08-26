@@ -1,3 +1,5 @@
-module k8s
+module github.com/ory/k8s
 
-go 1.18
+go 1.15
+
+require github.com/mikefarah/yq/v3 v3.0.0-20201018214059-6afc2e918934 // indirect
