@@ -316,9 +316,9 @@ serviceMonitor:
   # -- Timeout after which the scrape is ended
   scrapeTimeout: 30s
   # -- Provide additional metricRelabelings to apply to samples before ingestion.
-  metricRelabelings: {}
+  metricRelabelings: []
   # -- Provide additional relabelings to apply to samples before scraping
-  relabelings: {}
+  relabelings: []
   # -- Provide additional labels to the ServiceMonitor resource metadata
   labels: {}
   # -- TLS configuration to use when scraping the endpoint
