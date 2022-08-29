@@ -1,3 +1,9 @@
 ---
 adminService:
   name: hydra-admin.default
+deployment:
+  podMetadata:
+    labels:
+      ory.sh/pod_label: hydra-maester
+    annotations:
+      ory.sh/pod_annotation: hydra-maester

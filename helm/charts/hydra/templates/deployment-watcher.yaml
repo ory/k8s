@@ -29,6 +29,13 @@ spec:
         {{- with .Values.deployment.labels }}
           {{- toYaml . | nindent 8 }}
         {{- end }}
+        {{- with .Values.watcher.podMetadata.labels }}
+          {{- toYaml . | nindent 8 }}
+        {{- end }}
+      annotations:
+        {{- with .Values.watcher.podMetadata.annotations }}
+          {{- toYaml . | nindent 8 }}
+        {{- end }}
     spec:
       automountServiceAccountToken: {{ .Values.deployment.automountServiceAccountToken }}
       serviceAccountName: {{ include "hydra.serviceAccountName" . }}-watcher

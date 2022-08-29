@@ -42,6 +42,15 @@ deployment:
     - name: test-volume
       configMap:
         name: cm-sample
+  labels:
+    ory.sh/test: hydra
+  annotations:
+    ory.sh/test: hydra
+  podMetadata:
+    labels:
+      ory.sh/pod_label: hydra
+    annotations:
+      ory.sh/pod_annotation: hydra
 job:
   extraInitContainers: |
     - name: "hello-world"
@@ -54,10 +63,20 @@ job:
       command: ["/bin/sh"]
       args: ["-c", "sleep 10"]
   shareProcessNamespace: true
+  podMetadata:
+    labels:
+      ory.sh/pod_label: hydra_init
+    annotations:
+      ory.sh/pod_annotation: hydra_init
 
 watcher:
   enabled: true
   mountFile: "/testdir/sample.txt"
+  podMetadata:
+    labels:
+      ory.sh/pod_label: hydra_watcher
+    annotations:
+      ory.sh/pod_annotation: hydra_watcher
 
 serviceMonitor:
   labels:

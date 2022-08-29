@@ -4,7 +4,10 @@ kind: Deployment
 metadata:
   name: {{ include "hydra-maester.fullname" . }}
   labels:
-{{ include "hydra-maester.labels" . | indent 4 }}
+    {{- include "hydra-maester.labels" . | nindent 4 }}
+    {{- with .Values.deployment.extraLabels }}
+      {{- toYaml . | nindent 4 }}
+    {{- end }}
 spec:
   replicas: {{ .Values.replicaCount }}
   revisionHistoryLimit: 10
@@ -19,13 +22,19 @@ spec:
         control-plane: controller-manager
         app.kubernetes.io/name: {{ include "hydra-maester.fullname" . }}
         app.kubernetes.io/instance: {{ .Release.Name }}
-        {{- with .Values.deployment.podLabels }}
-        {{- toYaml . | nindent 8 }}
+        {{- with .Values.deployment.extraLabels }}
+          {{- toYaml . | nindent 8 }}
         {{- end }}
-      {{- with .Values.annotations }}
+        {{- with .Values.deployment.podMetadata.labels }}
+          {{- toYaml . | nindent 8 }}
+        {{- end }}
       annotations:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
+        {{- with .Values.deployment.extraAnnotations }}
+          {{- toYaml . | nindent 8 }}
+        {{- end }}
+        {{- with .Values.deployment.podMetadata.annotations }}
+          {{- toYaml . | nindent 8 }}
+        {{- end }}
     spec:
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
