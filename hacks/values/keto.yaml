@@ -12,6 +12,11 @@ ingress:
 deployment:
   extraLabels:
     ory.sh/test: keto
+  podMetadata:
+    labels:
+      ory.sh/pod_label: keto
+    annotations:
+      ory.sh/pod_annotation: keto
   annotations:
     ory.sh/test-annotations: "true"
   extraContainers: |
@@ -36,6 +41,11 @@ job:
       command: ["/bin/sh"]
       args: ["-c", "sleep 10"]
   shareProcessNamespace: true
+  podMetadata:
+    labels:
+      ory.sh/pod_label: keto_migrate
+    annotations:
+      ory.sh/pod_annotation: keto_migrate
 
 service:
   metrics:
@@ -44,6 +54,11 @@ service:
 watcher:
   enabled: true
   mountFile: "/testdir/sample.txt"
+  podMetadata:
+    labels:
+      ory.sh/pod_label: keto_watcher
+    annotations:
+      ory.sh/pod_annotation: keto_watcher
 
 serviceMonitor:
   labels:

@@ -88,6 +88,13 @@ job:
     # -- The name of the service account to use. If not set and create is true, a name is generated using the fullname template
     name: ""
 
+  # -- Specify pod metadata, this metadata is added directly to the pod, and not higher objects
+  podMetadata:
+    # -- Extra pod level labels
+    labels: {}
+    # -- Extra pod level annotations
+    annotations: {}
+
   spec:
     # -- Set job back off limit
     backoffLimit: 10
@@ -191,8 +198,15 @@ keto:
 
 # -- Configure the probes for when the deployment is considered ready and ongoing health check
 deployment:
-  # -- Set custom pod annotations
+  # -- DEPRECATED Set custom pod annotations
   podAnnotations: {}
+
+  # -- Specify pod metadata, this metadata is added directly to the pod, and not higher objects
+  podMetadata:
+    # -- Extra pod level labels
+    labels: {}
+    # -- Extra pod level annotations
+    annotations: {}
 
   # -- Set custom security context for pods
   podSecurityContext:
@@ -298,12 +312,19 @@ deployment:
 
   affinity: {}
 
+
 # -- Watcher sidecar configuration
 watcher:
   enabled: false
   image: oryd/k8s-toolbox:0.0.4
+  # -- Path to mounted file, which wil be monitored for changes. eg: /etc/secrets/my-secret/foo
   mountFile: ""
-  # mountFile: /etc/secrets/my-secret/foo
+  # -- Specify pod metadata, this metadata is added directly to the pod, and not higher objects
+  podMetadata:
+    # -- Extra pod level labels
+    labels: {}
+    # -- Extra pod level annotations
+    annotations: {}
 
 # -- PodDistributionBudget configuration
 pdb:
