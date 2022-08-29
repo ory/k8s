@@ -33,6 +33,11 @@ deployment:
       image: "alpine:latest"
       command: ["/bin/sh"]
       args: ["-c", "sleep infinity"]
+  podMetadata:
+    labels:
+      ory.sh/pod_label: oathkeeper
+    annotations:
+      ory.sh/pod_annotation: oathkeeper
 oathkeeper:
   accessRules: |
     [

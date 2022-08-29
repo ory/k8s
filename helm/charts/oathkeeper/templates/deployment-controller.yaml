@@ -8,7 +8,7 @@ metadata:
   namespace: {{ .Release.Namespace }}
   {{- end }}
   labels:
-{{ include "oathkeeper.labels" . | indent 4 }}
+    {{- include "oathkeeper.labels" . | nindent 4 }}
     {{- with .Values.deployment.labels }}
         {{- toYaml . | nindent 4 }}
     {{- end }}
@@ -27,13 +27,19 @@ spec:
   template:
     metadata:
       labels:
-{{ include "oathkeeper.labels" . | indent 8 }}
+        {{- include "oathkeeper.labels" . | nindent 8 }}
         {{- with .Values.deployment.labels }}
+          {{- toYaml . | nindent 8 }}
+        {{- end }}
+        {{- with .Values.deployment.podMetadata.labels }}
           {{- toYaml . | nindent 8 }}
         {{- end }}
       annotations:
         {{- include "oathkeeper.annotations.checksum" . | indent 8 -}}
         {{- with .Values.deployment.annotations }}
+          {{- toYaml . | nindent 8 }}
+        {{- end }}
+        {{- with .Values.deployment.podMetadata.annotations }}
           {{- toYaml . | nindent 8 }}
         {{- end }}
     spec:
@@ -43,7 +49,7 @@ spec:
     {{- end }}
       volumes:
         {{- if .Values.deployment.extraVolumes }}
-{{ toYaml .Values.deployment.extraVolumes | indent 8 }}
+          {{- toYaml .Values.deployment.extraVolumes | nindent 8 }}
         {{- end }}
         - name: {{ include "oathkeeper.name" . }}-config-volume
           configMap:
@@ -127,7 +133,7 @@ spec:
             {{- toYaml .Values.deployment.securityContext | nindent 12 }}
           {{- end }}
         {{- if .Values.deployment.extraContainers }}
-{{ tpl .Values.deployment.extraContainers . | indent 8 }}
+          {{- tpl .Values.deployment.extraContainers . | nindent 8 }}
         {{- end }}
       {{- with .Values.deployment.nodeSelector }}
       nodeSelector:
