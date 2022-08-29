@@ -10,7 +10,7 @@ metadata:
   labels:
 {{ include "kratos.labels" $root | indent 4 }}
   annotations: 
-    {{- with .Values.configmap.annotations }}
+    {{- with $.Values.configmap.annotations }}
       {{- toYaml . | nindent 4 }}
     {{- end }}
 data:
