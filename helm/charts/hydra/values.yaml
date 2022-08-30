@@ -58,6 +58,8 @@ service:
     #      If you do want to specify additional labels, uncomment the following
     #      lines, adjust them as necessary, and remove the curly braces after 'labels:'.
     #      e.g.  app: hydra
+    # -- Path to the metrics endpoint
+    metricsPath: /admin/metrics/prometheus
 
 secret:
   # -- switch to false to prevent creating the secret
@@ -150,8 +152,8 @@ hydra:
     # When set to initContainer, the migration will be executed when kratos pod is created
     # Defaults to job  
     type: job
-  dangerousForceHttp: false
-  dangerousAllowInsecureRedirectUrls: false
+  # -- Enables development mode, do not use in production   
+  dev: false
 
 deployment:
   # -- We usually recommend not to specify default resources and to leave this as a conscious choice for the user.
@@ -293,6 +295,11 @@ deployment:
     periodSeconds: 10
     failureThreshold: 5
 
+  # -- Configure a custom livenessProbe. This overwrites the default object 
+  customLivenessProbe: {} 
+  # -- Configure a custom readinessProbe. This overwrites the default object  
+  customReadinessProbe: {}
+
   # https://github.com/kubernetes/kubernetes/issues/57601
   automountServiceAccountToken: true
 
@@ -312,9 +319,10 @@ deployment:
 job:
   # -- If you do want to specify annotations, uncomment the following
   # lines, adjust them as necessary, and remove the curly braces after 'annotations:'.
-  annotations: {}
-  # kubernetes.io/ingress.class: nginx
-  # kubernetes.io/tls-acme: "true"
+  annotations:
+    helm.sh/hook-weight: "1"
+    helm.sh/hook: "pre-install, pre-upgrade"
+    helm.sh/hook-delete-policy: "before-hook-creation,hook-succeeded"
 
   # -- Set custom deployment level labels
   labels: {}

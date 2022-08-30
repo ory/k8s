@@ -11,8 +11,8 @@ metadata:
       {{- toYaml . | nindent 4 }}
     {{- end }}
     app.kubernetes.io/component: admin
-  {{- with .Values.service.admin.annotations }}
   annotations:
+  {{- with .Values.service.admin.annotations }}
     {{- toYaml . | nindent 4 }}
   {{- end }}
 spec:
@@ -44,7 +44,7 @@ metadata:
   {{- end }}
 spec:
   endpoints:
-  - path: /metrics/prometheus
+  - path: {{ .Values.service.admin.metricsPath }}
     port: {{ .Values.service.admin.name }}
     scheme: {{ .Values.serviceMonitor.scheme }}
     interval: {{ .Values.serviceMonitor.scrapeInterval }}

@@ -18,9 +18,6 @@ metadata:
     {{- with .Values.job.annotations }}
       {{- toYaml . | nindent 4 }}
     {{- end }}
-    helm.sh/hook-weight: "1"
-    helm.sh/hook: "pre-install, pre-upgrade"
-    helm.sh/hook-delete-policy: "before-hook-creation,hook-succeeded"
 spec:
   template:
     metadata: 
@@ -39,10 +36,10 @@ spec:
           {{- toYaml . | nindent 8 }}
         {{- end }}
     spec:
-    {{- with .Values.imagePullSecrets }}
+      {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
-    {{- end }}
+      {{- end }}
       serviceAccountName: {{ include "hydra.job.serviceAccountName" . }}
       automountServiceAccountToken: {{ .Values.job.automountServiceAccountToken }}
       containers:
