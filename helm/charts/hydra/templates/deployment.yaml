@@ -31,9 +31,15 @@ spec:
         {{- with .Values.deployment.labels }}
           {{- toYaml . | nindent 8 }}
         {{- end }}
+        {{- with $.Values.deployment.podMetadata.labels }}
+          {{- toYaml . | nindent 8 }}
+        {{- end }}
       annotations:
         {{- include "hydra.annotations.checksum" . | nindent 8 -}}
         {{- with .Values.deployment.annotations }}
+          {{- toYaml . | nindent 8 }}
+        {{- end }}
+        {{- with $.Values.deployment.podMetadata.annotations }}
           {{- toYaml . | nindent 8 }}
         {{- end }}
     spec:

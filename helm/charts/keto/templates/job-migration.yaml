@@ -26,11 +26,17 @@ spec:
   template:
     metadata: 
       annotations:
-      {{- with .Values.job.annotations }}  
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
+        {{- with .Values.job.annotations }}  
+          {{- toYaml . | nindent 8 }}
+        {{- end }}
+        {{- with .Values.job.podMetadata.annotations }}
+          {{- toYaml . | nindent 8 }}
+        {{- end }}
       labels:
         {{- with $extraLabels }}
+          {{- toYaml . | nindent 8 }}
+        {{- end }}
+        {{- with .Values.job.podMetadata.labels }}
           {{- toYaml . | nindent 8 }}
         {{- end }}
     spec:

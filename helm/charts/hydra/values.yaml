@@ -178,15 +178,18 @@ deployment:
 
   lifecycle: {}
 
+  # -- Set custom deployment level labels
   labels: {}
-  #      If you do want to specify additional labels, uncomment the following
-  #      lines, adjust them as necessary, and remove the curly braces after 'labels:'.
-  #      e.g.  type: app
 
+  # -- Set custom deployment level annotations
   annotations: {}
-  #      If you do want to specify annotations, uncomment the following
-  #      lines, adjust them as necessary, and remove the curly braces after 'annotations:'.
-  #      e.g.  sidecar.istio.io/rewriteAppHTTPProbers: "true"
+
+  # -- Specify pod metadata, this metadata is added directly to the pod, and not higher objects
+  podMetadata:
+    # -- Extra pod level labels
+    labels: {}
+    # -- Extra pod level annotations
+    annotations: {}
 
   # -- Node labels for pod assignment.
   nodeSelector: {}
@@ -313,11 +316,21 @@ job:
   # kubernetes.io/ingress.class: nginx
   # kubernetes.io/tls-acme: "true"
 
+  # -- Set custom deployment level labels
+  labels: {}
+
   # -- If you want to add extra sidecar containers.
   extraContainers: {}
   # extraContainers: |
   #  - name: ...
   #    image: ...
+
+  # -- Specify pod metadata, this metadata is added directly to the pod, and not higher objects
+  podMetadata:
+    # -- Extra pod level labels
+    labels: {}
+    # -- Extra pod level annotations
+    annotations: {}
 
   # -- If you want to add extra init containers.
   # extraInitContainers: |
@@ -382,8 +395,14 @@ hydra-maester:
 watcher:
   enabled: false
   image: oryd/k8s-toolbox:0.0.4
+  # -- Path to mounted file, which wil be monitored for changes. eg: /etc/secrets/my-secret/foo
   mountFile: ""
-  # mountFile: /etc/secrets/my-secret/foo
+  # -- Specify pod metadata, this metadata is added directly to the pod, and not higher objects
+  podMetadata:
+    # -- Extra pod level labels
+    labels: {}
+    # -- Extra pod level annotations
+    annotations: {}
 
 # -- PodDistributionBudget configuration
 pdb:

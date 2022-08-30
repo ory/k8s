@@ -130,6 +130,11 @@ deployment:
     - --sqa-opt-out
   labels:
     ory.sh/test: kratos
+  podMetadata:
+    labels:
+      ory.sh/pod_label: kratos
+    annotations:
+      ory.sh/pod_annotation: kratos
   extraEnv:
     - name: FOO
       value: BAR
@@ -162,6 +167,11 @@ statefulSet:
   extraArgs:
     - --expose-metrics-port
     - "8080"
+  podMetadata:
+    labels:
+      ory.sh/pod_label: kratos_courier
+    annotations:
+      ory.sh/pod_annotation: kratos_courier
 
 job:
   extraContainers: |
@@ -170,10 +180,20 @@ job:
       command: ["/bin/sh"]
       args: ["-c", "sleep 10"]
   shareProcessNamespace: true
+  podMetadata:
+    labels:
+      ory.sh/pod_label: kratos_init
+    annotations:
+      ory.sh/pod_annotation: kratos_init
 
 watcher:
   enabled: true
   mountFile: "/testdir/sample.txt"
+  podMetadata:
+    labels:
+      ory.sh/pod_label: kratos_watcher
+    annotations:
+      ory.sh/pod_annotation: kratos_watcher
 
 serviceMonitor:
   labels:

@@ -71,6 +71,12 @@ deployment:
   # https://github.com/kubernetes/kubernetes/issues/57601
   # This applications connects to the k8s API and requires the permissions
   automountServiceAccountToken: true
+  # -- Specify pod metadata, this metadata is added directly to the pod, and not higher objects
+  podMetadata:
+    # -- Extra pod level labels
+    labels: {}
+    # -- Extra pod level annotations
+    annotations: {}
 
 # -- Configure node affinity
 affinity: {}

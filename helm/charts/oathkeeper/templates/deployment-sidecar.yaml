@@ -9,7 +9,14 @@ metadata:
   {{- end }}
   labels:
     mode: {{ .Values.global.ory.oathkeeper.maester.mode }}
-{{ include "oathkeeper.labels" . | indent 4 }}
+    {{- include "oathkeeper.labels" . | nindent 4 }}
+    {{- with .Values.deployment.labels }} 
+      {{- toYaml . | nindent 4 }} 
+    {{- end }}  
+  annotations:  
+    {{- with .Values.deployment.annotations }}  
+      {{- toYaml . | nindent 4 }} 
+    {{- end }}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
@@ -19,12 +26,20 @@ spec:
   template:
     metadata:
       labels:
-        app.kubernetes.io/name: {{ include "oathkeeper.name" . }}
-        app.kubernetes.io/instance: {{ .Release.Name }}
+        {{- include "oathkeeper.labels" . | nindent 8 }}  
+        {{- with .Values.deployment.labels }} 
+          {{- toYaml . | nindent 8 }} 
+        {{- end }}  
+        {{- with .Values.deployment.podMetadata.labels }} 
+          {{- toYaml . | nindent 8 }} 
+        {{- end }}
       annotations:
         {{- include "oathkeeper.annotations.checksum" . | indent 8 -}}
         {{- with .Values.deployment.annotations }}
           {{- toYaml . | nindent 8 }}
+        {{- end }}
+        {{- with .Values.deployment.podMetadata.annotations }}  
+          {{- toYaml . | nindent 8 }} 
         {{- end }}
     spec:
     {{- with .Values.imagePullSecrets }}
@@ -32,6 +47,9 @@ spec:
         {{- toYaml . | nindent 8 }}
     {{- end }}
       volumes:
+        {{- if .Values.deployment.extraVolumes }} 
+          {{- toYaml .Values.deployment.extraVolumes | nindent 8 }} 
+        {{- end }}
         - name: {{ include "oathkeeper.name" . }}-config-volume
           configMap:
             {{- if .Values.demo }}
@@ -71,7 +89,29 @@ spec:
             - name: MUTATORS_ID_TOKEN_CONFIG_JWKS_URL
               value: "file://{{ .Values.secret.mountPath }}/{{ .Values.secret.filename }}"
             {{- end }}
+            {{- if .Values.deployment.tracing.datadog.enabled }}  
+            - name: TRACING_PROVIDER  
+              value: datadog  
+            - name: DD_ENV  
+              value: {{ .Values.deployment.tracing.datadog.env | default "none" | quote }}  
+            - name: DD_VERSION  
+              value: {{ .Values.deployment.tracing.datadog.version | default .Values.image.tag | quote }} 
+            - name: DD_SERVICE  
+              value: {{ .Values.deployment.tracing.datadog.service | default "ory/oathkeeper" | quote }}  
+            {{- if .Values.deployment.tracing.datadog.useHostIP }}  
+            - name: DD_AGENT_HOST 
+              valueFrom:  
+                fieldRef: 
+                  fieldPath: status.hostIP  
+            {{- end }}  
+            {{- end }}  
+            {{- with .Values.deployment.extraEnv }} 
+              {{- toYaml . | nindent 12 }}  
+            {{- end }}
           volumeMounts:
+            {{- with .Values.deployment.extraVolumeMounts }}  
+              {{- toYaml . | nindent 12 }}  
+            {{- end }}
             - name: {{ include "oathkeeper.name" . }}-config-volume
               mountPath: /etc/config
               readOnly: true
@@ -132,7 +172,7 @@ spec:
             {{- toYaml .Values.deployment.securityContext | nindent 12 }}
           {{- end }}
         {{- if .Values.deployment.extraContainers }}
-{{ tpl .Values.deployment.extraContainers . | indent 8 }}
+          {{- tpl .Values.deployment.extraContainers . | nindent 8 }}
         {{- end }}
       serviceAccountName: {{ default "maester" .Values.maester.nameOverride }}-account
       automountServiceAccountToken: {{ .Values.deployment.automountServiceAccountToken }}

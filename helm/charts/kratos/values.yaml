@@ -308,6 +308,13 @@ deployment:
   # https://github.com/kubernetes/kubernetes/issues/57601
   automountServiceAccountToken: true
 
+  # -- Specify pod metadata, this metadata is added directly to the pod, and not higher objects
+  podMetadata:
+    # -- Extra pod level labels
+    labels: {}
+    # -- Extra pod level annotations
+    annotations: {}
+
 ## -- Configuration options for the k8s statefulSet
 statefulSet:
   resources: {}
@@ -371,6 +378,13 @@ statefulSet:
   log:
     format: json
     level: trace
+
+    # -- Specify pod metadata, this metadata is added directly to the pod, and not higher objects
+  podMetadata:
+    # -- Extra pod level labels
+    labels: {}
+    # -- Extra pod level annotations
+    annotations: {}
 
 securityContext:
   capabilities:
@@ -438,6 +452,13 @@ job:
     # -- The name of the service account to use. If not set and create is true, a name is generated using the fullname template
     name: ""
 
+  # -- Specify pod metadata, this metadata is added directly to the pod, and not higher objects
+  podMetadata:
+    # -- Extra pod level labels
+    labels: {}
+    # -- Extra pod level annotations
+    annotations: {}
+
   spec:
     # -- Set job back off limit
     backoffLimit: 10
@@ -456,8 +477,14 @@ tolerations: []
 watcher:
   enabled: false
   image: oryd/k8s-toolbox:0.0.4
+  # -- Path to mounted file, which wil be monitored for changes. eg: /etc/secrets/my-secret/foo
   mountFile: ""
-  # mountFile: /etc/secrets/my-secret/foo
+  # -- Specify pod metadata, this metadata is added directly to the pod, and not higher objects
+  podMetadata:
+    # -- Extra pod level labels
+    labels: {}
+    # -- Extra pod level annotations
+    annotations: {}
 
 # -- PodDistributionBudget configuration
 pdb:

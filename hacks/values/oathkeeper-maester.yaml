@@ -1,2 +1,8 @@
 ---
 # singleNamespaceMode: true
+deployment:
+  podMetadata:
+    labels:
+      ory.sh/pod_label: oathkeeper_maester
+    annotations:
+      ory.sh/pod_annotation: oathkeeper_maester
