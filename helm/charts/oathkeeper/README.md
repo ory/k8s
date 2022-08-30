@@ -39,6 +39,9 @@ A Helm chart for deploying ORY Oathkeeper in Kubernetes
 | deployment.extraVolumes | list | `[]` | Extra volumes you can attach to the pod. |
 | deployment.labels | object | `{}` |  |
 | deployment.nodeSelector | object | `{}` | Node labels for pod assignment. |
+| deployment.podMetadata | object | `{"annotations":{},"labels":{}}` | Specify pod metadata, this metadata is added directly to the pod, and not higher objects |
+| deployment.podMetadata.annotations | object | `{}` | Extra pod level annotations |
+| deployment.podMetadata.labels | object | `{}` | Extra pod level labels |
 | deployment.resources | object | `{}` |  |
 | deployment.securityContext.allowPrivilegeEscalation | bool | `false` |  |
 | deployment.securityContext.capabilities.drop[0] | string | `"ALL"` |  |

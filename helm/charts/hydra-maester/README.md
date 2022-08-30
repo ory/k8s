@@ -12,12 +12,15 @@ A Helm chart for Kubernetes
 | adminService.name | string | `nil` | Service name |
 | adminService.port | string | `nil` | Service port |
 | affinity | object | `{}` | Configure node affinity |
-| deployment.annotations | object | `{}` |  |
 | deployment.args | object | `{"syncPeriod":""}` | Arguments to be passed to the program |
 | deployment.args.syncPeriod | string | `""` | The minimum frequency at which watched resources are reconciled |
 | deployment.automountServiceAccountToken | bool | `true` |  |
+| deployment.extraAnnotations | object | `{}` | Deployment level extra annotations |
+| deployment.extraLabels | object | `{}` | Deployment level extra labels |
 | deployment.nodeSelector | object | `{}` | Node labels for pod assignment. |
-| deployment.podLabels | object | `{}` |  |
+| deployment.podMetadata | object | `{"annotations":{},"labels":{}}` | Specify pod metadata, this metadata is added directly to the pod, and not higher objects |
+| deployment.podMetadata.annotations | object | `{}` | Extra pod level annotations |
+| deployment.podMetadata.labels | object | `{}` | Extra pod level labels |
 | deployment.resources | object | `{}` |  |
 | deployment.securityContext | object | `{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"privileged":false,"readOnlyRootFilesystem":true,"runAsNonRoot":true,"runAsUser":1000}` | Default security context |
 | deployment.tolerations | list | `[]` | Configure node tolerations. |
