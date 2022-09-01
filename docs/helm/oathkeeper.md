@@ -185,7 +185,7 @@ In this mode, the controller is a dedicated deployment and scales independently 
 This mode requires giving elevated privileges to the Oathkeeper Maestercontroller to allow operations on the configMaps. 
 
 **Sidecar mode**
-In this mode, the Hydra Maester controller runs as an additional container in the Oathkeeper application Pod. All communication is done on the local filesystem, which can be a shared `tempfs`, mounted directory or a persistent volume, and the controller is scaled together with the Oathkeeper application. 
+In this mode, the Oathkeeper Maester controller runs as an additional container in the Oathkeeper application Pod. All communication is done on the local filesystem, which can be a shared `tempfs`, mounted directory or a persistent volume, and the controller is scaled together with the Oathkeeper application. 
 
 ## Upgrade
 
