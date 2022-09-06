@@ -49,8 +49,16 @@ spec:
       - name: {{ .Chart.Name }}-automigrate
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
         imagePullPolicy: {{ .Values.image.pullPolicy }}
+        {{- if .Values.hydra.automigration.customCommand }}
+        command: {{- toYaml .Values.hydra.automigration.customCommand | nindent 10 }}
+        {{- else }}
         command: ["hydra"]
+        {{- end }}
+        {{- if .Values.hydra.automigration.customArgs }}
+        args: {{- toYaml .Values.hydra.automigration.customArgs | nindent 10 }}
+        {{- else }}
         args: ["migrate", "sql", "-e", "--yes", "--config", "/etc/config/hydra.yaml"]
+        {{- end }}
         env:
           - name: DSN
             valueFrom:
