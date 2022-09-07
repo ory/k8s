@@ -65,8 +65,16 @@ spec:
         - name: {{ .Chart.Name }}-automigrate
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
-          command: [ "keto" ]
+          {{- if .Values.keto.automigration.customCommand }}
+          command: {{- toYaml .Values.keto.automigration.customCommand | nindent 12 }}
+          {{- else }}
+          command: ["keto"]
+          {{- end }}
+          {{- if .Values.keto.automigration.customArgs }}
+          args: {{- toYaml .Values.keto.automigration.customArgs | nindent 12 }}
+          {{- else }}
           args: [ "migrate", "up", "-y", "--config", "/etc/config/keto.yaml" ]
+          {{- end }}
           volumeMounts:
             - name: {{ include "keto.name" . }}-config-volume
               mountPath: /etc/config

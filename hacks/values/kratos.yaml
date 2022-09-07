@@ -3,7 +3,16 @@ autoscaling:
   enabled: false
 kratos:
   automigration:
-      enabled: true
+    enabled: true
+    customCommand:
+      - hydra
+    customArgs:
+      - "migrate"
+      - "sql"
+      - "-e"
+      - "--yes"
+      - "--config"
+      - "/etc/config/kratos.yaml"
   identitySchemas:
     "identity.default.schema.json": |
       {
