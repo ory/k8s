@@ -5,7 +5,7 @@ kratos:
   automigration:
     enabled: true
     customCommand:
-      - hydra
+      - kratos
     customArgs:
       - "migrate"
       - "sql"
