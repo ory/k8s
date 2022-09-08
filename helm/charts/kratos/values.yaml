@@ -117,7 +117,9 @@ kratos:
     # -- Ability to override the entrypoint of the automigration container
     # (e.g. to source dynamic secrets or export environment dynamic variables)
     customCommand: []
-    #   - sleep 5;
+    # -- Ability to override arguments of the entrypoint. Can be used in-depended of customCommand 
+    # eg:
+    # - sleep 5;
     #   - kratos
     customArgs: []
 
