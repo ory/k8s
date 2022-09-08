@@ -115,7 +115,7 @@ kratos:
     # Defaults to job
     type: job
 
-  # -- You can add multiple identity schemas here
+  # -- You can add multiple identity schemas here. You can pass JSON schema using `--set-file` Helm CLI argument.
   identitySchemas: {}
   # identitySchemas:
   #  "identity.default.schema.json": |
