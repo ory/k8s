@@ -63,7 +63,7 @@ $ helm install -f ./path/to/kratos-config.yaml ory/kratos
 
 ## Helm Chart Configuration
 
-For the full list of chart values, please refer to the [Ory Kratos Helm Chart README](https://github.com/ory/k8s/tree/master/helm/charts/kratos), or the [values.yaml](https://github.com/ory/k8s/blob/master/helm/charts/kratos/values.yaml) directly 
+For the full list of chart values, please refer to the [Ory Kratos Helm Chart README](https://github.com/ory/k8s/tree/master/helm/charts/kratos), or the [values.yaml](https://github.com/ory/k8s/blob/master/helm/charts/kratos/values.yaml) directly
 
 Additionally, the following extra settings are available:
 
@@ -95,6 +95,40 @@ secret:
 > which need to be in the same format that the created secret uses. For more
 > details please take a look
 > [here](https://github.com/ory/k8s/blob/master/helm/charts/kratos/templates/secrets.yaml#L15).
+
+### Identity Schemas
+
+There are two options to provide identity schemas as file (consider, Kratos expects `user.schema.json`):
+
+1. Write json to `kratos.identitySchemas`:
+
+```yaml
+kratos:
+  identitySchemas:
+    user.schema.json: |-
+      {
+        "$id": "..."
+      }
+```
+
+2. Pass file using `--set-file` Helm CLI argument:
+
+Firstly, set file to `<your-key>`:
+
+```bash
+helm install kratos ory/kratos \
+    --values "/your/values" \
+    --set-file <your-key>=/path/to/user.schema.json
+```
+
+Next use it on `kratos.identitySchemas`:
+
+```yaml
+kratos:
+  identitySchemas:
+    user.schema.json: |-
+      {{ .Values.<your-key> }}
+```
 
 ## Upgrade
 
