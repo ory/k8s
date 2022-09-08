@@ -51,8 +51,16 @@ spec:
       - name: {{ .Chart.Name }}-automigrate
         image: {{ include "kratos.image" . }}
         imagePullPolicy: {{ include "kratos.imagePullPolicy" . }}
+        {{- if .Values.kratos.automigration.customCommand }}
+        command: {{- toYaml .Values.kratos.automigration.customCommand | nindent 10 }}
+        {{- else }}
         command: ["kratos"]
+        {{- end }}
+        {{- if .Values.kratos.automigration.customArgs }}
+        args: {{- toYaml .Values.kratos.automigration.customArgs | nindent 10 }}
+        {{- else }}
         args: ["migrate", "sql", "-e", "--yes", "--config", "/etc/config/kratos.yaml"]
+        {{- end }}
         env:
           - name: DSN
             valueFrom:

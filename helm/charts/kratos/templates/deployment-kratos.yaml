@@ -56,8 +56,16 @@ spec:
         - name: {{ .Chart.Name }}-automigrate
           image: {{ include "kratos.image" . }}
           imagePullPolicy: {{ include "kratos.imagePullPolicy" . }}
+          {{- if .Values.kratos.automigration.customCommand }}
+          command: {{- toYaml .Values.kratos.automigration.customCommand | nindent 12 }}
+          {{- else }}
           command: ["kratos"]
-          args: ["migrate", "sql", "-e", "--yes"]
+          {{- end }}
+          {{- if .Values.kratos.automigration.customArgs }}
+          args: {{- toYaml .Values.kratos.automigration.customArgs | nindent 12 }}
+          {{- else }}
+          args: ["migrate", "sql", "-e", "--yes", "--config", "/etc/config/kratos.yaml"]
+          {{- end }}
           volumeMounts:
             - name: {{ include "kratos.name" . }}-config-volume
               mountPath: /etc/config

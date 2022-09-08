@@ -153,8 +153,16 @@ spec:
         - name: {{ .Chart.Name }}-automigrate
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          {{- if .Values.hydra.automigration.customCommand }}
+          command: {{- toYaml .Values.hydra.automigration.customCommand | nindent 12 }}
+          {{- else }}
           command: ["hydra"]
+          {{- end }}
+          {{- if .Values.hydra.automigration.customArgs }}
+          args: {{- toYaml .Values.hydra.automigration.customArgs | nindent 12 }}
+          {{- else }}
           args: ["migrate", "sql", "-e", "--yes", "--config", "/etc/config/hydra.yaml"]
+          {{- end }}
           volumeMounts:
             - name: {{ include "hydra.name" . }}-config-volume
               mountPath: /etc/config

@@ -182,6 +182,14 @@ keto:
     # When set to initContainer, the migration will be executed when kratos pod is created
     # Defaults to job  
     type: job
+    # -- Ability to override the entrypoint of the automigration container
+    # (e.g. to source dynamic secrets or export environment dynamic variables)
+    customCommand: []
+    # -- Ability to override arguments of the entrypoint. Can be used in-depended of customCommand 
+    # eg:
+    # - sleep 5;
+    #   - keto
+    customArgs: []
   # -- Direct keto config. Full documentation can be found in https://www.ory.sh/keto/docs/reference/configuration
   config:
     serve:
