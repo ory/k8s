@@ -68,14 +68,14 @@ A ORY Kratos Helm chart for Kubernetes
 | kratos.automigration | object | `{"customArgs":[],"customCommand":[],"enabled":false,"type":"job"}` | Enables database migration |
 | kratos.automigration.customArgs | list | `[]` | Ability to override arguments of the entrypoint. Can be used in-depended of customCommand  eg: - sleep 5;   - kratos |
 | kratos.automigration.customCommand | list | `[]` | Ability to override the entrypoint of the automigration container (e.g. to source dynamic secrets or export environment dynamic variables) |
-| kratos.automigration.type | string | `"job"` | Configure the way to execute database migration. Possible values: job, initContainer When set to job, the migration will be executed as a job on release or upgrade. When set to initContainer, the migration will be executed when kratos pod is created Defaults to job   |
+| kratos.automigration.type | string | `"job"` | Configure the way to execute database migration. Possible values: job, initContainer When set to job, the migration will be executed as a job on release or upgrade. When set to initContainer, the migration will be executed when kratos pod is created Defaults to job |
 | kratos.config.courier.smtp | object | `{}` |  |
 | kratos.config.secrets | object | `{}` |  |
 | kratos.config.serve.admin.port | int | `4434` |  |
 | kratos.config.serve.public.port | int | `4433` |  |
 | kratos.development | bool | `false` |  |
 | kratos.emailTemplates | object | `{}` | You can customize the emails kratos is sending (also uncomment config.courier.template_override_path below) |
-| kratos.identitySchemas | object | `{}` | You can add multiple identity schemas here |
+| kratos.identitySchemas | object | `{}` | You can add multiple identity schemas here. You can pass JSON schema using `--set-file` Helm CLI argument. |
 | nameOverride | string | `""` |  |
 | nodeSelector | object | `{}` | Node labels for pod assignment. |
 | pdb | object | `{"enabled":false,"spec":{"minAvailable":1}}` | PodDistributionBudget configuration |
