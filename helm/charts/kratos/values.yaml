@@ -112,7 +112,7 @@ kratos:
     # -- Configure the way to execute database migration. Possible values: job, initContainer
     # When set to job, the migration will be executed as a job on release or upgrade.
     # When set to initContainer, the migration will be executed when kratos pod is created
-    # Defaults to job  
+    # Defaults to job
     type: job
 
   # -- You can add multiple identity schemas here
@@ -126,6 +126,8 @@ kratos:
   #    {
   #      // ...
   #    }
+  #  "identity.phone.schema.json": |
+  #    {{ .Values.phone_schema }}
 
   # -- You can customize the emails kratos is sending (also uncomment config.courier.template_override_path below)
   emailTemplates: {}

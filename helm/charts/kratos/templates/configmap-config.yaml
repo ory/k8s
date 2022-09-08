@@ -15,6 +15,6 @@ data:
   "kratos.yaml": |
     {{- include "kratos.configmap" . | nindent 4 }}
   # Render the identity schemas to disk:
-  {{- with .Values.kratos.identitySchemas }}
-    {{- toYaml . | nindent 2 }}
+  {{- range $key, $value := .Values.kratos.identitySchemas }}
+  {{- printf "%s: %s" $key (toYaml (tpl $value $)) | nindent 2 }}
   {{- end }}

@@ -73,7 +73,7 @@ A ORY Kratos Helm chart for Kubernetes
 | kratos.config.serve.public.port | int | `4433` |  |
 | kratos.development | bool | `false` |  |
 | kratos.emailTemplates | object | `{}` | You can customize the emails kratos is sending (also uncomment config.courier.template_override_path below) |
-| kratos.identitySchemas | object | `{}` | You can add multiple identity schemas here |
+| kratos.identitySchemas | object | `{}` | You can add multiple identity schemas here. You can pass JSON schema using `--set-file` Helm CLI argument. |
 | nameOverride | string | `""` |  |
 | nodeSelector | object | `{}` | Node labels for pod assignment. |
 | pdb | object | `{"enabled":false,"spec":{"minAvailable":1}}` | PodDistributionBudget configuration |
