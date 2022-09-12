@@ -292,6 +292,31 @@ $ hydra token client \
     --client-secret secret
 ```
 
+### Set up DSN variable on runtime
+
+If you use need to construct DSN environment variable on the fly, you can leave
+`hydra.config.dsn` empty and provide custom DSN variable via `extraEnv`, e.g.:
+
+```yaml
+deployment:
+  extraEnv:
+  - name: DB_USER
+    valueFrom:
+      secretKeyRef:
+        name: hydra.postgres-hydra.credentials.postgresql.acid.zalan.do
+        key: username
+  - name: DB_PASSWORD
+    valueFrom:
+      secretKeyRef:
+        name: hydra.postgres-hydra.credentials.postgresql.acid.zalan.do
+        key: password
+  - name: DSN
+    value: postgres://$(DB_USER):$(DB_PASSWORD)@postgres-hydra:5432/hydra
+```
+
+In such case you don't need to take care about `hydra.config.dsn` value,
+when database was updated/recreated (in case with dynamic environments, gitops approach etc).
+
 ### Hydra Maester
 
 This chart includes a helper chart in the form of
