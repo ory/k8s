@@ -20,7 +20,7 @@ metadata:
     {{- end }}
 spec:
   template:
-    metadata: 
+    metadata:
       annotations:
         {{- with .Values.job.annotations }}
           {{- toYaml . | nindent 8 }}
@@ -57,11 +57,13 @@ spec:
         args: ["migrate", "sql", "-e", "--yes", "--config", "/etc/config/hydra.yaml"]
         {{- end }}
         env:
+        {{- if not (empty ( include "hydra.dsn" . )) }}
           - name: DSN
             valueFrom:
               secretKeyRef:
                 name: {{ include "hydra.secretname" . }}
                 key: dsn
+        {{- end }}
         {{- with .Values.deployment.extraEnv }}
           {{- toYaml . | nindent 10 }}
         {{- end }}

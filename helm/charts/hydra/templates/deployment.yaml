@@ -119,11 +119,13 @@ spec:
             - name: URLS_SELF_ISSUER
               value: {{ $issuer | quote }}
             {{- end }}
+            {{- if not (empty ( include "hydra.dsn" . )) }}
             - name: DSN
               valueFrom:
                 secretKeyRef:
                   name: {{ include "hydra.secretname" . }}
                   key: dsn
+            {{- end }}
             - name: SECRETS_SYSTEM
               valueFrom:
                 secretKeyRef:
@@ -171,11 +173,13 @@ spec:
             {{- toYaml . | nindent 12 }}
           {{- end }}
           env:
+            {{- if not (empty ( include "hydra.dsn" . )) }}
             - name: DSN
               valueFrom:
                 secretKeyRef:
                   name: {{ include "hydra.secretname" . }}
                   key: dsn
+            {{- end }}
             {{- with .Values.deployment.extraEnv }}
               {{- toYaml . | nindent 12 }}
             {{- end }}

@@ -4,6 +4,7 @@ kind: ServiceAccount
 metadata:
   name: {{ include "hydra-maester.fullname" . }}-account
   namespace:  {{ .Release.Namespace }}
+{{- if not .Values.singleNamespaceMode }}
 ---
 kind: ClusterRole
 apiVersion: rbac.authorization.k8s.io/v1
@@ -29,21 +30,25 @@ roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
   name: {{ include "hydra-maester.fullname" . }}-role
+{{- end }}
 ---
 kind: Role
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  name: {{ include "hydra-maester.fullname" . }}-role-{{ .Release.Namespace }}
+  name: {{ include "hydra-maester.fullname" . }}-role
   namespace:  {{ .Release.Namespace }}
 rules:
   - apiGroups: [""]
     resources: ["secrets"]
     verbs: ["get", "list", "watch", "create"]
+  - apiGroups: ["hydra.ory.sh"]
+    resources: ["oauth2clients", "oauth2clients/status"]
+    verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
 ---
 kind: RoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  name: {{ include "hydra-maester.fullname" . }}-role-binding-{{ .Release.Namespace }}
+  name: {{ include "hydra-maester.fullname" . }}-role-binding
   namespace:  {{ .Release.Namespace }}
 subjects:
   - kind: ServiceAccount
@@ -52,7 +57,7 @@ subjects:
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
-  name: {{ include "hydra-maester.fullname" . }}-role-{{ .Release.Namespace }}
+  name: {{ include "hydra-maester.fullname" . }}-role
 
 {{- $name := include "hydra-maester.fullname" . -}}
 {{- $namespace := .Release.Namespace -}}
@@ -61,7 +66,7 @@ roleRef:
 kind: Role
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  name: {{ $name }}-role-{{ . }}
+  name: {{ $name }}-role
   namespace:  {{ . }}
 rules:
   - apiGroups: [""]
@@ -71,7 +76,7 @@ rules:
 kind: RoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  name: {{ $name }}-role-binding-{{ . }}
+  name: {{ $name }}-role-binding
   namespace:  {{ . }}
 subjects:
   - kind: ServiceAccount
@@ -80,5 +85,5 @@ subjects:
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
-  name: {{ $name }}-role-{{ . }}
+  name: {{ $name }}-role
 {{- end }}
