@@ -14,7 +14,7 @@ $ helm repo update
 To install ORY Keto, the following values must be set
 ([documentation](https://www.ory.sh/keto/docs/reference/configuration)):
 
-* `keto.config.dsn`
+- `keto.config.dsn`
 
 If you wish to install ORY Keto with an in-memory database run:
 
@@ -35,14 +35,16 @@ $ helm install \
     ory/keto
 ```
 
-This chart does not require MySQL, PostgreSQL, or CockroachDB as dependencies because we strongly encourage
-you not to run a database in Kubernetes but instead recommend to rely on a managed SQL database such as Google
-Cloud SQL or AWS Aurora.
+This chart does not require MySQL, PostgreSQL, or CockroachDB as dependencies
+because we strongly encourage you not to run a database in Kubernetes but
+instead recommend to rely on a managed SQL database such as Google Cloud SQL or
+AWS Aurora.
 
 ### With Google Cloud SQL
 
-To connect to Google Cloud SQL, you could use
-the [`gcloud-sqlproxy`](https://github.com/rimusz/charts/tree/master/stable/gcloud-sqlproxy) chart:
+To connect to Google Cloud SQL, you could use the
+[`gcloud-sqlproxy`](https://github.com/rimusz/charts/tree/master/stable/gcloud-sqlproxy)
+chart:
 
 ```bash
 $ helm upgrade pg-sqlproxy rimusz/gcloud-sqlproxy --namespace sqlproxy \
@@ -50,7 +52,8 @@ $ helm upgrade pg-sqlproxy rimusz/gcloud-sqlproxy --namespace sqlproxy \
     ...
 ```
 
-When bringing up ORY Keto, set the host to `pg-sqlproxy-gcloud-sqlproxy` as documented
+When bringing up ORY Keto, set the host to `pg-sqlproxy-gcloud-sqlproxy` as
+documented
 [here](https://github.com/rimusz/charts/tree/master/stable/gcloud-sqlproxy#installing-the-chart):
 
 ```bash
@@ -62,7 +65,8 @@ $ helm install \
 
 ## Configuration
 
-You can pass your [ORY Keto configuration file](https://www.ory.sh/keto/docs/reference/configuration)
+You can pass your
+[ORY Keto configuration file](https://www.ory.sh/keto/docs/reference/configuration)
 by creating a yaml file with key `keto.config`
 
 ```yaml
@@ -72,7 +76,7 @@ keto:
     # e.g.:
     serve:
       port: 8080
-   # ...
+    # ...
 ```
 
 and passing that as a value override to helm:
@@ -83,15 +87,18 @@ $ helm install -f ./path/to/keto-config.yaml ory/keto
 
 Additionally, the following extra settings are available:
 
-- `autoMigrate` (bool): If enabled, an `initContainer` running `keto migrate sql` will be created.
+- `autoMigrate` (bool): If enabled, an `initContainer` running
+  `keto migrate sql` will be created.
 
 ## Upgrade
 
 ### From `0.18.0`
 
-Since this version we support only kubernetes >= v1.18 for the ingress definition.
+Since this version we support only kubernetes >= v1.18 for the ingress
+definition.
 
 If you enabled ingresses you need to migrate values from:
+
 ```yaml
 ingress:
   read:
@@ -125,5 +132,10 @@ ingress:
 ```
 
 where changes are on:
-- introduce the `className` to specify the [ingress class documentation](https://kubernetes.io/blog/2020/04/02/improvements-to-the-ingress-api-in-kubernetes-1.18/#extended-configuration-with-ingress-classes) that need to be used
-- change `paths` definition from an array of strings to an array of objects, where each object include the `path` and the `pathType` (see [path matching documentation](https://kubernetes.io/blog/2020/04/02/improvements-to-the-ingress-api-in-kubernetes-1.18/#better-path-matching-with-path-types))
+
+- introduce the `className` to specify the
+  [ingress class documentation](https://kubernetes.io/blog/2020/04/02/improvements-to-the-ingress-api-in-kubernetes-1.18/#extended-configuration-with-ingress-classes)
+  that need to be used
+- change `paths` definition from an array of strings to an array of objects,
+  where each object include the `path` and the `pathType` (see
+  [path matching documentation](https://kubernetes.io/blog/2020/04/02/improvements-to-the-ingress-api-in-kubernetes-1.18/#better-path-matching-with-path-types))

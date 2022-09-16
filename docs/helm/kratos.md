@@ -63,7 +63,11 @@ $ helm install -f ./path/to/kratos-config.yaml ory/kratos
 
 ## Helm Chart Configuration
 
-For the full list of chart values, please refer to the [Ory Kratos Helm Chart README](https://github.com/ory/k8s/tree/master/helm/charts/kratos), or the [values.yaml](https://github.com/ory/k8s/blob/master/helm/charts/kratos/values.yaml) directly
+For the full list of chart values, please refer to the
+[Ory Kratos Helm Chart README](https://github.com/ory/k8s/tree/master/helm/charts/kratos),
+or the
+[values.yaml](https://github.com/ory/k8s/blob/master/helm/charts/kratos/values.yaml)
+directly
 
 Additionally, the following extra settings are available:
 
@@ -98,7 +102,8 @@ secret:
 
 ### Identity Schemas
 
-There are two options to provide identity schemas as file (consider, Kratos expects `user.schema.json`):
+There are two options to provide identity schemas as file (consider, Kratos
+expects `user.schema.json`):
 
 1. Write json to `kratos.identitySchemas`:
 
@@ -144,11 +149,11 @@ ingress:
   public:
     hosts:
       - host: kratos.public.local.com
-        paths: ['/']
+        paths: ["/"]
   admin:
     hosts:
       - host: kratos.admin.local.com
-        paths: ['/']
+        paths: ["/"]
 ```
 
 to
@@ -156,14 +161,14 @@ to
 ```yaml
 ingress:
   public:
-    className: ''
+    className: ""
     hosts:
       - host: kratos.public.local.com
         paths:
           - path: /
             pathType: ImplementationSpecific
   admin:
-    className: ''
+    className: ""
     hosts:
       - host: kratos.admin.local.com
         paths:

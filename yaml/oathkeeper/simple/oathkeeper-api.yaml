@@ -8,9 +8,9 @@ spec:
   selector:
     app: ory-oathkeeper
   ports:
-  - port: 80
-    name: http-ory-oathkeeper
-    targetPort: http-api
+    - port: 80
+      name: http-ory-oathkeeper
+      targetPort: http-api
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -29,26 +29,26 @@ spec:
         app: ory-oathkeeper
     spec:
       containers:
-      - name: ory-oathkeeper
-        image: oryd/oathkeeper:v0.13.8_oryOS.8
-        imagePullPolicy: Always
-        command: ["oathkeeper", "serve", "api"]
-        env:
-        - name: DATABASE_URL
-          value: memory
-        - name: CREDENTIALS_ISSUER_ID_TOKEN_ALGORITHM
-          value: HS256
-        - name: CREDENTIALS_ISSUER_ID_TOKEN_HS256_SECRET
-          valueFrom:
-            secretKeyRef:
-              name: ory-oathkeeper
-              key: CREDENTIALS_ISSUER_ID_TOKEN_HS256_SECRET
-        - name: PORT
-          value: "4456"
-        ports:
-        - name: http-api
-          containerPort: 4456
-        resources:
-          limits:
-            cpu: "0.1"
-            memory: 100Mi
+        - name: ory-oathkeeper
+          image: oryd/oathkeeper:v0.13.8_oryOS.8
+          imagePullPolicy: Always
+          command: ["oathkeeper", "serve", "api"]
+          env:
+            - name: DATABASE_URL
+              value: memory
+            - name: CREDENTIALS_ISSUER_ID_TOKEN_ALGORITHM
+              value: HS256
+            - name: CREDENTIALS_ISSUER_ID_TOKEN_HS256_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: ory-oathkeeper
+                  key: CREDENTIALS_ISSUER_ID_TOKEN_HS256_SECRET
+            - name: PORT
+              value: "4456"
+          ports:
+            - name: http-api
+              containerPort: 4456
+          resources:
+            limits:
+              cpu: "0.1"
+              memory: 100Mi

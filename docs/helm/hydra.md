@@ -25,8 +25,9 @@ must be set:
 > `hydra.existingSecret` is empty, a secret is generated automatically. The
 > generated secret is cryptographically secure, and 32 signs long.
 
-If you wish to install ORY Hydra with a postgres based database, a cryptographically
-strong secret, a Login and Consent provider located at `https://my-idp/` run:
+If you wish to install ORY Hydra with a postgres based database, a
+cryptographically strong secret, a Login and Consent provider located at
+`https://my-idp/` run:
 
 ```bash
 $ helm install \
@@ -52,7 +53,9 @@ Alternatively, you can use an existing
 [Kubernetes Secret](https://kubernetes.io/docs/concepts/configuration/secret/)
 instead of letting the Helm Chart create one for you:
 
-Last but not least, if you'd like to customise the way secrets are updated on your kubernetes cluster, you can do so via the `hydra.config.secretAnnotations` value as follows:
+Last but not least, if you'd like to customise the way secrets are updated on
+your kubernetes cluster, you can do so via the `hydra.config.secretAnnotations`
+value as follows:
 
 ```bash
 $ helm install \
@@ -76,9 +79,12 @@ $ helm install \
 
 ### Local in memory mode
 
-You can also run ORY Hydra with a in memory database. However, this requires changing the image tag to the `-sqlite`, which supports this mode of operation.
+You can also run ORY Hydra with a in memory database. However, this requires
+changing the image tag to the `-sqlite`, which supports this mode of operation.
 
-> **NOTE:*** This is recommended only for testing, and not intended for production use, as each replica will have its own db, and the data do not persist an application restart
+> **NOTE:\*** This is recommended only for testing, and not intended for
+> production use, as each replica will have its own db, and the data do not
+> persist an application restart
 
 For example:
 
@@ -300,22 +306,23 @@ If you use need to construct DSN environment variable on the fly, you can leave
 ```yaml
 deployment:
   extraEnv:
-  - name: DB_USER
-    valueFrom:
-      secretKeyRef:
-        name: hydra.postgres-hydra.credentials.postgresql.acid.zalan.do
-        key: username
-  - name: DB_PASSWORD
-    valueFrom:
-      secretKeyRef:
-        name: hydra.postgres-hydra.credentials.postgresql.acid.zalan.do
-        key: password
-  - name: DSN
-    value: postgres://$(DB_USER):$(DB_PASSWORD)@postgres-hydra:5432/hydra
+    - name: DB_USER
+      valueFrom:
+        secretKeyRef:
+          name: hydra.postgres-hydra.credentials.postgresql.acid.zalan.do
+          key: username
+    - name: DB_PASSWORD
+      valueFrom:
+        secretKeyRef:
+          name: hydra.postgres-hydra.credentials.postgresql.acid.zalan.do
+          key: password
+    - name: DSN
+      value: postgres://$(DB_USER):$(DB_PASSWORD)@postgres-hydra:5432/hydra
 ```
 
-In such case you don't need to take care about `hydra.config.dsn` value,
-when database was updated/recreated (in case with dynamic environments, gitops approach etc).
+In such case you don't need to take care about `hydra.config.dsn` value, when
+database was updated/recreated (in case with dynamic environments, gitops
+approach etc).
 
 ### Hydra Maester
 
@@ -347,9 +354,11 @@ Should you forget, helm will fail and remind you to.
 
 ### From `0.18.0`
 
-Since this version we support only kubernetes >= v1.18 for the ingress definition.
+Since this version we support only kubernetes >= v1.18 for the ingress
+definition.
 
 If you enabled ingresses you need to migrate values from:
+
 ```yaml
 ingress:
   public:
@@ -383,5 +392,10 @@ ingress:
 ```
 
 where changes are on:
-- introduce the `className` to specify the [ingress class documentation](https://kubernetes.io/blog/2020/04/02/improvements-to-the-ingress-api-in-kubernetes-1.18/#extended-configuration-with-ingress-classes) that need to be used
-- change `paths` definition from an array of strings to an array of objects, where each object include the `path` and the `pathType` (see [path matching documentation](https://kubernetes.io/blog/2020/04/02/improvements-to-the-ingress-api-in-kubernetes-1.18/#better-path-matching-with-path-types))
+
+- introduce the `className` to specify the
+  [ingress class documentation](https://kubernetes.io/blog/2020/04/02/improvements-to-the-ingress-api-in-kubernetes-1.18/#extended-configuration-with-ingress-classes)
+  that need to be used
+- change `paths` definition from an array of strings to an array of objects,
+  where each object include the `path` and the `pathType` (see
+  [path matching documentation](https://kubernetes.io/blog/2020/04/02/improvements-to-the-ingress-api-in-kubernetes-1.18/#better-path-matching-with-path-types))

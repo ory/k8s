@@ -29,9 +29,9 @@ https://github.com/ory/meta/blob/master/templates/repository/common/CONTRIBUTING
 
 ## Introduction
 
-_Please note_: We take Ory Kubernetes Resources's security and our users' trust very
-seriously. If you believe you have found a security issue in Ory Kubernetes Resources,
-please disclose by contacting us at security@ory.sh.
+_Please note_: We take Ory Kubernetes Resources's security and our users' trust
+very seriously. If you believe you have found a security issue in Ory Kubernetes
+Resources, please disclose by contacting us at security@ory.sh.
 
 There are many ways in which you can contribute. The goal of this document is to
 provide a high-level overview of how you can get involved in Ory.
@@ -47,9 +47,8 @@ contributions, and don't want a wall of rules to get in the way of that.
 
 That said, if you want to ensure that a pull request is likely to be merged,
 talk to us! You can find out our thoughts and ensure that your contribution
-won't clash with Ory
-Kubernetes Resources's direction. A great way to
-do this is via
+won't clash with Ory Kubernetes Resources's direction. A great way to do this is
+via
 [Ory Kubernetes Resources Discussions](https://github.com/orgs/ory/discussions)
 or the [Ory Chat](https://www.ory.sh/chat).
 
@@ -68,9 +67,8 @@ or the [Ory Chat](https://www.ory.sh/chat).
 - I want to talk to other Ory Kubernetes Resources users.
   [How can I become a part of the community?](#communication)
 
-- I would like to know what I am agreeing to when I contribute to Ory
-  Kubernetes Resources.
-  Does Ory have
+- I would like to know what I am agreeing to when I contribute to Ory Kubernetes
+  Resources. Does Ory have
   [a Contributors License Agreement?](https://cla-assistant.io/ory/k8s)
 
 - I would like updates about new versions of Ory Kubernetes Resources.
@@ -85,8 +83,8 @@ There are many other ways you can contribute. Here are a few things you can do
 to help out:
 
 - **Give us a star.** It may not seem like much, but it really makes a
-  difference. This is something that everyone can do to help out Ory Kubernetes Resources.
-  Github stars help the project gain visibility and stand out.
+  difference. This is something that everyone can do to help out Ory Kubernetes
+  Resources. Github stars help the project gain visibility and stand out.
 
 - **Join the community.** Sometimes helping people can be as easy as listening
   to their problems and offering a different perspective. Join our Slack, have a
@@ -100,11 +98,11 @@ to help out:
   help, please share it! Bonus: You get GitHub achievements for answered
   discussions.
 
-- **Help with open issues.** We have a lot of open issues for Ory Kubernetes Resources and
-  some of them may lack necessary information, some are duplicates of older
-  issues. You can help out by guiding people through the process of filling out
-  the issue template, asking for clarifying information, or pointing them to
-  existing issues that match their description of the problem.
+- **Help with open issues.** We have a lot of open issues for Ory Kubernetes
+  Resources and some of them may lack necessary information, some are duplicates
+  of older issues. You can help out by guiding people through the process of
+  filling out the issue template, asking for clarifying information, or pointing
+  them to existing issues that match their description of the problem.
 
 - **Review documentation changes.** Most documentation just needs a review for
   proper spelling and grammar. If you think a document can be improved in any
@@ -119,16 +117,18 @@ to help out:
 We use [Slack](https://www.ory.sh/chat). You are welcome to drop in and ask
 questions, discuss bugs and feature requests, talk to other users of Ory, etc.
 
-Check out [Ory Kubernetes Resources Discussions](https://github.com/orgs/ory/discussions). This is a great place for
-in-depth discussions and lots of code examples, logs and similar data.
+Check out
+[Ory Kubernetes Resources Discussions](https://github.com/orgs/ory/discussions).
+This is a great place for in-depth discussions and lots of code examples, logs
+and similar data.
 
 You can also join our community calls, if you want to speak to the Ory team
 directly or ask some questions. You can find more info and participate in
 [Slack](https://www.ory.sh/chat) in the #community-call channel.
 
-If you want to receive regular notifications about updates to Ory Kubernetes Resources,
-consider joining the mailing list. We will _only_ send you vital information on
-the projects that you are interested in.
+If you want to receive regular notifications about updates to Ory Kubernetes
+Resources, consider joining the mailing list. We will _only_ send you vital
+information on the projects that you are interested in.
 
 Also [follow us on twitter](https://twitter.com/orycorp).
 
@@ -163,8 +163,8 @@ checklist to contribute an example:
 
 Unless you are fixing a known bug, we **strongly** recommend discussing it with
 the core team via a GitHub issue or [in our chat](https://www.ory.sh/chat)
-before getting started to ensure your work is consistent with Ory Kubernetes Resources's
-roadmap and architecture.
+before getting started to ensure your work is consistent with Ory Kubernetes
+Resources's roadmap and architecture.
 
 All contributions are made via pull requests. To make a pull request, you will
 need a GitHub account; if you are unclear on this process, see GitHub's

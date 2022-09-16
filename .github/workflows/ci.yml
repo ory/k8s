@@ -17,7 +17,7 @@ jobs:
         uses: actions/checkout@v2
       - uses: actions/setup-go@v2
         with:
-          go-version: '1.17'
+          go-version: "1.17"
       - name: Setup dependencies
         uses: ./.github/actions/deps-setup
 
@@ -68,27 +68,31 @@ jobs:
         id: changed_charts
         env:
           FILTER_OUTPUT: ${{ toJson(steps.filter.outputs) }}
-          FORCE_FULL_RUN: ${{ github.ref_type == 'tag' || steps.filter.outputs['ci-definitions'] == 'true' }}
+          FORCE_FULL_RUN:
+            ${{ github.ref_type == 'tag' ||
+            steps.filter.outputs['ci-definitions'] == 'true' }}
         run: |
-           updated_charts=$(echo "$FILTER_OUTPUT" | jq -r 'to_entries | map(select((.key | endswith("-helm")) and .value == "true")) | map(.key)')
-           updated_charts=$(echo "$updated_charts" | sed "s/-helm//g")
-           
-           echo "ForceFullRun: ${FORCE_FULL_RUN}"
-           if [[ "$FORCE_FULL_RUN" == "true" ]]; then 
-            echo "Forcing tests to be running on every charts as CI running in release context"
-            updated_charts=$(ls ${{ github.workspace }}/helm/charts/ | tr -d " " | jq --raw-input --slurp 'split("\n") | map(select(. != ""))')
-           fi
+          updated_charts=$(echo "$FILTER_OUTPUT" | jq -r 'to_entries | map(select((.key | endswith("-helm")) and .value == "true")) | map(.key)')
+          updated_charts=$(echo "$updated_charts" | sed "s/-helm//g")
 
-           if [[ "$updated_charts" == "[]" ]]; then 
-            echo ::set-output name=no_changes::"true"
-           fi
-           echo ::set-output name=matrix::{\"chart\":$(echo $updated_charts)}\"
-           
-           echo "Charts array to run CI on: $updated_charts"
-  
+          echo "ForceFullRun: ${FORCE_FULL_RUN}"
+          if [[ "$FORCE_FULL_RUN" == "true" ]]; then 
+           echo "Forcing tests to be running on every charts as CI running in release context"
+           updated_charts=$(ls ${{ github.workspace }}/helm/charts/ | tr -d " " | jq --raw-input --slurp 'split("\n") | map(select(. != ""))')
+          fi
+
+          if [[ "$updated_charts" == "[]" ]]; then 
+           echo ::set-output name=no_changes::"true"
+          fi
+          echo ::set-output name=matrix::{\"chart\":$(echo $updated_charts)}\"
+
+          echo "Charts array to run CI on: $updated_charts"
+
   check:
     name: Check Helm Chart '${{ matrix.chart }}'
-    if: ${{ needs.detect-repo-changes.outputs.no-changes != 'true' && github.ref != 'ref/heads/master' }}
+    if:
+      ${{ needs.detect-repo-changes.outputs.no-changes != 'true' && github.ref
+      != 'ref/heads/master' }}
     needs: [dependencies, detect-repo-changes]
     runs-on: ubuntu-22.04
     env:
@@ -99,17 +103,18 @@ jobs:
         uses: actions/checkout@v2
       - name: Checkout dependencies
         uses: ./.github/actions/deps-setup
-      - name: Lint helm chart 
+      - name: Lint helm chart
         run: make helm-lint
-      - name: Validate helm chart 
+      - name: Validate helm chart
         run: make helm-validate
     strategy:
       matrix: ${{ fromJson(needs.detect-repo-changes.outputs.helms-changed) }}
 
- 
   test-upgrade:
     name: Upgrade Helm Chart '${{ matrix.chart }}'
-    if: ${{ needs.detect-repo-changes.outputs.no-changes != 'true' && github.ref != 'ref/heads/master' }}
+    if:
+      ${{ needs.detect-repo-changes.outputs.no-changes != 'true' && github.ref
+      != 'ref/heads/master' }}
     needs: [check, detect-repo-changes, dependencies]
     runs-on: ubuntu-22.04
     env:
@@ -120,14 +125,16 @@ jobs:
         uses: actions/checkout@v2
       - name: Checkout dependencies
         uses: ./.github/actions/deps-setup
-      - name: Test upgrade for helm chart 
+      - name: Test upgrade for helm chart
         run: make helm-upgrade
     strategy:
       matrix: ${{ fromJson(needs.detect-repo-changes.outputs.helms-changed) }}
- 
+
   test-install:
     name: Install Helm Chart '${{ matrix.chart }}'
-    if: ${{ needs.detect-repo-changes.outputs.no-changes != 'true' && github.ref != 'ref/heads/master' }}
+    if:
+      ${{ needs.detect-repo-changes.outputs.no-changes != 'true' && github.ref
+      != 'ref/heads/master' }}
     needs: [check, detect-repo-changes, dependencies]
     runs-on: ubuntu-22.04
     env:
@@ -138,7 +145,7 @@ jobs:
         uses: actions/checkout@v2
       - name: Checkout dependencies
         uses: ./.github/actions/deps-setup
-      - name: Test install for helm chart 
+      - name: Test install for helm chart
         run: make helm-test
     strategy:
       matrix: ${{ fromJson(needs.detect-repo-changes.outputs.helms-changed) }}
@@ -152,21 +159,21 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Generate documentation 
+      - name: Generate documentation
         run: |
-            pushd .bin
-            curl -L https://github.com/norwoodj/helm-docs/releases/download/v${HELM_DOCS_VERSION}/helm-docs_${HELM_DOCS_VERSION}_Linux_x86_64.tar.gz -o helm-docs.tar.gz
-            tar -xvf helm-docs.tar.gz
-            ./helm-docs -c ../helm/charts
-            popd
-      - name: Push commit for release 
+          pushd .bin
+          curl -L https://github.com/norwoodj/helm-docs/releases/download/v${HELM_DOCS_VERSION}/helm-docs_${HELM_DOCS_VERSION}_Linux_x86_64.tar.gz -o helm-docs.tar.gz
+          tar -xvf helm-docs.tar.gz
+          ./helm-docs -c ../helm/charts
+          popd
+      - name: Push commit for release
         run: |
           git config --global user.email "60093411+ory-bot@users.noreply.github.com"
           git config --global user.name "ory-bot"
           git checkout -b make-release HEAD
           git add -A 
           git commit -m "Regenerate helm docs
-          
+
           [skip ci]" || echo "No changes to commit"
 
           git push origin HEAD:master
@@ -183,14 +190,14 @@ jobs:
         run: echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
       - name: Release helm charts
         run: make release
-      - name: Push commit for release 
+      - name: Push commit for release
         run: |
           git config --global user.email "60093411+ory-bot@users.noreply.github.com"
           git config --global user.name "ory-bot"
           git checkout -b make-release HEAD
           git add -A 
           git commit -a -m "Release ${RELEASE_VERSION}
-          
+
           [skip ci]" || echo "No changes to commit"
 
           git push origin HEAD:master
