@@ -99,7 +99,7 @@ service:
 serviceMonitor:
   labels:
     release: "prometheus"
-  tlsConfig: 
+  tlsConfig:
     insecureSkipVerify: true
   relabelings:
     - action: labeldrop
@@ -108,4 +108,4 @@ serviceMonitor:
     - action: labeldrop
       regex: request
   targetLabels:
-   - app
+    - app

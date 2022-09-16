@@ -144,11 +144,11 @@ ingress:
   public:
     hosts:
       - host: kratos.public.local.com
-        paths: ['/']
+        paths: ["/"]
   admin:
     hosts:
       - host: kratos.admin.local.com
-        paths: ['/']
+        paths: ["/"]
 ```
 
 to
@@ -156,14 +156,14 @@ to
 ```yaml
 ingress:
   public:
-    className: ''
+    className: ""
     hosts:
       - host: kratos.public.local.com
         paths:
           - path: /
             pathType: ImplementationSpecific
   admin:
-    className: ''
+    className: ""
     hosts:
       - host: kratos.admin.local.com
         paths:

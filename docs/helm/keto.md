@@ -14,7 +14,7 @@ $ helm repo update
 To install ORY Keto, the following values must be set
 ([documentation](https://www.ory.sh/keto/docs/reference/configuration)):
 
-* `keto.config.dsn`
+- `keto.config.dsn`
 
 If you wish to install ORY Keto with an in-memory database run:
 
@@ -72,7 +72,7 @@ keto:
     # e.g.:
     serve:
       port: 8080
-   # ...
+    # ...
 ```
 
 and passing that as a value override to helm:
@@ -92,6 +92,7 @@ Additionally, the following extra settings are available:
 Since this version we support only kubernetes >= v1.18 for the ingress definition.
 
 If you enabled ingresses you need to migrate values from:
+
 ```yaml
 ingress:
   read:
@@ -125,5 +126,6 @@ ingress:
 ```
 
 where changes are on:
+
 - introduce the `className` to specify the [ingress class documentation](https://kubernetes.io/blog/2020/04/02/improvements-to-the-ingress-api-in-kubernetes-1.18/#extended-configuration-with-ingress-classes) that need to be used
 - change `paths` definition from an array of strings to an array of objects, where each object include the `path` and the `pathType` (see [path matching documentation](https://kubernetes.io/blog/2020/04/02/improvements-to-the-ingress-api-in-kubernetes-1.18/#better-path-matching-with-path-types))

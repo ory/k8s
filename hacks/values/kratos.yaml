@@ -51,7 +51,7 @@ kratos:
          }
       }
   config:
-    # ciphers: 
+    # ciphers:
     #   algorithm: aes
     dsn: "postgres://postgres:ory@postgresql.default.svc.cluster.local/ory?sslmode=disable&max_conn_lifetime=10s"
     selfservice:
@@ -212,5 +212,5 @@ watcher:
 serviceMonitor:
   labels:
     release: "prometheus"
-  tlsConfig: 
+  tlsConfig:
     insecureSkipVerify: true

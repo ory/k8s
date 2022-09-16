@@ -1,8 +1,6 @@
 namespaceOverride: "prometheus"
 alertmanager:
   enabled: false
-alertmanager:
-  enabled: false
 coreDns:
   enabled: false
 kubeEtcd:

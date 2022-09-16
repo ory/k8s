@@ -49,7 +49,7 @@ oathkeeper:
     authenticators:
       noop:
         enabled: true
-   # ...
+    # ...
 ```
 
 and passing that as a value override to helm:
@@ -90,13 +90,11 @@ $ helm install \
 Please note that any configuration values set for `oathkeeper.config.access_rules.repositories` using e.g.
 a configuration file will be overwritten by this setting.
 
-
 ### JSON Web Key Set for Authenticator
-
 
 1. Using `https://` , reference from [here](https://www.ory.sh/oathkeeper/docs/reference/configuration/)
 
-```yaml 
+```yaml
 # oathkeeper-config.yaml
 oathkeeper:
   config:
@@ -107,6 +105,7 @@ oathkeeper:
           jwks_urls:
             - https://my-website.com/.well-known/jwks.json
 ```
+
 2. Using `file://` (this requires that the file must existing within the container), reference from [here](https://www.ory.sh/oathkeeper/docs/reference/configuration/)
 
 ```yaml
@@ -120,7 +119,6 @@ oathkeeper:
           jwks_urls:
             - file://etc/jwks.json
 ```
-
 
 - You can add `secret` or `configmap` and mount the secret/configmaps with the file, and point `oathkeeper` to it using the file directive, by modifying `values.yaml` for this helm chart.
 
@@ -137,7 +135,6 @@ deployment:
   #   mountPath: /etc/secrets/my-secret
   #   readOnly: true
 ```
-
 
 3. Using storage bucket, e.g. `s3://` , `gs://` or `azblob://`, reference from [here](https://github.com/ory/oathkeeper/blob/master/docs/docs/reference/configuration.md)
 
@@ -159,8 +156,8 @@ oathkeeper:
             - azblob://my-blob-container/rules.json
 ```
 
-
 ### Oathkeeper-maester
+
 This chart includes a helper chart in the form of [Oathkeeper-maester](https://github.com/ory/k8s/blob/master/docs/helm/oathkeeper-maester.md), a k8s controller, which translates access rules object into a kubernetes native [CustomResource](https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/). This component is enabled by default, and installed together with Oathkeeper, however it can be disabled by setting the proper flag:
 
 ```bash
@@ -178,14 +175,15 @@ If you use it and deploy maester as part of oathkeeper, make sure you also set `
 Should you forget, helm will fail and remind you to.
 
 #### Operation modes
-The Oathkeeper Maester works in either of these two modes: 
+
+The Oathkeeper Maester works in either of these two modes:
 
 **Controller mode**
-In this mode, the controller is a dedicated deployment and scales independently from the Oathkeeper application. All communication with Oathkeeper is based on a configMap object, which stores the Oathkeeper configuration created based on the Rule custom resource. 
-This mode requires giving elevated privileges to the Oathkeeper Maestercontroller to allow operations on the configMaps. 
+In this mode, the controller is a dedicated deployment and scales independently from the Oathkeeper application. All communication with Oathkeeper is based on a configMap object, which stores the Oathkeeper configuration created based on the Rule custom resource.
+This mode requires giving elevated privileges to the Oathkeeper Maestercontroller to allow operations on the configMaps.
 
 **Sidecar mode**
-In this mode, the Oathkeeper Maester controller runs as an additional container in the Oathkeeper application Pod. All communication is done on the local filesystem, which can be a shared `tempfs`, mounted directory or a persistent volume, and the controller is scaled together with the Oathkeeper application. 
+In this mode, the Oathkeeper Maester controller runs as an additional container in the Oathkeeper application Pod. All communication is done on the local filesystem, which can be a shared `tempfs`, mounted directory or a persistent volume, and the controller is scaled together with the Oathkeeper application.
 
 ## Upgrade
 
@@ -194,6 +192,7 @@ In this mode, the Oathkeeper Maester controller runs as an additional container 
 Since this version we support only kubernetes >= v1.18 for the ingress definition.
 
 If you enabled ingresses you need to migrate values from:
+
 ```yaml
 ingress:
   proxy:
@@ -227,5 +226,6 @@ ingress:
 ```
 
 where changes are on:
+
 - introduce the `className` to specify the [ingress class documentation](https://kubernetes.io/blog/2020/04/02/improvements-to-the-ingress-api-in-kubernetes-1.18/#extended-configuration-with-ingress-classes) that need to be used
 - change `paths` definition from an array of strings to an array of objects, where each object include the `path` and the `pathType` (see [path matching documentation](https://kubernetes.io/blog/2020/04/02/improvements-to-the-ingress-api-in-kubernetes-1.18/#better-path-matching-with-path-types))

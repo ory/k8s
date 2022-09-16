@@ -1,6 +1,6 @@
 ---
 keto:
-  automigration: 
+  automigration:
     enabled: true
     customCommand:
       - keto
@@ -70,5 +70,5 @@ watcher:
 serviceMonitor:
   labels:
     release: "prometheus"
-  tlsConfig: 
+  tlsConfig:
     insecureSkipVerify: true

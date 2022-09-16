@@ -4,7 +4,8 @@ ORY Oathkeeper-maester is a Kubernetes controller that watches for instances of 
 By mounting the ConfigMap to the Oathkeeper Pod, you can manage the list of Oathkeeper Rules through `rules.oathkeeper.ory.sh/v1alpha1` CR instances.
 
 ## Installation
-Oathkeeper-maester is a part of the Oathkeeper chart, and it is installed together with it. 
+
+Oathkeeper-maester is a part of the Oathkeeper chart, and it is installed together with it.
 
 ## Configuration
 
@@ -21,6 +22,7 @@ ORY Maester introduces its own Custom Resource Definition (CRD) of type `rules.o
 Each CR instance defines the rules for a single service.
 
 The syntax of the CR **Spec** field reflects the Oathkeeper [Access Rule syntax](https://www.ory.sh/docs/next/oathkeeper/api-access-rules), with the following differences:
+
 - The `id` field is auto-generated.
 - The `upstream.preserveHost` property is camel cased.
 - The `upstream.stripPath` property is camel cased.
@@ -29,6 +31,7 @@ The JSON schema specified in the CRD provides definitions for all available attr
 All handlers such as authenticators, the authorizer, and the mutator are passed verbatim without any changes to the target Access Rules list.
 
 The controller provides the following defaults for each Access Rule it creates:
+
 - If `authenticators` are not defined, it defaults to a single `unauthorized` handler.
 - If `authorizer` is not defined, it defaults to a `deny` handler.
 - If `mutator` is not defined, it defaults to a `noop` handler.
