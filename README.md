@@ -2,17 +2,22 @@
 
 [![CI](https://github.com/ory/k8s/actions/workflows/ci.yml/badge.svg)](https://github.com/ory/k8s/actions/workflows/ci.yml)
 
-This repository contains helm charts for Kubernetes. All charts are in incubation phase and use is at your own risk.
+This repository contains helm charts for Kubernetes. All charts are in
+incubation phase and use is at your own risk.
 
-Please go to [k8s.ory.sh/helm](https://k8s.ory.sh/helm/) for a list of helm charts and their configuration options.
+Please go to [k8s.ory.sh/helm](https://k8s.ory.sh/helm/) for a list of helm
+charts and their configuration options.
 
 **NOTE**
 
-> All charts present in this repository require Kuberentes 1.18+. Please refer to releases [0.18.0](https://github.com/ory/k8s/releases/tag/v0.18.0) and older for versions supporting older releases of Kubernetes.
+> All charts present in this repository require Kuberentes 1.18+. Please refer
+> to releases [0.18.0](https://github.com/ory/k8s/releases/tag/v0.18.0) and
+> older for versions supporting older releases of Kubernetes.
 
 ## Development
 
-You can test and develop charts locally using [Minikube](https://kubernetes.io/docs/setup/learning-environment/minikube/).
+You can test and develop charts locally using
+[Minikube](https://kubernetes.io/docs/setup/learning-environment/minikube/).
 
 To test a chart locally without applying it to kubernetes, do:
 
@@ -34,7 +39,8 @@ If you wish to test ingress, run:
 $ minikube addons enable ingress
 ```
 
-Next you need to set up `/etc/hosts` to route traffic from domains - in this example for ORY Oathkeeper:
+Next you need to set up `/etc/hosts` to route traffic from domains - in this
+example for ORY Oathkeeper:
 
 - `api.oathkeeper.localhost`
 - `proxy.oathkeeper.localhost`

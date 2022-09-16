@@ -68,7 +68,9 @@ jobs:
         id: changed_charts
         env:
           FILTER_OUTPUT: ${{ toJson(steps.filter.outputs) }}
-          FORCE_FULL_RUN: ${{ github.ref_type == 'tag' || steps.filter.outputs['ci-definitions'] == 'true' }}
+          FORCE_FULL_RUN:
+            ${{ github.ref_type == 'tag' ||
+            steps.filter.outputs['ci-definitions'] == 'true' }}
         run: |
           updated_charts=$(echo "$FILTER_OUTPUT" | jq -r 'to_entries | map(select((.key | endswith("-helm")) and .value == "true")) | map(.key)')
           updated_charts=$(echo "$updated_charts" | sed "s/-helm//g")
@@ -88,7 +90,9 @@ jobs:
 
   check:
     name: Check Helm Chart '${{ matrix.chart }}'
-    if: ${{ needs.detect-repo-changes.outputs.no-changes != 'true' && github.ref != 'ref/heads/master' }}
+    if:
+      ${{ needs.detect-repo-changes.outputs.no-changes != 'true' && github.ref
+      != 'ref/heads/master' }}
     needs: [dependencies, detect-repo-changes]
     runs-on: ubuntu-22.04
     env:
@@ -108,7 +112,9 @@ jobs:
 
   test-upgrade:
     name: Upgrade Helm Chart '${{ matrix.chart }}'
-    if: ${{ needs.detect-repo-changes.outputs.no-changes != 'true' && github.ref != 'ref/heads/master' }}
+    if:
+      ${{ needs.detect-repo-changes.outputs.no-changes != 'true' && github.ref
+      != 'ref/heads/master' }}
     needs: [check, detect-repo-changes, dependencies]
     runs-on: ubuntu-22.04
     env:
@@ -126,7 +132,9 @@ jobs:
 
   test-install:
     name: Install Helm Chart '${{ matrix.chart }}'
-    if: ${{ needs.detect-repo-changes.outputs.no-changes != 'true' && github.ref != 'ref/heads/master' }}
+    if:
+      ${{ needs.detect-repo-changes.outputs.no-changes != 'true' && github.ref
+      != 'ref/heads/master' }}
     needs: [check, detect-repo-changes, dependencies]
     runs-on: ubuntu-22.04
     env:

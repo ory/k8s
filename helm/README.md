@@ -2,7 +2,8 @@
 
 ## Development
 
-You can test and develop charts locally using [Minikube](https://kubernetes.io/docs/setup/learning-environment/minikube/).
+You can test and develop charts locally using
+[Minikube](https://kubernetes.io/docs/setup/learning-environment/minikube/).
 
 To test a chart locally without applying it to kubernetes, do:
 

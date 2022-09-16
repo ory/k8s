@@ -18,7 +18,9 @@ runs:
           ~/.local/share/helm
           ~/.cache/helm
           ${{ github.workspace }}/.bin
-        key: ${{ runner.os }}-${{ steps.extract_branch.outputs.branch }}-${{ hashFiles('**/go.sum') }}
+        key:
+          ${{ runner.os }}-${{ steps.extract_branch.outputs.branch }}-${{
+          hashFiles('**/go.sum') }}
         restore-keys: |
           ${{ runner.os }}-${{ steps.extract_branch.outputs.branch }}-
 
