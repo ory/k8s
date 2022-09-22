@@ -13,33 +13,33 @@ export K3SIMAGE := docker.io/rancher/k3s:v1.22.5-k3s1
 
 release: .bin/yq .bin/helm
 	yq w -i helm/charts/example-idp/Chart.yaml version "${VERSION}"
-		yq w -i helm/charts/hydra-maester/Chart.yaml version "${VERSION}"; \
-		yq w -i helm/charts/hydra/Chart.yaml version "${VERSION}"; \
-		yq w -i helm/charts/hydra/Chart.yaml "dependencies.(name==hydra-maester).version" "${VERSION}"; \
-		yq w -i helm/charts/keto/Chart.yaml version "${VERSION}"; \
-		yq w -i helm/charts/kratos/Chart.yaml version "${VERSION}"; \
-		yq w -i helm/charts/kratos-selfservice-ui-node/Chart.yaml version "${VERSION}"; \
-		yq w -i helm/charts/oathkeeper-maester/Chart.yaml version "${VERSION}"; \
-		yq w -i helm/charts/oathkeeper/Chart.yaml version "${VERSION}"; \
-		yq w -i helm/charts/oathkeeper/Chart.yaml "dependencies.(name==oathkeeper-maester).version" "${VERSION}"; \
-		helm dep update ./helm/charts/oathkeeper/; \
-		helm package -d docs/helm/charts/ ./helm/charts/oathkeeper/ --version "${VERSION}"; \
-		helm package -d docs/helm/charts/ ./helm/charts/oathkeeper-maester/ --version "${VERSION}"; \
-		helm dep update ./helm/charts/hydra/; \
-		helm package -d docs/helm/charts/ ./helm/charts/hydra/ --version "${VERSION}"; \
-		helm package -d docs/helm/charts/ ./helm/charts/hydra-maester/ --version "${VERSION}"; \
-		helm package -d docs/helm/charts/ ./helm/charts/example-idp/ --version "${VERSION}"; \
-		helm package -d docs/helm/charts/ ./helm/charts/kratos/ --version "${VERSION}"; \
-		helm package -d docs/helm/charts/ ./helm/charts/keto/ --version "${VERSION}"; \
-		helm package -d docs/helm/charts/ ./helm/charts/kratos-selfservice-ui-node/ --version "${VERSION}"; \
-		helm repo index docs/helm/charts/
+	yq w -i helm/charts/hydra-maester/Chart.yaml version "${VERSION}"; \
+	yq w -i helm/charts/hydra/Chart.yaml version "${VERSION}"; \
+	yq w -i helm/charts/hydra/Chart.yaml "dependencies.(name==hydra-maester).version" "${VERSION}"; \
+	yq w -i helm/charts/keto/Chart.yaml version "${VERSION}"; \
+	yq w -i helm/charts/kratos/Chart.yaml version "${VERSION}"; \
+	yq w -i helm/charts/kratos-selfservice-ui-node/Chart.yaml version "${VERSION}"; \
+	yq w -i helm/charts/oathkeeper-maester/Chart.yaml version "${VERSION}"; \
+	yq w -i helm/charts/oathkeeper/Chart.yaml version "${VERSION}"; \
+	yq w -i helm/charts/oathkeeper/Chart.yaml "dependencies.(name==oathkeeper-maester).version" "${VERSION}"; \
+	helm dep update ./helm/charts/oathkeeper/; \
+	helm package -d docs/helm/charts/ ./helm/charts/oathkeeper/ --version "${VERSION}"; \
+	helm package -d docs/helm/charts/ ./helm/charts/oathkeeper-maester/ --version "${VERSION}"; \
+	helm dep update ./helm/charts/hydra/; \
+	helm package -d docs/helm/charts/ ./helm/charts/hydra/ --version "${VERSION}"; \
+	helm package -d docs/helm/charts/ ./helm/charts/hydra-maester/ --version "${VERSION}"; \
+	helm package -d docs/helm/charts/ ./helm/charts/example-idp/ --version "${VERSION}"; \
+	helm package -d docs/helm/charts/ ./helm/charts/kratos/ --version "${VERSION}"; \
+	helm package -d docs/helm/charts/ ./helm/charts/keto/ --version "${VERSION}"; \
+	helm package -d docs/helm/charts/ ./helm/charts/kratos-selfservice-ui-node/ --version "${VERSION}"; \
+	helm repo index docs/helm/charts/
 
 k3d-up:
-		k3d cluster create --image $${K3SIMAGE} ory-k8s -p "8080:80@server:0" \
+	k3d cluster create --image $${K3SIMAGE} ory-k8s -p "8080:80@server:0" \
 		--k3s-arg=--kube-apiserver-arg="enable-admission-plugins=NodeRestriction,ServiceAccount@server:0" \
 		--k3s-arg=feature-gates="NamespaceDefaultLabelName=true@server:0";
 
-		kubectl apply -R -f hacks/manifests
+	kubectl apply -R -f hacks/manifests
 
 k3d-down:
 	k3d cluster delete ory-k8s || true
