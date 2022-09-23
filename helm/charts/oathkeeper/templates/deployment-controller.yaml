@@ -70,7 +70,15 @@ spec:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
-          command: [ "oathkeeper", "serve", "--config", "/etc/config/config.yaml" ]
+          command: 
+            - "oathkeeper"
+          args:
+            - "serve"
+            - "--config" 
+            - "/etc/config/config.yaml"
+            {{- with .Values.deployment.extraArgs }}
+              {{- toYaml . | nindent 12 }}
+            {{- end }}
           env:
             {{- if .Values.oathkeeper.mutatorIdTokenJWKs }}
             - name: MUTATORS_ID_TOKEN_CONFIG_JWKS_URL

@@ -231,6 +231,9 @@ deployment:
 
   extraEnv: []
 
+  # -- Array of extra arguments to be passed down to the Deployment. Kubernetes args format is expected
+  extraArgs: []
+
   # -- Extra volumes you can attach to the pod.
   extraVolumes: []
   # - name: my-volume
