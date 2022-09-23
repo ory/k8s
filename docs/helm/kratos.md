@@ -43,9 +43,6 @@ kratos:
       default_browser_return_url: http://127.0.0.1:4455/
   automigration:
     enabled: true
-    type: job
-    customCommand: []
-    customArgs: []
   identitySchemas:
     'identity.default.schema.json': |
       {
