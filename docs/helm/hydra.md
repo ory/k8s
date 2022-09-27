@@ -25,6 +25,8 @@ must be set:
 > `hydra.existingSecret` is empty, a secret is generated automatically. The
 > generated secret is cryptographically secure, and 32 signs long.
 
+> **NOTE:** `hydra.config.dsn` can also be set on [runtime](https://github.com/ory/k8s/blob/master/docs/helm/hydra.md#set-up-dsn-variable-on-runtime).
+
 If you wish to install ORY Hydra with a postgres based database, a
 cryptographically strong secret, a Login and Consent provider located at
 `https://my-idp/` run:
@@ -53,17 +55,6 @@ Alternatively, you can use an existing
 [Kubernetes Secret](https://kubernetes.io/docs/concepts/configuration/secret/)
 instead of letting the Helm Chart create one for you:
 
-Last but not least, if you'd like to customise the way secrets are updated on
-your kubernetes cluster, you can do so via the `hydra.config.secretAnnotations`
-value as follows:
-
-```bash
-$ helm install \
-    --set hydra.config.secretAnnotations."helm\.sh/hook"="pre-install\,pre-upgrade" \
-    --set hydra.config.secretAnnotations."helm\.sh/hook-delete-policy"=before-hook-creation \
-    ory/hydra
-```
-
 ```bash
 
 $ kubectl create secret generic my-secure-secret --from-literal=dsn=postgres://foo:bar@baz:1234/db \
@@ -77,12 +68,23 @@ $ helm install \
     ory/hydra
 ```
 
+Last but not least, if you'd like to customise the way secrets are updated on
+your kubernetes cluster, you can do so via the `hydra.config.secretAnnotations`
+value as follows:
+
+```bash
+$ helm install \
+    --set hydra.config.secretAnnotations."helm\.sh/hook"="pre-install\,pre-upgrade" \
+    --set hydra.config.secretAnnotations."helm\.sh/hook-delete-policy"=before-hook-creation \
+    ory/hydra
+```
+
 ### Local in memory mode
 
 You can also run ORY Hydra with a in memory database. However, this requires
 changing the image tag to the `-sqlite`, which supports this mode of operation.
 
-> **NOTE:\*** This is recommended only for testing, and not intended for
+> **NOTE:** This is recommended only for testing, and not intended for
 > production use, as each replica will have its own db, and the data do not
 > persist an application restart
 
@@ -148,6 +150,8 @@ hydra:
     # e.g.:
     ttl:
       access_token: 1h
+    log:
+      level: trace
     # ...
 ```
 
@@ -159,7 +163,7 @@ $ helm install -f ./path/to/hydra-config.yaml ory/hydra
 
 Additionally, the following extra settings are available:
 
-- `autoMigrate` (bool): If enabled, an `initContainer` running
+- `automigration` (bool): If enabled, an `initContainer` running
   `hydra migrate sql` will be created.
 - `dangerousForceHttp` (bool): If enabled, sets the `--dangerous-force-http`
   flag on `hydra serve all`.
@@ -237,8 +241,8 @@ hydra-example-admin    admin.hydra.localhost    192.168.64.3   80      35s
 or alternatively with
 
 ```bash
-$ minikube ip192.168.64.3
-
+$ minikube ip
+192.168.64.3
 ```
 
 next route the hostnames to the IP Address from above by editing, for example
@@ -399,3 +403,4 @@ where changes are on:
 - change `paths` definition from an array of strings to an array of objects,
   where each object include the `path` and the `pathType` (see
   [path matching documentation](https://kubernetes.io/blog/2020/04/02/improvements-to-the-ingress-api-in-kubernetes-1.18/#better-path-matching-with-path-types))
+
