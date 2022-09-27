@@ -30,7 +30,7 @@ against this endpoint:
   export POD_NAME=$(kubectl get pods --namespace {{ .Release.Namespace }} -l "app.kubernetes.io/name={{ include "kratos.name" . }},app.kubernetes.io/instance={{ .Release.Name }}" -o jsonpath="{.items[0].metadata.name}")
   echo "Visit http://127.0.0.1:{{ .Values.service.public.port }} to use your application"
   kubectl port-forward $POD_NAME {{ .Values.service.public.port }}:{{ .Values.kratos.config.serve.public.port }}
-  export KRATOS_PUBLIC_URL=http://127.0.0.1:{{ .Values.service.public.port }}/
+  export KRATOS_PUBLIC_URL=http://127.0.0.1:{{ .Values.service.public.port }}
 
 
 If you have the ORY Kratos CLI installed locally, you can run commands
@@ -72,7 +72,7 @@ against this endpoint:
   export POD_NAME=$(kubectl get pods --namespace {{ .Release.Namespace }} -l "app.kubernetes.io/name={{ include "kratos.name" . }},app.kubernetes.io/instance={{ .Release.Name }}" -o jsonpath="{.items[0].metadata.name}")
   echo "Visit http://127.0.0.1:{{ .Values.service.admin.port }} to use your application"
   kubectl port-forward $POD_NAME {{ .Values.service.admin.port }}:{{ .Values.kratos.config.serve.admin.port }}
-  export KRATOS_ADMIN_URL=http://127.0.0.1:{{ .Values.service.admin.port }}/
+  export KRATOS_ADMIN_URL=http://127.0.0.1:{{ .Values.service.admin.port }}
 
 If you have the ORY Kratos CLI installed locally, you can run commands
 against this endpoint:
