@@ -125,7 +125,7 @@ directly
 
 Additionally, the following extra settings are available:
 
-- `kratos.autoMigrate` (bool): If enabled, an `initContainer` running
+- `kratos.automigration` (bool): If enabled, an `initContainer` running
   `kratos migrate sql` will be created.
 - `kratos.development` (bool): If enabled, kratos will run with `--dev`
   argument.
