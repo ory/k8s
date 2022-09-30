@@ -57,7 +57,7 @@ spec:
         args: ["migrate", "sql", "-e", "--yes", "--config", "/etc/config/hydra.yaml"]
         {{- end }}
         env:
-        {{- if not (empty ( include "hydra.dsn" . )) }}
+        {{- if empty ( include "hydra.dsn" . ) }}
           - name: DSN
             valueFrom:
               secretKeyRef:
