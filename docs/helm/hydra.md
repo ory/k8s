@@ -163,7 +163,7 @@ $ helm install -f ./path/to/hydra-config.yaml ory/hydra
 
 Additionally, the following extra settings are available:
 
-- `automigration` (bool): If enabled, an `initContainer` running
+- `automigration.enabled` (bool): If enabled, a `Job` running
   `hydra migrate sql` will be created.
 - `dangerousForceHttp` (bool): If enabled, sets the `--dangerous-force-http`
   flag on `hydra serve all`.
