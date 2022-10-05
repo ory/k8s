@@ -188,6 +188,29 @@ kratos:
           url: base64://<base64-encoded-json>
 ```
 
+3. Pass file using `--set-file` Helm CLI argument:
+
+```yaml
+# values.yaml
+kratos:
+  identitySchemas:
+    <schema-name>.schema.json: |-
+      {{ .Values.<your-key> }}
+  config:
+    identity:
+      schemas:
+        - id: <schema-id>
+          # match the name of the identitySchema
+          url: file:///etc/config/<schema-name>.schema.json
+```
+
+Install Kratos using the following command:
+```bash
+helm install kratos ory/kratos \
+    -f values.yaml \
+    --set-file <your-key>=/path/to/<your-file>.json
+```
+
 ## Upgrade
 
 ### From `0.18.0`
