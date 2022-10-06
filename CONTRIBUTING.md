@@ -8,7 +8,7 @@ https://github.com/ory/meta/blob/master/templates/repository/common/CONTRIBUTING
 
 -->
 
-# Contribute to Ory Kubernetes Resources
+# Contribute to Ory Kubernetes Resources<!-- omit in toc -->
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
