@@ -16,6 +16,10 @@ To install Ory Kratos, the following values must be set
 
 - `kratos.config.secrets.default`
 - `kratos.config.dsn`
+- `kratos.config.selfservice.default_browser_return_url`
+- `kratos.config.courier.smtp.connection_uri`
+- `kratos.config.identity.schemas`
+
 
 You can create a `values.yaml` file to set the required values, like so:
 
@@ -27,6 +31,56 @@ kratos:
       default:
         - dolore occaecat nostrud Ut
         - sit et commodoaute ut voluptate consectetur Duis
+    identity:
+      default_schema_id: default
+      schemas:
+        - id: default
+          url: file:///etc/config/identity.default.schema.json
+    courier:
+      smtp:
+        connection_uri: smtps://test:test@mailslurper:1025/?skip_ssl_verify=true
+    selfservice:
+      default_browser_return_url: http://127.0.0.1:4455/
+  automigration:
+    enabled: true
+  identitySchemas:
+    'identity.default.schema.json': |
+      {
+        "$id": "https://schemas.ory.sh/presets/kratos/identity.email.schema.json",
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "title": "Person",
+        "type": "object",
+        "properties": {
+          "traits": {
+            "type": "object",
+            "properties": {
+              "email": {
+                "type": "string",
+                "format": "email",
+                "title": "E-Mail",
+                "ory.sh/kratos": {
+                  "credentials": {
+                    "password": {
+                      "identifier": true
+                    }
+                  },
+                  "recovery": {
+                    "via": "email"
+                  },
+                  "verification": {
+                    "via": "email"
+                  }
+                }
+              }
+            },
+            "required": [
+              "email"
+            ],
+            "additionalProperties": false
+          }
+        }
+      }
+
 ```
 
 Install Ory Kratos by running this command:
@@ -71,7 +125,7 @@ directly
 
 Additionally, the following extra settings are available:
 
-- `kratos.autoMigrate` (bool): If enabled, an `initContainer` running
+- `kratos.automigration` (bool): If enabled, an `initContainer` running
   `kratos migrate sql` will be created.
 - `kratos.development` (bool): If enabled, kratos will run with `--dev`
   argument.
@@ -102,37 +156,59 @@ secret:
 
 ### Identity Schemas
 
-There are two options to provide identity schemas as file (consider, Kratos
-expects `user.schema.json`):
+There are two options to provide identity schemas:
+
+Note: You are free to name `<schema-id>` and `<schema-name>` whatever you want.
 
 1. Write json to `kratos.identitySchemas`:
 
 ```yaml
 kratos:
   identitySchemas:
-    user.schema.json: |-
+    <schema-name>.schema.json: |-
       {
         "$id": "..."
       }
+  config:
+    identity:
+      schemas:
+        - id: <schema-id>
+          # match the name of the identitySchema
+          url: file:///etc/config/<schema-name>.schema.json
 ```
 
-2. Pass file using `--set-file` Helm CLI argument:
-
-Firstly, set file to `<your-key>`:
-
-```bash
-helm install kratos ory/kratos \
-    --values "/your/values" \
-    --set-file <your-key>=/path/to/user.schema.json
-```
-
-Next use it on `kratos.identitySchemas`:
+2. Encode json schema in base64
 
 ```yaml
 kratos:
+  config:
+    identity:
+      schemas:
+        - id: <schema-id>
+          url: base64://<base64-encoded-json>
+```
+
+3. Pass file using `--set-file` Helm CLI argument:
+
+```yaml
+# values.yaml
+kratos:
   identitySchemas:
-    user.schema.json: |-
+    <schema-name>.schema.json: |-
       {{ .Values.<your-key> }}
+  config:
+    identity:
+      schemas:
+        - id: <schema-id>
+          # match the name of the identitySchema
+          url: file:///etc/config/<schema-name>.schema.json
+```
+
+Install Kratos using the following command:
+```bash
+helm install kratos ory/kratos \
+    -f values.yaml \
+    --set-file <your-key>=/path/to/<your-file>.json
 ```
 
 ## Upgrade
