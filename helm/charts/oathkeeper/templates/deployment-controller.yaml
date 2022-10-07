@@ -84,22 +84,6 @@ spec:
             - name: MUTATORS_ID_TOKEN_CONFIG_JWKS_URL
               value: "file://{{ .Values.secret.mountPath }}/{{ .Values.secret.filename }}"
             {{- end }}
-            {{- if .Values.deployment.tracing.datadog.enabled }}
-            - name: TRACING_PROVIDER
-              value: datadog
-            - name: DD_ENV
-              value: {{ .Values.deployment.tracing.datadog.env | default "none" | quote }}
-            - name: DD_VERSION
-              value: {{ .Values.deployment.tracing.datadog.version | default .Values.image.tag | quote }}
-            - name: DD_SERVICE
-              value: {{ .Values.deployment.tracing.datadog.service | default "ory/oathkeeper" | quote }}
-            {{- if .Values.deployment.tracing.datadog.useHostIP }}
-            - name: DD_AGENT_HOST
-              valueFrom:
-                fieldRef:
-                  fieldPath: status.hostIP
-            {{- end }}
-            {{- end }}
             {{- with .Values.deployment.extraEnv }}
               {{- toYaml . | nindent 12 }}
             {{- end }}

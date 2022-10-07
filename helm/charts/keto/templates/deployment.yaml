@@ -4,7 +4,6 @@
 {{- $livenessProbe := ternary .Values.deployment.livenessProbe .Values.livenessProbe (not (empty .Values.deployment.livenessProbe )) -}}
 {{- $readinessProbe := ternary .Values.deployment.readinessProbe .Values.readinessProbe (not (empty .Values.deployment.readinessProbe )) -}}
 {{- $autoscaling := ternary .Values.deployment.autoscaling .Values.autoscaling (not (empty .Values.deployment.autoscaling )) -}}
-{{- $tracing := ternary .Values.deployment.tracing .Values.tracing (not (empty .Values.deployment.tracing )) -}}
 {{- $resources := ternary .Values.deployment.resources .Values.resources (not (empty .Values.deployment.resources )) -}}
 {{- $extraInitContainers := ternary .Values.deployment.extraInitContainers .Values.extraInitContainers (not (empty .Values.deployment.extraInitContainers )) -}}
 {{- $extraContainers := ternary .Values.deployment.extraContainers .Values.extraContainers (not (empty .Values.deployment.extraContainers )) -}}
@@ -135,22 +134,6 @@ spec:
           resources:
             {{- toYaml $resources | nindent 12 }}
           env:
-            {{- if $tracing.datadog.enabled }}
-            - name: TRACING_PROVIDER
-              value: datadog
-            - name: DD_ENV
-              value: {{ $tracing.datadog.env | default "none" | quote }}
-            - name: DD_VERSION
-              value: {{ $tracing.datadog.version | default .Chart.AppVersion | quote }}
-            - name: DD_SERVICE
-              value: {{ $tracing.datadog.service | default "ory/keto" | quote }}
-            {{- if $tracing.datadog.useHostIP }}
-            - name: DD_AGENT_HOST
-              valueFrom:
-                fieldRef:
-                  fieldPath: status.hostIP
-            {{- end }}
-            {{- end }}
             - name: DSN
               valueFrom:
                 secretKeyRef:

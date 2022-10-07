@@ -98,22 +98,6 @@ spec:
               port: {{ .Values.hydra.config.serve.admin.port }}
             {{- toYaml .Values.deployment.readinessProbe | nindent 12 }}
           env:
-            {{- if .Values.deployment.tracing.datadog.enabled }}
-            - name: TRACING_PROVIDER
-              value: datadog
-            - name: DD_ENV
-              value: {{ .Values.deployment.tracing.datadog.env | default "none" | quote }}
-            - name: DD_VERSION
-              value: {{ .Values.deployment.tracing.datadog.version | default .Values.image.tag | quote }}
-            - name: DD_SERVICE
-              value: {{ .Values.deployment.tracing.datadog.service | default "ory/hydra" | quote }}
-            {{- if .Values.deployment.tracing.datadog.useHostIP }}
-            - name: DD_AGENT_HOST
-              valueFrom:
-                fieldRef:
-                  fieldPath: status.hostIP
-            {{- end }}
-            {{- end }}
             {{- $issuer := include "hydra.config.urls.issuer" . -}}
             {{- if $issuer }}
             - name: URLS_SELF_ISSUER
