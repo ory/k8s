@@ -170,22 +170,6 @@ spec:
             - name: DEV_DISABLE_API_FLOW_ENFORCEMENT
               value: "true"
             {{- end }}
-            {{- if .Values.deployment.tracing.datadog.enabled }}
-            - name: TRACING_PROVIDER
-              value: datadog
-            - name: DD_ENV
-              value: {{ .Values.deployment.tracing.datadog.env | default "none" | quote }}
-            - name: DD_VERSION
-              value: {{ .Values.deployment.tracing.datadog.version | default .Values.image.tag | quote }}
-            - name: DD_SERVICE
-              value: {{ .Values.deployment.tracing.datadog.service | default "ory/kratos" | quote }}
-            {{- if .Values.deployment.tracing.datadog.useHostIP }}
-            - name: DD_AGENT_HOST
-              valueFrom:
-                fieldRef:
-                  fieldPath: status.hostIP
-            {{- end }}
-            {{- end }}
             {{- if .Values.deployment.extraEnv }}
 {{ toYaml .Values.deployment.extraEnv | indent 12 }}
             {{- end }}
