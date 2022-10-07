@@ -148,12 +148,12 @@ hydra:
     # -- Configure the way to execute database migration. Possible values: job, initContainer
     # When set to job, the migration will be executed as a job on release or upgrade.
     # When set to initContainer, the migration will be executed when kratos pod is created
-    # Defaults to job  
+    # Defaults to job
     type: job
     # -- Ability to override the entrypoint of the automigration container
     # (e.g. to source dynamic secrets or export environment dynamic variables)
     customCommand: []
-    # -- Ability to override arguments of the entrypoint. Can be used in-depended of customCommand  
+    # -- Ability to override arguments of the entrypoint. Can be used in-depended of customCommand
     # eg:
     # - sleep 5;
     #   - kratos
@@ -393,6 +393,71 @@ watcher:
     labels: {}
     # -- Extra pod level annotations
     annotations: {}
+
+## -- Janitor cron job configuration
+janitor:
+  # -- Enable cleanup of stale database rows by periodically running the janitor command
+  enabled: false
+
+  ## -- Configure if the trust relationships must be cleaned up
+  cleanupGrants: false
+
+  ## -- Configure if the consent and authentication requests must be cleaned up
+  cleanupRequests: false
+
+  ## -- Configure if the access and refresh tokens must be cleaned up
+  cleanupTokens: false
+
+  ## -- Configure how many records are deleted with each iteration
+  batchSize: 100
+
+  ## -- Configure how many records are retrieved from database for deletion
+  limit: 10000
+
+  cronjob:
+    # -- Configure how often the cron job is ran
+    schedule: "0 */1 * * *"
+
+    # -- Set custom cron job level labels
+    labels: {}
+
+    # -- Set custom cron job level annotations
+    annotations: {}
+
+    # -- Specify pod metadata, this metadata is added directly to the pod, and not higher objects
+    podMetadata:
+      # -- Extra pod level labels
+      labels: {}
+
+      # -- Extra pod level annotations
+      annotations: {}
+
+    # -- Configure node labels for pod assignment
+    nodeSelector: {}
+
+    # -- Configure node tolerations
+    tolerations: []
+
+    # -- Configure node affinity
+    affinity: {}
+
+    # -- We usually recommend not to specify default resources and to leave this as a conscious choice for the user.
+    #  This also increases chances charts run on environments with little
+    #  resources, such as Minikube. If you do want to specify resources, uncomment the following
+    #  lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+    #  limits:
+    #    cpu: 100m
+    #    memory: 128Mi
+    #  requests:
+    #    cpu: 100m
+    #  memory: 128Mi
+    resources:
+      limits: {}
+      requests: {}
+
+    # -- Configure the containers' SecurityContext
+    securityContext:
+      enabled: false
 
 # -- PodDistributionBudget configuration
 pdb:
