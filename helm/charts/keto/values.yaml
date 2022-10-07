@@ -49,13 +49,13 @@ job:
   # kubernetes.io/tls-acme: "true"
 
   # -- If you want to add extra sidecar containers.
-  extraContainers: {}
+  extraContainers: ""
   # extraContainers: |
   #  - name: ...
   #    image: ...
 
   # -- If you want to add extra init containers.
-  extraInitContainers: {}
+  extraInitContainers: ""
   # extraInitContainers: |
   #  - name: ...
   #    image: ...
@@ -66,7 +66,7 @@ job:
   #   foo: bar
 
   # -- If you want to add lifecycle hooks.
-  lifecycle: {}
+  lifecycle: ""
   # lifecycle: |
   #   preStop:
   #     exec:
@@ -264,7 +264,7 @@ deployment:
   nodeSelector: {}
 
   # -- If you want to add extra sidecar containers.
-  extraContainers: {}
+  extraContainers: ""
   # extraContainers: |
   #  - name: ...
   #    image: ...
