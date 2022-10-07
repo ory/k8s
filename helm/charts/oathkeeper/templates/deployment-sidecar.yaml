@@ -79,6 +79,9 @@ spec:
           securityContext:
             {{- toYaml .Values.deployment.securityContext | nindent 12 }}
           {{- end }}
+      {{- if .Values.deployment.extraInitContainers }}
+        {{- tpl  .Values.deployment.extraInitContainers . | nindent 8 }}
+      {{- end }}
       containers:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"

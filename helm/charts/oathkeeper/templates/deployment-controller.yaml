@@ -66,6 +66,10 @@ spec:
             secretName: {{ include "oathkeeper.secretname" . }}
       serviceAccountName: {{ include "oathkeeper.serviceAccountName" . }}
       automountServiceAccountToken: {{ .Values.deployment.automountServiceAccountToken }}
+      initContainers:
+      {{- if .Values.deployment.extraInitContainers }}
+        {{- tpl  .Values.deployment.extraInitContainers . | nindent 8 }}
+      {{- end }}
       containers:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
