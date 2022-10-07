@@ -55,7 +55,6 @@ A Helm chart for deploying ORY Oathkeeper in Kubernetes
 | deployment.serviceAccount.create | bool | `true` | Specifies whether a service account should be created |
 | deployment.serviceAccount.name | string | `""` | The name of the service account to use. If not set and create is true, a name is generated using the fullname template |
 | deployment.tolerations | list | `[]` | Configure node tolerations. |
-| deployment.tracing | object | `{"datadog":{"enabled":false}}` | Configuration for tracing providers. Only datadog is currently supported through this block. If you need to use a different tracing provider, please manually set the configuration values via "oathkeeper.config" or via "deployment.extraEnv". |
 | fullnameOverride | string | `""` | Full chart name override |
 | global | object | `{"ory":{"oathkeeper":{"maester":{"mode":"controller"}}}}` | Mode for oathkeeper controller -- Two possible modes are: controller or sidecar |
 | image.pullPolicy | string | `"IfNotPresent"` | Image pull policy |
