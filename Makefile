@@ -11,6 +11,10 @@ export K3SIMAGE := docker.io/rancher/k3s:v1.22.5-k3s1
 .bin/helm: Makefile
 	HELM_INSTALL_DIR=.bin bash <(curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3) -v v3.3.4 --no-sudo
 
+.bin/ory: Makefile
+	curl https://raw.githubusercontent.com/ory/meta/master/install.sh | bash -s -- -b .bin ory v0.1.43
+	touch .bin/ory
+
 release: .bin/yq .bin/helm
 	yq w -i helm/charts/example-idp/Chart.yaml version "${VERSION}"
 	yq w -i helm/charts/hydra-maester/Chart.yaml version "${VERSION}"; \
@@ -89,7 +93,8 @@ helm-validate:
 	fi; \
 	hacks/helm-validate.sh ${HELM_CHART}
 
-format: .bin/goimports node_modules
+format: .bin/ory .bin/goimports node_modules
+	.bin/ory dev headers license
 	.bin/goimports -w .
 	npm exec -- prettier --write .
 
