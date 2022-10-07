@@ -297,30 +297,6 @@ deployment:
   # my.special.label/type: value
   extraLabels: {}
 
-  # -- Configuration for tracing providers. Only datadog is currently supported through this block.
-  # If you need to use a different tracing provider, please manually set the configuration values
-  # via "keto.config" or via "extraEnv".
-  tracing:
-    datadog:
-      enabled: false
-
-      # Sets the datadog DD_ENV environment variable. This value indicates the environment where keto is running.
-      # Default value: "none".
-      # env: production
-
-      # Sets the datadog DD_VERSION environment variable. This value indicates the version that keto is running.
-      # Default value: .Chart.AppVersion (i.e. the tag used for the docker image).
-      # version: X.Y.Z
-
-      # Sets the datadog DD_SERVICE environment variable. This value indicates the name of the service running.
-      # Default value: "ory/keto".
-      # service: ory/keto
-
-      # Sets the datadog DD_AGENT_HOST environment variable. This value indicates the host address of the datadog agent.
-      # If set to true, this configuration will automatically set DD_AGENT_HOST to the field "status.hostIP" of the pod.
-      # Default value: false.
-      # useHostIP: true
-
   tolerations: []
 
   affinity: {}
