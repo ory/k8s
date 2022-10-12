@@ -93,7 +93,7 @@ helm-validate:
 	fi; \
 	hacks/helm-validate.sh ${HELM_CHART}
 
-format: .bin/ory .bin/goimports node_modules
+format: .bin/goimports .bin/ory node_modules
 	.bin/ory dev headers license
 	.bin/goimports -w .
 	npm exec -- prettier --write .
