@@ -121,6 +121,9 @@ spec:
             - name: {{ .Values.service.metrics.name }}
               containerPort: {{ .Values.keto.config.serve.metrics.port }}
               protocol: TCP
+            {{- with .Values.deployment.extraPorts }}
+              {{- toYaml . | nindent 12 }}
+            {{- end }}
           livenessProbe:
             httpGet:
               path: /health/alive

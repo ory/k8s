@@ -1,0 +1,27 @@
+{{- range $ServiceName, $ServiceData := .Values.extraServices }}
+
+{{- if $ServiceData.enabled }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "keto.fullname" $ }}-{{ $ServiceName }}
+  {{- if $.Release.Namespace }}
+  namespace: {{ $.Release.Namespace }}
+  {{- end }}
+  labels:
+    app.kubernetes.io/component: {{ $ServiceName }}
+    {{- include "keto.labels" $ | nindent 4 }}
+spec:
+  type: {{ $ServiceData.type }}
+  ports:
+    - port: {{ $ServiceData.port }}
+      targetPort: {{ $ServiceData.name }}
+      protocol: TCP
+      name: {{ $ServiceData.name }}
+  selector:
+    app.kubernetes.io/name: {{ include "keto.name" $ }}
+    app.kubernetes.io/instance: {{ $.Release.Name }}
+{{- end }}
+
+{{- end }}
