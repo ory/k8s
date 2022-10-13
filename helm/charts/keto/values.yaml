@@ -225,8 +225,6 @@ keto:
         port: 4467
       metrics:
         port: 4468
-      opl:
-        port: 4469
     namespaces:
       - id: 0
         name: sample
