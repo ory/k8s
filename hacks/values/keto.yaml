@@ -36,6 +36,10 @@ deployment:
     - name: test-volume
       configMap:
         name: cm-sample
+  extraPorts:
+    - name: grpc-opl
+      containerPort: 4469
+      protocol: TCP
 job:
   extraInitContainers: |
     - name: "hello-world"
@@ -57,6 +61,13 @@ job:
 service:
   metrics:
     enabled: true
+
+extraServices:
+  opl:
+    enabled: true
+    type: ClusterIP
+    name: grpc-opl
+    port: 80
 
 watcher:
   enabled: true
