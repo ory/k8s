@@ -1,0 +1,52 @@
+{{- if .Values.ingress.opl.enabled -}}
+{{- $fullName := include "keto.fullname" . -}}
+{{- if semverCompare ">=1.19-0" .Capabilities.KubeVersion.GitVersion -}}
+apiVersion: networking.k8s.io/v1
+{{- else -}}
+apiVersion: networking.k8s.io/v1beta1
+{{- end }}
+kind: Ingress
+metadata:
+  name: {{ $fullName }}-opl
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "keto.labels" . | nindent 4 }}
+  {{- with .Values.ingress.opl.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  ingressClassName: {{ .Values.ingress.opl.className }}
+  {{- if .Values.ingress.opl.tls }}
+  tls:
+    {{- range .Values.ingress.opl.tls }}
+    - hosts:
+        {{- range .hosts }}
+        - {{ . | quote }}
+        {{- end }}
+      secretName: {{ .secretName }}
+    {{- end }}
+  {{- end }}
+  rules:
+    {{- range .Values.ingress.opl.hosts }}
+    - host: {{ .host | quote }}
+      http:
+        paths:
+          {{- range .paths }}
+          - path: {{ .path }}
+            {{- if .pathType }}
+            pathType: {{ .pathType }}
+            {{- end }}
+            backend:
+              {{- if semverCompare ">=1.19-0" $.Capabilities.KubeVersion.GitVersion }}
+              service:
+                name: {{ $fullName }}-opl
+                port:
+                  name: {{ $.Values.service.opl.name }}
+              {{- else }}
+              serviceName: {{ $fullName }}
+              servicePort: {{ $.Values.service.opl.name }}
+              {{- end }}
+          {{- end }}
+    {{- end }}
+{{- end }}

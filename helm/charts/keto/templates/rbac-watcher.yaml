@@ -16,7 +16,7 @@ metadata:
 rules:
   - apiGroups: ["apps"]
     resources: ["deployments"]
-    verbs: 
+    verbs:
       - list
       - watch
       - get

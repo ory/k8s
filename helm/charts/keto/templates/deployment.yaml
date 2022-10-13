@@ -118,6 +118,9 @@ spec:
             - name: {{ .Values.service.write.name }}
               containerPort: {{ .Values.keto.config.serve.write.port }}
               protocol: TCP
+            - name: {{ .Values.service.opl.name }}
+              containerPort: {{ .Values.keto.config.serve.opl.port }}
+              protocol: TCP
             - name: {{ .Values.service.metrics.name }}
               containerPort: {{ .Values.keto.config.serve.metrics.port }}
               protocol: TCP
