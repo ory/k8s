@@ -52,9 +52,9 @@ spec:
             - name: janitor
               image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
               imagePullPolicy: {{ .Values.image.pullPolicy }}
-              {{- if .Values.cronjob.janitor.securityContext.enabled }}
+              {{- with .Values.cronjob.janitor.securityContext }}
               securityContext:
-                {{- omit .Values.cronjob.janitor.securityContext "enabled" | toYaml | nindent 16 }}
+                {{- toYaml . | nindent 16 }}
               {{- end }}
               command: ["hydra"]
               args:
