@@ -8,34 +8,34 @@ metadata:
   {{- end }}
   labels:
     {{- include "hydra.janitor.labels" . | nindent 4 }}
-    {{- with .Values.janitor.cronjob.labels }}
+    {{- with .Values.cronjob.janitor.labels }}
       {{- toYaml . | nindent 4 }}
     {{- end }}
   annotations:
-    {{- with .Values.janitor.cronjob.annotations }}
+    {{- with .Values.cronjob.janitor.annotations }}
       {{- toYaml . | nindent 4 }}
     {{- end }}
 spec:
   concurrencyPolicy: Forbid
-  schedule: {{ .Values.janitor.cronjob.schedule | quote }}
+  schedule: {{ .Values.cronjob.janitor.schedule | quote }}
   jobTemplate:
     spec:
       template:
         metadata:
           labels:
             {{- include "hydra.janitor.labels" . | nindent 12 }}
-            {{- with .Values.janitor.cronjob.labels }}
+            {{- with .Values.cronjob.janitor.labels }}
               {{- toYaml . | nindent 12 }}
             {{- end }}
-            {{- with .Values.janitor.cronjob.podMetadata.labels }}
+            {{- with .Values.cronjob.janitor.podMetadata.labels }}
               {{- toYaml . | nindent 12 }}
             {{- end }}
           annotations:
             {{- include "hydra.annotations.checksum" . | nindent 12 -}}
-            {{- with .Values.janitor.cronjob.annotations }}
+            {{- with .Values.cronjob.janitor.annotations }}
               {{- toYaml . | nindent 12 }}
             {{- end }}
-            {{- with $.Values.janitor.cronjob.podMetadata.annotations }}
+            {{- with $.Values.cronjob.janitor.podMetadata.annotations }}
               {{- toYaml . | nindent 12 }}
             {{- end }}
         spec:
@@ -52,9 +52,9 @@ spec:
             - name: janitor
               image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
               imagePullPolicy: {{ .Values.image.pullPolicy }}
-              {{- if .Values.janitor.cronjob.securityContext.enabled }}
+              {{- if .Values.cronjob.janitor.securityContext.enabled }}
               securityContext:
-                {{- omit .Values.janitor.cronjob.securityContext "enabled" | toYaml | nindent 16 }}
+                {{- omit .Values.cronjob.janitor.securityContext "enabled" | toYaml | nindent 16 }}
               {{- end }}
               command: ["hydra"]
               args:
@@ -83,20 +83,20 @@ spec:
                       key: dsn
               {{- end }}
               resources:
-                {{- toYaml .Values.janitor.cronjob.resources | nindent 16 }}
+                {{- toYaml .Values.cronjob.janitor.resources | nindent 16 }}
               volumeMounts:
                 - name: {{ include "hydra.name" . }}-config-volume
                   mountPath: /etc/config
                   readOnly: true
-          {{- with .Values.janitor.cronjob.nodeSelector }}
+          {{- with .Values.cronjob.janitor.nodeSelector }}
           nodeSelector:
             {{- toYaml . | nindent 12 }}
           {{- end }}
-          {{- with .Values.janitor.cronjob.tolerations }}
+          {{- with .Values.cronjob.janitor.tolerations }}
           tolerations:
             {{- toYaml . | nindent 12 }}
           {{- end }}
-          {{- with .Values.janitor.cronjob.affinity }}
+          {{- with .Values.cronjob.janitor.affinity }}
           affinity:
             {{- toYaml . | nindent 12 }}
           {{- end }}

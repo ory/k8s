@@ -414,7 +414,8 @@ janitor:
   ## -- Configure how many records are retrieved from database for deletion
   limit: 10000
 
-  cronjob:
+cronjob:
+  janitor:
     # -- Configure how often the cron job is ran
     schedule: "0 */1 * * *"
 
