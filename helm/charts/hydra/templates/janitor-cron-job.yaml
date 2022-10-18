@@ -57,6 +57,9 @@ spec:
                 {{- toYaml . | nindent 16 }}
               {{- end }}
               command: ["hydra"]
+              {{- if .Values.cronjob.janitor.customArgs }}
+              args: {{- toYaml .Values.cronjob.janitor.customArgs | nindent 14 }}
+              {{- else }}
               args:
                 - janitor
                 {{- if .Values.janitor.cleanupGrants }}
@@ -74,6 +77,7 @@ spec:
                 - {{ .Values.janitor.limit | quote }}
                 - --config
                 - /etc/config/hydra.yaml
+              {{- end }}
               env:
               {{- if not (empty ( include "hydra.dsn" . )) }}
                 - name: DSN

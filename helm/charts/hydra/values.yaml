@@ -420,6 +420,9 @@ cronjob:
     # -- Configure how often the cron job is ran
     schedule: "0 */1 * * *"
 
+    # -- Configure the arguments of the entrypoint, overriding the default value
+    customArgs: []
+
     # -- Set custom cron job level labels
     labels: {}
 
