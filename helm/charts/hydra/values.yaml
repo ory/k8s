@@ -414,6 +414,7 @@ janitor:
   ## -- Configure how many records are retrieved from database for deletion
   limit: 10000
 
+# -- CronJob configuration
 cronjob:
   janitor:
     # -- Configure how often the cron job is ran
@@ -443,7 +444,15 @@ cronjob:
     affinity: {}
 
     # -- Configure the containers' SecurityContext
-    securityContext: {}
+    securityContext:
+      capabilities:
+        drop:
+          - ALL
+      readOnlyRootFilesystem: true
+      runAsNonRoot: true
+      runAsUser: 100
+      allowPrivilegeEscalation: false
+      privileged: false
 
     # -- We usually recommend not to specify default resources and to leave this as a conscious choice for the user.
     #  This also increases chances charts run on environments with little
