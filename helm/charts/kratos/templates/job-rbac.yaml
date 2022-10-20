@@ -6,8 +6,11 @@ metadata:
   name: {{ include "kratos.job.serviceAccountName" . }}
   labels:
     {{- include "kratos.labels" . | nindent 4 }}
-  {{- with .Values.job.serviceAccount.annotations }}
   annotations:
+    helm.sh/hook-weight: "0"
+    helm.sh/hook: "pre-install, pre-upgrade"
+    helm.sh/hook-delete-policy: "before-hook-creation"
+  {{- with .Values.job.serviceAccount.annotations }}
     {{- toYaml . | nindent 4 }}
   {{- end }}
 {{- end -}}
