@@ -8,7 +8,7 @@ metadata:
   {{- end }}
   labels:
     app.kubernetes.io/component: read
-{{ include "keto.labels" . | indent 4 }}
+    {{- include "keto.labels" . | nindent 4 }}
 spec:
   type: {{ .Values.service.read.type }}
   ports:

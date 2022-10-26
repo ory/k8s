@@ -11,7 +11,7 @@ image:
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
   # -- Ory KETO version
-  tag: "v0.8.0-alpha.2"
+  tag: "v0.10.0"
 
 imagePullSecrets: []
 nameOverride: ""
@@ -159,6 +159,9 @@ service:
     port: 80
     annotations: {}
 
+# -- Extra services to be deployed
+extraServices: {}
+
 # -- Secret management
 secret:
   # -- Switch to false to prevent creating the secret
@@ -296,6 +299,9 @@ deployment:
   # foo: bar
   # my.special.label/type: value
   extraLabels: {}
+
+  # -- Extra ports to be exposed by the main deployment
+  extraPorts: []
 
   tolerations: []
 
