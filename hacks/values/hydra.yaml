@@ -23,6 +23,9 @@ hydra:
 maester:
   enabled: false
 
+janitor:
+  enabled: true
+
 deployment:
   extraInitContainers: |
     - name: "hello-world"
@@ -85,3 +88,15 @@ serviceMonitor:
     release: "prometheus"
   tlsConfig:
     insecureSkipVerify: true
+
+cronjob:
+  janitor:
+    labels:
+      ory.sh/test: hydra
+    annotations:
+      ory.sh/test: hydra
+    podMetadata:
+      labels:
+        ory.sh/pod_label: hydra
+      annotations:
+        ory.sh/pod_annotation: hydra
