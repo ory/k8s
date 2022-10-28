@@ -1,6 +1,6 @@
 # hydra
 
-![Version: 0.26.0](https://img.shields.io/badge/Version-0.26.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v2.0.1](https://img.shields.io/badge/AppVersion-v2.0.1-informational?style=flat-square)
+![Version: 0.25.6](https://img.shields.io/badge/Version-0.25.6-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v1.11.8](https://img.shields.io/badge/AppVersion-v1.11.8-informational?style=flat-square)
 
 A Helm chart for deploying ORY Hydra in Kubernetes
 
@@ -10,7 +10,7 @@ A Helm chart for deploying ORY Hydra in Kubernetes
 
 | Name | Email | Url |
 | ---- | ------ | --- |
-| ORY Team | <hi@ory.sh> | <https://www.ory.sh/> |
+| ORY Team | hi@ory.sh | https://www.ory.sh/ |
 
 ## Source Code
 
@@ -21,7 +21,7 @@ A Helm chart for deploying ORY Hydra in Kubernetes
 
 | Repository | Name | Version |
 |------------|------|---------|
-| file://../hydra-maester | hydra-maester(hydra-maester) | 0.26.0 |
+| file://../hydra-maester | hydra-maester(hydra-maester) | 0.25.6 |
 
 ## Values
 
@@ -43,15 +43,13 @@ A Helm chart for deploying ORY Hydra in Kubernetes
 | cronjob.janitor.securityContext | object | `{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"privileged":false,"readOnlyRootFilesystem":true,"runAsNonRoot":true,"runAsUser":100}` | Configure the containers' SecurityContext |
 | cronjob.janitor.tolerations | list | `[]` | Configure node tolerations |
 | deployment.annotations | object | `{}` | Set custom deployment level annotations |
-| deployment.automigration | object | `{"extraEnv":[]}` | Parameters for the automigration initContainer |
-| deployment.automigration.extraEnv | list | `[]` | Array of extra envs to be passed to the initContainer. Kubernetes format is expected - name: FOO   value: BAR |
 | deployment.automountServiceAccountToken | bool | `true` |  |
-| deployment.autoscaling | object | `{"enabled":false,"maxReplicas":3,"minReplicas":1}` | Configure HPA |
-| deployment.customLivenessProbe | object | `{}` | Configure a custom livenessProbe. This overwrites the default object  |
-| deployment.customReadinessProbe | object | `{}` | Configure a custom readinessProbe. This overwrites the default object   |
-| deployment.extraContainers | string | `""` | If you want to add extra sidecar containers. |
-| deployment.extraEnv | list | `[]` | Array of extra envs to be passed to the deployment. Kubernetes format is expected - name: FOO   value: BAR |
-| deployment.extraInitContainers | string | `""` | If you want to add extra init containers. |
+| deployment.autoscaling.enabled | bool | `false` |  |
+| deployment.autoscaling.maxReplicas | int | `3` |  |
+| deployment.autoscaling.minReplicas | int | `1` |  |
+| deployment.extraContainers | object | `{}` | If you want to add extra sidecar containers. |
+| deployment.extraEnv | list | `[]` | If you want to use Jaeger with agents being deployed in a daemonset, you can -- use the following ENV vars to configure the right endpoints using the IP -- address of the node the pod has been deployed to. extraEnv:   - name: JAEGER_AGENT_HOST     valueFrom:       fieldRef:         fieldPath: status.hostIP   - name: TRACING_PROVIDERS_JAEGER_LOCAL_AGENT_ADDRESS     value: $(JAEGER_AGENT_HOST):6831   - name: TRACING_PROVIDERS_JAEGER_SAMPLING_SERVER_URL     value: http://$(JAEGER_AGENT_HOST):5778 |
+| deployment.extraInitContainers | object | `{}` | If you want to add extra init containers. |
 | deployment.extraVolumeMounts | list | `[]` |  |
 | deployment.extraVolumes | list | `[]` | If you want to mount external volume |
 | deployment.labels | object | `{}` | Set custom deployment level labels |
@@ -71,13 +69,13 @@ A Helm chart for deploying ORY Hydra in Kubernetes
 | deployment.securityContext.readOnlyRootFilesystem | bool | `true` |  |
 | deployment.securityContext.runAsNonRoot | bool | `true` |  |
 | deployment.securityContext.runAsUser | int | `100` |  |
-| deployment.serviceAccount | object | `{"annotations":{},"create":true,"name":""}` | Specify the serviceAccountName value. In some situations it is needed to provides specific permissions to Hydra deployments Like for example installing Hydra on a cluster with a PosSecurityPolicy and Istio. Uncoment if it is needed to provide a ServiceAccount for the Hydra deployment. |
+| deployment.serviceAccount | object | `{"annotations":{},"create":true,"name":""}` | Specify the serviceAccountName value. In some situations it is needed to provides specific permissions to Hydra deployments Like for example installing Hydra on a cluster with a PosSecurityPolicy and Istio. Uncoment if it is needed to provide a ServiceAccount for the Hydra deployment. -- Specify the serviceAccountName value. In some situations it is needed to provides specific permissions to Hydra deployments Like for example installing Hydra on a cluster with a PosSecurityPolicy and Istio. Uncoment if it is needed to provide a ServiceAccount for the Hydra deployment. |
 | deployment.serviceAccount.annotations | object | `{}` | Annotations to add to the service account |
 | deployment.serviceAccount.create | bool | `true` | Specifies whether a service account should be created |
 | deployment.serviceAccount.name | string | `""` | The name of the service account to use. If not set and create is true, a name is generated using the fullname template |
 | deployment.tolerations | list | `[]` | Configure node tolerations. |
 | fullnameOverride | string | `""` | Full chart name override |
-| hydra | object | `{"automigration":{"customArgs":[],"customCommand":[],"enabled":false,"type":"job"},"config":{"secrets":{},"serve":{"admin":{"port":4445},"public":{"port":4444},"tls":{"allow_termination_from":["10.0.0.0/8","172.16.0.0/12","192.168.0.0/16"]}},"urls":{"self":{}}},"dev":false}` | Configure ORY Hydra itself |
+| hydra | object | `{"automigration":{"customArgs":[],"customCommand":[],"enabled":false,"type":"job"},"config":{"secrets":{},"serve":{"admin":{"port":4445},"public":{"port":4444},"tls":{"allow_termination_from":["10.0.0.0/8","172.16.0.0/12","192.168.0.0/16"]}},"urls":{"self":{}}},"dangerousAllowInsecureRedirectUrls":false,"dangerousForceHttp":false}` | Configure ORY Hydra itself |
 | hydra-maester | object | `{"adminService":{"name":"","port":null}}` | Values for the hydra admin service arguments to hydra-maester |
 | hydra-maester.adminService.name | string | `""` | The service name value may need to be set if you use `fullnameOverride` for the parent chart |
 | hydra-maester.adminService.port | string | `nil` | You only need to set this port if you change the value for `service.admin.port` in the parent chart |
@@ -86,10 +84,9 @@ A Helm chart for deploying ORY Hydra in Kubernetes
 | hydra.automigration.type | string | `"job"` | Configure the way to execute database migration. Possible values: job, initContainer When set to job, the migration will be executed as a job on release or upgrade. When set to initContainer, the migration will be executed when kratos pod is created Defaults to job |
 | hydra.config | object | `{"secrets":{},"serve":{"admin":{"port":4445},"public":{"port":4444},"tls":{"allow_termination_from":["10.0.0.0/8","172.16.0.0/12","192.168.0.0/16"]}},"urls":{"self":{}}}` | The ORY Hydra configuration. For a full list of available settings, check:  https://www.ory.sh/docs/hydra/reference/configuration |
 | hydra.config.secrets | object | `{}` | The secrets have to be provided as a string slice, example: system:   - "OG5XbmxXa3dYeGplQXpQanYxeEFuRUFa"   - "foo bar 123 456 lorem"   - "foo bar 123 456 lorem 1"   - "foo bar 123 456 lorem 2"   - "foo bar 123 456 lorem 3" |
-| hydra.dev | bool | `false` | Enable dev mode, not secure in production environments  |
 | image.pullPolicy | string | `"IfNotPresent"` | Image pull policy |
 | image.repository | string | `"oryd/hydra"` | ORY Hydra image |
-| image.tag | string | `"v2.0.1"` | ORY Hydra version |
+| image.tag | string | `"v1.11.8"` | ORY Hydra version |
 | imagePullSecrets | list | `[]` | Image pull secrets |
 | ingress | object | `{"admin":{"annotations":{},"className":"","enabled":false,"hosts":[{"host":"admin.hydra.localhost","paths":[{"path":"/","pathType":"ImplementationSpecific"}]}]},"public":{"annotations":{},"className":"","enabled":false,"hosts":[{"host":"public.hydra.localhost","paths":[{"path":"/","pathType":"ImplementationSpecific"}]}]}}` | Configure ingress |
 | ingress.admin.enabled | bool | `false` | En-/Disable the api ingress. |
@@ -101,14 +98,13 @@ A Helm chart for deploying ORY Hydra in Kubernetes
 | janitor.cleanupTokens | bool | `false` |  |
 | janitor.enabled | bool | `false` | Enable cleanup of stale database rows by periodically running the janitor command |
 | janitor.limit | int | `10000` |  |
-| job | object | `{"annotations":{"helm.sh/hook":"pre-install, pre-upgrade","helm.sh/hook-delete-policy":"before-hook-creation","helm.sh/hook-weight":"1"},"automountServiceAccountToken":true,"extraContainers":"","extraEnv":[],"extraInitContainers":"","labels":{},"lifecycle":"","nodeSelector":{},"podMetadata":{"annotations":{},"labels":{}},"serviceAccount":{"annotations":{"helm.sh/hook":"pre-install, pre-upgrade","helm.sh/hook-delete-policy":"before-hook-creation","helm.sh/hook-weight":"0"},"create":true,"name":""},"shareProcessNamespace":false,"spec":{"backoffLimit":10}}` | Values for initialization job |
-| job.annotations | object | `{"helm.sh/hook":"pre-install, pre-upgrade","helm.sh/hook-delete-policy":"before-hook-creation","helm.sh/hook-weight":"1"}` | If you do want to specify annotations, uncomment the following lines, adjust them as necessary, and remove the curly braces after 'annotations:'. |
+| job | object | `{"annotations":{"helm.sh/hook":"pre-install, pre-upgrade","helm.sh/hook-delete-policy":"before-hook-creation,hook-succeeded","helm.sh/hook-weight":"1"},"automountServiceAccountToken":true,"extraContainers":{},"extraInitContainers":{},"labels":{},"lifecycle":{},"nodeSelector":{},"podMetadata":{"annotations":{},"labels":{}},"serviceAccount":{"annotations":{"helm.sh/hook":"pre-install, pre-upgrade","helm.sh/hook-delete-policy":"before-hook-creation","helm.sh/hook-weight":"0"},"create":true,"name":""},"shareProcessNamespace":false,"spec":{"backoffLimit":10}}` | Values for initialization job |
+| job.annotations | object | `{"helm.sh/hook":"pre-install, pre-upgrade","helm.sh/hook-delete-policy":"before-hook-creation,hook-succeeded","helm.sh/hook-weight":"1"}` | If you do want to specify annotations, uncomment the following lines, adjust them as necessary, and remove the curly braces after 'annotations:'. |
 | job.automountServiceAccountToken | bool | `true` | Set automounting of the SA token |
-| job.extraContainers | string | `""` | If you want to add extra sidecar containers. |
-| job.extraEnv | list | `[]` | Array of extra envs to be passed to the job. This takes precedence over deployment variables. Kubernetes format is expected - name: FOO   value: BAR |
-| job.extraInitContainers | string | `""` | If you want to add extra init containers. extraInitContainers: |  - name: ...    image: ... |
+| job.extraContainers | object | `{}` | If you want to add extra sidecar containers. |
+| job.extraInitContainers | object | `{}` | If you want to add extra init containers. extraInitContainers: |  - name: ...    image: ... |
 | job.labels | object | `{}` | Set custom deployment level labels |
-| job.lifecycle | string | `""` | If you want to add lifecycle hooks. |
+| job.lifecycle | object | `{}` | If you want to add lifecycle hooks. |
 | job.nodeSelector | object | `{}` | Node labels for pod assignment. |
 | job.podMetadata | object | `{"annotations":{},"labels":{}}` | Specify pod metadata, this metadata is added directly to the pod, and not higher objects |
 | job.podMetadata.annotations | object | `{}` | Extra pod level annotations |
@@ -126,12 +122,14 @@ A Helm chart for deploying ORY Hydra in Kubernetes
 | secret.enabled | bool | `true` | switch to false to prevent creating the secret |
 | secret.hashSumEnabled | bool | `true` | switch to false to prevent checksum annotations being maintained and propogated to the pods |
 | secret.nameOverride | string | `""` | Provide custom name of existing secret, or custom name of secret to be created |
-| secret.secretAnnotations | object | `{"helm.sh/hook":"pre-install, pre-upgrade","helm.sh/hook-delete-policy":"before-hook-creation","helm.sh/hook-weight":"0","helm.sh/resource-policy":"keep"}` | Annotations to be added to secret. Annotations are added only when secret is being created. Existing secret will not be modified. |
-| service | object | `{"admin":{"annotations":{},"enabled":true,"labels":{},"metricsPath":"/admin/metrics/prometheus","name":"http","port":4445,"type":"ClusterIP"},"public":{"annotations":{},"enabled":true,"labels":{},"name":"http","port":4444,"type":"ClusterIP"}}` | Configures the Kubernetes service |
-| service.admin | object | `{"annotations":{},"enabled":true,"labels":{},"metricsPath":"/admin/metrics/prometheus","name":"http","port":4445,"type":"ClusterIP"}` | Configures the Kubernetes service for the api port. |
+| secret.secretAnnotations."helm.sh/hook" | string | `"pre-install, pre-upgrade"` |  |
+| secret.secretAnnotations."helm.sh/hook-delete-policy" | string | `"before-hook-creation"` |  |
+| secret.secretAnnotations."helm.sh/hook-weight" | string | `"0"` |  |
+| secret.secretAnnotations."helm.sh/resource-policy" | string | `"keep"` |  |
+| service | object | `{"admin":{"annotations":{},"enabled":true,"labels":{},"name":"http","port":4445,"type":"ClusterIP"},"public":{"annotations":{},"enabled":true,"labels":{},"name":"http","port":4444,"type":"ClusterIP"}}` | Pod priority https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/ priorityClassName: "" -- Configures the Kubernetes service |
+| service.admin | object | `{"annotations":{},"enabled":true,"labels":{},"name":"http","port":4445,"type":"ClusterIP"}` | Configures the Kubernetes service for the api port. |
 | service.admin.annotations | object | `{}` | If you do want to specify annotations, uncomment the following lines, adjust them as necessary, and remove the curly braces after 'annotations:'. |
 | service.admin.enabled | bool | `true` | En-/disable the service |
-| service.admin.metricsPath | string | `"/admin/metrics/prometheus"` | Path to the metrics endpoint |
 | service.admin.name | string | `"http"` | The service port name. Useful to set a custom service port name if it must follow a scheme (e.g. Istio) |
 | service.admin.port | int | `4445` | The service port |
 | service.admin.type | string | `"ClusterIP"` | The service type |
@@ -155,4 +153,4 @@ A Helm chart for deploying ORY Hydra in Kubernetes
 | watcher.podMetadata.labels | object | `{}` | Extra pod level labels |
 
 ----------------------------------------------
-Autogenerated from chart metadata using [helm-docs v1.11.0](https://github.com/norwoodj/helm-docs/releases/v1.11.0)
+Autogenerated from chart metadata using [helm-docs v1.5.0](https://github.com/norwoodj/helm-docs/releases/v1.5.0)
