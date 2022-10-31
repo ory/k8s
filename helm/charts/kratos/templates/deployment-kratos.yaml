@@ -1,6 +1,8 @@
 {{- include "kratos.automigration.typeVerification" . -}}
 {{- $resources := ternary .Values.deployment.resources .Values.resources (not (empty .Values.deployment.resources )) -}}
 {{- $nodeSelector := ternary .Values.deployment.nodeSelector .Values.nodeSelector (not (empty .Values.deployment.nodeSelector )) -}}
+{{- $migrationExtraEnv := ternary .Values.deployment.automigration.extraEnv .Values.deployment.extraEnv (not (empty .Values.deployment.automigration.extraEnv )) -}}
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -79,7 +81,7 @@ spec:
                 secretKeyRef:
                   name: {{ include "kratos.secretname" . }}
                   key: dsn
-          {{- if .Values.deployment.extraEnv }}
+          {{- if $migrationExtraEnv }}
             {{- toYaml .Values.deployment.extraEnv | nindent 12 }}
           {{- end }}
       {{- end }}
@@ -171,7 +173,7 @@ spec:
               value: "true"
             {{- end }}
             {{- if .Values.deployment.extraEnv }}
-{{ toYaml .Values.deployment.extraEnv | indent 12 }}
+              {{- toYaml .Values.deployment.extraEnv | nindent 12 }}
             {{- end }}
         {{- if .Values.deployment.environmentSecretsName }}
           envFrom:
@@ -210,7 +212,7 @@ spec:
             {{- toYaml .Values.securityContext | nindent 12 }}
           {{- end }}
         {{- if .Values.deployment.extraContainers }}
-{{ tpl .Values.deployment.extraContainers . | indent 8 }}
+          {{- tpl .Values.deployment.extraContainers . | nindent 8 }}
         {{- end }}
       {{- with $nodeSelector }}
       nodeSelector:
