@@ -58,6 +58,8 @@ service:
     #      If you do want to specify additional labels, uncomment the following
     #      lines, adjust them as necessary, and remove the curly braces after 'labels:'.
     #      e.g.  app: hydra
+    # -- Path to the metrics endpoint
+    metricsPath: /admin/metrics/prometheus
 
 secret:
   # -- switch to false to prevent creating the secret
@@ -293,6 +295,11 @@ deployment:
   # extraContainers: |
   #  - name: ...
   #    image: ...
+
+  # -- Configure a custom livenessProbe. This overwrites the default object 
+  customLivenessProbe: {} 
+  # -- Configure a custom readinessProbe. This overwrites the default object  
+  customReadinessProbe: {}
 
 # -- Values for initialization job
 job:
