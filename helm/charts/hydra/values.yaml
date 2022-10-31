@@ -5,7 +5,7 @@ image:
   # -- ORY Hydra image
   repository: oryd/hydra
   # -- ORY Hydra version
-  tag: v1.11.8
+  tag: v2.0.1
   # -- Image pull policy
   pullPolicy: IfNotPresent
 
@@ -58,6 +58,8 @@ service:
     #      If you do want to specify additional labels, uncomment the following
     #      lines, adjust them as necessary, and remove the curly braces after 'labels:'.
     #      e.g.  app: hydra
+    # -- Path to the metrics endpoint
+    metricsPath: /admin/metrics/prometheus
 
 secret:
   # -- switch to false to prevent creating the secret
@@ -159,9 +161,8 @@ hydra:
     #   - kratos
     customArgs: []
 
-
-  dangerousForceHttp: false
-  dangerousAllowInsecureRedirectUrls: false
+  # -- Enable dev mode, not secure in production environments 
+  dev: false
 
 deployment:
   # -- We usually recommend not to specify default resources and to leave this as a conscious choice for the user.
@@ -207,20 +208,18 @@ deployment:
   # lines, adjust them as necessary, and remove the curly braces after 'nodeSelector:'.
   #   foo: bar
 
-  # -- If you want to use Jaeger with agents being deployed in a daemonset, you can
-  # -- use the following ENV vars to configure the right endpoints using the IP
-  # -- address of the node the pod has been deployed to.
-  #
-  # extraEnv:
-  #   - name: JAEGER_AGENT_HOST
-  #     valueFrom:
-  #       fieldRef:
-  #         fieldPath: status.hostIP
-  #   - name: TRACING_PROVIDERS_JAEGER_LOCAL_AGENT_ADDRESS
-  #     value: $(JAEGER_AGENT_HOST):6831
-  #   - name: TRACING_PROVIDERS_JAEGER_SAMPLING_SERVER_URL
-  #     value: http://$(JAEGER_AGENT_HOST):5778
+  # -- Array of extra envs to be passed to the deployment. Kubernetes format is expected
+  # - name: FOO
+  #   value: BAR
   extraEnv: []
+
+  # -- Parameters for the automigration initContainer
+  automigration:
+
+    # -- Array of extra envs to be passed to the initContainer. Kubernetes format is expected
+    # - name: FOO
+    #   value: BAR
+    extraEnv: []    
 
   # -- Configure node tolerations.
   tolerations: []
@@ -284,16 +283,21 @@ deployment:
   automountServiceAccountToken: true
 
   # -- If you want to add extra init containers.
-  extraInitContainers: {}
+  extraInitContainers: ""
   # extraInitContainers: |
   #  - name: ...
   #    image: ...
 
   # -- If you want to add extra sidecar containers.
-  extraContainers: {}
+  extraContainers: ""
   # extraContainers: |
   #  - name: ...
   #    image: ...
+
+  # -- Configure a custom livenessProbe. This overwrites the default object 
+  customLivenessProbe: {} 
+  # -- Configure a custom readinessProbe. This overwrites the default object  
+  customReadinessProbe: {}
 
 # -- Values for initialization job
 job:
@@ -302,7 +306,7 @@ job:
   annotations:
     helm.sh/hook-weight: "1"
     helm.sh/hook: "pre-install, pre-upgrade"
-    helm.sh/hook-delete-policy: "before-hook-creation,hook-succeeded"
+    helm.sh/hook-delete-policy: "before-hook-creation"
   # kubernetes.io/ingress.class: nginx
   # kubernetes.io/tls-acme: "true"
 
@@ -310,10 +314,15 @@ job:
   labels: {}
 
   # -- If you want to add extra sidecar containers.
-  extraContainers: {}
+  extraContainers: ""
   # extraContainers: |
   #  - name: ...
   #    image: ...
+
+  # -- Array of extra envs to be passed to the job. This takes precedence over deployment variables. Kubernetes format is expected
+  # - name: FOO
+  #   value: BAR
+  extraEnv: []
 
   # -- Specify pod metadata, this metadata is added directly to the pod, and not higher objects
   podMetadata:
@@ -326,7 +335,7 @@ job:
   # extraInitContainers: |
   #  - name: ...
   #    image: ...
-  extraInitContainers: {}
+  extraInitContainers: ""
 
   # -- Node labels for pod assignment.
   nodeSelector: {}
@@ -335,7 +344,7 @@ job:
   #   foo: bar
 
   # -- If you want to add lifecycle hooks.
-  lifecycle: {}
+  lifecycle: ""
   # lifecycle: |
   #   preStop:
   #     exec:

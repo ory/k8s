@@ -8,7 +8,7 @@ metadata:
   name: {{ include "kratos.fullname" $root }}-template-{{ $method }}-{{ $result }}
   namespace: {{ $root.Release.Namespace }}
   labels:
-{{ include "kratos.labels" $root | indent 4 }}
+    {{- include "kratos.labels" $root | nindent 4 }}
   annotations: 
     {{- with $.Values.configmap.annotations }}
       {{- toYaml . | nindent 4 }}
@@ -16,15 +16,15 @@ metadata:
 data:
   {{- if $resultEntry.subject }}
   "email.subject.gotmpl": |
-{{ $resultEntry.subject | indent 4 }}
+    {{- $resultEntry.subject | nindent 4 }}
   {{- end }}
   {{- if $resultEntry.body }}
   "email.body.gotmpl": |-
-{{ $resultEntry.body | indent 4 }}
+    {{- $resultEntry.body | nindent 4 }}
   {{- end }}
   {{- if $resultEntry.plainBody }}
   "email.body.plaintext.gotmpl": |-
-{{ $resultEntry.plainBody | indent 4 }}
+    {{- $resultEntry.plainBody | nindent 4 }}
   {{- end }}
 {{- end }}
 {{- end }}

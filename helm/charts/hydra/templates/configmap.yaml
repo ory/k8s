@@ -4,7 +4,7 @@ metadata:
   name: {{ include "hydra.fullname" . }}
   namespace: {{ .Release.Namespace }}
   labels:
-{{ include "hydra.labels" . | indent 4 }}
+    {{- include "hydra.labels" . | nindent 4 }}
 data:
   "hydra.yaml": |
-{{ include "hydra.configmap" . | nindent 4 }}
+    {{- include "hydra.configmap" . | nindent 4 }}

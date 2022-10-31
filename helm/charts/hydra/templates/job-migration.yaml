@@ -1,6 +1,8 @@
 {{- include "hydra.automigration.typeVerification" . -}}
 {{- if and  ( .Values.hydra.automigration.enabled ) ( eq .Values.hydra.automigration.type "job" ) }}
 {{- $nodeSelector := ternary .Values.job.nodeSelector .Values.deployment.nodeSelector (not (empty .Values.job.nodeSelector )) -}}
+{{- $migrationExtraEnv := ternary .Values.job.extraEnv .Values.deployment.extraEnv (not (empty .Values.job.extraEnv )) -}}
+
 ---
 apiVersion: batch/v1
 kind: Job
@@ -64,13 +66,13 @@ spec:
                 name: {{ include "hydra.secretname" . }}
                 key: dsn
         {{- end }}
-        {{- with .Values.deployment.extraEnv }}
+        {{- with $migrationExtraEnv }}
           {{- toYaml . | nindent 10 }}
         {{- end }}
-        {{- if .Values.job.lifecycle }}
         lifecycle:
-{{ tpl .Values.job.lifecycle . | indent 10 }}
-        {{- end }}
+          {{- if .Values.job.lifecycle }}
+            {{- tpl .Values.job.lifecycle . | nindent 10 }}
+          {{- end }}
         {{- if .Values.deployment.securityContext }}
         securityContext:
           {{- toYaml .Values.deployment.securityContext | nindent 10 }}

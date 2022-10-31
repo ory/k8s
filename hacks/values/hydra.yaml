@@ -10,7 +10,7 @@ hydra:
     # type: initContainer
     customCommand:
       - hydra
-  dangerousForceHttp: true
+  dev: true
   config:
     dsn: "postgres://postgres:ory@postgresql.default.svc.cluster.local/ory?sslmode=disable&max_conn_lifetime=10s"
     secrets:
@@ -57,6 +57,9 @@ deployment:
     annotations:
       ory.sh/pod_annotation: hydra
 job:
+  extraEnv:
+    - name: LOREM
+      value: IPSUM
   extraInitContainers: |
     - name: "hello-world"
       image: "alpine:latest"
