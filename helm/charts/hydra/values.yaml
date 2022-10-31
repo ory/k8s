@@ -5,7 +5,7 @@ image:
   # -- ORY Hydra image
   repository: oryd/hydra
   # -- ORY Hydra version
-  tag: v1.11.8
+  tag: v2.0.1
   # -- Image pull policy
   pullPolicy: IfNotPresent
 
@@ -159,9 +159,8 @@ hydra:
     #   - kratos
     customArgs: []
 
-
-  dangerousForceHttp: false
-  dangerousAllowInsecureRedirectUrls: false
+  # -- Enable dev mode, not secure in production environments 
+  dev: false
 
 deployment:
   # -- We usually recommend not to specify default resources and to leave this as a conscious choice for the user.
@@ -284,13 +283,13 @@ deployment:
   automountServiceAccountToken: true
 
   # -- If you want to add extra init containers.
-  extraInitContainers: {}
+  extraInitContainers: ""
   # extraInitContainers: |
   #  - name: ...
   #    image: ...
 
   # -- If you want to add extra sidecar containers.
-  extraContainers: {}
+  extraContainers: ""
   # extraContainers: |
   #  - name: ...
   #    image: ...
@@ -310,7 +309,7 @@ job:
   labels: {}
 
   # -- If you want to add extra sidecar containers.
-  extraContainers: {}
+  extraContainers: ""
   # extraContainers: |
   #  - name: ...
   #    image: ...
@@ -326,7 +325,7 @@ job:
   # extraInitContainers: |
   #  - name: ...
   #    image: ...
-  extraInitContainers: {}
+  extraInitContainers: ""
 
   # -- Node labels for pod assignment.
   nodeSelector: {}
@@ -335,7 +334,7 @@ job:
   #   foo: bar
 
   # -- If you want to add lifecycle hooks.
-  lifecycle: {}
+  lifecycle: ""
   # lifecycle: |
   #   preStop:
   #     exec:

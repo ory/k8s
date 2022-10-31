@@ -10,7 +10,7 @@ hydra:
     # type: initContainer
     customCommand:
       - hydra
-  dangerousForceHttp: true
+  dev: true
   config:
     dsn: "postgres://postgres:ory@postgresql.default.svc.cluster.local/ory?sslmode=disable&max_conn_lifetime=10s"
     secrets:
