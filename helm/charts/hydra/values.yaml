@@ -208,20 +208,18 @@ deployment:
   # lines, adjust them as necessary, and remove the curly braces after 'nodeSelector:'.
   #   foo: bar
 
-  # -- If you want to use Jaeger with agents being deployed in a daemonset, you can
-  # -- use the following ENV vars to configure the right endpoints using the IP
-  # -- address of the node the pod has been deployed to.
-  #
-  # extraEnv:
-  #   - name: JAEGER_AGENT_HOST
-  #     valueFrom:
-  #       fieldRef:
-  #         fieldPath: status.hostIP
-  #   - name: TRACING_PROVIDERS_JAEGER_LOCAL_AGENT_ADDRESS
-  #     value: $(JAEGER_AGENT_HOST):6831
-  #   - name: TRACING_PROVIDERS_JAEGER_SAMPLING_SERVER_URL
-  #     value: http://$(JAEGER_AGENT_HOST):5778
+  # -- Array of extra envs to be passed to the deployment. Kubernetes format is expected
+  # - name: FOO
+  #   value: BAR
   extraEnv: []
+
+  # -- Parameters for the automigration initContainer
+  automigration:
+
+    # -- Array of extra envs to be passed to the initContainer. Kubernetes format is expected
+    # - name: FOO
+    #   value: BAR
+    extraEnv: []    
 
   # -- Configure node tolerations.
   tolerations: []
@@ -308,7 +306,7 @@ job:
   annotations:
     helm.sh/hook-weight: "1"
     helm.sh/hook: "pre-install, pre-upgrade"
-    helm.sh/hook-delete-policy: "before-hook-creation,hook-succeeded"
+    helm.sh/hook-delete-policy: "before-hook-creation"
   # kubernetes.io/ingress.class: nginx
   # kubernetes.io/tls-acme: "true"
 
@@ -320,6 +318,11 @@ job:
   # extraContainers: |
   #  - name: ...
   #    image: ...
+
+  # -- Array of extra envs to be passed to the job. This takes precedence over deployment variables. Kubernetes format is expected
+  # - name: FOO
+  #   value: BAR
+  extraEnv: []
 
   # -- Specify pod metadata, this metadata is added directly to the pod, and not higher objects
   podMetadata:

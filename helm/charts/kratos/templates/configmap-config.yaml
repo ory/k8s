@@ -5,7 +5,7 @@ metadata:
   name: {{ include "kratos.fullname" . }}-config
   namespace: {{ .Release.Namespace }}
   labels:
-{{ include "kratos.labels" . | indent 4 }}
+    {{- include "kratos.labels" . | nindent 4 }}
   annotations:
     {{- with .Values.configmap.annotations }}
       {{- toYaml . | nindent 4 }}

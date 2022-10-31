@@ -302,6 +302,13 @@ deployment:
     # -- Extra pod level annotations
     annotations: {}
 
+  # -- Parameters for the automigration initContainer
+  automigration:
+    # -- Array of extra envs to be passed to the initContainer. Kubernetes format is expected
+    # - name: FOO
+    #   value: BAR
+    extraEnv: []
+
 ## -- Configuration options for the k8s statefulSet
 statefulSet:
   resources: {}
@@ -413,6 +420,12 @@ job:
   # extraInitContainers: |
   #  - name: ...
   #    image: ...
+
+  # -- Array of extra envs to be passed to the job. This takes precedence over deployment variables. Kubernetes format is expected
+  # - name: FOO
+  #   value: BAR
+  extraEnv: []
+
   # -- Node labels for pod assignment.
   nodeSelector: {}
   # If you do want to specify node labels, uncomment the following
