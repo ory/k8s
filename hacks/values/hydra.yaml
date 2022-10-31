@@ -57,6 +57,9 @@ deployment:
     annotations:
       ory.sh/pod_annotation: hydra
 job:
+  extraEnv:
+    - name: LOREM
+      value: IPSUM
   extraInitContainers: |
     - name: "hello-world"
       image: "alpine:latest"

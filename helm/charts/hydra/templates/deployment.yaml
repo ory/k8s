@@ -1,5 +1,7 @@
 {{- include "hydra.automigration.typeVerification" . -}}
+{{- $migrationExtraEnv := ternary .Values.deployment.automigration.extraEnv .Values.deployment.extraEnv (not (empty .Values.deployment.automigration.extraEnv )) -}}
 
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -168,7 +170,7 @@ spec:
                   name: {{ include "hydra.secretname" . }}
                   key: dsn
             {{- end }}
-            {{- with .Values.deployment.extraEnv }}
+            {{- with $migrationExtraEnv }}
               {{- toYaml . | nindent 12 }}
             {{- end }}
       {{- end }}
