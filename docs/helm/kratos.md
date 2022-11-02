@@ -20,7 +20,6 @@ To install Ory Kratos, the following values must be set
 - `kratos.config.courier.smtp.connection_uri`
 - `kratos.config.identity.schemas`
 
-
 You can create a `values.yaml` file to set the required values, like so:
 
 ```yaml
@@ -44,7 +43,7 @@ kratos:
   automigration:
     enabled: true
   identitySchemas:
-    'identity.default.schema.json': |
+    "identity.default.schema.json": |
       {
         "$id": "https://schemas.ory.sh/presets/kratos/identity.email.schema.json",
         "$schema": "http://json-schema.org/draft-07/schema#",
@@ -80,7 +79,6 @@ kratos:
           }
         }
       }
-
 ```
 
 Install Ory Kratos by running this command:
@@ -205,6 +203,7 @@ kratos:
 ```
 
 Install Kratos using the following command:
+
 ```bash
 helm install kratos ory/kratos \
     -f values.yaml \

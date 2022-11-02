@@ -25,7 +25,8 @@ must be set:
 > `hydra.existingSecret` is empty, a secret is generated automatically. The
 > generated secret is cryptographically secure, and 32 signs long.
 
-> **NOTE:** `hydra.config.dsn` can also be set on [runtime](https://github.com/ory/k8s/blob/master/docs/helm/hydra.md#set-up-dsn-variable-on-runtime).
+> **NOTE:** `hydra.config.dsn` can also be set on
+> [runtime](https://github.com/ory/k8s/blob/master/docs/helm/hydra.md#set-up-dsn-variable-on-runtime).
 
 If you wish to install ORY Hydra with a postgres based database, a
 cryptographically strong secret, a Login and Consent provider located at
@@ -403,4 +404,3 @@ where changes are on:
 - change `paths` definition from an array of strings to an array of objects,
   where each object include the `path` and the `pathType` (see
   [path matching documentation](https://kubernetes.io/blog/2020/04/02/improvements-to-the-ingress-api-in-kubernetes-1.18/#better-path-matching-with-path-types))
-
