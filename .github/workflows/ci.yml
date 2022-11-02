@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - uses: actions/setup-go@v2
         with:
           go-version: "1.17"
@@ -29,7 +29,7 @@ jobs:
       no-changes: ${{ steps.changed_charts.outputs.no_changes}}
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - uses: dorny/paths-filter@v2.9.1
         id: filter
         with:
@@ -100,7 +100,7 @@ jobs:
       HELM_CHART: ${{ matrix.chart }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Checkout dependencies
         uses: ./.github/actions/deps-setup
       - name: Lint helm chart
@@ -122,7 +122,7 @@ jobs:
       HELM_CHART: ${{ matrix.chart }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Checkout dependencies
         uses: ./.github/actions/deps-setup
       - name: Test upgrade for helm chart
@@ -142,7 +142,7 @@ jobs:
       HELM_CHART: ${{ matrix.chart }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Checkout dependencies
         uses: ./.github/actions/deps-setup
       - name: Test install for helm chart
@@ -158,7 +158,9 @@ jobs:
       HELM_DOCS_VERSION: "1.11.0"
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.ORY_BOT_PAT }}
       - name: Generate documentation
         run: |
           pushd .bin
@@ -185,7 +187,9 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.ORY_BOT_PAT }}
       - name: Define current tag version
         run: echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
       - name: Release helm charts
