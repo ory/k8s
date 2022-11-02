@@ -1,0 +1,20 @@
+# AUTO-GENERATED, DO NOT EDIT!
+# Please edit the original at https://github.com/ory/meta/blob/master/templates/repository/common/.github/workflows/format.yml
+
+name: Format
+
+on:
+  pull_request:
+  push:
+
+jobs:
+  format:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-go@v3
+        with:
+          go-version: 1.19
+      - run: make format
+      - name: Indicate formatting issues
+        run: git diff HEAD --exit-code --color
