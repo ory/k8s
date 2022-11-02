@@ -6,15 +6,15 @@ metadata:
   name: {{ include "hydra.fullname" . }}-admin
   namespace: {{ .Release.Namespace }}
   labels:
-{{ include "hydra.labels" . | indent 4 }}
+    {{- include "hydra.labels" . | nindent 4 }}
     {{- with .Values.service.admin.labels }}
       {{- toYaml . | nindent 4 }}
     {{- end }}
     app.kubernetes.io/component: admin
-  {{- with .Values.service.admin.annotations }}
   annotations:
-    {{- toYaml . | nindent 4 }}
-  {{- end }}
+    {{- with .Values.service.admin.annotations }}
+      {{- toYaml . | nindent 4 }}
+    {{- end }}
 spec:
   type: {{ .Values.service.admin.type }}
   ports:
@@ -34,7 +34,7 @@ metadata:
   namespace: {{ .Release.Namespace }}
   labels:
     app.kubernetes.io/component: admin
-{{ include "hydra.labels" . | indent 4 }}
+    {{- include "hydra.labels" . | nindent 4 }}
 {{- with .Values.serviceMonitor.labels }}
   {{- toYaml . | nindent 4 }}
 {{- end }}
@@ -44,7 +44,7 @@ metadata:
   {{- end }}
 spec:
   endpoints:
-  - path: /metrics/prometheus
+  - path: {{ .Values.service.admin.metricsPath }}
     port: {{ .Values.service.admin.name }}
     scheme: {{ .Values.serviceMonitor.scheme }}
     interval: {{ .Values.serviceMonitor.scrapeInterval }}

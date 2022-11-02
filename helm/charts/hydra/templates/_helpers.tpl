@@ -191,3 +191,15 @@ Check the migration type value and fail if unexpected
   {{- end }}  
 {{- end }}
 {{- end }}
+
+{{/*
+Common labels for the janitor cron job
+*/}}
+{{- define "hydra.janitor.labels" -}}
+"app.kubernetes.io/name": {{ printf "%s-janitor" (include "hydra.name" .) | quote }}
+"app.kubernetes.io/instance": {{ .Release.Name | quote }}
+"app.kubernetes.io/version": {{ include "hydra.version" . | quote }}
+"app.kubernetes.io/managed-by": {{ .Release.Service | quote }}
+"app.kubernetes.io/component": janitor
+"helm.sh/chart": {{ include "hydra.chart" . | quote }}
+{{- end -}}

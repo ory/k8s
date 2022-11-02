@@ -183,6 +183,9 @@ statefulSet:
       ory.sh/pod_annotation: kratos_courier
 
 job:
+  extraEnv:
+    - name: LOREM
+      value: IPSUM
   extraInitContainers: |
     - name: "hello-world"
       image: "alpine:latest"

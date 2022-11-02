@@ -5,14 +5,14 @@ metadata:
   name: {{ include "hydra.fullname" . }}-public
   namespace: {{ .Release.Namespace }}
   labels:
-{{ include "hydra.labels" . | indent 4 }}
+    {{- include "hydra.labels" . | nindent 4 }}
     {{- with .Values.service.public.labels }}
       {{- toYaml . | nindent 4 }}
     {{- end }}
-  {{- with .Values.service.public.annotations }}
   annotations:
-    {{- toYaml . | nindent 4 }}
-  {{- end }}
+    {{- with .Values.service.public.annotations }}
+      {{- toYaml . | nindent 4 }}
+    {{- end }}
 spec:
   type: {{ .Values.service.public.type }}
   ports:

@@ -10,7 +10,7 @@ Access Control Policies as a Server
 
 | Name | Email | Url |
 | ---- | ------ | --- |
-| ORY Team | hi@ory.sh | https://www.ory.sh/ |
+| ORY Team | <hi@ory.sh> | <https://www.ory.sh/> |
 
 ## Source Code
 
@@ -22,8 +22,10 @@ Access Control Policies as a Server
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | configmap.hashSumEnabled | bool | `true` | switch to false to prevent checksum annotations being maintained and propogated to the pods |
-| deployment | object | `{"affinity":{},"annotations":{},"automountServiceAccountToken":true,"autoscaling":{"enabled":false,"maxReplicas":100,"minReplicas":1,"targetCPUUtilizationPercentage":80},"extraContainers":"","extraEnv":[],"extraInitContainers":{},"extraLabels":{},"extraPorts":[],"extraVolumeMounts":[],"extraVolumes":[],"livenessProbe":{"failureThreshold":5,"initialDelaySeconds":30,"periodSeconds":10},"nodeSelector":{},"podAnnotations":{},"podMetadata":{"annotations":{},"labels":{}},"podSecurityContext":{},"readinessProbe":{"failureThreshold":5,"initialDelaySeconds":30,"periodSeconds":10},"resources":{},"tolerations":[]}` | Configure the probes for when the deployment is considered ready and ongoing health check |
+| deployment | object | `{"affinity":{},"annotations":{},"automigration":{"extraEnv":[]},"automountServiceAccountToken":true,"autoscaling":{"enabled":false,"maxReplicas":100,"minReplicas":1,"targetCPUUtilizationPercentage":80},"extraContainers":"","extraEnv":[],"extraInitContainers":{},"extraLabels":{},"extraPorts":[],"extraVolumeMounts":[],"extraVolumes":[],"livenessProbe":{"failureThreshold":5,"initialDelaySeconds":30,"periodSeconds":10},"nodeSelector":{},"podAnnotations":{},"podMetadata":{"annotations":{},"labels":{}},"podSecurityContext":{},"readinessProbe":{"failureThreshold":5,"initialDelaySeconds":30,"periodSeconds":10},"resources":{},"tolerations":[]}` | Configure the probes for when the deployment is considered ready and ongoing health check |
 | deployment.annotations | object | `{}` | Add custom annotations to the deployment |
+| deployment.automigration | object | `{"extraEnv":[]}` | Parameters for the automigration initContainer |
+| deployment.automigration.extraEnv | list | `[]` | Array of extra envs to be passed to the initContainer. Kubernetes format is expected - name: FOO   value: BAR |
 | deployment.autoscaling | object | `{"enabled":false,"maxReplicas":100,"minReplicas":1,"targetCPUUtilizationPercentage":80}` | Autoscaling for keto deployment |
 | deployment.extraContainers | string | `""` | If you want to add extra sidecar containers. |
 | deployment.extraEnv | list | `[]` | Array of extra Envs to be added to the deployment. K8s format expected - name: FOO   value: BAR |
@@ -41,15 +43,17 @@ Access Control Policies as a Server
 | fullnameOverride | string | `""` |  |
 | image.pullPolicy | string | `"IfNotPresent"` | Default image pull policy |
 | image.repository | string | `"oryd/keto"` | Ory KETO image |
-| image.tag | string | `"v0.10.0"` |  |
+| image.tag | string | `"v0.10.0"` | Ory KETO version |
 | imagePullSecrets | list | `[]` |  |
 | ingress | object | `{"read":{"annotations":{},"className":"","enabled":false,"hosts":[{"host":"chart-example.local","paths":[{"path":"/read","pathType":"Prefix"}]}],"tls":[]},"write":{"annotations":{},"className":"","enabled":false,"hosts":[{"host":"chart-example.local","paths":[{"path":"/write","pathType":"Prefix"}]}],"tls":[]}}` | Ingress definitions |
-| job | object | `{"annotations":{"helm.sh/hook":"pre-install, pre-upgrade","helm.sh/hook-delete-policy":"before-hook-creation,hook-succeeded","helm.sh/hook-weight":"1"},"automountServiceAccountToken":true,"extraContainers":"","extraInitContainers":"","lifecycle":"","nodeSelector":{},"podMetadata":{"annotations":{},"labels":{}},"serviceAccount":{"annotations":{"helm.sh/hook":"pre-install, pre-upgrade","helm.sh/hook-delete-policy":"before-hook-creation","helm.sh/hook-weight":"0"},"create":true,"name":""},"shareProcessNamespace":false,"spec":{"backoffLimit":10}}` | Values for initialization job |
+| job | object | `{"annotations":{"helm.sh/hook":"pre-install, pre-upgrade","helm.sh/hook-delete-policy":"before-hook-creation,hook-succeeded","helm.sh/hook-weight":"1"},"automountServiceAccountToken":true,"extraContainers":"","extraEnv":[],"extraInitContainers":"","lifecycle":"","nodeSelector":{},"podMetadata":{"annotations":{},"labels":{}},"serviceAccount":{"annotations":{"helm.sh/hook":"pre-install, pre-upgrade","helm.sh/hook-delete-policy":"before-hook-creation","helm.sh/hook-weight":"0"},"create":true,"name":""},"shareProcessNamespace":false,"spec":{"backoffLimit":10}}` | Values for initialization job |
 | job.annotations | object | `{"helm.sh/hook":"pre-install, pre-upgrade","helm.sh/hook-delete-policy":"before-hook-creation,hook-succeeded","helm.sh/hook-weight":"1"}` | If you do want to specify annotations, uncomment the following lines, adjust them as necessary, and remove the curly braces after 'annotations:'. |
 | job.automountServiceAccountToken | bool | `true` | Set automounting of the SA token |
 | job.extraContainers | string | `""` | If you want to add extra sidecar containers. |
+| job.extraEnv | list | `[]` | Array of extra envs to be passed to the job. This takes precedence over deployment variables. Kubernetes format is expected - name: FOO   value: BAR |
 | job.extraInitContainers | string | `""` | If you want to add extra init containers. |
 | job.lifecycle | string | `""` | If you want to add lifecycle hooks. |
+| job.nodeSelector | object | `{}` | Node labels for pod assignment. |
 | job.podMetadata | object | `{"annotations":{},"labels":{}}` | Specify pod metadata, this metadata is added directly to the pod, and not higher objects |
 | job.podMetadata.annotations | object | `{}` | Extra pod level annotations |
 | job.podMetadata.labels | object | `{}` | Extra pod level labels |
@@ -67,11 +71,12 @@ Access Control Policies as a Server
 | keto.config | object | `{"dsn":"memory","namespaces":[{"id":0,"name":"sample"}],"serve":{"metrics":{"port":4468},"read":{"port":4466},"write":{"port":4467}}}` | Direct keto config. Full documentation can be found in https://www.ory.sh/keto/docs/reference/configuration |
 | nameOverride | string | `""` |  |
 | pdb | object | `{"enabled":false,"spec":{"minAvailable":1}}` | PodDistributionBudget configuration |
-| replicaCount | int | `1` |  |
+| replicaCount | int | `1` | Number of replicas in deployment |
 | secret | object | `{"enabled":true,"hashSumEnabled":true,"nameOverride":"","secretAnnotations":{"helm.sh/hook":"pre-install, pre-upgrade","helm.sh/hook-delete-policy":"before-hook-creation","helm.sh/hook-weight":"0","helm.sh/resource-policy":"keep"}}` | Secret management |
 | secret.enabled | bool | `true` | Switch to false to prevent creating the secret |
 | secret.hashSumEnabled | bool | `true` | switch to false to prevent checksum annotations being maintained and propogated to the pods |
 | secret.nameOverride | string | `""` | Provide custom name of existing secret, or custom name of secret to be created |
+| secret.secretAnnotations | object | `{"helm.sh/hook":"pre-install, pre-upgrade","helm.sh/hook-delete-policy":"before-hook-creation","helm.sh/hook-weight":"0","helm.sh/resource-policy":"keep"}` | Annotations to be added to secret. Annotations are added only when secret is being created. Existing secret will not be modified. |
 | securityContext | object | `{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"privileged":false,"readOnlyRootFilesystem":true,"runAsNonRoot":true,"runAsUser":100}` | Default security context configuration |
 | service | object | `{"metrics":{"annotations":{},"enabled":false,"name":"http-metrics","port":80,"type":"ClusterIP"},"read":{"enabled":true,"name":"grpc-read","port":80,"type":"ClusterIP"},"write":{"enabled":true,"name":"grpc-write","port":80,"type":"ClusterIP"}}` | Service configurations |
 | service.metrics | object | `{"annotations":{},"enabled":false,"name":"http-metrics","port":80,"type":"ClusterIP"}` | Metrics service |
@@ -93,4 +98,4 @@ Access Control Policies as a Server
 | watcher.podMetadata.labels | object | `{}` | Extra pod level labels |
 
 ----------------------------------------------
-Autogenerated from chart metadata using [helm-docs v1.5.0](https://github.com/norwoodj/helm-docs/releases/v1.5.0)
+Autogenerated from chart metadata using [helm-docs v1.11.0](https://github.com/norwoodj/helm-docs/releases/v1.11.0)

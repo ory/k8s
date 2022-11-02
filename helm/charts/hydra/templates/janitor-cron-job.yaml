@@ -1,0 +1,107 @@
+{{- if .Values.janitor.enabled -}}
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: {{ include "hydra.fullname" . }}-janitor
+  {{- if .Release.Namespace }}
+  namespace: {{ .Release.Namespace }}
+  {{- end }}
+  labels:
+    {{- include "hydra.janitor.labels" . | nindent 4 }}
+    {{- with .Values.cronjob.janitor.labels }}
+      {{- toYaml . | nindent 4 }}
+    {{- end }}
+  annotations:
+    {{- with .Values.cronjob.janitor.annotations }}
+      {{- toYaml . | nindent 4 }}
+    {{- end }}
+spec:
+  concurrencyPolicy: Forbid
+  schedule: {{ .Values.cronjob.janitor.schedule | quote }}
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          labels:
+            {{- include "hydra.janitor.labels" . | nindent 12 }}
+            {{- with .Values.cronjob.janitor.labels }}
+              {{- toYaml . | nindent 12 }}
+            {{- end }}
+            {{- with .Values.cronjob.janitor.podMetadata.labels }}
+              {{- toYaml . | nindent 12 }}
+            {{- end }}
+          annotations:
+            {{- include "hydra.annotations.checksum" . | nindent 12 -}}
+            {{- with .Values.cronjob.janitor.annotations }}
+              {{- toYaml . | nindent 12 }}
+            {{- end }}
+            {{- with $.Values.cronjob.janitor.podMetadata.annotations }}
+              {{- toYaml . | nindent 12 }}
+            {{- end }}
+        spec:
+          restartPolicy: OnFailure
+          {{- with .Values.imagePullSecrets }}
+          imagePullSecrets:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          volumes:
+            - name: {{ include "hydra.name" . }}-config-volume
+              configMap:
+                name: {{ include "hydra.fullname" . }}
+          containers:
+            - name: janitor
+              image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+              imagePullPolicy: {{ .Values.image.pullPolicy }}
+              {{- with .Values.cronjob.janitor.securityContext }}
+              securityContext:
+                {{- toYaml . | nindent 16 }}
+              {{- end }}
+              command: ["hydra"]
+              {{- if .Values.cronjob.janitor.customArgs }}
+              args: {{- toYaml .Values.cronjob.janitor.customArgs | nindent 14 }}
+              {{- else }}
+              args:
+                - janitor
+                {{- if .Values.janitor.cleanupGrants }}
+                - --grants
+                {{- end }}
+                {{- if .Values.janitor.cleanupRequests }}
+                - --requests
+                {{- end }}
+                {{- if .Values.janitor.cleanupTokens }}
+                - --tokens
+                {{- end }}
+                - --batch-size
+                - {{ .Values.janitor.batchSize | quote }}
+                - --limit
+                - {{ .Values.janitor.limit | quote }}
+                - --config
+                - /etc/config/hydra.yaml
+              {{- end }}
+              env:
+              {{- if not (empty ( include "hydra.dsn" . )) }}
+                - name: DSN
+                  valueFrom:
+                    secretKeyRef:
+                      name: {{ include "hydra.secretname" . }}
+                      key: dsn
+              {{- end }}
+              resources:
+                {{- toYaml .Values.cronjob.janitor.resources | nindent 16 }}
+              volumeMounts:
+                - name: {{ include "hydra.name" . }}-config-volume
+                  mountPath: /etc/config
+                  readOnly: true
+          {{- with .Values.cronjob.janitor.nodeSelector }}
+          nodeSelector:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with .Values.cronjob.janitor.tolerations }}
+          tolerations:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with .Values.cronjob.janitor.affinity }}
+          affinity:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+{{- end }}

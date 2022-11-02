@@ -41,6 +41,9 @@ deployment:
       containerPort: 4469
       protocol: TCP
 job:
+  extraEnv:
+    - name: LOREM
+      value: IPSUM
   extraInitContainers: |
     - name: "hello-world"
       image: "alpine:latest"
