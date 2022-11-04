@@ -12,7 +12,7 @@ export K3SIMAGE := docker.io/rancher/k3s:v1.22.5-k3s1
 	HELM_INSTALL_DIR=.bin bash <(curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3) -v v3.3.4 --no-sudo
 
 .bin/ory: Makefile
-	curl https://raw.githubusercontent.com/ory/meta/master/install.sh | bash -s -- -b .bin ory v0.1.47
+	curl https://raw.githubusercontent.com/ory/meta/master/install.sh | bash -s -- -b .bin ory v0.1.48
 	touch .bin/ory
 
 release: .bin/yq .bin/helm
@@ -94,7 +94,7 @@ helm-validate:
 	hacks/helm-validate.sh ${HELM_CHART}
 
 format: .bin/goimports .bin/ory node_modules
-	.bin/ory dev headers license
+	.bin/ory dev headers copyright
 	.bin/goimports -w .
 	npm exec -- prettier --write .
 
