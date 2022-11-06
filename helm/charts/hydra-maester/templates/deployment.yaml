@@ -50,6 +50,9 @@ spec:
             - --metrics-addr=127.0.0.1:8080
             - --hydra-url=http://{{ .Values.adminService.name | default ( include "hydra-maester.adminService" . ) }}
             - --hydra-port={{ .Values.adminService.port | default 4445 }}
+            {{- with .Values.adminService.endpoint }}
+            - --endpoint={{ . }}
+            {{- end }}
             {{- if .Values.forwardedProto }}
             - --forwarded-proto={{ .Values.forwardedProto }}
             {{- end }}

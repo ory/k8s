@@ -28,6 +28,9 @@ adminService:
   name:
   # -- Service port
   port:
+  # -- Set the clients endpoint, should be `/clients` for Hydra 1.x and
+  # `/admin/clients` for Hydra 2.x
+  endpoint: /admin/clients
 
 forwardedProto:
 
