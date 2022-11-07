@@ -8,7 +8,8 @@ A Helm chart for Kubernetes
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| adminService | object | `{"name":null,"port":null}` | Connection data to admin service of Hydra |
+| adminService | object | `{"endpoint":"/admin/clients","name":null,"port":null}` | Connection data to admin service of Hydra |
+| adminService.endpoint | string | `"/admin/clients"` | Set the clients endpoint, should be `/clients` for Hydra 1.x and `/admin/clients` for Hydra 2.x |
 | adminService.name | string | `nil` | Service name |
 | adminService.port | string | `nil` | Service port |
 | affinity | object | `{}` | Configure node affinity |
