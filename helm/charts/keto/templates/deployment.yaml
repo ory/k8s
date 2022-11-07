@@ -13,6 +13,7 @@
 {{- $nodeSelector := ternary .Values.deployment.nodeSelector .Values.nodeSelector (not (empty .Values.deployment.nodeSelector )) -}}
 {{- $affinity := ternary .Values.deployment.affinity .Values.affinity (not (empty .Values.deployment.affinity )) -}}
 {{- $tolerations := ternary .Values.deployment.tolerations .Values.tolerations (not (empty .Values.deployment.tolerations )) -}}
+{{- $topologySpreadConstraints := ternary .Values.deployment.topologySpreadConstraints .Values.topologySpreadConstraints (not (empty .Values.deployment.topologySpreadConstraints )) -}}
 {{- include "keto.automigration.typeVerification" . -}}
 {{- $migrationExtraEnv := ternary .Values.deployment.automigration.extraEnv .Values.deployment.extraEnv (not (empty .Values.deployment.automigration.extraEnv )) -}}
 
@@ -173,5 +174,9 @@ spec:
       {{- end }}
       {{- with $tolerations }}
       tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with $topologySpreadConstraints }}
+      topologySpreadConstraints:
         {{- toYaml . | nindent 8 }}
       {{- end }}

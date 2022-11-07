@@ -71,6 +71,16 @@ deployment:
   # -- Deployment level extra labels
   extraLabels: {}
 
+  # -- Configure pod topologySpreadConstraints.
+  topologySpreadConstraints: []
+  # - maxSkew: 1
+  #   topologyKey: topology.kubernetes.io/zone
+  #   whenUnsatisfiable: DoNotSchedule
+  #   labelSelector:
+  #     matchLabels:
+  #       app.kubernetes.io/name: hydra
+  #       app.kubernetes.io/instance: hydra
+
   # -- Specify pod metadata, this metadata is added directly to the pod, and not higher objects
   podMetadata:
     # -- Extra pod level labels

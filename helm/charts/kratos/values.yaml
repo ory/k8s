@@ -263,6 +263,16 @@ deployment:
   # -- Configure node tolerations.
   tolerations: []
 
+  # -- Configure pod topologySpreadConstraints.
+  topologySpreadConstraints: []
+  # - maxSkew: 1
+  #   topologyKey: topology.kubernetes.io/zone
+  #   whenUnsatisfiable: DoNotSchedule
+  #   labelSelector:
+  #     matchLabels:
+  #       app.kubernetes.io/name: kratos
+  #       app.kubernetes.io/instance: kratos
+
   labels: {}
   #      If you do want to specify additional labels, uncomment the following
   #      lines, adjust them as necessary, and remove the curly braces after 'labels:'.
@@ -368,6 +378,16 @@ statefulSet:
   # If you do want to specify node labels, uncomment the following
   # lines, adjust them as necessary, and remove the curly braces after 'nodeSelector:'.
   #   foo: bar
+
+  # -- Configure pod topologySpreadConstraints.
+  topologySpreadConstraints: []
+  # - maxSkew: 1
+  #   topologyKey: topology.kubernetes.io/zone
+  #   whenUnsatisfiable: DoNotSchedule
+  #   labelSelector:
+  #     matchLabels:
+  #       app.kubernetes.io/name: kratos
+  #       app.kubernetes.io/instance: kratos
 
   log:
     format: json
