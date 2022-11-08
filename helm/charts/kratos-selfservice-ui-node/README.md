@@ -10,11 +10,12 @@ A Helm chart for ORY Kratos's example ui for Kubernetes
 |-----|------|---------|-------------|
 | affinity | object | `{}` |  |
 | baseUrl | string | `""` | The baseUrl |
-| deployment | object | `{"annotations":{},"automountServiceAccountToken":false,"extraEnv":[],"extraVolumeMounts":[],"extraVolumes":[],"labels":{},"nodeSelector":{},"resources":{},"tolerations":[]}` | Deployment configuration |
+| deployment | object | `{"annotations":{},"automountServiceAccountToken":false,"extraEnv":[],"extraVolumeMounts":[],"extraVolumes":[],"labels":{},"nodeSelector":{},"resources":{},"tolerations":[],"topologySpreadConstraints":[]}` | Deployment configuration |
 | deployment.extraEnv | list | `[]` | Array of extra envs to be passed to the deployment. Kubernetes format is expected - name: FOO   value: BAR |
 | deployment.extraVolumes | list | `[]` | If you want to mount external volume For example, mount a secret containing Certificate root CA to verify database TLS connection. |
 | deployment.nodeSelector | object | `{}` | Node labels for pod assignment. |
 | deployment.tolerations | list | `[]` | Configure node tolerations. |
+| deployment.topologySpreadConstraints | list | `[]` | Configure pod topologySpreadConstraints. |
 | fullnameOverride | string | `""` |  |
 | image | object | `{"pullPolicy":"IfNotPresent","repository":"oryd/kratos-selfservice-ui-node","tag":"v0.10.1"}` | Deployment image settings |
 | image.tag | string | `"v0.10.1"` | ORY KRATOS VERSION |

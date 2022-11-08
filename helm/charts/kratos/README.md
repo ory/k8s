@@ -12,7 +12,7 @@ A ORY Kratos Helm chart for Kubernetes
 | autoscaling | object | `{"enabled":false,"maxReplicas":3,"minReplicas":1,"targetCPUUtilizationPercentage":80}` | Horizontal pod autoscaling configuration |
 | configmap.annotations | object | `{}` | If you do want to specify annotations for configmap, uncomment the following lines, adjust them as necessary, and remove the curly braces after 'annotations:'. |
 | configmap.hashSumEnabled | bool | `true` | switch to false to prevent checksum annotations being maintained and propogated to the pods |
-| deployment | object | `{"annotations":{},"automigration":{"extraEnv":[]},"automountServiceAccountToken":true,"customLivenessProbe":{},"customReadinessProbe":{},"extraArgs":[],"extraContainers":"","extraEnv":[],"extraInitContainers":"","extraVolumeMounts":[],"extraVolumes":[],"labels":{},"livenessProbe":{"failureThreshold":5,"initialDelaySeconds":30,"periodSeconds":10},"nodeSelector":{},"podMetadata":{"annotations":{},"labels":{}},"readinessProbe":{"failureThreshold":5,"initialDelaySeconds":30,"periodSeconds":10},"resources":{},"serviceAccount":{"annotations":{},"create":true,"name":""},"tolerations":[]}` | Configuration options for the k8s deployment |
+| deployment | object | `{"annotations":{},"automigration":{"extraEnv":[]},"automountServiceAccountToken":true,"customLivenessProbe":{},"customReadinessProbe":{},"extraArgs":[],"extraContainers":"","extraEnv":[],"extraInitContainers":"","extraVolumeMounts":[],"extraVolumes":[],"labels":{},"livenessProbe":{"failureThreshold":5,"initialDelaySeconds":30,"periodSeconds":10},"nodeSelector":{},"podMetadata":{"annotations":{},"labels":{}},"readinessProbe":{"failureThreshold":5,"initialDelaySeconds":30,"periodSeconds":10},"resources":{},"serviceAccount":{"annotations":{},"create":true,"name":""},"tolerations":[],"topologySpreadConstraints":[]}` | Configuration options for the k8s deployment |
 | deployment.automigration | object | `{"extraEnv":[]}` | Parameters for the automigration initContainer |
 | deployment.automigration.extraEnv | list | `[]` | Array of extra envs to be passed to the initContainer. Kubernetes format is expected - name: FOO   value: BAR |
 | deployment.customLivenessProbe | object | `{}` | Configure a custom livenessProbe. This overwrites the default object |
@@ -34,6 +34,7 @@ A ORY Kratos Helm chart for Kubernetes
 | deployment.serviceAccount.create | bool | `true` | Specifies whether a service account should be created |
 | deployment.serviceAccount.name | string | `""` | The name of the service account to use. If not set and create is true, a name is generated using the fullname template |
 | deployment.tolerations | list | `[]` | Configure node tolerations. |
+| deployment.topologySpreadConstraints | list | `[]` | Configure pod topologySpreadConstraints. |
 | fullnameOverride | string | `""` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"oryd/kratos"` | ORY KRATOS image |
@@ -128,6 +129,7 @@ A ORY Kratos Helm chart for Kubernetes
 | statefulSet.podMetadata.annotations | object | `{}` | Extra pod level annotations |
 | statefulSet.podMetadata.labels | object | `{}` | Extra pod level labels |
 | statefulSet.resources | object | `{}` |  |
+| statefulSet.topologySpreadConstraints | list | `[]` | Configure pod topologySpreadConstraints. |
 | strategy | object | `{"rollingUpdate":{"maxSurge":"30%","maxUnavailable":0},"type":"RollingUpdate"}` | Deployment update strategy |
 | tolerations | list | `[]` | If you do want to specify node labels, uncomment the following lines, adjust them as necessary, and remove the curly braces after 'annotations:'.   foo: bar Configure node tolerations. |
 | watcher | object | `{"enabled":false,"image":"oryd/k8s-toolbox:0.0.4","mountFile":"","podMetadata":{"annotations":{},"labels":{}}}` | Configuration of the watcher sidecar |

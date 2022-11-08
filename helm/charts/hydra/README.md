@@ -76,6 +76,7 @@ A Helm chart for deploying ORY Hydra in Kubernetes
 | deployment.serviceAccount.create | bool | `true` | Specifies whether a service account should be created |
 | deployment.serviceAccount.name | string | `""` | The name of the service account to use. If not set and create is true, a name is generated using the fullname template |
 | deployment.tolerations | list | `[]` | Configure node tolerations. |
+| deployment.topologySpreadConstraints | list | `[]` | Configure pod topologySpreadConstraints. |
 | fullnameOverride | string | `""` | Full chart name override |
 | hydra | object | `{"automigration":{"customArgs":[],"customCommand":[],"enabled":false,"type":"job"},"config":{"secrets":{},"serve":{"admin":{"port":4445},"public":{"port":4444},"tls":{"allow_termination_from":["10.0.0.0/8","172.16.0.0/12","192.168.0.0/16"]}},"urls":{"self":{}}},"dev":false}` | Configure ORY Hydra itself |
 | hydra-maester | object | `{"adminService":{"name":"","port":null}}` | Values for the hydra admin service arguments to hydra-maester |

@@ -56,6 +56,7 @@ A Helm chart for deploying ORY Oathkeeper in Kubernetes
 | deployment.serviceAccount.create | bool | `true` | Specifies whether a service account should be created |
 | deployment.serviceAccount.name | string | `""` | The name of the service account to use. If not set and create is true, a name is generated using the fullname template |
 | deployment.tolerations | list | `[]` | Configure node tolerations. |
+| deployment.topologySpreadConstraints | list | `[]` | Configure pod topologySpreadConstraints. |
 | fullnameOverride | string | `""` | Full chart name override |
 | global | object | `{"ory":{"oathkeeper":{"maester":{"mode":"controller"}}}}` | Two possible modes are: controller or sidecar |
 | image.pullPolicy | string | `"IfNotPresent"` | Image pull policy |

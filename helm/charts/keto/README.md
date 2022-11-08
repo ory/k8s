@@ -22,7 +22,7 @@ Access Control Policies as a Server
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | configmap.hashSumEnabled | bool | `true` | switch to false to prevent checksum annotations being maintained and propogated to the pods |
-| deployment | object | `{"affinity":{},"annotations":{},"automigration":{"extraEnv":[]},"automountServiceAccountToken":true,"autoscaling":{"enabled":false,"maxReplicas":100,"minReplicas":1,"targetCPUUtilizationPercentage":80},"extraContainers":"","extraEnv":[],"extraInitContainers":{},"extraLabels":{},"extraPorts":[],"extraVolumeMounts":[],"extraVolumes":[],"livenessProbe":{"failureThreshold":5,"initialDelaySeconds":30,"periodSeconds":10},"nodeSelector":{},"podAnnotations":{},"podMetadata":{"annotations":{},"labels":{}},"podSecurityContext":{},"readinessProbe":{"failureThreshold":5,"initialDelaySeconds":30,"periodSeconds":10},"resources":{},"tolerations":[]}` | Configure the probes for when the deployment is considered ready and ongoing health check |
+| deployment | object | `{"affinity":{},"annotations":{},"automigration":{"extraEnv":[]},"automountServiceAccountToken":true,"autoscaling":{"enabled":false,"maxReplicas":100,"minReplicas":1,"targetCPUUtilizationPercentage":80},"extraContainers":"","extraEnv":[],"extraInitContainers":{},"extraLabels":{},"extraPorts":[],"extraVolumeMounts":[],"extraVolumes":[],"livenessProbe":{"failureThreshold":5,"initialDelaySeconds":30,"periodSeconds":10},"nodeSelector":{},"podAnnotations":{},"podMetadata":{"annotations":{},"labels":{}},"podSecurityContext":{},"readinessProbe":{"failureThreshold":5,"initialDelaySeconds":30,"periodSeconds":10},"resources":{},"tolerations":[],"topologySpreadConstraints":[]}` | Configure the probes for when the deployment is considered ready and ongoing health check |
 | deployment.annotations | object | `{}` | Add custom annotations to the deployment |
 | deployment.automigration | object | `{"extraEnv":[]}` | Parameters for the automigration initContainer |
 | deployment.automigration.extraEnv | list | `[]` | Array of extra envs to be passed to the initContainer. Kubernetes format is expected - name: FOO   value: BAR |
@@ -39,6 +39,7 @@ Access Control Policies as a Server
 | deployment.podMetadata.annotations | object | `{}` | Extra pod level annotations |
 | deployment.podMetadata.labels | object | `{}` | Extra pod level labels |
 | deployment.podSecurityContext | object | `{}` | Set custom security context for pods |
+| deployment.topologySpreadConstraints | list | `[]` | Configure pod topologySpreadConstraints. |
 | extraServices | object | `{}` | Extra services to be deployed |
 | fullnameOverride | string | `""` |  |
 | image.pullPolicy | string | `"IfNotPresent"` | Default image pull policy |

@@ -25,6 +25,7 @@ A Helm chart for Kubernetes
 | deployment.resources | object | `{}` |  |
 | deployment.securityContext | object | `{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"privileged":false,"readOnlyRootFilesystem":true,"runAsNonRoot":true,"runAsUser":1000}` | Default security context |
 | deployment.tolerations | list | `[]` | Configure node tolerations. |
+| deployment.topologySpreadConstraints | list | `[]` | Configure pod topologySpreadConstraints. |
 | enabledNamespaces | list | `[]` | The Controller have CREATE and READ access to all Secrets in the namespaces listed below. |
 | forwardedProto | string | `nil` |  |
 | image.pullPolicy | string | `"IfNotPresent"` | Image pull policy |
