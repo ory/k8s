@@ -16,7 +16,7 @@ metadata:
   namespace: {{ .Release.Namespace }}
   {{- end }}
   labels:
-{{ include "kratos.labels" . | indent 4 }}
+    {{- include "kratos.labels" . | nindent 4 }}
     {{- with $labels }}
       {{- toYaml . | nindent 4 }}
     {{- end }}
@@ -67,7 +67,7 @@ spec:
               mountPath: /etc/config
               readOnly: true
             {{- if $extraVolumeMounts }}
-{{ toYaml $extraVolumeMounts | indent 12 }}
+              {{- toYaml $extraVolumeMounts | nindent 12 }}
             {{- end }}
             {{- $root := . -}}
             {{- range $method, $methodEntry := .Values.kratos.emailTemplates }}
@@ -111,7 +111,7 @@ spec:
                   name: {{ include "kratos.secretname" . }}
                   key: smtpConnectionURI
             {{- if $extraEnv }}
-{{ toYaml $extraEnv | indent 12 }}
+              {{- toYaml $extraEnv | nindent 12 }}
             {{- end }}
           resources:
               {{- toYaml $resources | nindent 12 }}
@@ -120,18 +120,18 @@ spec:
             {{- toYaml .Values.securityContext | nindent 12 }}
           {{- end }}
         {{- if $extraContainers }}
-{{ tpl $extraContainers . | indent 8 }}
+          {{- tpl $extraContainers . | nindent 8 }}
         {{- end }}
       {{- if $extraInitContainers }}
       initContainers:
-{{ tpl $extraInitContainers . | indent 8 }}
+        {{- tpl $extraInitContainers . | nindent 8 }}
       {{- end }}
       volumes:
         - name: {{ include "kratos.fullname" . }}-config-volume
           configMap:
             name: {{ include "kratos.fullname" . }}-config
         {{- if $extraVolumes }}
-{{ toYaml $extraVolumes | indent 8 }}
+          {{- toYaml $extraVolumes | nindent 8 }}
         {{- end }}
         {{- $root := . -}}
         {{- range $method, $methodEntry := .Values.kratos.emailTemplates }}

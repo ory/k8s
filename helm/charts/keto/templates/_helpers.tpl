@@ -66,6 +66,9 @@ helm.sh/chart: {{ include "keto.chart" . }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
+{{- if $.Values.watcher.enabled }}
+{{ printf "\"%s\": \"%s\"" $.Values.watcher.watchLabelKey (include "keto.name" .) }}
+{{- end }}
 {{- end }}
 
 {{/*

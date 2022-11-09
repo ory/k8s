@@ -57,7 +57,7 @@ spec:
             - name: WATCH_FILE
               value: {{ .Values.watcher.mountFile | quote }}
             - name: DEPLOYMENT_SELECTOR
-              value: 'app.kubernetes.io/name={{ include "hydra.name" . }}'
+              value: '{{ $.Values.watcher.watchLabelKey }}={{ include "hydra.name" . }}'
           volumeMounts:
           {{- with .Values.deployment.extraVolumeMounts }}
             {{- toYaml . | nindent 12 }}
