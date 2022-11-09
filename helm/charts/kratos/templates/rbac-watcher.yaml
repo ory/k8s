@@ -23,7 +23,9 @@ rules:
       - watch
       - get
   - apiGroups: ["apps"]
-    resources: ["deployments"]
+    resources:
+      - deployments
+      - statefulsets
     verbs:
       - get
       - list

@@ -56,7 +56,7 @@ spec:
               value: {{ .Release.Namespace | quote }}
             - name: WATCH_FILE
               value: {{ .Values.watcher.mountFile | quote }}
-            - name: DEPLOYMENT_SELECTOR
+            - name: LABEL_SELECTOR
               value: '{{ $.Values.watcher.watchLabelKey }}={{ include "keto.name" . }}'
           volumeMounts:
           {{- with .Values.deployment.extraVolumeMounts }}
