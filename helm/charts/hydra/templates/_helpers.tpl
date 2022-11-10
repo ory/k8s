@@ -53,6 +53,9 @@ Common labels
 "app.kubernetes.io/version": {{ include "hydra.version" . | quote }}
 "app.kubernetes.io/managed-by": {{ .Release.Service | quote }}
 "helm.sh/chart": {{ include "hydra.chart" . | quote }}
+{{- if $.Values.watcher.enabled }}
+{{ printf "\"%s\": \"%s\"" $.Values.watcher.watchLabelKey (include "hydra.name" .) }}
+{{- end }}
 {{- end -}}
 
 {{/*

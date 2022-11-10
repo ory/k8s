@@ -3,3 +3,10 @@ global:
     auth:
       database: ory
       postgresPassword: ory
+primary:
+  initdb:
+    scripts:
+      init.sql: |
+        CREATE DATABASE ory_kratos;
+        CREATE DATABASE ory_keto;
+        CREATE DATABASE ory_hydra;

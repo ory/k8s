@@ -15,13 +15,17 @@ metadata:
   namespace: {{ .Release.Namespace }}
 rules:
   - apiGroups: ["apps"]
-    resources: ["deployments"]
+    resources: 
+      - deployments
+      - statefulsets
     verbs: 
       - list
       - watch
       - get
   - apiGroups: ["apps"]
-    resources: ["deployments"]
+    resources:
+      - deployments
+      - statefulsets
     verbs:
       - get
       - list
@@ -30,6 +34,7 @@ rules:
       - watch
     resourceNames:
       - {{ include "kratos.fullname" . }}
+      - {{ include "kratos.fullname" . }}-courier
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding

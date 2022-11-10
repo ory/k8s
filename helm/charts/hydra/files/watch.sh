@@ -12,6 +12,6 @@ while true; do
     inotifywait --event DELETE_SELF "${WATCH_FILE}" |
         while read path _ file; do
            echo "---> $path$file modified"
-           rollOut "${DEPLOYMENT_SELECTOR}"
+           rollOut "${LABEL_SELECTOR}"
         done
 done

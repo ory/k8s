@@ -12,7 +12,7 @@ hydra:
       - hydra
   dev: true
   config:
-    dsn: "postgres://postgres:ory@postgresql.default.svc.cluster.local/ory?sslmode=disable&max_conn_lifetime=10s"
+    dsn: "postgres://postgres:ory@postgresql.default.svc.cluster.local/ory_kratos?sslmode=disable&max_conn_lifetime=10s"
     secrets:
       system:
         - "OG5XbmxXa3dYeGplQXpQanYxeEFuRUFa"
