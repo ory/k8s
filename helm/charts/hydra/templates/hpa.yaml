@@ -14,21 +14,6 @@ spec:
   minReplicas: {{ .Values.deployment.autoscaling.minReplicas }}
   maxReplicas: {{ .Values.deployment.autoscaling.maxReplicas }}
   metrics:
-  {{- if .Values.deployment.autoscaling.targetCPUUtilizationPercentage }}
-    - type: Resource
-      resource:
-        name: cpu
-        target:
-          type: Utilization
-          averageUtilization: {{ .Values.deployment.autoscaling.targetCPUUtilizationPercentage }}
-  {{- else if .Values.deployment.autoscaling.targetCPUAverageValue }}
-    - type: Resource
-      resource:
-        name: cpu
-        target:
-          type: AverageValue
-          averageValue: {{ .Values.deployment.autoscaling.targetCPUAverageValue }}
-  {{- end }}
   {{- if .Values.deployment.autoscaling.targetMemoryUtilizationPercentage }}
     - type: Resource
       resource:
@@ -43,5 +28,20 @@ spec:
         target:
           type: AverageValue
           averageValue: {{ .Values.deployment.autoscaling.targetMemoryAverageValue }}
+  {{- end }}
+  {{- if .Values.deployment.autoscaling.targetCPUUtilizationPercentage }}
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: {{ .Values.deployment.autoscaling.targetCPUUtilizationPercentage }}
+  {{- else if .Values.deployment.autoscaling.targetCPUAverageValue }}
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: AverageValue
+          averageValue: {{ .Values.deployment.autoscaling.targetCPUAverageValue }}
   {{- end }}
 {{- end }}
