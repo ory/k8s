@@ -1,3 +1,4 @@
+{{- if .Values.courier.enabled -}}
 {{- $resources := ternary .Values.deployment.resources .Values.resources (not (empty .Values.deployment.resources )) -}}
 {{- $annotations := ternary .Values.statefulSet.annotations .Values.deployment.annotations (not (empty .Values.statefulSet.annotations )) -}}
 {{- $labels := ternary .Values.statefulSet.labels .Values.deployment.labels (not (empty .Values.statefulSet.labels )) -}}
@@ -149,3 +150,4 @@ spec:
       topologySpreadConstraints:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+{{- end }}

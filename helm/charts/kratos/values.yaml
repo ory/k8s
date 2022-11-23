@@ -501,6 +501,10 @@ nodeSelector: {}
 # Configure node tolerations.
 tolerations: []
 
+# -- Configuration of the courier
+courier:
+  enabled: true
+
 # -- Configuration of the watcher sidecar
 watcher:
   enabled: false
