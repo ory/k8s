@@ -1,6 +1,6 @@
 # Headless Service for StatefulSet. See https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/#limitations 
 # and https://kubernetes.io/docs/concepts/services-networking/service/#headless-services for details.
-{{- if .Values.courier.enabled -}}
+{{- if .Values.courier.enabled }}
 apiVersion: v1
 kind: Service
 metadata:
