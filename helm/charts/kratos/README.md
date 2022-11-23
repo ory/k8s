@@ -12,6 +12,7 @@ A ORY Kratos Helm chart for Kubernetes
 | autoscaling | object | `{"enabled":false,"maxReplicas":3,"minReplicas":1,"targetCPUUtilizationPercentage":80}` | Horizontal pod autoscaling configuration |
 | configmap.annotations | object | `{}` | If you do want to specify annotations for configmap, uncomment the following lines, adjust them as necessary, and remove the curly braces after 'annotations:'. |
 | configmap.hashSumEnabled | bool | `true` | switch to false to prevent checksum annotations being maintained and propogated to the pods |
+| courier | object | `{"enabled":true}` | Configuration of the courier |
 | deployment | object | `{"annotations":{},"automigration":{"extraEnv":[]},"automountServiceAccountToken":true,"customLivenessProbe":{},"customReadinessProbe":{},"extraArgs":[],"extraContainers":"","extraEnv":[],"extraInitContainers":"","extraVolumeMounts":[],"extraVolumes":[],"labels":{},"livenessProbe":{"failureThreshold":5,"initialDelaySeconds":30,"periodSeconds":10},"nodeSelector":{},"podMetadata":{"annotations":{},"labels":{}},"readinessProbe":{"failureThreshold":5,"initialDelaySeconds":30,"periodSeconds":10},"resources":{},"serviceAccount":{"annotations":{},"create":true,"name":""},"tolerations":[],"topologySpreadConstraints":[]}` | Configuration options for the k8s deployment |
 | deployment.automigration | object | `{"extraEnv":[]}` | Parameters for the automigration initContainer |
 | deployment.automigration.extraEnv | list | `[]` | Array of extra envs to be passed to the initContainer. Kubernetes format is expected - name: FOO   value: BAR |
@@ -132,7 +133,6 @@ A ORY Kratos Helm chart for Kubernetes
 | statefulSet.topologySpreadConstraints | list | `[]` | Configure pod topologySpreadConstraints. |
 | strategy | object | `{"rollingUpdate":{"maxSurge":"30%","maxUnavailable":0},"type":"RollingUpdate"}` | Deployment update strategy |
 | tolerations | list | `[]` | If you do want to specify node labels, uncomment the following lines, adjust them as necessary, and remove the curly braces after 'annotations:'.   foo: bar Configure node tolerations. |
-| courier.enabled | boolean | `true` |  |
 | watcher | object | `{"enabled":false,"image":"oryd/k8s-toolbox:0.0.4","mountFile":"","podMetadata":{"annotations":{},"labels":{}},"watchLabelKey":"ory.sh/watcher"}` | Configuration of the watcher sidecar |
 | watcher.mountFile | string | `""` | Path to mounted file, which wil be monitored for changes. eg: /etc/secrets/my-secret/foo |
 | watcher.podMetadata | object | `{"annotations":{},"labels":{}}` | Specify pod metadata, this metadata is added directly to the pod, and not higher objects |
