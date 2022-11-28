@@ -106,11 +106,13 @@ spec:
                   name: {{ include "kratos.secretname" . }}
                   key: secretsCipher
                   optional: true
+            {{- if .Values.kratos.config.courier.smtp.connection_uri }}
             - name: COURIER_SMTP_CONNECTION_URI
               valueFrom:
                 secretKeyRef:
                   name: {{ include "kratos.secretname" . }}
                   key: smtpConnectionURI
+            {{- end }}
             {{- if $extraEnv }}
               {{- toYaml $extraEnv | nindent 12 }}
             {{- end }}
