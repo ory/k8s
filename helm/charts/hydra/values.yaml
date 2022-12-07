@@ -353,6 +353,9 @@ job:
   # lines, adjust them as necessary, and remove the curly braces after 'nodeSelector:'.
   #   foo: bar
 
+  # -- Configure node tolerations.
+  tolerations: []
+
   # -- If you want to add lifecycle hooks.
   lifecycle: ""
   # lifecycle: |

@@ -47,8 +47,8 @@ A Helm chart for deploying ORY Hydra in Kubernetes
 | deployment.automigration.extraEnv | list | `[]` | Array of extra envs to be passed to the initContainer. Kubernetes format is expected - name: FOO   value: BAR |
 | deployment.automountServiceAccountToken | bool | `true` |  |
 | deployment.autoscaling | object | `{"enabled":false,"maxReplicas":3,"minReplicas":1}` | Configure HPA |
-| deployment.customLivenessProbe | object | `{}` | Configure a custom livenessProbe. This overwrites the default object  |
-| deployment.customReadinessProbe | object | `{}` | Configure a custom readinessProbe. This overwrites the default object   |
+| deployment.customLivenessProbe | object | `{}` | Configure a custom livenessProbe. This overwrites the default object |
+| deployment.customReadinessProbe | object | `{}` | Configure a custom readinessProbe. This overwrites the default object  |
 | deployment.extraContainers | string | `""` | If you want to add extra sidecar containers. |
 | deployment.extraEnv | list | `[]` | Array of extra envs to be passed to the deployment. Kubernetes format is expected - name: FOO   value: BAR |
 | deployment.extraInitContainers | string | `""` | If you want to add extra init containers. |
@@ -87,7 +87,7 @@ A Helm chart for deploying ORY Hydra in Kubernetes
 | hydra.automigration.type | string | `"job"` | Configure the way to execute database migration. Possible values: job, initContainer When set to job, the migration will be executed as a job on release or upgrade. When set to initContainer, the migration will be executed when kratos pod is created Defaults to job |
 | hydra.config | object | `{"secrets":{},"serve":{"admin":{"port":4445},"public":{"port":4444},"tls":{"allow_termination_from":["10.0.0.0/8","172.16.0.0/12","192.168.0.0/16"]}},"urls":{"self":{}}}` | The ORY Hydra configuration. For a full list of available settings, check:  https://www.ory.sh/docs/hydra/reference/configuration |
 | hydra.config.secrets | object | `{}` | The secrets have to be provided as a string slice, example: system:   - "OG5XbmxXa3dYeGplQXpQanYxeEFuRUFa"   - "foo bar 123 456 lorem"   - "foo bar 123 456 lorem 1"   - "foo bar 123 456 lorem 2"   - "foo bar 123 456 lorem 3" |
-| hydra.dev | bool | `false` | Enable dev mode, not secure in production environments  |
+| hydra.dev | bool | `false` | Enable dev mode, not secure in production environments |
 | image.pullPolicy | string | `"IfNotPresent"` | Image pull policy |
 | image.repository | string | `"oryd/hydra"` | ORY Hydra image |
 | image.tag | string | `"v2.0.1"` | ORY Hydra version |
@@ -120,6 +120,7 @@ A Helm chart for deploying ORY Hydra in Kubernetes
 | job.serviceAccount.name | string | `""` | The name of the service account to use. If not set and create is true, a name is generated using the fullname template |
 | job.shareProcessNamespace | bool | `false` | Set sharing process namespace |
 | job.spec.backoffLimit | int | `10` | Set job back off limit |
+| job.tolerations | list | `[]` | Configure node tolerations |
 | maester | object | `{"enabled":true}` | Configures controller setup |
 | nameOverride | string | `""` |  |
 | pdb | object | `{"enabled":false,"spec":{"minAvailable":1}}` | PodDistributionBudget configuration |
