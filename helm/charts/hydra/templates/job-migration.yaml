@@ -104,5 +104,9 @@ spec:
       nodeSelector:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+      {{- with .Values.job.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
   backoffLimit: {{ .Values.job.spec.backoffLimit }}
 {{- end }}

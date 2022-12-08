@@ -72,6 +72,7 @@ A ORY Kratos Helm chart for Kubernetes
 | job.serviceAccount.name | string | `""` | The name of the service account to use. If not set and create is true, a name is generated using the fullname template |
 | job.shareProcessNamespace | bool | `false` | Set sharing process namespace |
 | job.spec.backoffLimit | int | `10` | Set job back off limit |
+| job.tolerations | list | `[]` | Configure node tolerations |
 | kratos.automigration | object | `{"customArgs":[],"customCommand":[],"enabled":false,"type":"job"}` | Enables database migration |
 | kratos.automigration.customArgs | list | `[]` | Ability to override arguments of the entrypoint. Can be used in-depended of customCommand  eg: - sleep 5;   - kratos |
 | kratos.automigration.customCommand | list | `[]` | Ability to override the entrypoint of the automigration container (e.g. to source dynamic secrets or export environment dynamic variables) |
