@@ -97,6 +97,7 @@ format: .bin/goimports .bin/ory node_modules
 	.bin/ory dev headers copyright --type=open-source
 	.bin/goimports -w .
 	npm exec -- prettier --write .
+	helm-docs -c helm/charts/
 
 licenses: .bin/licenses node_modules  # checks open-source licenses
 	.bin/licenses
