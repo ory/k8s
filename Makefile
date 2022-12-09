@@ -47,6 +47,9 @@ k3d-up:
 
 	kubectl apply -R -f hacks/manifests
 
+.PHONY: k3d-run
+k3d-run: k3d-up postgresql prometheus
+
 .PHONY: k3d-down
 k3d-down:
 	k3d cluster delete ory-k8s || true
