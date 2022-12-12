@@ -15,6 +15,7 @@ export K3SIMAGE := docker.io/rancher/k3s:v1.22.5-k3s1
 	curl https://raw.githubusercontent.com/ory/meta/master/install.sh | bash -s -- -b .bin ory v0.1.48
 	touch .bin/ory
 
+.PHONY: release
 release: .bin/yq .bin/helm
 	yq w -i helm/charts/example-idp/Chart.yaml version "${VERSION}"
 	yq w -i helm/charts/hydra-maester/Chart.yaml version "${VERSION}"; \
@@ -38,6 +39,7 @@ release: .bin/yq .bin/helm
 	helm package -d docs/helm/charts/ ./helm/charts/kratos-selfservice-ui-node/ --version "${VERSION}"; \
 	helm repo index docs/helm/charts/
 
+.PHONY: k3d-up
 k3d-up:
 	k3d cluster create --image $${K3SIMAGE} ory-k8s -p "8080:80@server:0" \
 		--k3s-arg=--kube-apiserver-arg="enable-admission-plugins=NodeRestriction,ServiceAccount@server:0" \
@@ -45,24 +47,32 @@ k3d-up:
 
 	kubectl apply -R -f hacks/manifests
 
+.PHONY: k3d-run
+k3d-run: k3d-up postgresql prometheus
+
+.PHONY: k3d-down
 k3d-down:
 	k3d cluster delete ory-k8s || true
 
+.PHONY: postgresql
 postgresql:
 	helm repo add bitnami https://charts.bitnami.com/bitnami
 	helm repo update
 	helm install postgresql bitnami/postgresql -f hacks/values/postgres.yaml
 
+.PHONY: prometheus
 prometheus:
 	helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
 	helm repo update
 	kubectl create ns prometheus --dry-run=client -o yaml | kubectl apply -f -
 	helm install prometheus prometheus-community/kube-prometheus-stack -f hacks/values/prometheus.yaml
 
+.PHONY: ory-repo
 ory-repo:
 	helm repo add ory https://k8s.ory.sh/helm/charts
 	helm repo update
 
+.PHONY: helm-test
 helm-test: k3d-up postgresql prometheus
 	@if [ ! "${HELM_CHART}" ]; then \
 		echo 'No helm chart specified, cancelling, please specify HELM_CHART'; \
@@ -71,6 +81,7 @@ helm-test: k3d-up postgresql prometheus
 	hacks/helm-test.sh ${HELM_CHART}
 	make k3d-down
 
+.PHONY: helm-upgrade
 helm-upgrade: k3d-up postgresql ory-repo prometheus
 	@if [ ! "${HELM_CHART}" ]; then \
 		echo 'No helm chart specified, cancelling, please specify HELM_CHART'; \
@@ -79,6 +90,7 @@ helm-upgrade: k3d-up postgresql ory-repo prometheus
 	hacks/helm-upgrade.sh ${HELM_CHART}
 	make k3d-down
 
+.PHONY: helm-lint
 helm-lint:
 	@if [ ! "${HELM_CHART}" ]; then \
 		echo 'No helm chart specified, cancelling, please specify HELM_CHART'; \
@@ -86,6 +98,7 @@ helm-lint:
 	fi; \
 	helm lint ./helm/charts/${HELM_CHART}/
 
+.PHONY: helm-validate
 helm-validate:
 	@if [ ! "${HELM_CHART}" ]; then \
 		echo 'No helm chart specified, cancelling, please specify HELM_CHART'; \
@@ -93,6 +106,11 @@ helm-validate:
 	fi; \
 	hacks/helm-validate.sh ${HELM_CHART}
 
+.PHONY: helm-docs
+helm-docs:
+	helm-docs -c helm/charts/
+
+.PHONY: format
 format: .bin/goimports .bin/ory node_modules
 	.bin/ory dev headers copyright --type=open-source
 	.bin/goimports -w .

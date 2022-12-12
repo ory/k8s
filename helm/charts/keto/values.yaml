@@ -240,14 +240,28 @@ deployment:
   # https://github.com/kubernetes/kubernetes/issues/57601
   automountServiceAccountToken: true
 
+  # -- Default probe timers
   livenessProbe:
-    initialDelaySeconds: 30
+    initialDelaySeconds: 5
     periodSeconds: 10
     failureThreshold: 5
+  # -- Default probe timers
   readinessProbe:
-    initialDelaySeconds: 30
+    initialDelaySeconds: 5
     periodSeconds: 10
     failureThreshold: 5
+  # -- Default probe timers
+  startupProbe:
+    failureThreshold: 60
+    successThreshold: 1
+    periodSeconds: 1
+    timeoutSeconds: 1
+  # -- Configure a custom livenessProbe. This overwrites the default object
+  customLivenessProbe: {} 
+  # -- Configure a custom readinessProbe. This overwrites the default object  
+  customReadinessProbe: {}
+  # -- Configure a custom startupProbe. This overwrites the default object  
+  customStartupProbe: {}
 
   # -- Add custom annotations to the deployment
   annotations: {}

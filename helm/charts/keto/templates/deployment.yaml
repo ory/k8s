@@ -127,15 +127,41 @@ spec:
               {{- toYaml . | nindent 12 }}
             {{- end }}
           livenessProbe:
+            {{- if .Values.deployment.customLivenessProbe }} 
+              {{- toYaml .Values.deployment.customLivenessProbe | nindent 12 }}
+            {{- else }}
             httpGet:
               path: /health/alive
               port: {{ .Values.keto.config.serve.write.port }}
+              httpHeaders:
+                - name: Host
+                  value: '127.0.0.1'
             {{- toYaml $livenessProbe | nindent 12 }}
+            {{- end }}
           readinessProbe:
+            {{- if .Values.deployment.customReadinessProbe }} 
+              {{- toYaml .Values.deployment.customReadinessProbe | nindent 12 }}
+            {{- else }}
             httpGet:
               path: /health/ready
               port: {{ .Values.keto.config.serve.write.port }}
+              httpHeaders:
+                - name: Host
+                  value: '127.0.0.1'
           {{- toYaml $readinessProbe | nindent 12 }}
+          {{- end }}
+          startupProbe:
+            {{- if .Values.deployment.customStartupProbe }} 
+              {{- toYaml .Values.deployment.customStartupProbe | nindent 12 }}
+            {{- else }}
+            httpGet:
+              path: /health/ready
+              port: {{ .Values.keto.config.serve.write.port }}
+              httpHeaders:
+                - name: Host
+                  value: '127.0.0.1'
+            {{- toYaml .Values.deployment.startupProbe | nindent 12 }}
+            {{- end }}
           resources:
             {{- toYaml $resources | nindent 12 }}
           env:

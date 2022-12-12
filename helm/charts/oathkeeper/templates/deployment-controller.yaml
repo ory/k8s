@@ -115,13 +115,41 @@ spec:
               protocol: TCP
               containerPort: {{ .Values.oathkeeper.config.serve.prometheus.port }}
           livenessProbe:
+            {{- if .Values.deployment.customLivenessProbe }}
+              {{- toYaml .Values.deployment.customLivenessProbe | nindent 12 }}
+            {{- else }}
             httpGet:
               path: /health/alive
               port: http-api
+              httpHeaders:
+                - name: Host
+                  value: '127.0.0.1'
+            {{- toYaml .Values.deployment.livenessProbe | nindent 12 }}
+            {{- end }}
           readinessProbe:
+            {{- if .Values.deployment.customReadinessProbe }}
+              {{- toYaml .Values.deployment.customReadinessProbe | nindent 12 }}
+            {{- else }}
             httpGet:
               path: /health/ready
               port: http-api
+              httpHeaders:
+                - name: Host
+                  value: '127.0.0.1'
+            {{- toYaml .Values.deployment.readinessProbe | nindent 12 }}
+            {{- end }}
+          startupProbe:
+            {{- if .Values.deployment.customStartupProbe }}
+              {{- toYaml .Values.deployment.customStartupProbe | nindent 12 }}
+            {{- else }}
+            httpGet:
+              path: /health/ready
+              port: http-api
+              httpHeaders:
+                - name: Host
+                  value: '127.0.0.1'
+            {{- toYaml .Values.deployment.startupProbe | nindent 12 }}
+            {{- end }}
           resources:
             {{- toYaml .Values.deployment.resources | nindent 12 }}
           {{- if .Values.deployment.securityContext }}

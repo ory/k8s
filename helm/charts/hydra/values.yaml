@@ -279,15 +279,22 @@ deployment:
   # targetCPUUtilizationPercentage: 80
   # targetMemoryUtilizationPercentage: 80
 
-  # -- Configure the probes for when the deployment is considered ready and ongoing health check
+  # -- Default probe timers
   livenessProbe:
-    initialDelaySeconds: 30
+    initialDelaySeconds: 5
     periodSeconds: 10
     failureThreshold: 5
+  # -- Default probe timers
   readinessProbe:
-    initialDelaySeconds: 30
+    initialDelaySeconds: 5
     periodSeconds: 10
     failureThreshold: 5
+  # -- Default probe timers
+  startupProbe:
+    failureThreshold: 60
+    successThreshold: 1
+    periodSeconds: 1
+    timeoutSeconds: 1
 
   # https://github.com/kubernetes/kubernetes/issues/57601
   automountServiceAccountToken: true
@@ -308,6 +315,8 @@ deployment:
   customLivenessProbe: {} 
   # -- Configure a custom readinessProbe. This overwrites the default object  
   customReadinessProbe: {}
+  # -- Configure a custom startupProbe. This overwrites the default object  
+  customStartupProbe: {}
 
 # -- Values for initialization job
 job:
