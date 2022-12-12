@@ -35,7 +35,7 @@ A Helm chart for deploying ORY Oathkeeper in Kubernetes
 | deployment.autoscaling | object | `{"enabled":false,"maxReplicas":5,"minReplicas":1,"targetCPUUtilizationPercentage":80}` | Configure horizontal pod autoscaler for deployment |
 | deployment.customLivenessProbe | object | `{}` | Configure a custom livenessProbe. This overwrites the default object |
 | deployment.customReadinessProbe | object | `{}` | Configure a custom readinessProbe. This overwrites the default object |
-| deployment.customStartupProbe | object | `{}` | Configure a custom startupProbe. This overwrites the default object   |
+| deployment.customStartupProbe | object | `{}` | Configure a custom startupProbe. This overwrites the default object |
 | deployment.extraArgs | list | `[]` | Array of extra arguments to be passed down to the Deployment. Kubernetes args format is expected |
 | deployment.extraContainers | string | `""` | If you want to add extra sidecar containers. |
 | deployment.extraEnv | list | `[]` |  |
