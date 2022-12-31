@@ -138,6 +138,8 @@ kratos:
   #    {{ .Values.phone_schema }}
 
   # -- You can customize the emails kratos is sending (also uncomment config.courier.template_override_path below)
+  # Note for recovery code and verification code, please use kebab-case on name, e.g. recovery-code: ...
+  # This is because underscore isn't allowed in configmap name.
   emailTemplates: {}
   # emailTemplates:
   #   recovery:
