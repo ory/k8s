@@ -100,6 +100,21 @@ kratos:
           However, this email address is not on our database of registered users and therefore the attempt has failed. If this was you, check if you signed up using a different address. If this was not you, please ignore this email.
         plainBody: |-
           Hi, you (or someone else) entered this email address when trying to recover access to an account.
+    recovery_code:
+      valid:
+        subject: Recover access to your account
+        body: |-
+          Hi, please recover access to your account using following code:
+          <h1>{{ .RecoveryCode }}</h1>
+        plainBody: |-
+          Hi, please recover access to your account using following code: {{ .RecoveryCode }}
+      invalid:
+        subject: Account access attempted
+        body: |-
+          Hi, you (or someone else) entered this email address when trying to recover access to an account.
+          However, this email address is not on our database of registered users and therefore the attempt has failed. If this was you, check if you signed up using a different address. If this was not you, please ignore this email.
+        plainBody: |-
+          Hi, you (or someone else) entered this email address when trying to recover access to an account.
     verification:
       valid:
         subject: Please verify your email address
@@ -108,6 +123,19 @@ kratos:
           <a href="{{ .VerificationURL }}">{{ .VerificationURL }}</a>
         plainBody: |-
           Hi, please verify your account by clicking the following link: {{ .VerificationURL }}
+      invalid:
+        subject:
+        body:
+        plainBody:
+    verification_code:
+      valid:
+        subject: Please verify your email address
+        body: |-
+          Hi, please verify your account by clicking the following link:
+          <a href="{{ .VerificationURL }}">{{ .VerificationURL }}</a>
+          or using the following code: {{ .VerificationCode }}
+        plainBody: |-
+          Hi, please verify your account by using the following code: {{ .VerificationCode }}
       invalid:
         subject:
         body:
