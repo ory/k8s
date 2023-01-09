@@ -98,9 +98,9 @@ spec:
         {{- $root := . -}}
         {{- range $method, $methodEntry := .Values.kratos.emailTemplates }}
         {{- range $result, $resultEntry := $methodEntry }}
-        - name: {{ include "kratos.name" $root }}-template-{{ $method }}-{{ $result }}-volume
+        - name: {{ include "kratos.name" $root }}-template-{{ $method | kebabcase }}-{{ $result }}-volume
           configMap:
-            name: {{ include "kratos.fullname" $root }}-template-{{ $method }}-{{ $result }}
+            name: {{ include "kratos.fullname" $root }}-template-{{ $method | kebabcase }}-{{ $result }}
         {{- end }}
         {{- end }}
       automountServiceAccountToken: {{ .Values.deployment.automountServiceAccountToken }}
