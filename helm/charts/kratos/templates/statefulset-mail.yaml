@@ -73,8 +73,8 @@ spec:
             {{- $root := . -}}
             {{- range $method, $methodEntry := .Values.kratos.emailTemplates }}
             {{- range $result, $resultEntry := $methodEntry }}
-            - name: {{ include "kratos.name" $root }}-template-{{ $method }}-{{ $result }}-volume
-              mountPath: /conf/courier-templates/{{ $method }}/{{ $result }}
+            - name: {{ include "kratos.name" $root }}-template-{{ $method | kebabcase }}-{{ $result }}-volume
+              mountPath: /conf/courier-templates/{{ $method | snakecase }}/{{ $result }}
               readOnly: true
             {{- end }}
             {{- end }}
