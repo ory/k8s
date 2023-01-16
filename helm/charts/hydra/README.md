@@ -1,6 +1,6 @@
 # hydra
 
-![Version: 0.26.5](https://img.shields.io/badge/Version-0.26.5-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v2.0.1](https://img.shields.io/badge/AppVersion-v2.0.1-informational?style=flat-square)
+![Version: 0.26.6](https://img.shields.io/badge/Version-0.26.6-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v2.0.3](https://img.shields.io/badge/AppVersion-v2.0.3-informational?style=flat-square)
 
 A Helm chart for deploying ORY Hydra in Kubernetes
 
@@ -21,7 +21,7 @@ A Helm chart for deploying ORY Hydra in Kubernetes
 
 | Repository | Name | Version |
 |------------|------|---------|
-| file://../hydra-maester | hydra-maester(hydra-maester) | 0.26.5 |
+| file://../hydra-maester | hydra-maester(hydra-maester) | 0.26.6 |
 
 ## Values
 
@@ -90,7 +90,7 @@ A Helm chart for deploying ORY Hydra in Kubernetes
 | hydra.dev | bool | `false` | Enable dev mode, not secure in production environments  |
 | image.pullPolicy | string | `"IfNotPresent"` | Image pull policy |
 | image.repository | string | `"oryd/hydra"` | ORY Hydra image |
-| image.tag | string | `"v2.0.1"` | ORY Hydra version |
+| image.tag | string | `"v2.0.3"` | ORY Hydra version |
 | imagePullSecrets | list | `[]` | Image pull secrets |
 | ingress | object | `{"admin":{"annotations":{},"className":"","enabled":false,"hosts":[{"host":"admin.hydra.localhost","paths":[{"path":"/","pathType":"ImplementationSpecific"}]}]},"public":{"annotations":{},"className":"","enabled":false,"hosts":[{"host":"public.hydra.localhost","paths":[{"path":"/","pathType":"ImplementationSpecific"}]}]}}` | Configure ingress |
 | ingress.admin.enabled | bool | `false` | En-/Disable the api ingress. |
