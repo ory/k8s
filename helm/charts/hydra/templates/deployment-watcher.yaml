@@ -41,9 +41,9 @@ spec:
       serviceAccountName: {{ include "hydra.serviceAccountName" . }}-watcher
       containers:
         - name: watcher
-          {{- if .Values.securityContext }}
+          {{- with .Values.watcher.securityContext }}
           securityContext:
-            {{- toYaml .Values.securityContext | nindent 12 }}
+            {{- toYaml . | nindent 12 }}
           {{- end }}
           image: {{ .Values.watcher.image }}
           command:
@@ -62,6 +62,10 @@ spec:
           {{- with .Values.deployment.extraVolumeMounts }}
             {{- toYaml . | nindent 12 }}
           {{- end }}
+      {{- with .Values.watcher.podSecurityContext }}
+      securityContext:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
       volumes:
         {{- if .Values.deployment.extraVolumes }}
           {{- toYaml .Values.deployment.extraVolumes | nindent 8 }}
