@@ -160,6 +160,9 @@ hydra:
     # - sleep 5;
     #   - kratos
     customArgs: []
+    # -- resource requests and limits for the automigration initcontainer
+    resources: {}
+
 
   # -- Enable dev mode, not secure in production environments 
   dev: false
