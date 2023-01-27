@@ -191,6 +191,10 @@ spec:
             {{- with $migrationExtraEnv }}
               {{- toYaml . | nindent 12 }}
             {{- end }}
+          {{- if .Values.deployment.securityContext }}
+          securityContext:
+            {{- toYaml .Values.deployment.securityContext | nindent 12 }}
+          {{- end }}
       {{- end }}
       {{- if .Values.deployment.extraInitContainers }}
         {{- tpl .Values.deployment.extraInitContainers . | nindent 8 }}
