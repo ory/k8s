@@ -1,6 +1,6 @@
 # hydra
 
-![Version: 0.26.6](https://img.shields.io/badge/Version-0.26.6-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v2.0.3](https://img.shields.io/badge/AppVersion-v2.0.3-informational?style=flat-square)
+![Version: 0.27.0](https://img.shields.io/badge/Version-0.27.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v2.0.3](https://img.shields.io/badge/AppVersion-v2.0.3-informational?style=flat-square)
 
 A Helm chart for deploying ORY Hydra in Kubernetes
 
@@ -21,7 +21,7 @@ A Helm chart for deploying ORY Hydra in Kubernetes
 
 | Repository | Name | Version |
 |------------|------|---------|
-| file://../hydra-maester | hydra-maester(hydra-maester) | 0.26.6 |
+| file://../hydra-maester | hydra-maester(hydra-maester) | 0.27.0 |
 
 ## Values
 
@@ -29,7 +29,7 @@ A Helm chart for deploying ORY Hydra in Kubernetes
 |-----|------|---------|-------------|
 | affinity | object | `{}` | Configure node affinity |
 | configmap.hashSumEnabled | bool | `true` | switch to false to prevent checksum annotations being maintained and propogated to the pods |
-| cronjob | object | `{"janitor":{"affinity":{},"annotations":{},"customArgs":[],"labels":{},"nodeSelector":{},"podMetadata":{"annotations":{},"labels":{}},"resources":{"limits":{},"requests":{}},"schedule":"0 */1 * * *","securityContext":{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"privileged":false,"readOnlyRootFilesystem":true,"runAsNonRoot":true,"runAsUser":100},"tolerations":[]}}` | CronJob configuration |
+| cronjob | object | `{"janitor":{"affinity":{},"annotations":{},"customArgs":[],"labels":{},"nodeSelector":{},"podMetadata":{"annotations":{},"labels":{}},"podSecurityContext":{},"resources":{"limits":{},"requests":{}},"schedule":"0 */1 * * *","securityContext":{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"privileged":false,"readOnlyRootFilesystem":true,"runAsNonRoot":true,"runAsUser":100},"tolerations":[]}}` | CronJob configuration |
 | cronjob.janitor.affinity | object | `{}` | Configure node affinity |
 | cronjob.janitor.annotations | object | `{}` | Set custom cron job level annotations |
 | cronjob.janitor.customArgs | list | `[]` | Configure the arguments of the entrypoint, overriding the default value |
@@ -40,7 +40,7 @@ A Helm chart for deploying ORY Hydra in Kubernetes
 | cronjob.janitor.podMetadata.labels | object | `{}` | Extra pod level labels |
 | cronjob.janitor.resources | object | `{"limits":{},"requests":{}}` | We usually recommend not to specify default resources and to leave this as a conscious choice for the user.  This also increases chances charts run on environments with little  resources, such as Minikube. If you do want to specify resources, uncomment the following  lines, adjust them as necessary, and remove the curly braces after 'resources:'.  limits:    cpu: 100m    memory: 128Mi  requests:    cpu: 100m  memory: 128Mi |
 | cronjob.janitor.schedule | string | `"0 */1 * * *"` | Configure how often the cron job is ran |
-| cronjob.janitor.securityContext | object | `{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"privileged":false,"readOnlyRootFilesystem":true,"runAsNonRoot":true,"runAsUser":100}` | Configure the containers' SecurityContext |
+| cronjob.janitor.securityContext | object | `{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"privileged":false,"readOnlyRootFilesystem":true,"runAsNonRoot":true,"runAsUser":100}` | Configure the containers' SecurityContext for the janitor cronjob |
 | cronjob.janitor.tolerations | list | `[]` | Configure node tolerations |
 | deployment.annotations | object | `{}` | Set custom deployment level annotations |
 | deployment.automigration | object | `{"extraEnv":[]}` | Parameters for the automigration initContainer |
@@ -55,6 +55,7 @@ A Helm chart for deploying ORY Hydra in Kubernetes
 | deployment.extraInitContainers | string | `""` | If you want to add extra init containers. |
 | deployment.extraVolumeMounts | list | `[]` |  |
 | deployment.extraVolumes | list | `[]` | If you want to mount external volume |
+| deployment.initContainerSecurityContext | object | `{}` |  |
 | deployment.labels | object | `{}` | Set custom deployment level labels |
 | deployment.lifecycle | object | `{}` |  |
 | deployment.livenessProbe | object | `{"failureThreshold":5,"initialDelaySeconds":5,"periodSeconds":10}` | Default probe timers |
@@ -62,6 +63,7 @@ A Helm chart for deploying ORY Hydra in Kubernetes
 | deployment.podMetadata | object | `{"annotations":{},"labels":{}}` | Specify pod metadata, this metadata is added directly to the pod, and not higher objects |
 | deployment.podMetadata.annotations | object | `{}` | Extra pod level annotations |
 | deployment.podMetadata.labels | object | `{}` | Extra pod level labels |
+| deployment.podSecurityContext | object | `{}` |  |
 | deployment.readinessProbe | object | `{"failureThreshold":5,"initialDelaySeconds":5,"periodSeconds":10}` | Default probe timers |
 | deployment.resources | object | `{}` | We usually recommend not to specify default resources and to leave this as a conscious choice for the user.  This also increases chances charts run on environments with little  resources, such as Minikube. If you do want to specify resources, uncomment the following  lines, adjust them as necessary, and remove the curly braces after 'resources:'.  limits:    cpu: 100m    memory: 128Mi  requests:    cpu: 100m  memory: 128Mi |
 | deployment.securityContext.allowPrivilegeEscalation | bool | `false` |  |
@@ -78,12 +80,13 @@ A Helm chart for deploying ORY Hydra in Kubernetes
 | deployment.tolerations | list | `[]` | Configure node tolerations. |
 | deployment.topologySpreadConstraints | list | `[]` | Configure pod topologySpreadConstraints. |
 | fullnameOverride | string | `""` | Full chart name override |
-| hydra | object | `{"automigration":{"customArgs":[],"customCommand":[],"enabled":false,"type":"job"},"config":{"secrets":{},"serve":{"admin":{"port":4445},"public":{"port":4444},"tls":{"allow_termination_from":["10.0.0.0/8","172.16.0.0/12","192.168.0.0/16"]}},"urls":{"self":{}}},"dev":false}` | Configure ORY Hydra itself |
+| hydra | object | `{"automigration":{"customArgs":[],"customCommand":[],"enabled":false,"resources":{},"type":"job"},"config":{"secrets":{},"serve":{"admin":{"port":4445},"public":{"port":4444},"tls":{"allow_termination_from":["10.0.0.0/8","172.16.0.0/12","192.168.0.0/16"]}},"urls":{"self":{}}},"dev":false}` | Configure ORY Hydra itself |
 | hydra-maester | object | `{"adminService":{"name":"","port":null}}` | Values for the hydra admin service arguments to hydra-maester |
 | hydra-maester.adminService.name | string | `""` | The service name value may need to be set if you use `fullnameOverride` for the parent chart |
 | hydra-maester.adminService.port | string | `nil` | You only need to set this port if you change the value for `service.admin.port` in the parent chart |
 | hydra.automigration.customArgs | list | `[]` | Ability to override arguments of the entrypoint. Can be used in-depended of customCommand eg: - sleep 5;   - kratos |
 | hydra.automigration.customCommand | list | `[]` | Ability to override the entrypoint of the automigration container (e.g. to source dynamic secrets or export environment dynamic variables) |
+| hydra.automigration.resources | object | `{}` | resource requests and limits for the automigration initcontainer |
 | hydra.automigration.type | string | `"job"` | Configure the way to execute database migration. Possible values: job, initContainer When set to job, the migration will be executed as a job on release or upgrade. When set to initContainer, the migration will be executed when kratos pod is created Defaults to job |
 | hydra.config | object | `{"secrets":{},"serve":{"admin":{"port":4445},"public":{"port":4444},"tls":{"allow_termination_from":["10.0.0.0/8","172.16.0.0/12","192.168.0.0/16"]}},"urls":{"self":{}}}` | The ORY Hydra configuration. For a full list of available settings, check:  https://www.ory.sh/docs/hydra/reference/configuration |
 | hydra.config.secrets | object | `{}` | The secrets have to be provided as a string slice, example: system:   - "OG5XbmxXa3dYeGplQXpQanYxeEFuRUFa"   - "foo bar 123 456 lorem"   - "foo bar 123 456 lorem 1"   - "foo bar 123 456 lorem 2"   - "foo bar 123 456 lorem 3" |
@@ -150,7 +153,7 @@ A Helm chart for deploying ORY Hydra in Kubernetes
 | serviceMonitor.scrapeInterval | string | `"60s"` | Interval at which metrics should be scraped |
 | serviceMonitor.scrapeTimeout | string | `"30s"` | Timeout after which the scrape is ended |
 | serviceMonitor.tlsConfig | object | `{}` | TLS configuration to use when scraping the endpoint |
-| watcher | object | `{"enabled":false,"image":"oryd/k8s-toolbox:0.0.5","mountFile":"","podMetadata":{"annotations":{},"labels":{}},"watchLabelKey":"ory.sh/watcher"}` | Sidecar watcher configuration |
+| watcher | object | `{"enabled":false,"image":"oryd/k8s-toolbox:0.0.5","mountFile":"","podMetadata":{"annotations":{},"labels":{}},"podSecurityContext":{},"securityContext":{},"watchLabelKey":"ory.sh/watcher"}` | Sidecar watcher configuration |
 | watcher.mountFile | string | `""` | Path to mounted file, which wil be monitored for changes. eg: /etc/secrets/my-secret/foo |
 | watcher.podMetadata | object | `{"annotations":{},"labels":{}}` | Specify pod metadata, this metadata is added directly to the pod, and not higher objects |
 | watcher.podMetadata.annotations | object | `{}` | Extra pod level annotations |
