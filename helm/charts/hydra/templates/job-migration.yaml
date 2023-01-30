@@ -73,9 +73,9 @@ spec:
           {{- if .Values.job.lifecycle }}
             {{- tpl .Values.job.lifecycle . | nindent 10 }}
           {{- end }}
-        {{- if .Values.deployment.securityContext }}
+        {{- with .Values.deployment.securityContext }}
         securityContext:
-          {{- toYaml .Values.deployment.securityContext | nindent 10 }}
+          {{- toYaml . | nindent 10 }}
         {{- end }}
         volumeMounts:
           - name: {{ include "hydra.name" . }}-config-volume
@@ -92,6 +92,10 @@ spec:
         {{- tpl .Values.job.extraInitContainers . | nindent 8 }}
       {{- end }}
       restartPolicy: Never
+      {{- with .Values.deployment.podSecurityContext }}
+      securityContext:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
       shareProcessNamespace: {{ .Values.job.shareProcessNamespace }}
       volumes:
         - name: {{ include "hydra.name" . }}-config-volume

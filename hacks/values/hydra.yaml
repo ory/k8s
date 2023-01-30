@@ -10,6 +10,14 @@ hydra:
     # type: initContainer
     customCommand:
       - hydra
+    resources:
+      limits:
+        cpu: 100m
+        memory: 128Mi
+      requests:
+        cpu: 100m
+        memory: 128Mi
+
   dev: true
   config:
     dsn: "postgres://postgres:ory@postgresql.default.svc.cluster.local/ory_kratos?sslmode=disable&max_conn_lifetime=10s"
@@ -25,6 +33,12 @@ maester:
 
 janitor:
   enabled: true
+  securityContext:
+    capabilities:
+      drop:
+        - ALL
+  podSecurityContext:
+    runAsNonRoot: false
 
 deployment:
   extraInitContainers: |
@@ -56,6 +70,13 @@ deployment:
       ory.sh/pod_label: hydra
     annotations:
       ory.sh/pod_annotation: hydra
+  initContainerSecurityContext:
+    capabilities:
+      drop:
+        - ALL
+  podSecurityContext:
+    runAsNonRoot: false
+
 job:
   extraEnv:
     - name: LOREM
@@ -85,6 +106,12 @@ watcher:
       ory.sh/pod_label: hydra_watcher
     annotations:
       ory.sh/pod_annotation: hydra_watcher
+  securityContext:
+    capabilities:
+      drop:
+        - ALL
+  podSecurityContext:
+    runAsNonRoot: false
 
 serviceMonitor:
   labels:
@@ -103,3 +130,5 @@ cronjob:
         ory.sh/pod_label: hydra
       annotations:
         ory.sh/pod_annotation: hydra
+    podSecurityContext:
+      runAsNonRoot: false

@@ -96,6 +96,10 @@ spec:
           nodeSelector:
             {{- toYaml . | nindent 12 }}
           {{- end }}
+          {{- with .Values.cronjob.janitor.podSecurityContext }}
+          securityContext:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
           {{- with .Values.cronjob.janitor.tolerations }}
           tolerations:
             {{- toYaml . | nindent 12 }}

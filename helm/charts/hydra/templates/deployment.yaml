@@ -191,6 +191,14 @@ spec:
             {{- with $migrationExtraEnv }}
               {{- toYaml . | nindent 12 }}
             {{- end }}
+          {{- if .Values.hydra.automigration.resources }}
+          resources:
+            {{- .Values.hydra.automigration.resources | nindent 12 }}
+          {{- end }}
+          {{- with .Values.deployment.initContainerSecurityContext }}
+          securityContext:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
       {{- end }}
       {{- if .Values.deployment.extraInitContainers }}
         {{- tpl .Values.deployment.extraInitContainers . | nindent 8 }}
@@ -212,5 +220,9 @@ spec:
       {{- end }}
       {{- with .Values.deployment.topologySpreadConstraints }}
       topologySpreadConstraints:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.deployment.podSecurityContext }}
+      securityContext:
         {{- toYaml . | nindent 8 }}
       {{- end }}

@@ -160,6 +160,8 @@ hydra:
     # - sleep 5;
     #   - kratos
     customArgs: []
+    # -- resource requests and limits for the automigration initcontainer
+    resources: {}
 
   # -- Enable dev mode, not secure in production environments 
   dev: false
@@ -177,6 +179,13 @@ deployment:
   #  memory: 128Mi
   resources: {}
 
+  ## -- initContainer securityContext for hydra & migration init
+  initContainerSecurityContext: {}
+
+  ## -- pod securityContext for hydra & migration init
+  podSecurityContext: {}
+
+  ## -- container securityContext for hydra & migration init
   securityContext:
     capabilities:
       drop:
@@ -427,6 +436,12 @@ watcher:
   # -- Label key used for managing applications
   watchLabelKey: 'ory.sh/watcher'
 
+  ## -- pod securityContext for watcher deployment
+  podSecurityContext: {}
+
+  ## -- container securityContext for watcher deployment
+  securityContext: {}
+
 ## -- Janitor cron job configuration
 janitor:
   # -- Enable cleanup of stale database rows by periodically running the janitor command
@@ -479,7 +494,7 @@ cronjob:
     # -- Configure node affinity
     affinity: {}
 
-    # -- Configure the containers' SecurityContext
+    # -- Configure the containers' SecurityContext for the janitor cronjob
     securityContext:
       capabilities:
         drop:
@@ -489,6 +504,9 @@ cronjob:
       runAsUser: 100
       allowPrivilegeEscalation: false
       privileged: false
+
+    ## -- pod securityContext for the janitor cronjob
+    podSecurityContext: {}
 
     # -- We usually recommend not to specify default resources and to leave this as a conscious choice for the user.
     #  This also increases chances charts run on environments with little
