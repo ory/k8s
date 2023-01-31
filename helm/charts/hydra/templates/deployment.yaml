@@ -193,7 +193,7 @@ spec:
             {{- end }}
           {{- if .Values.hydra.automigration.resources }}
           resources:
-            {{- .Values.hydra.automigration.resources | nindent 12 }}
+            {{- toYaml .Values.hydra.automigration.resources | nindent 12 }}
           {{- end }}
           {{- with .Values.deployment.initContainerSecurityContext }}
           securityContext:
