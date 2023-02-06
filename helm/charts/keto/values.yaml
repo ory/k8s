@@ -112,6 +112,7 @@ job:
   spec:
     # -- Set job back off limit
     backoffLimit: 10
+    ttlSecondsAfterFinished: 600
 
 # -- Ingress definitions
 ingress:
