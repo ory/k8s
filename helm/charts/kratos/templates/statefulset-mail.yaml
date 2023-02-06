@@ -7,7 +7,6 @@
 {{- $extraContainers := ternary .Values.statefulSet.extraContainers .Values.deployment.extraContainers (not (empty .Values.statefulSet.extraContainers )) -}}
 {{- $extraInitContainers := ternary .Values.statefulSet.extraInitContainers .Values.deployment.extraInitContainers (not (empty .Values.statefulSet.extraInitContainers )) -}}
 {{- $extraVolumes := ternary .Values.statefulSet.extraVolumes .Values.deployment.extraVolumes (not (empty .Values.statefulSet.extraVolumes )) -}}
-{{- $nodeSelector := ternary .Values.statefulSet.nodeSelector .Values.nodeSelector (not (empty .Values.statefulSet.nodeSelector )) -}}
 ---
 apiVersion: apps/v1
 kind: StatefulSet
@@ -144,8 +143,16 @@ spec:
             name: {{ include "kratos.fullname" $root }}-template-{{ $method | kebabcase }}-{{ $result }}
         {{- end }}
         {{- end }}
-      {{- with $nodeSelector }}
+      {{- with .Values.statefulSet.nodeSelector }}
       nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.statefulSet.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.statefulSet.tolerations }}
+      tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       {{- with .Values.statefulSet.topologySpreadConstraints }}
