@@ -271,6 +271,9 @@ deployment:
   # -- Configure node tolerations.
   tolerations: []
 
+  # -- Configure node affinity
+  affinity: {}
+
   # -- Configure pod topologySpreadConstraints.
   topologySpreadConstraints: []
   # - maxSkew: 1
@@ -387,6 +390,12 @@ statefulSet:
   # lines, adjust them as necessary, and remove the curly braces after 'nodeSelector:'.
   #   foo: bar
 
+  # -- Configure node tolerations.
+  tolerations: []
+
+  # -- Configure node affinity
+  affinity: {}
+
   # -- Configure pod topologySpreadConstraints.
   topologySpreadConstraints: []
   # - maxSkew: 1
@@ -501,16 +510,6 @@ job:
   spec:
     # -- Set job back off limit
     backoffLimit: 10
-
-# -- Configure node affinity
-affinity: {}
-# -- Node labels for pod assignment.
-nodeSelector: {}
-# -- If you do want to specify node labels, uncomment the following
-# lines, adjust them as necessary, and remove the curly braces after 'annotations:'.
-#   foo: bar
-# Configure node tolerations.
-tolerations: []
 
 # -- Configuration of the courier
 courier:

@@ -1,6 +1,4 @@
 {{- include "kratos.automigration.typeVerification" . -}}
-{{- $resources := ternary .Values.deployment.resources .Values.resources (not (empty .Values.deployment.resources )) -}}
-{{- $nodeSelector := ternary .Values.deployment.nodeSelector .Values.nodeSelector (not (empty .Values.deployment.nodeSelector )) -}}
 {{- $migrationExtraEnv := ternary .Values.deployment.automigration.extraEnv .Values.deployment.extraEnv (not (empty .Values.deployment.automigration.extraEnv )) -}}
 ---
 apiVersion: apps/v1
@@ -224,7 +222,7 @@ spec:
             {{- toYaml .Values.deployment.startupProbe | nindent 12 }}
             {{- end }}
           resources:
-            {{- toYaml $resources | nindent 12 }}  
+            {{- toYaml .Values.deployment.resources | nindent 12 }}
           {{- if .Values.securityContext }}
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
@@ -232,15 +230,15 @@ spec:
         {{- if .Values.deployment.extraContainers }}
           {{- tpl .Values.deployment.extraContainers . | nindent 8 }}
         {{- end }}
-      {{- with $nodeSelector }}
+      {{- with .Values.deployment.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-    {{- with .Values.affinity }}
+    {{- with .Values.deployment.affinity }}
       affinity:
         {{- toYaml . | nindent 8 }}
     {{- end }}
-    {{- with .Values.tolerations }}
+    {{- with .Values.deployment.tolerations }}
       tolerations:
         {{- toYaml . | nindent 8 }}
     {{- end }}
