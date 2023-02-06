@@ -61,9 +61,11 @@ spec:
         - name: {{ include "oathkeeper.name" . }}-rules-volume
           configMap:
             name: {{ include "oathkeeper.fullname" . }}-rules
+        {{- if .Values.secret.enabled }}
         - name: {{ include "oathkeeper.name" . }}-secrets-volume
           secret:
             secretName: {{ include "oathkeeper.secretname" . }}
+        {{- end }}
       serviceAccountName: {{ include "oathkeeper.serviceAccountName" . }}
       automountServiceAccountToken: {{ .Values.deployment.automountServiceAccountToken }}
       initContainers:
@@ -101,9 +103,11 @@ spec:
             - name: {{ include "oathkeeper.name" . }}-rules-volume
               mountPath: /etc/rules
               readOnly: true
+            {{ if .Values.secret.enabled }}
             - name: {{ include "oathkeeper.name" . }}-secrets-volume
               mountPath: {{ .Values.secret.mountPath }}
               readOnly: true
+            {{- end }}
           ports:
             - name: http-api
               containerPort: {{ .Values.oathkeeper.config.serve.api.port }}
