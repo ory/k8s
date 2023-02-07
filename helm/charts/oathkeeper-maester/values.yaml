@@ -73,6 +73,12 @@ deployment:
   #       app.kubernetes.io/name: oathkeeper-maester
   #       app.kubernetes.io/instance: oathkeeper-maester
 
+  # -- Configure pod dnsConfig.
+  dnsConfig: {}
+  #   options:
+  #     - name: "ndots"
+  #       value: "1"
+
   # -- Configure annotations.
   annotations: {}
 

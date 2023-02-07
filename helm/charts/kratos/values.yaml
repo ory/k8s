@@ -284,6 +284,12 @@ deployment:
   #       app.kubernetes.io/name: kratos
   #       app.kubernetes.io/instance: kratos
 
+  # -- Configure pod dnsConfig.
+  dnsConfig: {}
+  #   options:
+  #     - name: "ndots"
+  #       value: "1"
+
   labels: {}
   #      If you do want to specify additional labels, uncomment the following
   #      lines, adjust them as necessary, and remove the curly braces after 'labels:'.
@@ -405,6 +411,12 @@ statefulSet:
   #     matchLabels:
   #       app.kubernetes.io/name: kratos
   #       app.kubernetes.io/instance: kratos
+
+  # -- Configure pod dnsConfig.
+  dnsConfig: {}
+  #   options:
+  #     - name: "ndots"
+  #       value: "1"
 
   log:
     format: json

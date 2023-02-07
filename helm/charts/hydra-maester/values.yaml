@@ -81,6 +81,12 @@ deployment:
   #       app.kubernetes.io/name: hydra
   #       app.kubernetes.io/instance: hydra
 
+  # -- Configure pod dnsConfig.
+  dnsConfig: {}
+  #   options:
+  #     - name: "ndots"
+  #       value: "1"
+
   # -- Specify pod metadata, this metadata is added directly to the pod, and not higher objects
   podMetadata:
     # -- Extra pod level labels
