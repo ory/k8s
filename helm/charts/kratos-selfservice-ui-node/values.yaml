@@ -101,6 +101,12 @@ deployment:
   #       app.kubernetes.io/name: kratos-selfservice-ui-node
   #       app.kubernetes.io/instance: kratos-selfservice-ui-node
 
+  # -- Configure pod dnsConfig.
+  dnsConfig: {}
+  #   options:
+  #     - name: "ndots"
+  #       value: "1"
+
   labels: {}
   #      If you do want to specify additional labels, uncomment the following
   #      lines, adjust them as necessary, and remove the curly braces after 'labels:'.
