@@ -16,6 +16,7 @@ A Helm chart for Kubernetes
 | deployment.args | object | `{"syncPeriod":""}` | Arguments to be passed to the program |
 | deployment.args.syncPeriod | string | `""` | The minimum frequency at which watched resources are reconciled |
 | deployment.automountServiceAccountToken | bool | `true` | This applications connects to the k8s API and requires the permissions |
+| deployment.dnsConfig | object | `{}` | Configure pod dnsConfig. |
 | deployment.extraAnnotations | object | `{}` | Deployment level extra annotations |
 | deployment.extraLabels | object | `{}` | Deployment level extra labels |
 | deployment.nodeSelector | object | `{}` | Node labels for pod assignment. |
