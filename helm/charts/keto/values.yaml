@@ -340,6 +340,12 @@ deployment:
   #       app.kubernetes.io/name: keto
   #       app.kubernetes.io/instance: keto
 
+  # -- Configure pod dnsConfig.
+  dnsConfig: {}
+  #   options:
+  #     - name: "ndots"
+  #       value: "1"
+
   # -- Parameters for the automigration initContainer
   automigration:
     # -- Array of extra envs to be passed to the initContainer. Kubernetes format is expected
