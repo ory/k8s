@@ -24,9 +24,9 @@ metadata:
     {{- end }}
 spec:
   template:
-    metadata: 
+    metadata:
       annotations:
-        {{- with .Values.job.annotations }}  
+        {{- with .Values.job.annotations }}
           {{- toYaml . | nindent 8 }}
         {{- end }}
         {{- with .Values.job.podMetadata.annotations }}
@@ -110,5 +110,4 @@ spec:
       {{- end }}
       shareProcessNamespace: {{ .Values.job.shareProcessNamespace }}
   backoffLimit: {{ .Values.job.spec.backoffLimit }}
-  ttlSecondsAfterFinished: {{ .Values.job.spec.ttlSecondsAfterFinished }}
 {{- end }}
