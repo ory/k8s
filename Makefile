@@ -3,7 +3,7 @@ SHELL=/bin/bash -euo pipefail
 export PATH := .bin:${PATH}
 export PWD := $(shell pwd)
 export VERSION=$(shell echo ${RELEASE_VERSION} | sed s/v//g)
-export K3SIMAGE := docker.io/rancher/k3s:v1.22.5-k3s1
+export K3SIMAGE := docker.io/rancher/k3s:v1.26.1-k3s1
 
 .bin/yq: go.mod
 	go build -o .bin/yq github.com/mikefarah/yq/v3

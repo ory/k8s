@@ -38,6 +38,14 @@ deployment:
       ory.sh/pod_label: oathkeeper
     annotations:
       ory.sh/pod_annotation: oathkeeper
+  autoscaling:
+    enabled: true
+    targetCPU:
+      type: Utilization
+      averageUtilization: 80
+    targetMemory:
+      type: Utilization
+      averageUtilization: 80
 oathkeeper:
   accessRules: |
     [

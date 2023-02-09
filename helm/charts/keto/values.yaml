@@ -283,8 +283,12 @@ deployment:
     enabled: false
     minReplicas: 1
     maxReplicas: 100
-    targetCPUUtilizationPercentage: 80
-    # targetMemoryUtilizationPercentage: 80
+    targetCPU: {}
+    #   type: Utilization
+    #   averageUtilization: 80
+    targetMemory: {}
+    #   type: Utilization
+    #   averageUtilization: 80
 
   nodeSelector: {}
 
