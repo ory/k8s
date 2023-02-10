@@ -32,7 +32,7 @@ A Helm chart for deploying ORY Oathkeeper in Kubernetes
 | demo | bool | `false` | If enabled, a demo deployment with exemplary access rules and JSON Web Key Secrets will be generated. |
 | deployment.annotations | object | `{}` |  |
 | deployment.automountServiceAccountToken | bool | `false` |  |
-| deployment.autoscaling | object | `{"enabled":false,"maxReplicas":5,"minReplicas":1,"targetCPUUtilizationPercentage":80}` | Configure horizontal pod autoscaler for deployment |
+| deployment.autoscaling | object | `{"enabled":false,"maxReplicas":5,"minReplicas":1,"targetCPU":{},"targetMemory":{}}` | Configure horizontal pod autoscaler for deployment |
 | deployment.customLivenessProbe | object | `{}` | Configure a custom livenessProbe. This overwrites the default object |
 | deployment.customReadinessProbe | object | `{}` | Configure a custom readinessProbe. This overwrites the default object |
 | deployment.customStartupProbe | object | `{}` | Configure a custom startupProbe. This overwrites the default object |
