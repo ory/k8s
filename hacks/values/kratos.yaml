@@ -1,6 +1,13 @@
 ---
 autoscaling:
-  enabled: false
+  enabled: true
+  targetCPU:
+    type: Utilization
+    averageUtilization: 80
+  targetMemory:
+    type: Utilization
+    averageUtilization: 80
+
 kratos:
   automigration:
     enabled: true
