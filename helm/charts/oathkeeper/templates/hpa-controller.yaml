@@ -21,13 +21,13 @@ spec:
     resource:
       name: cpu
       target:
-        {{ toYaml . | nindent 8 }}
+        {{- toYaml . | nindent 8 }}
   {{- end }}
   {{- with .Values.deployment.autoscaling.targetMemory }}
   - type: Resource
     resource:
       name: memory
       target:
-        {{ toYaml . | nindent 8 }}
+        {{- toYaml . | nindent 8 }}
   {{- end }}
 {{- end }}
