@@ -6,7 +6,7 @@ metadata:
   namespace: {{ .Release.Namespace }}
   {{- end }}
   labels:
-{{ include "oathkeeper.labels" . | indent 4 }}
+    {{ include "oathkeeper.labels" . | indent 4 }}
   annotations:
     "helm.sh/hook": test-success
 spec:
