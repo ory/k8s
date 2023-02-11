@@ -2,7 +2,9 @@
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
+  {{- if .Release.Namespace }}
   namespace: {{ .Release.Namespace }}
+  {{- end }}
   name: {{ include "hydra.fullname" . }}
   labels:
     {{- include "hydra.labels" . | nindent 4 }}

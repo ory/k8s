@@ -33,7 +33,9 @@ apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
   name: {{ include "oathkeeper.fullname" . }}-metrics
+  {{- if .Release.Namespace }}
   namespace: {{ .Release.Namespace }}
+  {{- end }}
   labels:
     app.kubernetes.io/component: metrics
 {{ include "oathkeeper.labels" . | indent 4 }}
