@@ -4,6 +4,7 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: {{ include "kratos.job.serviceAccountName" . }}
+  namespace: {{ .Release.Namespace }}
   labels:
     {{- include "kratos.labels" . | nindent 4 }}
   {{- with .Values.job.serviceAccount.annotations }}
