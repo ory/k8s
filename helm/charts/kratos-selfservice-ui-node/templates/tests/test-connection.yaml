@@ -6,7 +6,7 @@ metadata:
   namespace: {{ .Release.Namespace }}
   {{- end }}
   labels:
-    {{ include "kratos-selfservice-ui-node.labels" . | indent 4 }}
+{{ include "kratos-selfservice-ui-node.labels" . | indent 4 }}
   annotations:
     "helm.sh/hook": test-success
 spec:
