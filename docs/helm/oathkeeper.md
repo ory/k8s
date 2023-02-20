@@ -66,7 +66,6 @@ service and ingress definitions.
 
 For a detailed list of configuration items look at the
 [Configuration Reference](https://www.ory.sh/docs/oathkeeper/reference/configuration)
-[Configuration Reference](https://www.ory.sh/docs/oathkeeper/reference/configuration)
 
 ### JSON Web Key Set for Mutator `id_token`
 
