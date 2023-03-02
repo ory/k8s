@@ -1,5 +1,5 @@
-{{- if and (.Values.autoscaling.enabled) (not (.Capabilities.APIVersions.Has "autoscaling/v2beta2")) }}
-apiVersion: autoscaling/v1
+{{- if .Values.autoscaling.enabled }}
+apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
   name: {{ include "kratos.fullname" . }}
@@ -12,7 +12,19 @@ spec:
     name: {{ include "kratos.fullname" . }}
   minReplicas: {{ .Values.autoscaling.minReplicas }}
   maxReplicas: {{ .Values.autoscaling.maxReplicas }}
-  {{- if .Values.autoscaling.targetCPUUtilizationPercentage }}
-  targetCPUUtilizationPercentage: {{ .Values.autoscaling.targetCPUUtilizationPercentage }}
+  metrics:
+  {{- with .Values.autoscaling.targetCPU}}
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        {{- toYaml . | nindent 8 }}
+  {{- end }}
+  {{- with .Values.autoscaling.targetMemory }}
+  - type: Resource
+    resource:
+      name: memory
+      target:
+        {{- toYaml . | nindent 8 }}
   {{- end }}
 {{- end }}

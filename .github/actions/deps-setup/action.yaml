@@ -31,7 +31,7 @@ runs:
         HELM_INSTALL_DIR: ${{ github.workspace }}/.bin
         HELM_PLUGINS: ${{ github.workspace }}/.bin/plugins
         K3D_INSTALL_DIR: ${{ github.workspace }}/.bin
-        KUBECTL_VERSION: "1.24.3"
+        KUBECTL_VERSION: "1.26.1"
         K3D_VERSION: "5.4.4"
       run: |
         # Export .bin into PATH so k3d doesn't fail when installing

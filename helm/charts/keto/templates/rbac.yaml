@@ -4,6 +4,9 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: {{ include "keto.serviceAccountName" . }}
+  {{- if .Release.Namespace }}
+  namespace: {{ .Release.Namespace }}
+  {{- end }}
   labels:
     {{- include "keto.labels" . | nindent 4 }}
   {{- with .Values.serviceAccount.annotations }}

@@ -1,6 +1,6 @@
 # hydra
 
-![Version: 0.27.1](https://img.shields.io/badge/Version-0.27.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v2.0.3](https://img.shields.io/badge/AppVersion-v2.0.3-informational?style=flat-square)
+![Version: 0.28.0](https://img.shields.io/badge/Version-0.28.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v2.0.3](https://img.shields.io/badge/AppVersion-v2.0.3-informational?style=flat-square)
 
 A Helm chart for deploying ORY Hydra in Kubernetes
 
@@ -21,7 +21,7 @@ A Helm chart for deploying ORY Hydra in Kubernetes
 
 | Repository | Name | Version |
 |------------|------|---------|
-| file://../hydra-maester | hydra-maester(hydra-maester) | 0.27.1 |
+| file://../hydra-maester | hydra-maester(hydra-maester) | 0.28.0 |
 
 ## Values
 
@@ -46,7 +46,7 @@ A Helm chart for deploying ORY Hydra in Kubernetes
 | deployment.automigration | object | `{"extraEnv":[]}` | Parameters for the automigration initContainer |
 | deployment.automigration.extraEnv | list | `[]` | Array of extra envs to be passed to the initContainer. Kubernetes format is expected - name: FOO   value: BAR |
 | deployment.automountServiceAccountToken | bool | `true` |  |
-| deployment.autoscaling | object | `{"enabled":false,"maxReplicas":3,"minReplicas":1}` | Configure HPA |
+| deployment.autoscaling | object | `{"enabled":false,"maxReplicas":3,"minReplicas":1,"targetCPU":{},"targetMemory":{}}` | Configure HPA |
 | deployment.customLivenessProbe | object | `{}` | Configure a custom livenessProbe. This overwrites the default object  |
 | deployment.customReadinessProbe | object | `{}` | Configure a custom readinessProbe. This overwrites the default object   |
 | deployment.customStartupProbe | object | `{}` | Configure a custom startupProbe. This overwrites the default object   |

@@ -2,7 +2,9 @@
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
+  {{- if .Release.Namespace }}
   namespace: {{ .Release.Namespace }}
+  {{- end }}
   name: {{ include "hydra.fullname" . }}
   labels:
     {{- include "hydra.labels" . | nindent 4 }}
@@ -14,34 +16,18 @@ spec:
   minReplicas: {{ .Values.deployment.autoscaling.minReplicas }}
   maxReplicas: {{ .Values.deployment.autoscaling.maxReplicas }}
   metrics:
-  {{- if .Values.deployment.autoscaling.targetMemoryUtilizationPercentage }}
-    - type: Resource
-      resource:
-        name: memory
-        target:
-          type: Utilization
-          averageUtilization: {{ .Values.deployment.autoscaling.targetMemoryUtilizationPercentage }}
-  {{- else if .Values.deployment.autoscaling.targetMemoryAverageValue }}
-    - type: Resource
-      resource:
-        name: memory
-        target:
-          type: AverageValue
-          averageValue: {{ .Values.deployment.autoscaling.targetMemoryAverageValue }}
+  {{- with .Values.deployment.autoscaling.targetCPU}}
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        {{- toYaml . | nindent 8 }}
   {{- end }}
-  {{- if .Values.deployment.autoscaling.targetCPUUtilizationPercentage }}
-    - type: Resource
-      resource:
-        name: cpu
-        target:
-          type: Utilization
-          averageUtilization: {{ .Values.deployment.autoscaling.targetCPUUtilizationPercentage }}
-  {{- else if .Values.deployment.autoscaling.targetCPUAverageValue }}
-    - type: Resource
-      resource:
-        name: cpu
-        target:
-          type: AverageValue
-          averageValue: {{ .Values.deployment.autoscaling.targetCPUAverageValue }}
+  {{- with .Values.deployment.autoscaling.targetMemory }}
+  - type: Resource
+    resource:
+      name: memory
+      target:
+        {{- toYaml . | nindent 8 }}
   {{- end }}
 {{- end }}

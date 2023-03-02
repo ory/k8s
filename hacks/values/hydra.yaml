@@ -41,6 +41,14 @@ janitor:
     runAsNonRoot: false
 
 deployment:
+  autoscaling:
+    enabled: true
+    targetCPU:
+      type: Utilization
+      averageUtilization: 80
+    targetMemory:
+      type: Utilization
+      averageUtilization: 80
   extraInitContainers: |
     - name: "hello-world"
       image: "alpine:latest"

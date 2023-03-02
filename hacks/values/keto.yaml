@@ -12,6 +12,14 @@ ingress:
   write:
     enabled: true
 deployment:
+  autoscaling:
+    enabled: true
+    targetCPU:
+      type: Utilization
+      averageUtilization: 80
+    targetMemory:
+      type: Utilization
+      averageUtilization: 80
   extraLabels:
     ory.sh/test: keto
   podMetadata:
