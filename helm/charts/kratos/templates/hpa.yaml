@@ -13,17 +13,17 @@ spec:
   minReplicas: {{ .Values.autoscaling.minReplicas }}
   maxReplicas: {{ .Values.autoscaling.maxReplicas }}
   metrics:
-  {{- with .Values.autoscaling.targetCPU}}
-  - type: Resource
-    resource:
-      name: cpu
-      target:
-        {{- toYaml . | nindent 8 }}
-  {{- end }}
   {{- with .Values.autoscaling.targetMemory }}
   - type: Resource
     resource:
       name: memory
+      target:
+        {{- toYaml . | nindent 8 }}
+  {{- end }}
+  {{- with .Values.autoscaling.targetCPU}}
+  - type: Resource
+    resource:
+      name: cpu
       target:
         {{- toYaml . | nindent 8 }}
   {{- end }}
