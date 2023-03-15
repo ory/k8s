@@ -87,10 +87,13 @@ Access Control Policies as a Server
 | secret.nameOverride | string | `""` | Provide custom name of existing secret, or custom name of secret to be created |
 | secret.secretAnnotations | object | `{"helm.sh/hook":"pre-install, pre-upgrade","helm.sh/hook-delete-policy":"before-hook-creation","helm.sh/hook-weight":"0","helm.sh/resource-policy":"keep"}` | Annotations to be added to secret. Annotations are added only when secret is being created. Existing secret will not be modified. |
 | securityContext | object | `{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"privileged":false,"readOnlyRootFilesystem":true,"runAsNonRoot":true,"runAsUser":100}` | Default security context configuration |
-| service | object | `{"metrics":{"annotations":{},"enabled":false,"name":"http-metrics","port":80,"type":"ClusterIP"},"read":{"enabled":true,"name":"grpc-read","port":80,"type":"ClusterIP"},"write":{"enabled":true,"name":"grpc-write","port":80,"type":"ClusterIP"}}` | Service configurations |
-| service.metrics | object | `{"annotations":{},"enabled":false,"name":"http-metrics","port":80,"type":"ClusterIP"}` | Metrics service |
-| service.read | object | `{"enabled":true,"name":"grpc-read","port":80,"type":"ClusterIP"}` | Read service |
-| service.write | object | `{"enabled":true,"name":"grpc-write","port":80,"type":"ClusterIP"}` | Write service |
+| service | object | `{"metrics":{"annotations":{},"enabled":false,"loadBalancerIP":"","name":"http-metrics","port":80,"type":"ClusterIP"},"read":{"enabled":true,"loadBalancerIP":"","name":"grpc-read","port":80,"type":"ClusterIP"},"write":{"enabled":true,"loadBalancerIP":"","name":"grpc-write","port":80,"type":"ClusterIP"}}` | Service configurations |
+| service.metrics | object | `{"annotations":{},"enabled":false,"loadBalancerIP":"","name":"http-metrics","port":80,"type":"ClusterIP"}` | Metrics service |
+| service.metrics.loadBalancerIP | string | `""` | The load balancer IP |
+| service.read | object | `{"enabled":true,"loadBalancerIP":"","name":"grpc-read","port":80,"type":"ClusterIP"}` | Read service |
+| service.read.loadBalancerIP | string | `""` | The load balancer IP |
+| service.write | object | `{"enabled":true,"loadBalancerIP":"","name":"grpc-write","port":80,"type":"ClusterIP"}` | Write service |
+| service.write.loadBalancerIP | string | `""` | The load balancer IP |
 | serviceAccount.annotations | object | `{}` | Annotations to add to the service account |
 | serviceAccount.create | bool | `true` | Specifies whether a service account should be created |
 | serviceAccount.name | string | `""` | The name of the service account to use. If not set and create is true, a name is generated using the fullname template |

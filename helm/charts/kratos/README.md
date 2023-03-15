@@ -103,12 +103,14 @@ A ORY Kratos Helm chart for Kubernetes
 | service.admin.annotations | object | `{}` | If you do want to specify annotations, uncomment the following lines, adjust them as necessary, and remove the curly braces after 'annotations:'. |
 | service.admin.enabled | bool | `true` |  |
 | service.admin.labels | object | `{}` | Provide custom labels. Use the same syntax as for annotations. |
+| service.admin.loadBalancerIP | string | `""` | Load balancer IP |
 | service.admin.name | string | `"http"` | The service port name. Useful to set a custom service port name if it must follow a scheme (e.g. Istio) |
 | service.admin.port | int | `80` |  |
 | service.admin.type | string | `"ClusterIP"` |  |
 | service.public.annotations | object | `{}` | If you do want to specify annotations, uncomment the following lines, adjust them as necessary, and remove the curly braces after 'annotations:'. |
 | service.public.enabled | bool | `true` |  |
 | service.public.labels | object | `{}` | Provide custom labels. Use the same syntax as for annotations. |
+| service.public.loadBalancerIP | string | `""` | Load balancer IP |
 | service.public.name | string | `"http"` | The service port name. Useful to set a custom service port name if it must follow a scheme (e.g. Istio) |
 | service.public.port | int | `80` |  |
 | service.public.type | string | `"ClusterIP"` |  |

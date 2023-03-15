@@ -90,25 +90,28 @@ A Helm chart for deploying ORY Oathkeeper in Kubernetes
 | secret.mountPath | string | `"/etc/secrets"` | default mount path for the kubernetes secret |
 | secret.nameOverride | string | `""` | Provide custom name of existing secret, or custom name of secret to be created |
 | secret.secretAnnotations | object | `{"helm.sh/hook":"pre-install, pre-upgrade","helm.sh/hook-delete-policy":"before-hook-creation","helm.sh/hook-weight":"0","helm.sh/resource-policy":"keep"}` | Annotations to be added to secret. Annotations are added only when secret is being created. Existing secret will not be modified. |
-| service | object | `{"api":{"annotations":{},"enabled":true,"labels":{},"name":"http","port":4456,"type":"ClusterIP"},"metrics":{"annotations":{},"enabled":true,"labels":{},"name":"http","port":80,"type":"ClusterIP"},"proxy":{"annotations":{},"enabled":true,"labels":{},"name":"http","port":4455,"type":"ClusterIP"}}` | Configures the Kubernetes service |
-| service.api | object | `{"annotations":{},"enabled":true,"labels":{},"name":"http","port":4456,"type":"ClusterIP"}` | Configures the Kubernetes service for the api port. |
+| service | object | `{"api":{"annotations":{},"enabled":true,"labels":{},"loadBalancerIP":"","name":"http","port":4456,"type":"ClusterIP"},"metrics":{"annotations":{},"enabled":true,"labels":{},"loadBalancerIP":"","name":"http","port":80,"type":"ClusterIP"},"proxy":{"annotations":{},"enabled":true,"labels":{},"loadBalancerIP":"","name":"http","port":4455,"type":"ClusterIP"}}` | Configures the Kubernetes service |
+| service.api | object | `{"annotations":{},"enabled":true,"labels":{},"loadBalancerIP":"","name":"http","port":4456,"type":"ClusterIP"}` | Configures the Kubernetes service for the api port. |
 | service.api.annotations | object | `{}` | If you do want to specify annotations, uncomment the following lines, adjust them as necessary, and remove the curly braces after 'annotations:'. kubernetes.io/ingress.class: nginx kubernetes.io/tls-acme: "true" |
 | service.api.enabled | bool | `true` | En-/disable the service |
 | service.api.labels | object | `{}` | If you do want to specify additional labels, uncomment the following lines, adjust them as necessary, and remove the curly braces after 'labels:'. e.g.  app: oathkeeper |
+| service.api.loadBalancerIP | string | `""` | The load balancer IP |
 | service.api.name | string | `"http"` | The service port name. Useful to set a custom service port name if it must follow a scheme (e.g. Istio) |
 | service.api.port | int | `4456` | The service port |
 | service.api.type | string | `"ClusterIP"` | The service type |
-| service.metrics | object | `{"annotations":{},"enabled":true,"labels":{},"name":"http","port":80,"type":"ClusterIP"}` | Configures the Kubernetes service for the metrics port. |
+| service.metrics | object | `{"annotations":{},"enabled":true,"labels":{},"loadBalancerIP":"","name":"http","port":80,"type":"ClusterIP"}` | Configures the Kubernetes service for the metrics port. |
 | service.metrics.annotations | object | `{}` | If you do want to specify annotations, uncomment the following lines, adjust them as necessary, and remove the curly braces after 'annotations:'. kubernetes.io/ingress.class: nginx kubernetes.io/tls-acme: "true" |
 | service.metrics.enabled | bool | `true` | En-/disable the service |
 | service.metrics.labels | object | `{}` | If you do want to specify additional labels, uncomment the following lines, adjust them as necessary, and remove the curly braces after 'labels:'. e.g.  app: oathkeeper |
+| service.metrics.loadBalancerIP | string | `""` | Load balancer IP |
 | service.metrics.name | string | `"http"` | The service port name. Useful to set a custom service port name if it must follow a scheme (e.g. Istio) |
 | service.metrics.port | int | `80` | The service port |
 | service.metrics.type | string | `"ClusterIP"` | The service type |
-| service.proxy | object | `{"annotations":{},"enabled":true,"labels":{},"name":"http","port":4455,"type":"ClusterIP"}` | Configures the Kubernetes service for the proxy port. |
+| service.proxy | object | `{"annotations":{},"enabled":true,"labels":{},"loadBalancerIP":"","name":"http","port":4455,"type":"ClusterIP"}` | Configures the Kubernetes service for the proxy port. |
 | service.proxy.annotations | object | `{}` | If you do want to specify annotations, uncomment the following lines, adjust them as necessary, and remove the curly braces after 'annotations:'. kubernetes.io/ingress.class: nginx kubernetes.io/tls-acme: "true" |
 | service.proxy.enabled | bool | `true` | En-/disable the service |
 | service.proxy.labels | object | `{}` | If you do want to specify additional labels, uncomment the following lines, adjust them as necessary, and remove the curly braces after 'labels:'. e.g.  app: oathkeeper |
+| service.proxy.loadBalancerIP | string | `""` | The load balancer IP |
 | service.proxy.name | string | `"http"` | The service port name. Useful to set a custom service port name if it must follow a scheme (e.g. Istio) |
 | service.proxy.port | int | `4455` | The service port |
 | service.proxy.type | string | `"ClusterIP"` | The service type |

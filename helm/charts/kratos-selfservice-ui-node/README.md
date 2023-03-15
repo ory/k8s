@@ -30,7 +30,8 @@ A Helm chart for ORY Kratos's example ui for Kubernetes
 | projectName | string | `"SecureApp"` |  |
 | replicaCount | int | `1` | Number of replicas in deployment |
 | securityContext | object | `{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"privileged":false,"readOnlyRootFilesystem":true,"runAsNonRoot":true,"runAsUser":1000}` | Deployment level securityContext |
-| service | object | `{"name":"http","port":80,"type":"ClusterIP"}` | Service configuration |
+| service | object | `{"loadBalancerIP":"","name":"http","port":80,"type":"ClusterIP"}` | Service configuration |
+| service.loadBalancerIP | string | `""` | The load balancer IP |
 | service.name | string | `"http"` | The service port name. Useful to set a custom service port name if it must follow a scheme (e.g. Istio) |
 
 ----------------------------------------------
