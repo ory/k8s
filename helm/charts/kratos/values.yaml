@@ -27,6 +27,8 @@ service:
   admin:
     enabled: true
     type: ClusterIP
+    # -- Load balancer IP
+    loadBalancerIP: ""
     port: 80
     # -- The service port name. Useful to set a custom service port name if it must follow a scheme (e.g. Istio)
     name: http
@@ -40,6 +42,8 @@ service:
   public:
     enabled: true
     type: ClusterIP
+    # -- Load balancer IP
+    loadBalancerIP: ""
     port: 80
     # -- The service port name. Useful to set a custom service port name if it must follow a scheme (e.g. Istio)
     name: http

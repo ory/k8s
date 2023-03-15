@@ -152,18 +152,24 @@ service:
   read:
     enabled: true
     type: ClusterIP
+    # -- The load balancer IP
+    loadBalancerIP: ""
     name: grpc-read
     port: 80
   # -- Write service
   write:
     enabled: true
     type: ClusterIP
+    # -- The load balancer IP
+    loadBalancerIP: ""
     name: grpc-write
     port: 80
   # -- Metrics service
   metrics:
     enabled: false
     type: ClusterIP
+    # -- The load balancer IP
+    loadBalancerIP: ""
     name: http-metrics
     port: 80
     annotations: {}
