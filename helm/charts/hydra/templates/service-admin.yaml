@@ -19,6 +19,11 @@ metadata:
     {{- end }}
 spec:
   type: {{ .Values.service.admin.type }}
+  {{- if eq .Values.service.admin.type "LoadBalancer" }}
+  {{- with .Values.service.admin.loadBalancerIP }}
+  loadBalancerIP: {{ . }}
+  {{- end }}
+  {{- end }}
   ports:
     - port: {{ .Values.service.admin.port }}
       targetPort: http-admin

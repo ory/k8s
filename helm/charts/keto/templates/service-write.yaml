@@ -11,6 +11,11 @@ metadata:
     {{- include "keto.labels" . | nindent 4 }}
 spec:
   type: {{ .Values.service.write.type }}
+  {{- if eq .Values.service.write.type "LoadBalancer" }}
+  {{- with .Values.service.write.loadBalancerIP }}
+  loadBalancerIP: {{ . }}
+  {{- end }}
+  {{- end }}
   ports:
     - port: {{ .Values.service.write.port }}
       targetPort: {{ .Values.service.write.name }}

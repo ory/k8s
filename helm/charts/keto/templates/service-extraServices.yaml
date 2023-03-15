@@ -14,6 +14,11 @@ metadata:
     {{- include "keto.labels" $ | nindent 4 }}
 spec:
   type: {{ $ServiceData.type }}
+  {{- if eq $ServiceData.type "LoadBalancer" }}
+  {{- with $ServiceData.loadBalancerIP }}
+  loadBalancerIP: {{ . }}
+  {{- end }}
+  {{- end }}
   ports:
     - port: {{ $ServiceData.port }}
       targetPort: {{ $ServiceData.name }}
