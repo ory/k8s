@@ -19,6 +19,11 @@ metadata:
   {{- end }}
 spec:
   type: {{ .Values.service.admin.type }}
+  {{- if eq .Values.service.admin.type "ClusterIP" }}
+  {{- with .Values.service.admin.clusterIP }}
+  clusterIP: {{ . }}
+  {{- end }}
+  {{- end }}
   ports:
     - port: {{ .Values.service.admin.port }}
       targetPort: http-admin
