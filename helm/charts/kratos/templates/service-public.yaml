@@ -18,8 +18,8 @@ metadata:
   {{- end }}
 spec:
   type: {{ .Values.service.public.type }}
-  {{- if eq .Values.service.public.type "ClusterIP" }}
-  {{- with .Values.service.public.clusterIP }}
+  {{- if eq .Values.service.public.type "LoadBalancer" }}
+  {{- with .Values.service.public.loadBalancerIP }}
   clusterIP: {{ . }}
   {{- end }}
   {{- end }}
