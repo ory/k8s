@@ -17,6 +17,11 @@ metadata:
     {{- end }}
 spec:
   type: {{ .Values.service.public.type }}
+  {{- if eq .Values.service.public.type "LoadBalancer" }}
+  {{- with .Values.service.public.loadBalancerIP }}
+  loadBalancerIP: {{ . }}
+  {{- end }}
+  {{- end }}
   ports:
     - port: {{ .Values.service.public.port }}
       targetPort: http-public

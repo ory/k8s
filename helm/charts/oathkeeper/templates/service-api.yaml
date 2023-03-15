@@ -18,6 +18,11 @@ metadata:
   {{- end }}
 spec:
   type: {{ .Values.service.api.type }}
+  {{- if eq .Values.service.api.type "LoadBalancer" }}
+  {{- with .Values.service.api.loadBalancerIP }}
+  loadBalancerIP: {{ . }}
+  {{- end }}
+  {{- end }}
   ports:
     - port: {{ .Values.service.api.port }}
       targetPort: http-api

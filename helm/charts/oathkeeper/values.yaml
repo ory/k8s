@@ -42,6 +42,8 @@ service:
     enabled: true
     # -- The service type
     type: ClusterIP
+    # -- The load balancer IP
+    loadBalancerIP: ""
     # -- The service port
     port: 4455
     # -- The service port name. Useful to set a custom service port name if it must follow a scheme (e.g. Istio)
@@ -61,6 +63,8 @@ service:
     enabled: true
     # -- The service type
     type: ClusterIP
+    # -- The load balancer IP
+    loadBalancerIP: ""
     # -- The service port
     port: 4456
     # -- The service port name. Useful to set a custom service port name if it must follow a scheme (e.g. Istio)
@@ -80,6 +84,8 @@ service:
     enabled: true
     # -- The service type
     type: ClusterIP
+    # -- Load balancer IP
+    loadBalancerIP: ""
     # -- The service port
     port: 80
     # -- The service port name. Useful to set a custom service port name if it must follow a scheme (e.g. Istio)

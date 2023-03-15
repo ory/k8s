@@ -18,6 +18,11 @@ metadata:
   {{- end }}
 spec:
   type: {{ .Values.service.proxy.type }}
+  {{- if eq .Values.service.proxy.type "LoadBalancer" }}
+  {{- with .Values.service.proxy.loadBalancerIP }}
+  loadBalancerIP: {{ . }}
+  {{- end }}
+  {{- end }}
   ports:
     - port: {{ .Values.service.proxy.port }}
       targetPort: http-proxy
