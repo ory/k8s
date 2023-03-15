@@ -21,7 +21,7 @@ spec:
   type: {{ .Values.service.admin.type }}
   {{- if eq .Values.service.admin.type "LoadBalancer" }}
   {{- with .Values.service.admin.loadBalancerIP }}
-  clusterIP: {{ . }}
+  loadBalancerIP: {{ . }}
   {{- end }}
   {{- end }}
   ports:

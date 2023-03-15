@@ -20,7 +20,7 @@ spec:
   type: {{ .Values.service.public.type }}
   {{- if eq .Values.service.public.type "LoadBalancer" }}
   {{- with .Values.service.public.loadBalancerIP }}
-  clusterIP: {{ . }}
+  loadBalancerIP: {{ . }}
   {{- end }}
   {{- end }}
   ports:
