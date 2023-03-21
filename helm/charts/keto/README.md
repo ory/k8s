@@ -1,6 +1,6 @@
 # keto
 
-![Version: 0.28.1](https://img.shields.io/badge/Version-0.28.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.10.0](https://img.shields.io/badge/AppVersion-v0.10.0-informational?style=flat-square)
+![Version: 0.28.2](https://img.shields.io/badge/Version-0.28.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.10.0](https://img.shields.io/badge/AppVersion-v0.10.0-informational?style=flat-square)
 
 Access Control Policies as a Server
 
@@ -87,12 +87,12 @@ Access Control Policies as a Server
 | secret.nameOverride | string | `""` | Provide custom name of existing secret, or custom name of secret to be created |
 | secret.secretAnnotations | object | `{"helm.sh/hook":"pre-install, pre-upgrade","helm.sh/hook-delete-policy":"before-hook-creation","helm.sh/hook-weight":"0","helm.sh/resource-policy":"keep"}` | Annotations to be added to secret. Annotations are added only when secret is being created. Existing secret will not be modified. |
 | securityContext | object | `{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"privileged":false,"readOnlyRootFilesystem":true,"runAsNonRoot":true,"runAsUser":100}` | Default security context configuration |
-| service | object | `{"metrics":{"annotations":{},"enabled":false,"loadBalancerIP":"","name":"http-metrics","port":80,"type":"ClusterIP"},"read":{"enabled":true,"loadBalancerIP":"","name":"grpc-read","port":80,"type":"ClusterIP"},"write":{"enabled":true,"loadBalancerIP":"","name":"grpc-write","port":80,"type":"ClusterIP"}}` | Service configurations |
+| service | object | `{"metrics":{"annotations":{},"enabled":false,"loadBalancerIP":"","name":"http-metrics","port":80,"type":"ClusterIP"},"read":{"appProtocol":"grpc","enabled":true,"loadBalancerIP":"","name":"grpc-read","port":80,"type":"ClusterIP"},"write":{"appProtocol":"grpc","enabled":true,"loadBalancerIP":"","name":"grpc-write","port":80,"type":"ClusterIP"}}` | Service configurations |
 | service.metrics | object | `{"annotations":{},"enabled":false,"loadBalancerIP":"","name":"http-metrics","port":80,"type":"ClusterIP"}` | Metrics service |
 | service.metrics.loadBalancerIP | string | `""` | The load balancer IP |
-| service.read | object | `{"enabled":true,"loadBalancerIP":"","name":"grpc-read","port":80,"type":"ClusterIP"}` | Read service |
+| service.read | object | `{"appProtocol":"grpc","enabled":true,"loadBalancerIP":"","name":"grpc-read","port":80,"type":"ClusterIP"}` | Read service |
 | service.read.loadBalancerIP | string | `""` | The load balancer IP |
-| service.write | object | `{"enabled":true,"loadBalancerIP":"","name":"grpc-write","port":80,"type":"ClusterIP"}` | Write service |
+| service.write | object | `{"appProtocol":"grpc","enabled":true,"loadBalancerIP":"","name":"grpc-write","port":80,"type":"ClusterIP"}` | Write service |
 | service.write.loadBalancerIP | string | `""` | The load balancer IP |
 | serviceAccount.annotations | object | `{}` | Annotations to add to the service account |
 | serviceAccount.create | bool | `true` | Specifies whether a service account should be created |
