@@ -21,6 +21,7 @@ spec:
       targetPort: {{ .Values.service.read.name }}
       protocol: TCP
       name: {{ .Values.service.read.name }}
+      appProtocol: {{ .Values.service.read.appProtocol }}
   selector:
     app.kubernetes.io/name: {{ include "keto.name" . }}
     app.kubernetes.io/instance: {{ .Release.Name }}
