@@ -156,6 +156,7 @@ service:
     loadBalancerIP: ""
     name: grpc-read
     port: 80
+    appProtocol: grpc
   # -- Write service
   write:
     enabled: true
@@ -164,6 +165,7 @@ service:
     loadBalancerIP: ""
     name: grpc-write
     port: 80
+    appProtocol: grpc
   # -- Metrics service
   metrics:
     enabled: false
