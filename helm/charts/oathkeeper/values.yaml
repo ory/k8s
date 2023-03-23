@@ -1,11 +1,3 @@
-# -- Mode for oathkeeper controller
-# -- Two possible modes are: controller or sidecar
-global:
-  ory:
-    oathkeeper:
-      maester:
-        mode: controller
-
 # -- Number of ORY Oathkeeper members
 replicaCount: 1
 
@@ -287,10 +279,6 @@ deployment:
   # targetMemoryUtilizationPercentage: 80
 # -- Configure node affinity
 affinity: {}
-
-# -- Configures controller setup
-maester:
-  enabled: true
 
 # -- PodDistributionBudget configuration
 pdb:

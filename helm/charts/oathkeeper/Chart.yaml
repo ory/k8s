@@ -22,10 +22,3 @@ maintainers: # (optional)
     email: office@ory.sh
     url: https://www.ory.sh/
 type: application
-dependencies:
-  - name: oathkeeper-maester
-    version: 0.25.5
-    condition: maester.enabled
-    alias: oathkeeper-maester
-    repository: file://../oathkeeper-maester
-    # repository: https://k8s.ory.sh/helm/charts
