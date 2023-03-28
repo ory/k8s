@@ -31,7 +31,7 @@ A Helm chart for Kubernetes
 | forwardedProto | string | `nil` |  |
 | image.pullPolicy | string | `"IfNotPresent"` | Image pull policy |
 | image.repository | string | `"oryd/hydra-maester"` | Ory Hydra-maester image |
-| image.tag | string | `"v0.0.25"` | Ory Hydra-maester version |
+| image.tag | string | `"v0.0.27"` | Ory Hydra-maester version |
 | imagePullSecrets | list | `[]` | Image pull secrets |
 | pdb | object | `{"enabled":false,"spec":{"minAvailable":1}}` | PodDistributionBudget configuration |
 | priorityClassName | string | `""` | Pod priority # https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/ |
