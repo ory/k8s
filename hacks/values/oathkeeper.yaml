@@ -96,6 +96,18 @@ oathkeeper:
         }
       ]
     }
+  config:
+    mutators:
+      noop:
+        enabled: true
+    authorizers:
+      allow:
+        enabled: true
+      deny:
+        enabled: true
+    authenticators:
+      noop:
+        enabled: true
 
 service:
   metrics:
