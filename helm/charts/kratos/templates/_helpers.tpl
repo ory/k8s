@@ -109,7 +109,7 @@ Generate the configmap data, redacting secrets
 {{- if $config.courier.smtp.connection_uri -}}
 {{- $config = set $config "courier" (set $config.courier "smtp" (omit $config.courier.smtp "connection_uri")) -}}
 {{- end -}}
-{{- toYaml $config -}}
+{{- tpl (toYaml $config) . -}}
 {{- end -}}
 
 {{/*
