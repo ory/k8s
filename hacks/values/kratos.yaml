@@ -1,4 +1,7 @@
 ---
+global:
+  dnsDomain: example.com
+
 autoscaling:
   enabled: true
   targetCPU:
@@ -62,7 +65,8 @@ kratos:
     #   algorithm: aes
     dsn: "postgres://postgres:ory@postgresql.default.svc.cluster.local/ory_kratos?sslmode=disable&max_conn_lifetime=10s"
     selfservice:
-      default_browser_return_url: http://127.0.0.1:4455/
+      #      default_browser_return_url: http://127.0.0.1:4455/
+      default_browser_return_url: "http://{{ .Values.global.dnsDomain }}:4455/"
       methods:
         password:
           enabled: true
@@ -150,8 +154,31 @@ kratos:
 ingress:
   admin:
     enabled: true
+    annotations:
+      my.domain: "{{ .Values.global.dnsDomain }}"
+    tls:
+      - secretName: chart-example-tls
+        hosts:
+          - "chart-example.{{ $.Values.global.dnsDomain }}"
+    hosts:
+      - host: "admin.{{ $.Values.global.dnsDomain }}"
+        paths:
+          - path: /
+            pathType: Prefix
   public:
     enabled: true
+    annotations:
+      my.domain: "{{ .Values.global.dnsDomain }}"
+    tls:
+      - secretName: chart-example-tls
+        hosts:
+          - "public-chart-example.{{ $.Values.global.dnsDomain }}"
+    hosts:
+      - host: "public.{{ $.Values.global.dnsDomain }}"
+        paths:
+          - path: /
+            pathType: Prefix
+
 deployment:
   extraInitContainers: |
     - name: "hello-world"

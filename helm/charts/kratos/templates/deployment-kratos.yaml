@@ -80,7 +80,7 @@ spec:
                   name: {{ include "kratos.secretname" . }}
                   key: dsn
           {{- if $migrationExtraEnv }}
-            {{- tpl (toYaml .Values.deployment.extraEnv) . | nindent 12 }}
+            {{- toYaml .Values.deployment.extraEnv | nindent 12 }}
           {{- end }}
       {{- end }}
       {{- if .Values.deployment.extraInitContainers  }}
