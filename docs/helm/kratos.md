@@ -268,4 +268,4 @@ Since this version some values in values.yaml may contain reference to other val
 
 ``helm install kratos ory/kratos -f values-wrapper.yaml -f ../my-env-values.yaml ``
 
-You can see example of usage [here](../../../kartos-helm-chart-tpl-values/hacks/values/kratos.yaml) 
+You can see example of usage dynamic values [here](../../../kartos-helm-chart-tpl-values/hacks/values/kratos.yaml) 
