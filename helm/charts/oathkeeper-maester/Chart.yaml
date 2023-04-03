@@ -3,7 +3,7 @@ appVersion: "v0.1.7"
 description: A Helm chart for deploying ORY Oathkeeper Rule Controller in Kubernetes
 name: oathkeeper-maester
 icon: https://raw.githubusercontent.com/ory/docs/master/docs/static/img/logo-oathkeeper.svg
-version: 0.29.0
+version: 0.30.0
 keywords:
   - zero-trust
   - beyond-corp
