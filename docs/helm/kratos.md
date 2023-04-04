@@ -262,9 +262,7 @@ where changes are on:
 
 ### Referencing other values in values file
 
-#### From `0.29.1`
-
-Since this version some values in values.yaml may contain references to other values `{{.Values.environmentDomain}}`. It is useful when you deploy multiple charts to multiple environments and you want to avoid creating multiple environment value files in each chart. Instead of it you may create for each chart only one value file that references values in environment specific files (that is used for all your charts) and install each chart by specifying two value files: chart value file + environment value file.
+Some values in values.yaml may contain references to other values `{{.Values.environmentDomain}}`. It is useful when you deploy multiple charts to multiple environments and you want to avoid creating multiple environment value files in each chart. Instead of it you may create for each chart only one value file that references values in environment specific files (that is used for all your charts) and install each chart by specifying two value files: chart value file + environment value file.
 
 ``helm install kratos ory/kratos -f values-wrapper.yaml -f ../my-env-values.yaml ``
 
