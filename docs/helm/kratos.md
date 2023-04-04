@@ -260,7 +260,7 @@ where changes are on:
   where each object include the `path` and the `pathType` (see
   [path matching documentation](https://kubernetes.io/blog/2020/04/02/improvements-to-the-ingress-api-in-kubernetes-1.18/#better-path-matching-with-path-types))
 
-### Referencing other values in Helm Chart values file
+### Referencing other values in values file
 
 #### From `0.29.1`
 
