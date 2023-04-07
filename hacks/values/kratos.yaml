@@ -234,7 +234,7 @@ deployment:
     successThreshold: 1
     timeoutSeconds: 1
 
-  environmentSecretsName: my-sec-env
+  environmentSecretsName: env-secrets
 
 statefulSet:
   extraArgs:
