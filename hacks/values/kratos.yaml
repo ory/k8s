@@ -234,6 +234,8 @@ deployment:
     successThreshold: 1
     timeoutSeconds: 1
 
+  environmentSecretsName: my-sec-env
+
 statefulSet:
   extraArgs:
     - --expose-metrics-port
