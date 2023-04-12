@@ -588,3 +588,8 @@ configmap:
   # -- If you do want to specify annotations for configmap, uncomment the following
   # lines, adjust them as necessary, and remove the curly braces after 'annotations:'.
   annotations: {}
+
+# -- use a busybox image from another repository
+busybox:
+  repository: busybox
+  tag: 1

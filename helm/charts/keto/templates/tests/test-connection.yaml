@@ -14,7 +14,7 @@ metadata:
 spec:
   containers:
     - name: wget
-      image: busybox
+      image: "{{ .Values.busybox.repository }}:{{ .Values.busybox.tag }}"
       command: ['wget']
       args: ['{{ include "keto.fullname" . }}-write:{{ .Values.service.write.port }}/health/ready']
   restartPolicy: Never
