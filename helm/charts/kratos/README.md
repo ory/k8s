@@ -130,7 +130,7 @@ A ORY Kratos Helm chart for Kubernetes
 | statefulSet.extraInitContainers | string | `""` | If you want to add extra init containers. These are processed before the migration init container. |
 | statefulSet.extraVolumeMounts | list | `[]` |  |
 | statefulSet.extraVolumes | list | `[]` | If you want to mount external volume For example, mount a secret containing Certificate root CA to verify database TLS connection. |
-| statefulSet.labels | object | `{}` |  |
+| statefulSet.labels | object | `{}` | The secret specified here will be used to load environment variables with envFrom. This allows arbitrary environment variables to be provided to the application which is useful for sensitive values which should not be in a configMap. This secret is not created by the helm chart and must already exist in the namespace. https://kubernetes.io/docs/tasks/inject-data-application/distribute-credentials-secure/#configure-all-key-value-pairs-in-a-secret-as-container-environment-variables environmentSecretsName: |
 | statefulSet.log.format | string | `"json"` |  |
 | statefulSet.log.level | string | `"trace"` |  |
 | statefulSet.nodeSelector | object | `{}` | Node labels for pod assignment. |
