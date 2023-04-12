@@ -4,6 +4,7 @@
 {{- $labels := ternary .Values.statefulSet.labels .Values.deployment.labels (not (empty .Values.statefulSet.labels )) -}}
 {{- $extraVolumeMounts := ternary .Values.statefulSet.extraVolumeMounts .Values.deployment.extraVolumeMounts (not (empty .Values.statefulSet.extraVolumeMounts )) -}}
 {{- $extraEnv := ternary .Values.statefulSet.extraEnv .Values.deployment.extraEnv (not (empty .Values.statefulSet.extraEnv )) -}}
+{{- $environmentSecretsName := ternary .Values.statefulSet.environmentSecretsName .Values.deployment.environmentSecretsName (not (empty .Values.statefulSet.environmentSecretsName )) -}}
 {{- $extraContainers := ternary .Values.statefulSet.extraContainers .Values.deployment.extraContainers (not (empty .Values.statefulSet.extraContainers )) -}}
 {{- $extraInitContainers := ternary .Values.statefulSet.extraInitContainers .Values.deployment.extraInitContainers (not (empty .Values.statefulSet.extraInitContainers )) -}}
 {{- $extraVolumes := ternary .Values.statefulSet.extraVolumes .Values.deployment.extraVolumes (not (empty .Values.statefulSet.extraVolumes )) -}}
@@ -115,6 +116,11 @@ spec:
             {{- if $extraEnv }}
               {{- toYaml $extraEnv | nindent 12 }}
             {{- end }}
+          {{- if $environmentSecretsName }}
+          envFrom:
+            - secretRef:
+                name: {{ $environmentSecretsName }}
+          {{- end}}
           resources:
               {{- toYaml $resources | nindent 12 }}
           {{- if .Values.securityContext }}

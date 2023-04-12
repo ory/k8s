@@ -389,6 +389,13 @@ statefulSet:
   #      lines, adjust them as necessary, and remove the curly braces after 'annotations:'.
   #      e.g.  sidecar.istio.io/rewriteAppHTTPProbers: "true"
 
+  # -- The secret specified here will be used to load environment variables with envFrom.
+  # This allows arbitrary environment variables to be provided to the application which is useful for
+  # sensitive values which should not be in a configMap.
+  # This secret is not created by the helm chart and must already exist in the namespace.
+  # https://kubernetes.io/docs/tasks/inject-data-application/distribute-credentials-secure/#configure-all-key-value-pairs-in-a-secret-as-container-environment-variables
+  # environmentSecretsName:
+
   labels: {}
   #      If you do want to specify additional labels, uncomment the following
   #      lines, adjust them as necessary, and remove the curly braces after 'labels:'.
