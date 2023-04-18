@@ -52,6 +52,8 @@ deployment:
     capabilities:
       drop:
       - ALL
+    seccompProfile:
+      type: RuntimeDefault
     readOnlyRootFilesystem: true
     runAsNonRoot: true
     runAsUser: 1000
