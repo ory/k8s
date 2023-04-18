@@ -250,6 +250,7 @@ deployment:
   # https://github.com/kubernetes/kubernetes/issues/57601
   automountServiceAccountToken: true
 
+  lifecycle: {}
   # -- Default probe timers
   livenessProbe:
     initialDelaySeconds: 5

@@ -126,6 +126,8 @@ spec:
             {{- with .Values.deployment.extraPorts }}
               {{- toYaml . | nindent 12 }}
             {{- end }}
+          lifecycle:
+            {{- toYaml .Values.deployment.lifecycle | nindent 12 }}
           livenessProbe:
             {{- if .Values.deployment.customLivenessProbe }} 
               {{- toYaml .Values.deployment.customLivenessProbe | nindent 12 }}

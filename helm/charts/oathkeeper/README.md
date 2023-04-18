@@ -44,6 +44,7 @@ A Helm chart for deploying ORY Oathkeeper in Kubernetes
 | deployment.extraVolumeMounts | list | `[]` | Extra volume mounts, allows mounting the extraVolumes to the container. |
 | deployment.extraVolumes | list | `[]` | Extra volumes you can attach to the pod. |
 | deployment.labels | object | `{}` |  |
+| deployment.lifecycle | object | `{}` |  |
 | deployment.livenessProbe | object | `{"failureThreshold":5,"initialDelaySeconds":5,"periodSeconds":10}` | Configure the livenessProbe parameters |
 | deployment.nodeSelector | object | `{}` | Node labels for pod assignment. |
 | deployment.podMetadata | object | `{"annotations":{},"labels":{}}` | Specify pod metadata, this metadata is added directly to the pod, and not higher objects |

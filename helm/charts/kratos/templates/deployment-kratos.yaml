@@ -185,6 +185,8 @@ spec:
             - name: http-public
               containerPort: {{ .Values.kratos.config.serve.public.port }}
               protocol: TCP
+          lifecycle:
+            {{- toYaml .Values.deployment.lifecycle | nindent 12 }}
           livenessProbe:
           {{- if .Values.deployment.customLivenessProbe }}
             {{- toYaml .Values.deployment.customLivenessProbe | nindent 12 }}

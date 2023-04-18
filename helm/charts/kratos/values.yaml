@@ -187,6 +187,7 @@ kratos:
 
 # -- Configuration options for the k8s deployment
 deployment:
+  lifecycle: {}
   # -- Configure the livenessProbe parameters
   livenessProbe:
     initialDelaySeconds: 5

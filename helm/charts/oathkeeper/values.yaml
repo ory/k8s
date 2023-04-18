@@ -216,6 +216,7 @@ deployment:
     allowPrivilegeEscalation: false
     privileged: false
 
+  lifecycle: {}
   # -- Configure the livenessProbe parameters
   livenessProbe:
     initialDelaySeconds: 5
