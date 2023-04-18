@@ -114,6 +114,8 @@ spec:
             - name: http-metrics
               protocol: TCP
               containerPort: {{ .Values.oathkeeper.config.serve.prometheus.port }}
+          lifecycle:
+            {{- toYaml .Values.deployment.lifecycle | nindent 12 }}
           livenessProbe:
             {{- if .Values.deployment.customLivenessProbe }}
               {{- toYaml .Values.deployment.customLivenessProbe | nindent 12 }}

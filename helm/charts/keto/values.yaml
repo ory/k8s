@@ -249,6 +249,7 @@ deployment:
   automountServiceAccountToken: true
 
   # -- Default probe timers
+  lifecycle: {}
   livenessProbe:
     initialDelaySeconds: 5
     periodSeconds: 10
