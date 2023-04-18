@@ -100,6 +100,7 @@ A ORY Kratos Helm chart for Kubernetes
 | securityContext.readOnlyRootFilesystem | bool | `true` |  |
 | securityContext.runAsNonRoot | bool | `true` |  |
 | securityContext.runAsUser | int | `100` |  |
+| securityContext.seccompProfile.type | string | `"RuntimeDefault"` |  |
 | service.admin.annotations | object | `{}` | If you do want to specify annotations, uncomment the following lines, adjust them as necessary, and remove the curly braces after 'annotations:'. |
 | service.admin.enabled | bool | `true` |  |
 | service.admin.labels | object | `{}` | Provide custom labels. Use the same syntax as for annotations. |
