@@ -7,7 +7,5 @@ deployment:
     annotations:
       ory.sh/pod_annotation: oathkeeper_maester
   serviceAccount:
-    labels:
-      ory.sh/pod_label: hydra-maester
     annotations:
       ory.sh/pod_annotation: hydra-maester
