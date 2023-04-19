@@ -5,7 +5,7 @@ metadata:
   name: {{ include "oathkeeper-maester.fullname" . }}-account
   namespace:  {{ .Release.Namespace }}
   labels:
-    {{- include "oathkeeper-maester.labels" . | indent 4 }}
+    {{- include "oathkeeper-maester.labels" . | nindent 4 }}
   {{- with .Values.deployment.serviceAccount.annotations }}
   annotations:
     {{- toYaml . | nindent 4 }}
