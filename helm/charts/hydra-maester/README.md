@@ -1,6 +1,6 @@
 # hydra-maester
 
-![Version: 0.30.0](https://img.shields.io/badge/Version-0.30.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.0.23](https://img.shields.io/badge/AppVersion-v0.0.23-informational?style=flat-square)
+![Version: 0.31.0](https://img.shields.io/badge/Version-0.31.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.0.23](https://img.shields.io/badge/AppVersion-v0.0.23-informational?style=flat-square)
 
 A Helm chart for Kubernetes
 
@@ -25,6 +25,8 @@ A Helm chart for Kubernetes
 | deployment.podMetadata.labels | object | `{}` | Extra pod level labels |
 | deployment.resources | object | `{}` |  |
 | deployment.securityContext | object | `{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"privileged":false,"readOnlyRootFilesystem":true,"runAsNonRoot":true,"runAsUser":1000,"seccompProfile":{"type":"RuntimeDefault"}}` | Default security context |
+| deployment.serviceAccount | object | `{"annotations":{}}` | Configure service account |
+| deployment.serviceAccount.annotations | object | `{}` | Annotations to add to the service account |
 | deployment.tolerations | list | `[]` | Configure node tolerations. |
 | deployment.topologySpreadConstraints | list | `[]` | Configure pod topologySpreadConstraints. |
 | enabledNamespaces | list | `[]` | The Controller have CREATE and READ access to all Secrets in the namespaces listed below. |

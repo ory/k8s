@@ -4,6 +4,12 @@ kind: ServiceAccount
 metadata:
   name: {{ include "hydra-maester.fullname" . }}-account
   namespace:  {{ .Release.Namespace }}
+  labels:
+    {{- include "hydra-maester.labels" . | nindent 4 }}
+  {{- with .Values.deployment.serviceAccount.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
 {{- if not .Values.singleNamespaceMode }}
 ---
 kind: ClusterRole
