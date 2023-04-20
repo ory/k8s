@@ -96,6 +96,11 @@ deployment:
     # -- Extra pod level annotations
     annotations: {}
 
+  # -- Configure service account
+  serviceAccount:
+    # -- Annotations to add to the service account
+    annotations: {}
+
 # -- Configure node affinity
 affinity: {}
 
