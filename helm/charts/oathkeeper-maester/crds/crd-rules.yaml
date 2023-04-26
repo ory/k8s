@@ -106,8 +106,7 @@ spec:
                     type: object
                   type: array
                 match:
-                  description:
-                    Match defines the URL(s) that an access rule should match.
+                  description: Match defines the URL(s) that an access rule should match.
                   properties:
                     methods:
                       description:
@@ -161,8 +160,7 @@ spec:
                         forwarding the requested URL to the upstream URL.
                       type: string
                     url:
-                      description:
-                        URL defines the target URL for incoming requests
+                      description: URL defines the target URL for incoming requests
                       maxLength: 256
                       minLength: 3
                       pattern: ^(?:https?:\/\/)?(?:[^@\/\n]+@)?(?:www\.)?([^:\/\n]+)
