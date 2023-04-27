@@ -562,3 +562,7 @@ serviceMonitor:
 configmap:
   # -- switch to false to prevent checksum annotations being maintained and propogated to the pods
   hashSumEnabled: true
+
+test:
+  # -- Provide additional labels to the test pod
+  labels: {}

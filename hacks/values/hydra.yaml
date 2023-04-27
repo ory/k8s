@@ -140,3 +140,9 @@ cronjob:
         ory.sh/pod_annotation: hydra
     podSecurityContext:
       runAsNonRoot: false
+
+test:
+  labels:
+    test-org: ory
+    test-product: hydra
+    test-service: authentication
