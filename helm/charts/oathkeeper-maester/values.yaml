@@ -16,7 +16,7 @@ singleNamespaceMode: false
 # -- Defines the Namespace in which the ConfigMap is stored. Defaults to the same Namespace as the ORY Maester Helm release.
 rulesConfigmapNamespace: ""
 # rulesConfigmapNamespace: some-namespace
-# -- Defines the name of the single root-level ConfigMap key used to store the entire array of Access Rules. 
+# -- Defines the name of the single root-level ConfigMap key used to store the entire array of Access Rules.
 # When the ConfigMap is mounted in the Oathkeeper Pod, this becomes also the filename of the "rules file" to the Oathkeeper process. Defaults to `access-rules.json`.
 rulesFileName: ""
 # rulesFileName: access-rules.json
@@ -33,7 +33,8 @@ image:
 imagePullSecrets: []
 
 deployment:
-  resources: {}
+  resources:
+    {}
     #  We usually recommend not to specify default resources and to leave this as a conscious
     #  choice for the user. This also increases chances charts run on environments with little
     #  resources, such as Minikube. If you do want to specify resources, uncomment the following
@@ -47,7 +48,7 @@ deployment:
   securityContext:
     capabilities:
       drop:
-      - ALL
+        - ALL
     seccompProfile:
       type: RuntimeDefault
     readOnlyRootFilesystem: true

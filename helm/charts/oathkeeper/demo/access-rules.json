@@ -6,13 +6,7 @@
     },
     "match": {
       "url": "http://<[^/]+>/authenticator/noop/authorizer/allow/mutator/noop",
-      "methods": [
-        "GET",
-        "POST",
-        "PUT",
-        "DELETE",
-        "PATCH"
-      ]
+      "methods": ["GET", "POST", "PUT", "DELETE", "PATCH"]
     },
     "authenticators": [
       {
@@ -22,9 +16,11 @@
     "authorizer": {
       "handler": "allow"
     },
-    "mutators": [{
-      "handler": "noop"
-    }]
+    "mutators": [
+      {
+        "handler": "noop"
+      }
+    ]
   },
   {
     "id": "rule-2",
@@ -33,13 +29,7 @@
     },
     "match": {
       "url": "http://<[^/]+>/authenticator/anonymous/authorizer/allow/mutator/header",
-      "methods": [
-        "GET",
-        "POST",
-        "PUT",
-        "DELETE",
-        "PATCH"
-      ]
+      "methods": ["GET", "POST", "PUT", "DELETE", "PATCH"]
     },
     "authenticators": [
       {
@@ -49,9 +39,11 @@
     "authorizer": {
       "handler": "allow"
     },
-    "mutators": [{
-      "handler": "header"
-    }]
+    "mutators": [
+      {
+        "handler": "header"
+      }
+    ]
   },
   {
     "id": "rule-3",
@@ -60,13 +52,7 @@
     },
     "match": {
       "url": "http://<[^/]+>/authenticator/anonymous/authorizer/allow/mutator/id_token",
-      "methods": [
-        "GET",
-        "POST",
-        "PUT",
-        "DELETE",
-        "PATCH"
-      ]
+      "methods": ["GET", "POST", "PUT", "DELETE", "PATCH"]
     },
     "authenticators": [
       {
@@ -76,8 +62,10 @@
     "authorizer": {
       "handler": "allow"
     },
-    "mutators": [{
-      "handler": "id_token"
-    }]
+    "mutators": [
+      {
+        "handler": "id_token"
+      }
+    ]
   }
 ]

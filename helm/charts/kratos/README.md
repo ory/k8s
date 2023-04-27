@@ -18,7 +18,7 @@ A ORY Kratos Helm chart for Kubernetes
 | deployment.automigration.extraEnv | list | `[]` | Array of extra envs to be passed to the initContainer. Kubernetes format is expected - name: FOO   value: BAR |
 | deployment.customLivenessProbe | object | `{}` | Configure a custom livenessProbe. This overwrites the default object |
 | deployment.customReadinessProbe | object | `{}` | Configure a custom readinessProbe. This overwrites the default object |
-| deployment.customStartupProbe | object | `{}` | Configure a custom startupProbe. This overwrites the default object   |
+| deployment.customStartupProbe | object | `{}` | Configure a custom startupProbe. This overwrites the default object |
 | deployment.dnsConfig | object | `{}` | Configure pod dnsConfig. |
 | deployment.extraArgs | list | `[]` | Array of extra arguments to be passed down to the deployment. Kubernetes args format is expected - --foo - --sqa-opt-out |
 | deployment.extraContainers | string | `""` | If you want to add extra sidecar containers. |
@@ -77,7 +77,7 @@ A ORY Kratos Helm chart for Kubernetes
 | job.spec.backoffLimit | int | `10` | Set job back off limit |
 | job.tolerations | list | `[]` | Configure node tolerations. |
 | kratos.automigration | object | `{"customArgs":[],"customCommand":[],"enabled":false,"type":"job"}` | Enables database migration |
-| kratos.automigration.customArgs | list | `[]` | Ability to override arguments of the entrypoint. Can be used in-depended of customCommand  eg: - sleep 5;   - kratos |
+| kratos.automigration.customArgs | list | `[]` | Ability to override arguments of the entrypoint. Can be used in-depended of customCommand eg: - sleep 5;   - kratos |
 | kratos.automigration.customCommand | list | `[]` | Ability to override the entrypoint of the automigration container (e.g. to source dynamic secrets or export environment dynamic variables) |
 | kratos.automigration.type | string | `"job"` | Configure the way to execute database migration. Possible values: job, initContainer When set to job, the migration will be executed as a job on release or upgrade. When set to initContainer, the migration will be executed when kratos pod is created Defaults to job |
 | kratos.config.courier.smtp | object | `{}` |  |

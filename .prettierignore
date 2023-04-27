@@ -1,4 +1,6 @@
 .github/pull_request_template.md
 .github/ISSUE_TEMPLATE/
-helm/charts/
 docs/helm/charts/index.yaml
+helm/charts/**/templates/*.yaml
+helm/charts/**/tests/*.yaml
+helm/charts/**/README.md
