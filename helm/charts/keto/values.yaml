@@ -11,7 +11,7 @@ image:
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
   # -- Ory KETO version
-  tag: "v0.10.0"
+  tag: "v0.11.1"
 
 imagePullSecrets: []
 nameOverride: ""
@@ -207,12 +207,12 @@ keto:
     # -- Configure the way to execute database migration. Possible values: job, initContainer
     # When set to job, the migration will be executed as a job on release or upgrade.
     # When set to initContainer, the migration will be executed when kratos pod is created
-    # Defaults to job  
+    # Defaults to job
     type: job
     # -- Ability to override the entrypoint of the automigration container
     # (e.g. to source dynamic secrets or export environment dynamic variables)
     customCommand: []
-    # -- Ability to override arguments of the entrypoint. Can be used in-depended of customCommand 
+    # -- Ability to override arguments of the entrypoint. Can be used in-depended of customCommand
     # eg:
     # - sleep 5;
     #   - keto
@@ -268,10 +268,10 @@ deployment:
     periodSeconds: 1
     timeoutSeconds: 1
   # -- Configure a custom livenessProbe. This overwrites the default object
-  customLivenessProbe: {} 
-  # -- Configure a custom readinessProbe. This overwrites the default object  
+  customLivenessProbe: {}
+  # -- Configure a custom readinessProbe. This overwrites the default object
   customReadinessProbe: {}
-  # -- Configure a custom startupProbe. This overwrites the default object  
+  # -- Configure a custom startupProbe. This overwrites the default object
   customStartupProbe: {}
 
   # -- Add custom annotations to the deployment
@@ -365,7 +365,7 @@ deployment:
     # -- Array of extra envs to be passed to the initContainer. Kubernetes format is expected
     # - name: FOO
     #   value: BAR
-    extraEnv: []    
+    extraEnv: []
 
 # -- Watcher sidecar configuration
 watcher:
@@ -380,7 +380,7 @@ watcher:
     # -- Extra pod level annotations
     annotations: {}
   # -- Label key used for managing applications
-  watchLabelKey: 'ory.sh/watcher'
+  watchLabelKey: "ory.sh/watcher"
 
 # -- PodDistributionBudget configuration
 pdb:

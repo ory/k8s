@@ -1,6 +1,7 @@
 apiVersion: v1
 appVersion: "v0.1.8"
-description: A Helm chart for deploying ORY Oathkeeper Rule Controller in Kubernetes
+description:
+  A Helm chart for deploying ORY Oathkeeper Rule Controller in Kubernetes
 name: oathkeeper-maester
 icon: https://raw.githubusercontent.com/ory/docs/master/docs/static/img/logo-oathkeeper.svg
 version: 0.31.0

@@ -15,7 +15,7 @@ image:
   repository: oryd/kratos
   # -- ORY KRATOS VERSION
   # Alternative format: image: oryd/kratos:v0.6.3-alpha.1
-  tag: v0.11.1
+  tag: v0.13.0
   pullPolicy: IfNotPresent
   # imagePullPolicy: Always
 
@@ -121,7 +121,7 @@ kratos:
     # -- Ability to override the entrypoint of the automigration container
     # (e.g. to source dynamic secrets or export environment dynamic variables)
     customCommand: []
-    # -- Ability to override arguments of the entrypoint. Can be used in-depended of customCommand 
+    # -- Ability to override arguments of the entrypoint. Can be used in-depended of customCommand
     # eg:
     # - sleep 5;
     #   - kratos
@@ -209,7 +209,7 @@ deployment:
   customLivenessProbe: {}
   # -- Configure a custom readinessProbe. This overwrites the default object
   customReadinessProbe: {}
-  # -- Configure a custom startupProbe. This overwrites the default object  
+  # -- Configure a custom startupProbe. This overwrites the default object
   customStartupProbe: {}
 
   # -- Array of extra arguments to be passed down to the deployment. Kubernetes args format is expected
@@ -558,7 +558,7 @@ watcher:
     # -- Extra pod level annotations
     annotations: {}
   # -- Label key used for managing applications
-  watchLabelKey: 'ory.sh/watcher'
+  watchLabelKey: "ory.sh/watcher"
 
 # -- PodDistributionBudget configuration
 pdb:

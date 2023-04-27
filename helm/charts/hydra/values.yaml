@@ -5,7 +5,7 @@ image:
   # -- ORY Hydra image
   repository: oryd/hydra
   # -- ORY Hydra version
-  tag: v2.0.3
+  tag: v2.1.1
   # -- Image pull policy
   pullPolicy: IfNotPresent
 
@@ -167,7 +167,7 @@ hydra:
     # -- resource requests and limits for the automigration initcontainer
     resources: {}
 
-  # -- Enable dev mode, not secure in production environments 
+  # -- Enable dev mode, not secure in production environments
   dev: false
 
 deployment:
@@ -230,11 +230,10 @@ deployment:
 
   # -- Parameters for the automigration initContainer
   automigration:
-
     # -- Array of extra envs to be passed to the initContainer. Kubernetes format is expected
     # - name: FOO
     #   value: BAR
-    extraEnv: []    
+    extraEnv: []
 
   # -- Configure node tolerations.
   tolerations: []
@@ -336,11 +335,11 @@ deployment:
   #  - name: ...
   #    image: ...
 
-  # -- Configure a custom livenessProbe. This overwrites the default object 
-  customLivenessProbe: {} 
-  # -- Configure a custom readinessProbe. This overwrites the default object  
+  # -- Configure a custom livenessProbe. This overwrites the default object
+  customLivenessProbe: {}
+  # -- Configure a custom readinessProbe. This overwrites the default object
   customReadinessProbe: {}
-  # -- Configure a custom startupProbe. This overwrites the default object  
+  # -- Configure a custom startupProbe. This overwrites the default object
   customStartupProbe: {}
 
 # -- Values for initialization job
@@ -450,7 +449,7 @@ watcher:
     # -- Extra pod level annotations
     annotations: {}
   # -- Label key used for managing applications
-  watchLabelKey: 'ory.sh/watcher'
+  watchLabelKey: "ory.sh/watcher"
 
   ## -- pod securityContext for watcher deployment
   podSecurityContext: {}
