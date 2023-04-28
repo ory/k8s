@@ -34,7 +34,7 @@ jobs:
         id: filter
         with:
           base: master
-          # `-helm` suffix aims that we can easily filter helm charts
+          #`-helm` suffix aims that we can easily filter helm charts
           filters: |
             example-idp-helm:
               - 'helm/charts/example-idp/**'
@@ -84,7 +84,7 @@ jobs:
           if [[ "$updated_charts" == "[]" ]]; then 
            echo "no_changes=true" >> $GITHUB_OUTPUT
           fi
-          echo "matrix='{\"chart\":$(echo $updated_charts)}\"'" >> $GITHUB_OUTPUT
+          echo "matrix={\"chart\":$(echo $updated_charts)}\"" >> $GITHUB_OUTPUT
 
           echo "Charts array to run CI on: $updated_charts"
 
