@@ -1,6 +1,6 @@
 # hydra
 
-![Version: 0.31.0](https://img.shields.io/badge/Version-0.31.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v2.1.1](https://img.shields.io/badge/AppVersion-v2.1.1-informational?style=flat-square)
+![Version: 0.32.0](https://img.shields.io/badge/Version-0.32.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v2.1.1](https://img.shields.io/badge/AppVersion-v2.1.1-informational?style=flat-square)
 
 A Helm chart for deploying ORY Hydra in Kubernetes
 
@@ -21,7 +21,7 @@ A Helm chart for deploying ORY Hydra in Kubernetes
 
 | Repository | Name | Version |
 |------------|------|---------|
-| file://../hydra-maester | hydra-maester(hydra-maester) | 0.31.0 |
+| file://../hydra-maester | hydra-maester(hydra-maester) | 0.32.0 |
 
 ## Values
 
@@ -157,6 +157,7 @@ A Helm chart for deploying ORY Hydra in Kubernetes
 | serviceMonitor.scrapeInterval | string | `"60s"` | Interval at which metrics should be scraped |
 | serviceMonitor.scrapeTimeout | string | `"30s"` | Timeout after which the scrape is ended |
 | serviceMonitor.tlsConfig | object | `{}` | TLS configuration to use when scraping the endpoint |
+| test.labels | object | `{}` | Provide additional labels to the test pod |
 | watcher | object | `{"enabled":false,"image":"oryd/k8s-toolbox:0.0.5","mountFile":"","podMetadata":{"annotations":{},"labels":{}},"podSecurityContext":{},"securityContext":{},"watchLabelKey":"ory.sh/watcher"}` | Sidecar watcher configuration |
 | watcher.mountFile | string | `""` | Path to mounted file, which wil be monitored for changes. eg: /etc/secrets/my-secret/foo |
 | watcher.podMetadata | object | `{"annotations":{},"labels":{}}` | Specify pod metadata, this metadata is added directly to the pod, and not higher objects |
