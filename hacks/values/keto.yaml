@@ -94,3 +94,9 @@ serviceMonitor:
     release: "prometheus"
   tlsConfig:
     insecureSkipVerify: true
+
+test:
+  labels:
+    test-org: ory
+    test-product: keto
+    test-service: authorization

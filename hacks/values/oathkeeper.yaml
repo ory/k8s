@@ -129,3 +129,9 @@ serviceMonitor:
       regex: request
   targetLabels:
     - app
+
+test:
+  labels:
+    test-org: ory
+    test-product: oathkeeper
+    test-service: authorizer
