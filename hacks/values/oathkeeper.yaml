@@ -9,6 +9,12 @@ maester:
 #  api:
 #    type: NodePort
 #
+
+image:
+  initContainer:
+    repository: docker.io/library/busybox
+    tag: 1.36
+
 ingress:
   proxy:
     enabled: true

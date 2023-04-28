@@ -64,7 +64,7 @@ spec:
             secretName: {{ include "oathkeeper.secretname" . }}
       initContainers:
         - name: init
-          image: "{{ .Values.test.busybox.repository }}:{{ .Values.test.busybox.tag }}"
+          image: "{{ .Values.image.initContainer.repository }}:{{ .Values.image.initContainer.tag }}"
           volumeMounts:
             - name: {{ include "oathkeeper.name" . }}-rules-volume
               mountPath: /etc/rules
