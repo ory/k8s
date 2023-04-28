@@ -15,7 +15,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      - uses: actions/setup-go@v2
+      - uses: actions/setup-go@v3
         with:
           go-version: "1.17"
       - name: Setup dependencies
@@ -30,7 +30,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      - uses: dorny/paths-filter@v2.9.1
+      - uses: dorny/paths-filter@v2.11.1
         id: filter
         with:
           base: master
@@ -82,9 +82,9 @@ jobs:
           fi
 
           if [[ "$updated_charts" == "[]" ]]; then 
-           echo ::set-output name=no_changes::"true"
+           echo "no_changes=true" >> $GITHUB_OUTPUT
           fi
-          echo ::set-output name=matrix::{\"chart\":$(echo $updated_charts)}\"
+          echo "matrix='{\"chart\":$(echo $updated_charts)}\"'" >> $GITHUB_OUTPUT
 
           echo "Charts array to run CI on: $updated_charts"
 
