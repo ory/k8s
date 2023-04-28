@@ -100,3 +100,6 @@ test:
     test-org: ory
     test-product: keto
     test-service: authorization
+  busybox:
+    repository: docker.io/library/busybox
+    tag: 1.36

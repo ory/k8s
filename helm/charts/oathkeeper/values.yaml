@@ -379,8 +379,7 @@ configmap:
 test:
   # -- Provide additional labels to the test pod
   labels: {}
-
-# -- use a busybox image from another repository
-busybox:
-  repository: busybox
-  tag: 1
+  # -- use a busybox image from another repository
+  busybox:
+    repository: busybox
+    tag: 1

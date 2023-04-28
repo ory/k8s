@@ -144,6 +144,8 @@ jwksUrl: "http://oathkeeper-api"
 
 projectName: "SecureApp"
 
-busybox:
-  repository: busybox
-  tag: 1
+test:
+  # -- use a busybox image from another repository
+  busybox:
+    repository: busybox
+    tag: 1

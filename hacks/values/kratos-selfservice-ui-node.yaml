@@ -13,3 +13,8 @@ deployment:
   extraVolumeMounts:
     - name: dummy
       mountPath: /opt/dummy/
+
+test:
+  busybox:
+    repository: docker.io/library/busybox
+    tag: 1.36

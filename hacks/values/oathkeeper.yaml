@@ -135,3 +135,6 @@ test:
     test-org: ory
     test-product: oathkeeper
     test-service: authorizer
+  busybox:
+    repository: docker.io/library/busybox
+    tag: 1.36
