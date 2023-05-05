@@ -12,7 +12,7 @@ metadata:
 spec:
   containers:
     - name: wget
-      image: busybox
+      image: "{{ .Values.test.busybox.repository }}:{{ .Values.test.busybox.tag }}"
       command: ['wget']
       args:  ['{{ include "kratos.fullname" . }}-admin:{{ .Values.service.admin.port }}/admin/health/ready']
   restartPolicy: Never
