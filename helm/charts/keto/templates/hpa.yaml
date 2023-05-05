@@ -5,6 +5,9 @@ apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
   name: {{ include "keto.fullname" . }}
+  {{- if .Release.Namespace }}
+  namespace: {{ .Release.Namespace }}
+  {{- end }}
   labels:
     {{- include "keto.labels" . | nindent 4 }}
 spec:
