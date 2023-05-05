@@ -30,6 +30,7 @@ A Helm chart for deploying the reference implementation for the User Login and C
 | service.annotations | object | `{}` | If you do want to specify annotations, uncomment the following lines, adjust them as necessary, and remove the curly braces after 'annotations:'. |
 | service.port | int | `3000` |  |
 | service.type | string | `"ClusterIP"` |  |
+| test.busybox | object | `{"repository":"busybox","tag":1}` | use a busybox image from another repository |
 | tolerations | list | `[]` |  |
 | topologySpreadConstraints | list | `[]` | Configure pod topologySpreadConstraints. |
 

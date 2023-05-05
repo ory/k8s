@@ -151,3 +151,6 @@ test:
     test-org: ory
     test-product: hydra
     test-service: authentication
+  busybox:
+    repository: docker.io/library/busybox
+    tag: 1.36

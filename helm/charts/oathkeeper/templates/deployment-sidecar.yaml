@@ -10,12 +10,12 @@ metadata:
   labels:
     mode: {{ .Values.global.ory.oathkeeper.maester.mode }}
     {{- include "oathkeeper.labels" . | nindent 4 }}
-    {{- with .Values.deployment.labels }} 
-      {{- toYaml . | nindent 4 }} 
-    {{- end }}  
-  annotations:  
-    {{- with .Values.deployment.annotations }}  
-      {{- toYaml . | nindent 4 }} 
+    {{- with .Values.deployment.labels }}
+      {{- toYaml . | nindent 4 }}
+    {{- end }}
+  annotations:
+    {{- with .Values.deployment.annotations }}
+      {{- toYaml . | nindent 4 }}
     {{- end }}
 spec:
   replicas: {{ .Values.replicaCount }}
@@ -26,20 +26,20 @@ spec:
   template:
     metadata:
       labels:
-        {{- include "oathkeeper.labels" . | nindent 8 }}  
-        {{- with .Values.deployment.labels }} 
-          {{- toYaml . | nindent 8 }} 
-        {{- end }}  
-        {{- with .Values.deployment.podMetadata.labels }} 
-          {{- toYaml . | nindent 8 }} 
+        {{- include "oathkeeper.labels" . | nindent 8 }}
+        {{- with .Values.deployment.labels }}
+          {{- toYaml . | nindent 8 }}
+        {{- end }}
+        {{- with .Values.deployment.podMetadata.labels }}
+          {{- toYaml . | nindent 8 }}
         {{- end }}
       annotations:
         {{- include "oathkeeper.annotations.checksum" . | indent 8 -}}
         {{- with .Values.deployment.annotations }}
           {{- toYaml . | nindent 8 }}
         {{- end }}
-        {{- with .Values.deployment.podMetadata.annotations }}  
-          {{- toYaml . | nindent 8 }} 
+        {{- with .Values.deployment.podMetadata.annotations }}
+          {{- toYaml . | nindent 8 }}
         {{- end }}
     spec:
     {{- with .Values.imagePullSecrets }}
@@ -47,8 +47,8 @@ spec:
         {{- toYaml . | nindent 8 }}
     {{- end }}
       volumes:
-        {{- if .Values.deployment.extraVolumes }} 
-          {{- toYaml .Values.deployment.extraVolumes | nindent 8 }} 
+        {{- if .Values.deployment.extraVolumes }}
+          {{- toYaml .Values.deployment.extraVolumes | nindent 8 }}
         {{- end }}
         - name: {{ include "oathkeeper.name" . }}-config-volume
           configMap:
@@ -64,7 +64,7 @@ spec:
             secretName: {{ include "oathkeeper.secretname" . }}
       initContainers:
         - name: init
-          image: busybox:1
+          image: "{{ .Values.image.initContainer.repository }}:{{ .Values.image.initContainer.tag }}"
           volumeMounts:
             - name: {{ include "oathkeeper.name" . }}-rules-volume
               mountPath: /etc/rules
@@ -92,12 +92,12 @@ spec:
             - name: MUTATORS_ID_TOKEN_CONFIG_JWKS_URL
               value: "file://{{ .Values.secret.mountPath }}/{{ .Values.secret.filename }}"
             {{- end }}
-            {{- with .Values.deployment.extraEnv }} 
-              {{- toYaml . | nindent 12 }}  
+            {{- with .Values.deployment.extraEnv }}
+              {{- toYaml . | nindent 12 }}
             {{- end }}
           volumeMounts:
-            {{- with .Values.deployment.extraVolumeMounts }}  
-              {{- toYaml . | nindent 12 }}  
+            {{- with .Values.deployment.extraVolumeMounts }}
+              {{- toYaml . | nindent 12 }}
             {{- end }}
             - name: {{ include "oathkeeper.name" . }}-config-volume
               mountPath: /etc/config
