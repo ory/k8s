@@ -1,2 +1,7 @@
 ingress:
   enabled: true
+
+test:
+  busybox:
+    repository: docker.io/library/busybox
+    tag: 1.36

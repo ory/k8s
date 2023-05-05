@@ -16,6 +16,10 @@ image:
   tag: v0.40.3
   # -- Image pull policy
   pullPolicy: IfNotPresent
+  # -- use a busybox image from another repository
+  initContainer:
+    repository: busybox
+    tag: 1
 
 # -- Options for the sidecar
 sidecar:
@@ -383,3 +387,7 @@ configmap:
 test:
   # -- Provide additional labels to the test pod
   labels: {}
+  # -- use a busybox image from another repository
+  busybox:
+    repository: busybox
+    tag: 1

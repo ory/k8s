@@ -81,3 +81,9 @@ dnsConfig: {}
 #   options:
 #     - name: "ndots"
 #       value: "1"
+
+test:
+  # -- use a busybox image from another repository
+  busybox:
+    repository: busybox
+    tag: 1
