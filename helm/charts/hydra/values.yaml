@@ -456,7 +456,10 @@ watcher:
   watchLabelKey: "ory.sh/watcher"
 
   ## -- pod securityContext for watcher deployment
-  podSecurityContext:
+  podSecurityContext: {}
+
+  ## -- container securityContext for watcher deployment
+  securityContext:
     capabilities:
       drop:
         - ALL
@@ -467,9 +470,6 @@ watcher:
     runAsUser: 100
     allowPrivilegeEscalation: false
     privileged: false
-
-  ## -- container securityContext for watcher deployment
-  securityContext: {}
 
 ## -- Janitor cron job configuration
 janitor:
