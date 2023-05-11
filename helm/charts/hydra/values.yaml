@@ -456,7 +456,17 @@ watcher:
   watchLabelKey: "ory.sh/watcher"
 
   ## -- pod securityContext for watcher deployment
-  podSecurityContext: {}
+  podSecurityContext:
+    capabilities:
+      drop:
+        - ALL
+    seccompProfile:
+      type: RuntimeDefault
+    readOnlyRootFilesystem: true
+    runAsNonRoot: true
+    runAsUser: 100
+    allowPrivilegeEscalation: false
+    privileged: false
 
   ## -- container securityContext for watcher deployment
   securityContext: {}
