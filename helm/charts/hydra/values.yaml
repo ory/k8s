@@ -459,7 +459,17 @@ watcher:
   podSecurityContext: {}
 
   ## -- container securityContext for watcher deployment
-  securityContext: {}
+  securityContext:
+    capabilities:
+      drop:
+        - ALL
+    seccompProfile:
+      type: RuntimeDefault
+    readOnlyRootFilesystem: true
+    runAsNonRoot: true
+    runAsUser: 100
+    allowPrivilegeEscalation: false
+    privileged: false
 
 ## -- Janitor cron job configuration
 janitor:
