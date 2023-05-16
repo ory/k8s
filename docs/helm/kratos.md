@@ -272,5 +272,4 @@ file + environment value file.
 
 `helm install kratos ory/kratos -f values-wrapper.yaml -f ../my-env-values.yaml `
 
-You can see example of referencing values
-[here](/hacks/values/kratos.yaml)
+You can see example of referencing values [here](/hacks/values/kratos.yaml)
