@@ -52,6 +52,9 @@ spec:
         {{- toYaml . | nindent 8 }}
     {{- end }}
       initContainers:
+      {{- if .Values.deployment.extraInitContainers  }}
+{{ tpl  .Values.deployment.extraInitContainers . | indent 8 }}
+      {{- end }}
       {{- if and ( .Values.kratos.automigration.enabled ) ( eq .Values.kratos.automigration.type "initContainer" ) }}
         - name: {{ .Chart.Name }}-automigrate
           image: {{ include "kratos.image" . }}
@@ -82,9 +85,6 @@ spec:
           {{- if $migrationExtraEnv }}
             {{- toYaml .Values.deployment.extraEnv | nindent 12 }}
           {{- end }}
-      {{- end }}
-      {{- if .Values.deployment.extraInitContainers  }}
-{{ tpl  .Values.deployment.extraInitContainers . | indent 8 }}
       {{- end }}
       volumes:
         {{- if .Values.deployment.extraVolumes }}
