@@ -65,6 +65,9 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       initContainers:
+      {{- if $extraInitContainers}}
+        {{- tpl $extraInitContainers . | nindent 8 }}
+      {{- end }}
       {{- if and ( .Values.keto.automigration.enabled ) ( eq .Values.keto.automigration.type "initContainer" ) }}
         - name: {{ .Chart.Name }}-automigrate
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
@@ -95,9 +98,6 @@ spec:
             {{- with $migrationExtraEnv }}
               {{- toYaml . | nindent 12 }}
             {{- end }}
-      {{- end }}
-      {{- if $extraInitContainers}}
-        {{- tpl $extraInitContainers . | nindent 8 }}
       {{- end }}
       serviceAccountName: {{ include "keto.serviceAccountName" . }}
       automountServiceAccountToken: {{ $automountServiceAccountToken }}
