@@ -161,6 +161,9 @@ spec:
           {{- tpl .Values.deployment.extraContainers . | nindent 8 }}
         {{- end }}
       initContainers:
+      {{- if .Values.deployment.extraInitContainers }}
+        {{- tpl .Values.deployment.extraInitContainers . | nindent 8 }}
+      {{- end }}
       {{- if and ( .Values.hydra.automigration.enabled ) ( eq .Values.hydra.automigration.type "initContainer" ) }}
         - name: {{ .Chart.Name }}-automigrate
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
@@ -201,9 +204,6 @@ spec:
           securityContext:
             {{- toYaml . | nindent 12 }}
           {{- end }}
-      {{- end }}
-      {{- if .Values.deployment.extraInitContainers }}
-        {{- tpl .Values.deployment.extraInitContainers . | nindent 8 }}
       {{- end }}
       {{- if .Values.priorityClassName }}
       priorityClassName: {{ .Values.priorityClassName }}
