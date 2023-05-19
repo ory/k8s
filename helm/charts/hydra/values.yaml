@@ -327,7 +327,7 @@ deployment:
   # https://github.com/kubernetes/kubernetes/issues/57601
   automountServiceAccountToken: true
 
-  # -- If you want to add extra init containers.
+  # -- If you want to add extra init containers. These are processed before the migration init container.
   extraInitContainers: ""
   # extraInitContainers: |
   #  - name: ...
