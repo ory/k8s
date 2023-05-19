@@ -40,7 +40,7 @@ A Helm chart for deploying ORY Oathkeeper in Kubernetes
 | deployment.extraArgs | list | `[]` | Array of extra arguments to be passed down to the Deployment. Kubernetes args format is expected |
 | deployment.extraContainers | string | `""` | If you want to add extra sidecar containers. |
 | deployment.extraEnv | list | `[]` |  |
-| deployment.extraInitContainers | string | `""` | If you want to add extra init containers. These are processed before the migration init container. |
+| deployment.extraInitContainers | string | `""` | If you want to add extra init containers. |
 | deployment.extraVolumeMounts | list | `[]` | Extra volume mounts, allows mounting the extraVolumes to the container. |
 | deployment.extraVolumes | list | `[]` | Extra volumes you can attach to the pod. |
 | deployment.labels | object | `{}` |  |

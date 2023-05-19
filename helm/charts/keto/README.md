@@ -33,7 +33,7 @@ Access Control Policies as a Server
 | deployment.dnsConfig | object | `{}` | Configure pod dnsConfig. |
 | deployment.extraContainers | string | `""` | If you want to add extra sidecar containers. |
 | deployment.extraEnv | list | `[]` | Array of extra Envs to be added to the deployment. K8s format expected - name: FOO   value: BAR |
-| deployment.extraInitContainers | object | `{}` | If you want to add extra init containers. |
+| deployment.extraInitContainers | object | `{}` | If you want to add extra init containers. These are processed before the migration init container. |
 | deployment.extraLabels | object | `{}` | Extra labels to be added to the deployment, and pods. K8s object format expected foo: bar my.special.label/type: value |
 | deployment.extraPorts | list | `[]` | Extra ports to be exposed by the main deployment |
 | deployment.extraVolumeMounts | list | `[]` | Array of extra VolumeMounts to be added to the deployment. K8s format expected - name: my-volume   mountPath: /etc/secrets/my-secret   readOnly: true |
