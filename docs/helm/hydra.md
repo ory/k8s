@@ -34,7 +34,7 @@ cryptographically strong secret, a Login and Consent provider located at
 
 ```bash
 $ helm install \
-    --set 'hydra.config.secrets.system={$(LC_ALL=C tr -dc 'A-Za-z0-9' < /dev/urandom | base64 | head -c 32)}' \
+    --set 'hydra.config.secrets.system={$(LC_ALL=C tr -dc 'A-Za-z0-9' < /dev/urandom | head -c 32 | base64)}' \
     --set 'hydra.config.dsn=postgres://foo:bar@baz:1234/db' \
     --set 'hydra.config.urls.self.issuer=https://my-hydra/' \
     --set 'hydra.config.urls.login=https://my-idp/login' \
@@ -47,7 +47,7 @@ You can optionally also set the cookie secrets:
 ```bash
 $ helm install \
     ...
-    --set 'hydra.config.secrets.cookie=$(LC_ALL=C tr -dc 'A-Za-z0-9' < /dev/urandom | base64 | head -c 32)' \
+    --set 'hydra.config.secrets.cookie=$(LC_ALL=C tr -dc 'A-Za-z0-9' < /dev/urandom | head -c 32 | base64)' \
     ...
     ory/hydra
 ```
@@ -59,8 +59,8 @@ instead of letting the Helm Chart create one for you:
 ```bash
 
 $ kubectl create secret generic my-secure-secret --from-literal=dsn=postgres://foo:bar@baz:1234/db \
-    --from-literal=secretsCookie=$(LC_ALL=C tr -dc 'A-Za-z0-9' < /dev/urandom | base64 | head -c 32) \
-    --from-literal=secretsSystem=$(LC_ALL=C tr -dc 'A-Za-z0-9' < /dev/urandom | base64 | head -c 32)
+    --from-literal=secretsCookie=$(LC_ALL=C tr -dc 'A-Za-z0-9' < /dev/urandom | head -c 32 | base64) \
+    --from-literal=secretsSystem=$(LC_ALL=C tr -dc 'A-Za-z0-9' < /dev/urandom | head -c 32 | base64)
 
 $ helm install \
     ...
@@ -204,7 +204,7 @@ the ORY Hydra Helm Chart
 
 ```bash
 $ helm install \
-    --set 'hydra.config.secrets.system={$(LC_ALL=C tr -dc 'A-Za-z0-9' < /dev/urandom | base64 | head -c 32)}' \
+    --set 'hydra.config.secrets.system={$(LC_ALL=C tr -dc 'A-Za-z0-9' < /dev/urandom | head -c 32 | base64)}' \
     --set 'hydra.config.dsn=postgres://foo:bar@baz:1234/db' \
     --set 'hydra.config.urls.self.issuer=http://public.hydra.localhost/' \
     --set 'hydra.config.urls.login=http://example-idp.localhost/login' \
