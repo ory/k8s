@@ -154,7 +154,7 @@ secret:
 
 ### Identity Schemas
 
-There are two options to provide identity schemas:
+There are three options to provide identity schemas:
 
 Note: You are free to name `<schema-id>` and `<schema-name>` whatever you want.
 
