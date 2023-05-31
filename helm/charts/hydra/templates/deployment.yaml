@@ -64,14 +64,14 @@ spec:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          {{- if .Values.hydra.customCommand }}
+          command: {{- toYaml .Values.hydra.customCommand | nindent 12 }}
+          {{- else }}
           command: ["hydra"]
-          volumeMounts:
-            - name: {{ include "hydra.name" . }}-config-volume
-              mountPath: /etc/config
-              readOnly: true
-            {{- if .Values.deployment.extraVolumeMounts }}
-              {{- toYaml .Values.deployment.extraVolumeMounts | nindent 12 }}
-            {{- end }}
+          {{- end }}
+          {{- if .Values.hydra.customArgs }}
+          args: {{- toYaml .Values.hydra.customArgs | nindent 12 }}
+          {{- else }}
           args:
             - serve
             - all
@@ -80,6 +80,14 @@ spec:
             {{- end }}
             - --config
             - /etc/config/hydra.yaml
+          {{- end }}
+          volumeMounts:
+            - name: {{ include "hydra.name" . }}-config-volume
+              mountPath: /etc/config
+              readOnly: true
+            {{- if .Values.deployment.extraVolumeMounts }}
+              {{- toYaml .Values.deployment.extraVolumeMounts | nindent 12 }}
+            {{- end }}
           ports:
             - name: http-public
               containerPort: {{ .Values.hydra.config.serve.public.port }}
