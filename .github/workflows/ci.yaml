@@ -217,7 +217,6 @@ jobs:
 
           git push origin HEAD:master
 
-
   gha-lint:
     name: Lint GithubAction files
     if: ${{ steps.filter.outputs['ci-definitions'] == 'true' }}
