@@ -45,7 +45,9 @@ Create chart name and version as used by the chart label.
 Generate the dsn value
 */}}
 {{- define "keto.dsn" -}}
+{{- if .Values.keto.config.dsn -}}
 {{- .Values.keto.config.dsn }}
+{{- end -}}
 {{- end -}}
 
 {{/*

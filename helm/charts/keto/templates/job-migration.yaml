@@ -24,9 +24,9 @@ metadata:
     {{- end }}
 spec:
   template:
-    metadata: 
+    metadata:
       annotations:
-        {{- with .Values.job.annotations }}  
+        {{- with .Values.job.annotations }}
           {{- toYaml . | nindent 8 }}
         {{- end }}
         {{- with .Values.job.podMetadata.annotations }}
@@ -73,11 +73,13 @@ spec:
           {{- toYaml . | nindent 10 }}
         {{- end }}
         env:
+          {{- if not (empty ( include "keto.dsn" . )) }}
           - name: DSN
             valueFrom:
               secretKeyRef:
                 name: {{ include "keto.secretname" . }}
                 key: dsn
+          {{- end }}
           {{- with $migrationExtraEnv }}
             {{- toYaml . | nindent 10 }}
           {{- end }}

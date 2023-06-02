@@ -90,11 +90,13 @@ spec:
             {{- toYaml . | nindent 12 }}
           {{- end }}
           env:
+            {{- if not (empty ( include "keto.dsn" . )) }}
             - name: DSN
               valueFrom:
                 secretKeyRef:
                   name: {{ include "keto.secretname" . }}
                   key: dsn
+            {{- end }}
             {{- with $migrationExtraEnv }}
               {{- toYaml . | nindent 12 }}
             {{- end }}
@@ -112,10 +114,11 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           command: [ "keto" ]
-          args:
-            - serve
-            - --config
-            - /etc/config/keto.yaml
+          {{- if .Values.deployment.customArgs }}
+          args: {{- toYaml .Values.deployment.customArgs | nindent 12 }}
+          {{- else }}
+          args: ["serve", "--config", "/etc/config/keto.yaml"]
+          {{- end }}
           ports:
             - name: {{ .Values.service.read.name }}
               containerPort: {{ .Values.keto.config.serve.read.port }}
@@ -170,11 +173,13 @@ spec:
           resources:
             {{- toYaml $resources | nindent 12 }}
           env:
+            {{- if not (empty ( include "keto.dsn" . )) }}
             - name: DSN
               valueFrom:
                 secretKeyRef:
                   name: {{ include "keto.secretname" . }}
                   key: dsn
+            {{- end }}
             {{- with .Values.deployment.extraEnv }}
               {{- toYaml . | nindent 12 }}
             {{- end }}
