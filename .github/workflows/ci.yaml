@@ -184,7 +184,7 @@ jobs:
         shell: bash
         run: |
           pushd .bin
-          curl -L "https://github.com/norwoodj/helm-docs/releases/download/v${HELM_DOCS_VERSION}/helm-docs_${HELM_DOCS_VERSION}_Linux_x86_64.tar.gz "-o helm-docs.tar.gz
+          curl -L "https://github.com/norwoodj/helm-docs/releases/download/v${HELM_DOCS_VERSION}/helm-docs_${HELM_DOCS_VERSION}_Linux_x86_64.tar.gz" -o helm-docs.tar.gz
           tar -xvf helm-docs.tar.gz
           ./helm-docs -c ../helm/charts
           popd
