@@ -26,7 +26,8 @@ jobs:
     runs-on: ubuntu-22.04
     outputs:
       helms-changed: ${{ steps.changed_charts.outputs.matrix }}
-      no-changes: ${{ steps.changed_charts.outputs.no_changes}}
+      no-changes: ${{ steps.changed_charts.outputs.no_changes }}
+      cicd-definition-changed: ${{ steps.filter.outputs.cicd-definition }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -219,7 +220,8 @@ jobs:
 
   gha-lint:
     name: Lint GithubAction files
-    if: ${{ needs.detect-repo-changes.outputs.ci-definition == 'true' }}
+    if:
+      ${{ needs.detect-repo-changes.outputs.cicd-definition-changed == 'true' }}
     needs: [detect-repo-changes]
     runs-on: ubuntu-latest
     steps:
