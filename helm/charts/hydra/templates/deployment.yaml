@@ -64,11 +64,7 @@ spec:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
-          {{- if .Values.hydra.customCommand }}
-          command: {{- toYaml .Values.hydra.customCommand | nindent 12 }}
-          {{- else }}
-          command: ["hydra"]
-          {{- end }}
+          command: {{- toYaml .Values.hydra.command | nindent 12 }}
           {{- if .Values.hydra.customArgs }}
           args: {{- toYaml .Values.hydra.customArgs | nindent 12 }}
           {{- else }}

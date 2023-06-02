@@ -111,11 +111,7 @@ spec:
           {{- end }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
-          {{- if .Values.keto.customCommand }}
-          command: {{- toYaml .Values.keto.customCommand | nindent 12 }}
-          {{- else }}
-          command: ["keto"]
-          {{- end }}
+          command: {{- toYaml .Values.keto.command | nindent 12 }}
           {{- if .Values.keto.customArgs }}
           args: {{- toYaml .Values.keto.customArgs | nindent 12 }}
           {{- else }}
