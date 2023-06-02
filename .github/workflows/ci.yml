@@ -107,6 +107,17 @@ jobs:
         run: make helm-lint
       - name: Validate helm chart
         run: make helm-validate
+      - uses: kubescape/github-action@main
+        with:
+          format: json
+          outputFile: results
+          files: "helm/charts/${{ matrix.chart }}"
+          verbose: true
+          severityThreshold: high
+          controlsConfig: ".github/kubescape-control.json"
+          exceptions: ".github/kubescape-exceptions.json"
+          frameworks: |
+            AllControls,ArmoBest,DevOpsBest,mitre,nsa
     strategy:
       matrix: ${{ fromJson(needs.detect-repo-changes.outputs.helms-changed) }}
 
