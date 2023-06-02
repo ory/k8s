@@ -1,9 +1,0 @@
-- name: actionlint
-  id: actionlint  #optional, id required only when outputs are used in the workflow steps later
-  uses: raven-actions/actionlint@v1
-  with:
-    matcher: false  # optional
-    cache: false  # optional
-    fail-on-error: false  # optional
-    files: "tests/*.yml, tests/*.yaml"  # optional, example on how to grab all .yml and .yaml files from the test directory
-    flags: "-ignore SC2086"  # optional
