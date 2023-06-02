@@ -92,8 +92,8 @@ jobs:
           if [[ "$updated_charts" == "[]" ]]; then 
            echo "no_changes=true" >> "$GITHUB_OUTPUT"
           fi
-          # shellcheck disable=SC2116
-          echo "matrix={\"chart\":${updated_charts}}" >> "$GITHUB_OUTPUT"
+          # shellcheck disable=SC2116,SC2086
+          echo "matrix={\"chart\":$(echo $updated_charts)}\"" >> "$GITHUB_OUTPUT"
           echo "Charts array to run CI on: $updated_charts"
 
   check:
