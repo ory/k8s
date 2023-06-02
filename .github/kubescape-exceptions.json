@@ -88,5 +88,24 @@
         "designatorType": "Attributes"
       }
     ]
+  },
+  {
+    "actions": ["alertOnly"],
+    "name": "hydra-maester-secrets",
+    "policyType": "postureExceptionPolicy",
+    "posturePolicies": [
+      {
+        "controlID": "C-0015"
+      }
+    ],
+    "resources": [
+      {
+        "attributes": {
+          "kind": "ServiceAccount",
+          "name": "-hydra-maester-account"
+        },
+        "designatorType": "Attributes"
+      }
+    ]
   }
 ]
