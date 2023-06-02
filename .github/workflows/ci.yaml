@@ -237,4 +237,3 @@ jobs:
         uses: raven-actions/actionlint@v1
         with:
           fail-on-error: true
-          files: ".github/workflows"
