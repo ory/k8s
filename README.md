@@ -1,6 +1,6 @@
 # Kubernetes Helm Charts for ORY
 
-[![CI](https://github.com/ory/k8s/actions/workflows/ci.yml/badge.svg)](https://github.com/ory/k8s/actions/workflows/ci.yml)
+[![CI](https://github.com/ory/k8s/actions/workflows/ci.yml/badge.svg)](https://github.com/ory/k8s/actions/workflows/ci.yaml)
 
 This repository contains helm charts for Kubernetes. All charts are in
 incubation phase and use is at your own risk.
