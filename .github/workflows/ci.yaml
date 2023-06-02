@@ -216,3 +216,19 @@ jobs:
           [skip ci]" || echo "No changes to commit"
 
           git push origin HEAD:master
+
+
+  gha-lint:
+    name: Lint GithubAction files
+    if: ${{ steps.filter.outputs['ci-definitions'] == 'true' }}
+    needs: [detect-repo-changes]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: actionlint
+        id: actionlint
+        uses: raven-actions/actionlint@v1
+        with:
+          fail-on-error: true
+          files: ".github/workflows"
