@@ -219,7 +219,7 @@ jobs:
 
   gha-lint:
     name: Lint GithubAction files
-    if: ${{ needs.detect-repo-changes.outputs.cicd-definition == 'true' }}
+    if: ${{ needs.detect-repo-changes.outputs.ci-definition == 'true' }}
     needs: [detect-repo-changes]
     runs-on: ubuntu-latest
     steps:
