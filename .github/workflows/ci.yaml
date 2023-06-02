@@ -1,11 +1,10 @@
 name: CI
 on:
-  create:
-    tags:
-      - "v*"
   push:
     branches:
       - "master"
+    tags:
+      - "v*"
   pull_request:
 
 concurrency:
@@ -77,21 +76,23 @@ jobs:
           FORCE_FULL_RUN:
             ${{ github.ref_type == 'tag' ||
             steps.filter.outputs['cicd-definitions'] == 'true' }}
+        shell: bash
         run: |
           updated_charts=$(echo "$FILTER_OUTPUT" | jq -r 'to_entries | map(select((.key | endswith("-helm")) and .value == "true")) | map(.key)')
+          # shellcheck disable=SC2001
           updated_charts=$(echo "$updated_charts" | sed "s/-helm//g")
 
           echo "ForceFullRun: ${FORCE_FULL_RUN}"
           if [[ "$FORCE_FULL_RUN" == "true" ]]; then 
            echo "Forcing tests to be running on every charts as CI running in release context"
+           # shellcheck disable=SC2012
            updated_charts=$(ls ${{ github.workspace }}/helm/charts/ | tr -d " " | jq --raw-input --slurp 'split("\n") | map(select(. != ""))')
           fi
 
           if [[ "$updated_charts" == "[]" ]]; then 
-           echo "no_changes=true" >> $GITHUB_OUTPUT
+           echo "no_changes=true" >> "$GITHUB_OUTPUT"
           fi
-          echo "matrix={\"chart\":$(echo $updated_charts)}\"" >> $GITHUB_OUTPUT
-
+          echo "matrix={\"chart\":$(echo $updated_charts)}\"" >> "$GITHUB_OUTPUT"
           echo "Charts array to run CI on: $updated_charts"
 
   check:
@@ -179,13 +180,15 @@ jobs:
         with:
           token: ${{ secrets.ORY_BOT_PAT }}
       - name: Generate documentation
+        shell: bash
         run: |
           pushd .bin
-          curl -L https://github.com/norwoodj/helm-docs/releases/download/v${HELM_DOCS_VERSION}/helm-docs_${HELM_DOCS_VERSION}_Linux_x86_64.tar.gz -o helm-docs.tar.gz
+          curl -L "https://github.com/norwoodj/helm-docs/releases/download/v${HELM_DOCS_VERSION}/helm-docs_${HELM_DOCS_VERSION}_Linux_x86_64.tar.gz "-o helm-docs.tar.gz
           tar -xvf helm-docs.tar.gz
           ./helm-docs -c ../helm/charts
           popd
       - name: Push commit for release
+        shell: bash
         run: |
           git config --global user.email "60093411+ory-bot@users.noreply.github.com"
           git config --global user.name "ory-bot"
@@ -208,10 +211,12 @@ jobs:
         with:
           token: ${{ secrets.ORY_BOT_PAT }}
       - name: Define current tag version
-        run: echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
+        shell: bash
+        run: echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> "$GITHUB_ENV"
       - name: Release helm charts
         run: make release
       - name: Push commit for release
+        shell: bash
         run: |
           git config --global user.email "60093411+ory-bot@users.noreply.github.com"
           git config --global user.name "ory-bot"
