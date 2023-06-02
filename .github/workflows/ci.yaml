@@ -31,7 +31,7 @@ jobs:
     outputs:
       helms-changed: ${{ steps.changed_charts.outputs.matrix }}
       no-changes: ${{ steps.changed_charts.outputs.no_changes }}
-      cicd-definition-changed: ${{ steps.filter.outputs.cicd-definition }}
+      cicd-definition-changed: ${{ steps.filter.outputs.cicd-definitions }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -67,6 +67,7 @@ jobs:
               - 'hacks/values/oathkeeper-maester.yaml'
             cicd-definitions:
               - '.github/workflows/**'
+              - '.github/actions/**'
       # This step will take output from paths-filter and then process it in order to get what helm charts have been updated
       # It allows us to do matrix in validating & testing process
       - name: Generate helm chart matrix to be validated
