@@ -1,0 +1,117 @@
+[
+    {
+        "actions":
+        [
+            "alertOnly"
+        ],
+        "name": "services-in-default",
+        "policyType": "postureExceptionPolicy",
+        "posturePolicies":
+        [
+            {
+                "controlID": "C-0212"
+            }
+        ],
+        "resources":
+        [
+            {
+                "attributes":
+                {
+                    "kind": "Service",
+                    "namespace": "default"
+                },
+                "designatorType": "Attributes"
+            },
+            {
+                "attributes":
+                {
+                    "kind": "Endpoints",
+                    "namespace": "default"
+                },
+                "designatorType": "Attributes"
+            }
+        ]
+    },
+    {
+        "actions":
+        [
+            "alertOnly"
+        ],
+        "name": "resource-limits",
+        "policyType": "postureExceptionPolicy",
+        "posturePolicies":
+        [
+            {
+                "controlID": "C-0009"
+            },
+            {
+                "controlID": "C-0004"
+            },
+            {
+                "controlID": "C-0050"
+            }
+        ],
+        "resources":
+        [
+            {
+                "attributes":
+                {
+                    "kind": ".*",
+                    "namespace": ".*"
+                },
+                "designatorType": "Attributes"
+            }
+        ]
+    },
+    {
+        "actions":
+        [
+            "alertOnly"
+        ],
+        "name": "signed-images",
+        "policyType": "postureExceptionPolicy",
+        "posturePolicies":
+        [
+            {
+                "controlID": "C-0237"
+            }
+        ],
+        "resources":
+        [
+            {
+                "attributes":
+                {
+                    "namespace": ".*"
+                },
+                "designatorType": "Attributes"
+            }
+        ]
+    },
+    {
+        "actions":
+        [
+            "alertOnly"
+        ],
+        "name": "probes-for-jobs",
+        "policyType": "postureExceptionPolicy",
+        "posturePolicies":
+        [
+            {
+                "controlID": "C-0056"
+            },
+            {
+                "controlID": "C-0018"
+            }
+        ],
+        "resources":
+        [
+            {
+                "attributes":
+                {
+                    "kind": "Job"
+                },
+                "designatorType": "Attributes"
+            }
+        ]
+    }
+]
