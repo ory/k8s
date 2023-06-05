@@ -111,11 +111,15 @@ spec:
           {{- end }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
-          command: [ "keto" ]
+          command: {{- toYaml .Values.keto.command | nindent 12 }}
+          {{- if .Values.keto.customArgs }}
+          args: {{- toYaml .Values.keto.customArgs | nindent 12 }}
+          {{- else }}
           args:
             - serve
             - --config
             - /etc/config/keto.yaml
+          {{- end }}
           ports:
             - name: {{ .Values.service.read.name }}
               containerPort: {{ .Values.keto.config.serve.read.port }}
