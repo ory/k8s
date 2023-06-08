@@ -195,3 +195,17 @@ Check the migration type value and fail if unexpected
   {{- end }}  
 {{- end }}
 {{- end }}
+
+{{/*
+Common labels for the cleanup cron job
+*/}}
+{{- define "kratos.cleanup.labels" -}}
+"app.kubernetes.io/name": {{ printf "%s-cleanup" (include "kratos.name" .) | quote }}
+"app.kubernetes.io/instance": {{ .Release.Name | quote }}
+{{- if .Chart.AppVersion }}
+"app.kubernetes.io/version": {{ .Chart.AppVersion | quote }}
+{{- end }}
+"app.kubernetes.io/managed-by": {{ .Release.Service | quote }}
+"app.kubernetes.io/component": cleanup
+"helm.sh/chart": {{ include "kratos.chart" . | quote }}
+{{- end -}}

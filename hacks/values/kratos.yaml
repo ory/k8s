@@ -276,6 +276,29 @@ watcher:
     annotations:
       ory.sh/pod_annotation: kratos_watcher
 
+cleanup:
+  enabled: true
+  securityContext:
+    capabilities:
+      drop:
+        - ALL
+  podSecurityContext:
+    runAsNonRoot: true
+
+cronjob:
+  cleanup:
+    labels:
+      ory.sh/test: kratos
+    annotations:
+      ory.sh/test: kratos
+    podMetadata:
+      labels:
+        ory.sh/pod_label: kratos
+      annotations:
+        ory.sh/pod_annotation: kratos
+    podSecurityContext:
+      runAsNonRoot: true
+
 serviceMonitor:
   labels:
     release: "prometheus"
