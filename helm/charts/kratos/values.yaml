@@ -560,6 +560,82 @@ watcher:
   # -- Label key used for managing applications
   watchLabelKey: "ory.sh/watcher"
 
+# -- SQL cleanup cron job configuration
+cleanup:
+  # -- Enable cleanup of stale database rows by periodically running the cleanup sql command
+  enabled: false
+
+  # -- Configure how many records are cleaned per run
+  batchSize: 100
+
+  # -- Configure how long to wait between each table cleanup
+  sleepTables: 1m0s
+
+  # -- Configure the youngest records to keep
+  keepLast: 6h
+
+# -- CronJob configuration
+cronjob:
+  cleanup:
+    # -- Configure how often the cron job is ran
+    schedule: "0 */1 * * *"
+
+    # -- Configure the arguments of the entrypoint, overriding the default value
+    customArgs: []
+
+    # -- Set custom cron job level labels
+    labels: {}
+
+    # -- Set custom cron job level annotations
+    annotations: {}
+
+    # -- Specify pod metadata, this metadata is added directly to the pod, and not higher objects
+    podMetadata:
+      # -- Extra pod level labels
+      labels: {}
+
+      # -- Extra pod level annotations
+      annotations: {}
+
+    # -- Configure node labels for pod assignment
+    nodeSelector: {}
+
+    # -- Configure node tolerations
+    tolerations: []
+
+    # -- Configure node affinity
+    affinity: {}
+
+    # -- Configure the containers' SecurityContext for the cleanup cronjob
+    securityContext:
+      capabilities:
+        drop:
+          - ALL
+      readOnlyRootFilesystem: true
+      runAsNonRoot: true
+      runAsUser: 100
+      allowPrivilegeEscalation: false
+      privileged: false
+      seccompProfile:
+        type: RuntimeDefault
+
+    # -- pod securityContext for the cleanup cronjob
+    podSecurityContext: {}
+
+    # -- We usually recommend not to specify default resources and to leave this as a conscious choice for the user.
+    #  This also increases chances charts run on environments with little
+    #  resources, such as Minikube. If you do want to specify resources, uncomment the following
+    #  lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+    #  limits:
+    #    cpu: 100m
+    #    memory: 128Mi
+    #  requests:
+    #    cpu: 100m
+    #  memory: 128Mi
+    resources:
+      limits: {}
+      requests: {}
+
 # -- PodDistributionBudget configuration
 pdb:
   enabled: false
