@@ -9,9 +9,28 @@ A ORY Kratos Helm chart for Kubernetes
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | autoscaling | object | `{"enabled":false,"maxReplicas":3,"minReplicas":1,"targetCPU":{},"targetMemory":{}}` | Horizontal pod autoscaling configuration |
+| cleanup | object | `{"batchSize":100,"enabled":false,"keepLast":"6h","sleepTables":"1m0s"}` | SQL cleanup cron job configuration |
+| cleanup.batchSize | int | `100` | Configure how many records are cleaned per run |
+| cleanup.enabled | bool | `false` | Enable cleanup of stale database rows by periodically running the cleanup sql command |
+| cleanup.keepLast | string | `"6h"` | Configure the youngest records to keep |
+| cleanup.sleepTables | string | `"1m0s"` | Configure how long to wait between each table cleanup |
 | configmap.annotations | object | `{}` | If you do want to specify annotations for configmap, uncomment the following lines, adjust them as necessary, and remove the curly braces after 'annotations:'. |
 | configmap.hashSumEnabled | bool | `true` | switch to false to prevent checksum annotations being maintained and propogated to the pods |
 | courier | object | `{"enabled":true}` | Configuration of the courier |
+| cronjob | object | `{"cleanup":{"affinity":{},"annotations":{},"customArgs":[],"labels":{},"nodeSelector":{},"podMetadata":{"annotations":{},"labels":{}},"podSecurityContext":{},"resources":{"limits":{},"requests":{}},"schedule":"0 */1 * * *","securityContext":{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"privileged":false,"readOnlyRootFilesystem":true,"runAsNonRoot":true,"runAsUser":100,"seccompProfile":{"type":"RuntimeDefault"}},"tolerations":[]}}` | CronJob configuration |
+| cronjob.cleanup.affinity | object | `{}` | Configure node affinity |
+| cronjob.cleanup.annotations | object | `{}` | Set custom cron job level annotations |
+| cronjob.cleanup.customArgs | list | `[]` | Configure the arguments of the entrypoint, overriding the default value |
+| cronjob.cleanup.labels | object | `{}` | Set custom cron job level labels |
+| cronjob.cleanup.nodeSelector | object | `{}` | Configure node labels for pod assignment |
+| cronjob.cleanup.podMetadata | object | `{"annotations":{},"labels":{}}` | Specify pod metadata, this metadata is added directly to the pod, and not higher objects |
+| cronjob.cleanup.podMetadata.annotations | object | `{}` | Extra pod level annotations |
+| cronjob.cleanup.podMetadata.labels | object | `{}` | Extra pod level labels |
+| cronjob.cleanup.podSecurityContext | object | `{}` | pod securityContext for the cleanup cronjob |
+| cronjob.cleanup.resources | object | `{"limits":{},"requests":{}}` | We usually recommend not to specify default resources and to leave this as a conscious choice for the user.  This also increases chances charts run on environments with little  resources, such as Minikube. If you do want to specify resources, uncomment the following  lines, adjust them as necessary, and remove the curly braces after 'resources:'.  limits:    cpu: 100m    memory: 128Mi  requests:    cpu: 100m  memory: 128Mi |
+| cronjob.cleanup.schedule | string | `"0 */1 * * *"` | Configure how often the cron job is ran |
+| cronjob.cleanup.securityContext | object | `{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"privileged":false,"readOnlyRootFilesystem":true,"runAsNonRoot":true,"runAsUser":100,"seccompProfile":{"type":"RuntimeDefault"}}` | Configure the containers' SecurityContext for the cleanup cronjob |
+| cronjob.cleanup.tolerations | list | `[]` | Configure node tolerations |
 | deployment | object | `{"affinity":{},"annotations":{},"automigration":{"extraEnv":[]},"automountServiceAccountToken":true,"customLivenessProbe":{},"customReadinessProbe":{},"customStartupProbe":{},"dnsConfig":{},"extraArgs":[],"extraContainers":"","extraEnv":[],"extraInitContainers":"","extraVolumeMounts":[],"extraVolumes":[],"labels":{},"lifecycle":{},"livenessProbe":{"failureThreshold":5,"initialDelaySeconds":5,"periodSeconds":10},"nodeSelector":{},"podMetadata":{"annotations":{},"labels":{}},"readinessProbe":{"failureThreshold":5,"initialDelaySeconds":5,"periodSeconds":10},"resources":{},"serviceAccount":{"annotations":{},"create":true,"name":""},"startupProbe":{"failureThreshold":60,"periodSeconds":1,"successThreshold":1,"timeoutSeconds":1},"tolerations":[],"topologySpreadConstraints":[]}` | Configuration options for the k8s deployment |
 | deployment.affinity | object | `{}` | Configure node affinity |
 | deployment.automigration | object | `{"extraEnv":[]}` | Parameters for the automigration initContainer |
