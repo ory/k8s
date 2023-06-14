@@ -47,7 +47,7 @@ spec:
           volumes:
             - name: {{ include "kratos.name" . }}-config-volume
               configMap:
-                name: {{ include "kratos.fullname" . }}
+                name: {{ include "kratos.fullname" . }}-config
           containers:
             - name: cleanup
               image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
