@@ -115,7 +115,7 @@ kratos:
     enabled: false
     # -- Configure the way to execute database migration. Possible values: job, initContainer
     # When set to job, the migration will be executed as a job on release or upgrade.
-    # When set to initContainer, the migration will be executed when kratos pod is created
+    # When set to initContainer, the migration will be executed when Kratos pod is created
     # Defaults to job
     type: job
     # -- Ability to override the entrypoint of the automigration container
@@ -143,7 +143,7 @@ kratos:
   #  "identity.phone.schema.json": |
   #    {{ .Values.phone_schema }}
 
-  # -- You can customize the emails kratos is sending (also uncomment config.courier.template_override_path below)
+  # -- You can customize the emails Kratos is sending (also uncomment config.courier.template_override_path below)
   emailTemplates: {}
   # emailTemplates:
   #   recovery:
@@ -189,24 +189,24 @@ kratos:
 
 # -- Configuration options for the k8s deployment
 deployment:
-  ## -- initContainer securityContext for hydra & migration init
+  ## -- initContainer securityContext for Kratos & migration init
   initContainerSecurityContext: {}
 
-  ## -- pod securityContext for hydra & migration init
+  ## -- pod securityContext for Kratos & migration init
   podSecurityContext: {}
 
-  ## -- container securityContext for hydra & migration init
+  ## -- container securityContext for Kratos & migration init
   securityContext:
+    allowPrivilegeEscalation: false
     capabilities:
       drop:
         - ALL
-    seccompProfile:
-      type: RuntimeDefault
+    privileged: false
     readOnlyRootFilesystem: true
     runAsNonRoot: true
     runAsUser: 100
-    allowPrivilegeEscalation: false
-    privileged: false
+    seccompProfile:
+      type: RuntimeDefault
 
   lifecycle: {}
   # -- Configure the livenessProbe parameters
@@ -537,9 +537,9 @@ job:
   shareProcessNamespace: false
 
   # -- Specify the serviceAccountName value.
-  # In some situations it is needed to provides specific permissions to Hydra deployments
-  # Like for example installing Hydra on a cluster with a PosSecurityPolicy and Istio.
-  # Uncoment if it is needed to provide a ServiceAccount for the Hydra deployment.
+  # In some situations it is needed to provide specific permissions to Kratos deployments
+  # Like for example installing Kratos on a cluster with a PosSecurityPolicy and Istio.
+  # Uncomment if it is needed to provide a ServiceAccount for the Kratos deployment.
   serviceAccount:
     # -- Specifies whether a service account should be created
     create: true
@@ -629,14 +629,14 @@ cronjob:
 
     # -- Configure the containers' SecurityContext for the cleanup cronjob
     securityContext:
+      allowPrivilegeEscalation: false
       capabilities:
         drop:
           - ALL
+      privileged: false
       readOnlyRootFilesystem: true
       runAsNonRoot: true
       runAsUser: 100
-      allowPrivilegeEscalation: false
-      privileged: false
       seccompProfile:
         type: RuntimeDefault
 
@@ -674,7 +674,7 @@ serviceMonitor:
   scrapeInterval: 60s
   # -- Timeout after which the scrape is ended
   scrapeTimeout: 30s
-  # -- Provide additionnal labels to the ServiceMonitor ressource metadata
+  # -- Provide additional labels to the ServiceMonitor ressource metadata
   labels: {}
   # -- TLS configuration to use when scraping the endpoint
   tlsConfig: {}
