@@ -89,6 +89,10 @@ spec:
           resources:
             {{- toYaml .Values.kratos.automigration.resources | nindent 12 }}
           {{- end }}
+          {{- with .Values.deployment.initContainerSecurityContext }}
+          securityContext:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
       {{- end }}
       volumes:
         {{- if .Values.deployment.extraVolumes }}
@@ -229,9 +233,9 @@ spec:
             {{- end }}
           resources:
             {{- toYaml .Values.deployment.resources | nindent 12 }}
-          {{- if .Values.securityContext }}
+          {{- with .Values.securityContext }}
           securityContext:
-            {{- toYaml .Values.securityContext | nindent 12 }}
+            {{- toYaml . | nindent 12 }}
           {{- end }}
         {{- if .Values.deployment.extraContainers }}
           {{- tpl .Values.deployment.extraContainers . | nindent 8 }}
@@ -250,6 +254,10 @@ spec:
     {{- end }}
     {{- with .Values.deployment.topologySpreadConstraints }}
       topologySpreadConstraints:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+    {{- with .Values.deployment.podSecurityContext }}
+      securityContext:
         {{- toYaml . | nindent 8 }}
     {{- end }}
     {{- with .Values.deployment.dnsConfig }}

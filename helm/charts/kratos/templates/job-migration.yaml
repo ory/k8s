@@ -21,7 +21,7 @@ metadata:
     {{- end }}
 spec:
   template:
-    metadata: 
+    metadata:
       annotations:
         {{- with .Values.job.annotations }}
           {{- toYaml . | nindent 8 }}
@@ -91,6 +91,10 @@ spec:
         {{- tpl .Values.job.extraInitContainers . | nindent 8 }}
       {{- end }}
       restartPolicy: Never
+      {{- with .Values.deployment.podSecurityContext }}
+      securityContext:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
       volumes:
         - name: {{ include "kratos.name" . }}-config-volume
           configMap:
