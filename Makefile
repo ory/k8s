@@ -58,7 +58,7 @@ k3d-down:
 postgresql:
 	helm repo add bitnami https://charts.bitnami.com/bitnami
 	helm repo update
-	helm install postgresql bitnami/postgresql -f hacks/values/postgres.yaml
+	helm install postgresql bitnami/postgresql --atomic --debug -f hacks/values/postgres.yaml
 
 .PHONY: prometheus
 prometheus:

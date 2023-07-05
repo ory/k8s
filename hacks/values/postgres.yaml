@@ -1,8 +1,10 @@
 global:
   postgresql:
     auth:
-      database: ory
-      postgresPassword: ory
+      database: "ory"
+      username: "ory"
+      password: "ory"
+      postgresPassword: "ory"
 primary:
   initdb:
     scripts:
@@ -10,3 +12,8 @@ primary:
         CREATE DATABASE ory_kratos;
         CREATE DATABASE ory_keto;
         CREATE DATABASE ory_hydra;
+auth:
+  database: "ory"
+  username: "ory"
+  password: "ory"
+  postgresPassword: "ory"
