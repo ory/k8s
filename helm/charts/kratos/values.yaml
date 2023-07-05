@@ -126,6 +126,8 @@ kratos:
     # - sleep 5;
     #   - kratos
     customArgs: []
+    # -- resource requests and limits for the automigration initcontainer
+    resources: {}
 
   # -- You can add multiple identity schemas here. You can pass JSON schema using `--set-file` Helm CLI argument.
   identitySchemas: {}

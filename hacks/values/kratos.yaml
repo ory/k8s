@@ -23,6 +23,13 @@ kratos:
       - "--yes"
       - "--config"
       - "/etc/config/kratos.yaml"
+    resources:
+      limits:
+        cpu: 100m
+        memory: 128Mi
+      requests:
+        cpu: 100m
+        memory: 128Mi
   identitySchemas:
     "identity.default.schema.json": |
       {

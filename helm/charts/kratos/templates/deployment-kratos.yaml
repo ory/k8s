@@ -85,6 +85,10 @@ spec:
           {{- if $migrationExtraEnv }}
             {{- toYaml $migrationExtraEnv | nindent 12 }}
           {{- end }}
+          {{- if .Values.kratos.automigration.resources }}
+          resources:
+            {{- toYaml .Values.kratos.automigration.resources | nindent 12 }}
+          {{- end }}
       {{- end }}
       volumes:
         {{- if .Values.deployment.extraVolumes }}
@@ -212,7 +216,7 @@ spec:
             {{- toYaml .Values.deployment.readinessProbe | nindent 12 }}
           {{- end }}
           startupProbe:
-            {{- if .Values.deployment.customStartupProbe }} 
+            {{- if .Values.deployment.customStartupProbe }}
               {{- toYaml .Values.deployment.customStartupProbe | nindent 12 }}
             {{- else }}
             httpGet:
