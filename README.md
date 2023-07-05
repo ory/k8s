@@ -22,12 +22,12 @@ You can test and develop charts locally using
 To test a chart locally without applying it to kubernetes, do:
 
 ```sh
-$ helm install --debug --dry-run .
+$ helm install --debug --dry-run <name> .
 ```
 
 ```sh
 $ name=<name>
-$ helm install --name $name .
+$ helm install $name .
 $ helm upgrade $name .
 ```
 
@@ -67,8 +67,8 @@ To run helm test, do:
 
 ```sh
 $ helm lint .
-$ helm install .
-$ helm test --cleanup <name>
+$ helm install <name> .
+$ helm test <name>
 ```
 
 ### Remove all releases
