@@ -520,6 +520,9 @@ job:
   # lines, adjust them as necessary, and remove the curly braces after 'nodeSelector:'.
   #   foo: bar
 
+  # -- resource requests and limits for the job
+  resources: {}
+
   # -- Configure node tolerations.
   tolerations: []
 
