@@ -11,7 +11,7 @@ image:
   # -- Ory Hydra-maester image
   repository: oryd/hydra-maester
   # -- Ory Hydra-maester version
-  tag: v0.0.27
+  tag: v0.0.28
   # -- Image pull policy
   pullPolicy: IfNotPresent
 

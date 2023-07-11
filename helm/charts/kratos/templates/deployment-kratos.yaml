@@ -83,7 +83,15 @@ spec:
                   name: {{ include "kratos.secretname" . }}
                   key: dsn
           {{- if $migrationExtraEnv }}
-            {{- toYaml .Values.deployment.extraEnv | nindent 12 }}
+            {{- toYaml $migrationExtraEnv | nindent 12 }}
+          {{- end }}
+          {{- with .Values.kratos.automigration.resources }}
+          resources:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with .Values.deployment.initContainerSecurityContext }}
+          securityContext:
+            {{- toYaml . | nindent 12 }}
           {{- end }}
       {{- end }}
       volumes:
@@ -212,7 +220,7 @@ spec:
             {{- toYaml .Values.deployment.readinessProbe | nindent 12 }}
           {{- end }}
           startupProbe:
-            {{- if .Values.deployment.customStartupProbe }} 
+            {{- if .Values.deployment.customStartupProbe }}
               {{- toYaml .Values.deployment.customStartupProbe | nindent 12 }}
             {{- else }}
             httpGet:
@@ -225,9 +233,9 @@ spec:
             {{- end }}
           resources:
             {{- toYaml .Values.deployment.resources | nindent 12 }}
-          {{- if .Values.securityContext }}
+          {{- with .Values.securityContext }}
           securityContext:
-            {{- toYaml .Values.securityContext | nindent 12 }}
+            {{- toYaml . | nindent 12 }}
           {{- end }}
         {{- if .Values.deployment.extraContainers }}
           {{- tpl .Values.deployment.extraContainers . | nindent 8 }}
@@ -246,6 +254,10 @@ spec:
     {{- end }}
     {{- with .Values.deployment.topologySpreadConstraints }}
       topologySpreadConstraints:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+    {{- with .Values.deployment.podSecurityContext }}
+      securityContext:
         {{- toYaml . | nindent 8 }}
     {{- end }}
     {{- with .Values.deployment.dnsConfig }}

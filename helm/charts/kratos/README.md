@@ -1,6 +1,6 @@
 # kratos
 
-![Version: 0.33.2](https://img.shields.io/badge/Version-0.33.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.13.0](https://img.shields.io/badge/AppVersion-v0.13.0-informational?style=flat-square)
+![Version: 0.33.4](https://img.shields.io/badge/Version-0.33.4-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.13.0](https://img.shields.io/badge/AppVersion-v0.13.0-informational?style=flat-square)
 
 A ORY Kratos Helm chart for Kubernetes
 
@@ -9,10 +9,29 @@ A ORY Kratos Helm chart for Kubernetes
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | autoscaling | object | `{"enabled":false,"maxReplicas":3,"minReplicas":1,"targetCPU":{},"targetMemory":{}}` | Horizontal pod autoscaling configuration |
+| cleanup | object | `{"batchSize":100,"enabled":false,"keepLast":"6h","sleepTables":"1m0s"}` | SQL cleanup cron job configuration |
+| cleanup.batchSize | int | `100` | Configure how many records are cleaned per run |
+| cleanup.enabled | bool | `false` | Enable cleanup of stale database rows by periodically running the cleanup sql command |
+| cleanup.keepLast | string | `"6h"` | Configure the youngest records to keep |
+| cleanup.sleepTables | string | `"1m0s"` | Configure how long to wait between each table cleanup |
 | configmap.annotations | object | `{}` | If you do want to specify annotations for configmap, uncomment the following lines, adjust them as necessary, and remove the curly braces after 'annotations:'. |
 | configmap.hashSumEnabled | bool | `true` | switch to false to prevent checksum annotations being maintained and propogated to the pods |
 | courier | object | `{"enabled":true}` | Configuration of the courier |
-| deployment | object | `{"affinity":{},"annotations":{},"automigration":{"extraEnv":[]},"automountServiceAccountToken":true,"customLivenessProbe":{},"customReadinessProbe":{},"customStartupProbe":{},"dnsConfig":{},"extraArgs":[],"extraContainers":"","extraEnv":[],"extraInitContainers":"","extraVolumeMounts":[],"extraVolumes":[],"labels":{},"lifecycle":{},"livenessProbe":{"failureThreshold":5,"initialDelaySeconds":5,"periodSeconds":10},"nodeSelector":{},"podMetadata":{"annotations":{},"labels":{}},"readinessProbe":{"failureThreshold":5,"initialDelaySeconds":5,"periodSeconds":10},"resources":{},"serviceAccount":{"annotations":{},"create":true,"name":""},"startupProbe":{"failureThreshold":60,"periodSeconds":1,"successThreshold":1,"timeoutSeconds":1},"tolerations":[],"topologySpreadConstraints":[]}` | Configuration options for the k8s deployment |
+| cronjob | object | `{"cleanup":{"affinity":{},"annotations":{},"customArgs":[],"labels":{},"nodeSelector":{},"podMetadata":{"annotations":{},"labels":{}},"podSecurityContext":{},"resources":{"limits":{},"requests":{}},"schedule":"0 */1 * * *","securityContext":{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"privileged":false,"readOnlyRootFilesystem":true,"runAsNonRoot":true,"runAsUser":100,"seccompProfile":{"type":"RuntimeDefault"}},"tolerations":[]}}` | CronJob configuration |
+| cronjob.cleanup.affinity | object | `{}` | Configure node affinity |
+| cronjob.cleanup.annotations | object | `{}` | Set custom cron job level annotations |
+| cronjob.cleanup.customArgs | list | `[]` | Configure the arguments of the entrypoint, overriding the default value |
+| cronjob.cleanup.labels | object | `{}` | Set custom cron job level labels |
+| cronjob.cleanup.nodeSelector | object | `{}` | Configure node labels for pod assignment |
+| cronjob.cleanup.podMetadata | object | `{"annotations":{},"labels":{}}` | Specify pod metadata, this metadata is added directly to the pod, and not higher objects |
+| cronjob.cleanup.podMetadata.annotations | object | `{}` | Extra pod level annotations |
+| cronjob.cleanup.podMetadata.labels | object | `{}` | Extra pod level labels |
+| cronjob.cleanup.podSecurityContext | object | `{}` | pod securityContext for the cleanup cronjob |
+| cronjob.cleanup.resources | object | `{"limits":{},"requests":{}}` | We usually recommend not to specify default resources and to leave this as a conscious choice for the user.  This also increases chances charts run on environments with little  resources, such as Minikube. If you do want to specify resources, uncomment the following  lines, adjust them as necessary, and remove the curly braces after 'resources:'.  limits:    cpu: 100m    memory: 128Mi  requests:    cpu: 100m  memory: 128Mi |
+| cronjob.cleanup.schedule | string | `"0 */1 * * *"` | Configure how often the cron job is ran |
+| cronjob.cleanup.securityContext | object | `{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"privileged":false,"readOnlyRootFilesystem":true,"runAsNonRoot":true,"runAsUser":100,"seccompProfile":{"type":"RuntimeDefault"}}` | Configure the containers' SecurityContext for the cleanup cronjob |
+| cronjob.cleanup.tolerations | list | `[]` | Configure node tolerations |
+| deployment | object | `{"affinity":{},"annotations":{},"automigration":{"extraEnv":[]},"automountServiceAccountToken":true,"customLivenessProbe":{},"customReadinessProbe":{},"customStartupProbe":{},"dnsConfig":{},"extraArgs":[],"extraContainers":"","extraEnv":[],"extraInitContainers":"","extraVolumeMounts":[],"extraVolumes":[],"initContainerSecurityContext":{},"labels":{},"lifecycle":{},"livenessProbe":{"failureThreshold":5,"initialDelaySeconds":5,"periodSeconds":10},"nodeSelector":{},"podMetadata":{"annotations":{},"labels":{}},"podSecurityContext":{},"readinessProbe":{"failureThreshold":5,"initialDelaySeconds":5,"periodSeconds":10},"resources":{},"securityContext":{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"privileged":false,"readOnlyRootFilesystem":true,"runAsNonRoot":true,"runAsUser":100,"seccompProfile":{"type":"RuntimeDefault"}},"serviceAccount":{"annotations":{},"create":true,"name":""},"startupProbe":{"failureThreshold":60,"periodSeconds":1,"successThreshold":1,"timeoutSeconds":1},"tolerations":[],"topologySpreadConstraints":[]}` | Configuration options for the k8s deployment |
 | deployment.affinity | object | `{}` | Configure node affinity |
 | deployment.automigration | object | `{"extraEnv":[]}` | Parameters for the automigration initContainer |
 | deployment.automigration.extraEnv | list | `[]` | Array of extra envs to be passed to the initContainer. Kubernetes format is expected - name: FOO   value: BAR |
@@ -58,7 +77,7 @@ A ORY Kratos Helm chart for Kubernetes
 | ingress.public.hosts[0].paths[0].path | string | `"/"` |  |
 | ingress.public.hosts[0].paths[0].pathType | string | `"ImplementationSpecific"` |  |
 | ingress.public.tls | list | `[]` |  |
-| job | object | `{"annotations":{"helm.sh/hook":"pre-install, pre-upgrade","helm.sh/hook-delete-policy":"before-hook-creation,hook-succeeded","helm.sh/hook-weight":"1"},"automountServiceAccountToken":true,"extraContainers":"","extraEnv":[],"extraInitContainers":"","lifecycle":"","nodeSelector":{},"podMetadata":{"annotations":{},"labels":{}},"serviceAccount":{"annotations":{"helm.sh/hook":"pre-install, pre-upgrade","helm.sh/hook-delete-policy":"before-hook-creation","helm.sh/hook-weight":"0"},"create":true,"name":""},"shareProcessNamespace":false,"spec":{"backoffLimit":10},"tolerations":[]}` | Values for initialization job |
+| job | object | `{"annotations":{"helm.sh/hook":"pre-install, pre-upgrade","helm.sh/hook-delete-policy":"before-hook-creation,hook-succeeded","helm.sh/hook-weight":"1"},"automountServiceAccountToken":true,"extraContainers":"","extraEnv":[],"extraInitContainers":"","lifecycle":"","nodeSelector":{},"podMetadata":{"annotations":{},"labels":{}},"resources":{},"serviceAccount":{"annotations":{"helm.sh/hook":"pre-install, pre-upgrade","helm.sh/hook-delete-policy":"before-hook-creation","helm.sh/hook-weight":"0"},"create":true,"name":""},"shareProcessNamespace":false,"spec":{"backoffLimit":10},"tolerations":[]}` | Values for initialization job |
 | job.annotations | object | `{"helm.sh/hook":"pre-install, pre-upgrade","helm.sh/hook-delete-policy":"before-hook-creation,hook-succeeded","helm.sh/hook-weight":"1"}` | If you do want to specify annotations, uncomment the following lines, adjust them as necessary, and remove the curly braces after 'annotations:'. |
 | job.automountServiceAccountToken | bool | `true` | Set automounting of the SA token |
 | job.extraContainers | string | `""` | If you want to add extra sidecar containers. |
@@ -69,23 +88,25 @@ A ORY Kratos Helm chart for Kubernetes
 | job.podMetadata | object | `{"annotations":{},"labels":{}}` | Specify pod metadata, this metadata is added directly to the pod, and not higher objects |
 | job.podMetadata.annotations | object | `{}` | Extra pod level annotations |
 | job.podMetadata.labels | object | `{}` | Extra pod level labels |
-| job.serviceAccount | object | `{"annotations":{"helm.sh/hook":"pre-install, pre-upgrade","helm.sh/hook-delete-policy":"before-hook-creation","helm.sh/hook-weight":"0"},"create":true,"name":""}` | Specify the serviceAccountName value. In some situations it is needed to provides specific permissions to Hydra deployments Like for example installing Hydra on a cluster with a PosSecurityPolicy and Istio. Uncoment if it is needed to provide a ServiceAccount for the Hydra deployment. |
+| job.resources | object | `{}` | resource requests and limits for the job |
+| job.serviceAccount | object | `{"annotations":{"helm.sh/hook":"pre-install, pre-upgrade","helm.sh/hook-delete-policy":"before-hook-creation","helm.sh/hook-weight":"0"},"create":true,"name":""}` | Specify the serviceAccountName value. In some situations it is needed to provide specific permissions to Kratos deployments Like for example installing Kratos on a cluster with a PosSecurityPolicy and Istio. Uncomment if it is needed to provide a ServiceAccount for the Kratos deployment. |
 | job.serviceAccount.annotations | object | `{"helm.sh/hook":"pre-install, pre-upgrade","helm.sh/hook-delete-policy":"before-hook-creation","helm.sh/hook-weight":"0"}` | Annotations to add to the service account |
 | job.serviceAccount.create | bool | `true` | Specifies whether a service account should be created |
 | job.serviceAccount.name | string | `""` | The name of the service account to use. If not set and create is true, a name is generated using the fullname template |
 | job.shareProcessNamespace | bool | `false` | Set sharing process namespace |
 | job.spec.backoffLimit | int | `10` | Set job back off limit |
 | job.tolerations | list | `[]` | Configure node tolerations. |
-| kratos.automigration | object | `{"customArgs":[],"customCommand":[],"enabled":false,"type":"job"}` | Enables database migration |
+| kratos.automigration | object | `{"customArgs":[],"customCommand":[],"enabled":false,"resources":{},"type":"job"}` | Enables database migration |
 | kratos.automigration.customArgs | list | `[]` | Ability to override arguments of the entrypoint. Can be used in-depended of customCommand eg: - sleep 5;   - kratos |
 | kratos.automigration.customCommand | list | `[]` | Ability to override the entrypoint of the automigration container (e.g. to source dynamic secrets or export environment dynamic variables) |
-| kratos.automigration.type | string | `"job"` | Configure the way to execute database migration. Possible values: job, initContainer When set to job, the migration will be executed as a job on release or upgrade. When set to initContainer, the migration will be executed when kratos pod is created Defaults to job |
+| kratos.automigration.resources | object | `{}` | resource requests and limits for the automigration initcontainer |
+| kratos.automigration.type | string | `"job"` | Configure the way to execute database migration. Possible values: job, initContainer When set to job, the migration will be executed as a job on release or upgrade. When set to initContainer, the migration will be executed when Kratos pod is created Defaults to job |
 | kratos.config.courier.smtp | object | `{}` |  |
 | kratos.config.secrets | object | `{}` |  |
 | kratos.config.serve.admin.port | int | `4434` |  |
 | kratos.config.serve.public.port | int | `4433` |  |
 | kratos.development | bool | `false` |  |
-| kratos.emailTemplates | object | `{}` | You can customize the emails kratos is sending (also uncomment config.courier.template_override_path below) |
+| kratos.emailTemplates | object | `{}` | You can customize the emails Kratos is sending (also uncomment config.courier.template_override_path below) |
 | kratos.identitySchemas | object | `{}` | You can add multiple identity schemas here. You can pass JSON schema using `--set-file` Helm CLI argument. |
 | nameOverride | string | `""` |  |
 | pdb | object | `{"enabled":false,"spec":{"minAvailable":1}}` | PodDistributionBudget configuration |
@@ -117,7 +138,7 @@ A ORY Kratos Helm chart for Kubernetes
 | service.public.type | string | `"ClusterIP"` |  |
 | serviceMonitor | object | `{"enabled":true,"labels":{},"scheme":"http","scrapeInterval":"60s","scrapeTimeout":"30s","tlsConfig":{}}` | Parameters for the Prometheus ServiceMonitor objects. Reference: https://docs.openshift.com/container-platform/4.6/rest_api/monitoring_apis/servicemonitor-monitoring-coreos-com-v1.html |
 | serviceMonitor.enabled | bool | `true` | switch to false to prevent creating the ServiceMonitor |
-| serviceMonitor.labels | object | `{}` | Provide additionnal labels to the ServiceMonitor ressource metadata |
+| serviceMonitor.labels | object | `{}` | Provide additional labels to the ServiceMonitor ressource metadata |
 | serviceMonitor.scheme | string | `"http"` | HTTP scheme to use for scraping. |
 | serviceMonitor.scrapeInterval | string | `"60s"` | Interval at which metrics should be scraped |
 | serviceMonitor.scrapeTimeout | string | `"30s"` | Timeout after which the scrape is ended |

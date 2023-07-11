@@ -9,7 +9,7 @@ export K3SIMAGE := docker.io/rancher/k3s:v1.26.1-k3s1
 	go build -o .bin/yq github.com/mikefarah/yq/v3
 
 .bin/helm: Makefile
-	HELM_INSTALL_DIR=.bin bash <(curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3) -v v3.3.4 --no-sudo
+	HELM_INSTALL_DIR=.bin bash <(curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3) -v v3.12.0 --no-sudo
 
 .bin/ory: Makefile
 	curl https://raw.githubusercontent.com/ory/meta/master/install.sh | bash -s -- -b .bin ory v0.1.48
@@ -58,7 +58,7 @@ k3d-down:
 postgresql:
 	helm repo add bitnami https://charts.bitnami.com/bitnami
 	helm repo update
-	helm install postgresql bitnami/postgresql -f hacks/values/postgres.yaml
+	helm install postgresql bitnami/postgresql --atomic --debug -f hacks/values/postgres.yaml
 
 .PHONY: prometheus
 prometheus:

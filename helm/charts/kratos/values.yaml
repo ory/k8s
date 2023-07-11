@@ -115,7 +115,7 @@ kratos:
     enabled: false
     # -- Configure the way to execute database migration. Possible values: job, initContainer
     # When set to job, the migration will be executed as a job on release or upgrade.
-    # When set to initContainer, the migration will be executed when kratos pod is created
+    # When set to initContainer, the migration will be executed when Kratos pod is created
     # Defaults to job
     type: job
     # -- Ability to override the entrypoint of the automigration container
@@ -126,6 +126,8 @@ kratos:
     # - sleep 5;
     #   - kratos
     customArgs: []
+    # -- resource requests and limits for the automigration initcontainer
+    resources: {}
 
   # -- You can add multiple identity schemas here. You can pass JSON schema using `--set-file` Helm CLI argument.
   identitySchemas: {}
@@ -141,7 +143,7 @@ kratos:
   #  "identity.phone.schema.json": |
   #    {{ .Values.phone_schema }}
 
-  # -- You can customize the emails kratos is sending (also uncomment config.courier.template_override_path below)
+  # -- You can customize the emails Kratos is sending (also uncomment config.courier.template_override_path below)
   emailTemplates: {}
   # emailTemplates:
   #   recovery:
@@ -187,6 +189,25 @@ kratos:
 
 # -- Configuration options for the k8s deployment
 deployment:
+  ## -- initContainer securityContext for Kratos & migration init
+  initContainerSecurityContext: {}
+
+  ## -- pod securityContext for Kratos & migration init
+  podSecurityContext: {}
+
+  ## -- container securityContext for Kratos & migration init
+  securityContext:
+    allowPrivilegeEscalation: false
+    capabilities:
+      drop:
+        - ALL
+    privileged: false
+    readOnlyRootFilesystem: true
+    runAsNonRoot: true
+    runAsUser: 100
+    seccompProfile:
+      type: RuntimeDefault
+
   lifecycle: {}
   # -- Configure the livenessProbe parameters
   livenessProbe:
@@ -499,6 +520,9 @@ job:
   # lines, adjust them as necessary, and remove the curly braces after 'nodeSelector:'.
   #   foo: bar
 
+  # -- resource requests and limits for the job
+  resources: {}
+
   # -- Configure node tolerations.
   tolerations: []
 
@@ -516,9 +540,9 @@ job:
   shareProcessNamespace: false
 
   # -- Specify the serviceAccountName value.
-  # In some situations it is needed to provides specific permissions to Hydra deployments
-  # Like for example installing Hydra on a cluster with a PosSecurityPolicy and Istio.
-  # Uncoment if it is needed to provide a ServiceAccount for the Hydra deployment.
+  # In some situations it is needed to provide specific permissions to Kratos deployments
+  # Like for example installing Kratos on a cluster with a PosSecurityPolicy and Istio.
+  # Uncomment if it is needed to provide a ServiceAccount for the Kratos deployment.
   serviceAccount:
     # -- Specifies whether a service account should be created
     create: true
@@ -560,6 +584,82 @@ watcher:
   # -- Label key used for managing applications
   watchLabelKey: "ory.sh/watcher"
 
+# -- SQL cleanup cron job configuration
+cleanup:
+  # -- Enable cleanup of stale database rows by periodically running the cleanup sql command
+  enabled: false
+
+  # -- Configure how many records are cleaned per run
+  batchSize: 100
+
+  # -- Configure how long to wait between each table cleanup
+  sleepTables: 1m0s
+
+  # -- Configure the youngest records to keep
+  keepLast: 6h
+
+# -- CronJob configuration
+cronjob:
+  cleanup:
+    # -- Configure how often the cron job is ran
+    schedule: "0 */1 * * *"
+
+    # -- Configure the arguments of the entrypoint, overriding the default value
+    customArgs: []
+
+    # -- Set custom cron job level labels
+    labels: {}
+
+    # -- Set custom cron job level annotations
+    annotations: {}
+
+    # -- Specify pod metadata, this metadata is added directly to the pod, and not higher objects
+    podMetadata:
+      # -- Extra pod level labels
+      labels: {}
+
+      # -- Extra pod level annotations
+      annotations: {}
+
+    # -- Configure node labels for pod assignment
+    nodeSelector: {}
+
+    # -- Configure node tolerations
+    tolerations: []
+
+    # -- Configure node affinity
+    affinity: {}
+
+    # -- Configure the containers' SecurityContext for the cleanup cronjob
+    securityContext:
+      allowPrivilegeEscalation: false
+      capabilities:
+        drop:
+          - ALL
+      privileged: false
+      readOnlyRootFilesystem: true
+      runAsNonRoot: true
+      runAsUser: 100
+      seccompProfile:
+        type: RuntimeDefault
+
+    # -- pod securityContext for the cleanup cronjob
+    podSecurityContext: {}
+
+    # -- We usually recommend not to specify default resources and to leave this as a conscious choice for the user.
+    #  This also increases chances charts run on environments with little
+    #  resources, such as Minikube. If you do want to specify resources, uncomment the following
+    #  lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+    #  limits:
+    #    cpu: 100m
+    #    memory: 128Mi
+    #  requests:
+    #    cpu: 100m
+    #  memory: 128Mi
+    resources:
+      limits: {}
+      requests: {}
+
 # -- PodDistributionBudget configuration
 pdb:
   enabled: false
@@ -577,7 +677,7 @@ serviceMonitor:
   scrapeInterval: 60s
   # -- Timeout after which the scrape is ended
   scrapeTimeout: 30s
-  # -- Provide additionnal labels to the ServiceMonitor ressource metadata
+  # -- Provide additional labels to the ServiceMonitor ressource metadata
   labels: {}
   # -- TLS configuration to use when scraping the endpoint
   tlsConfig: {}

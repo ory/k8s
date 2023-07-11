@@ -1,5 +1,6 @@
 name: CI
 on:
+  create:
   push:
     branches:
       - "master"

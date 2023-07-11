@@ -1,0 +1,101 @@
+{{- if .Values.cleanup.enabled -}}
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: {{ include "kratos.fullname" . }}-cleanup
+  {{- if .Release.Namespace }}
+  namespace: {{ .Release.Namespace }}
+  {{- end }}
+  labels:
+    {{- include "kratos.cleanup.labels" . | nindent 4 }}
+    {{- with .Values.cronjob.cleanup.labels }}
+      {{- toYaml . | nindent 4 }}
+    {{- end }}
+  annotations:
+    {{- with .Values.cronjob.cleanup.annotations }}
+      {{- toYaml . | nindent 4 }}
+    {{- end }}
+spec:
+  concurrencyPolicy: Forbid
+  schedule: {{ .Values.cronjob.cleanup.schedule | quote }}
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          labels:
+            {{- include "kratos.cleanup.labels" . | nindent 12 }}
+            {{- with .Values.cronjob.cleanup.labels }}
+              {{- toYaml . | nindent 12 }}
+            {{- end }}
+            {{- with .Values.cronjob.cleanup.podMetadata.labels }}
+              {{- toYaml . | nindent 12 }}
+            {{- end }}
+          annotations:
+            {{- include "kratos.annotations.checksum" . | nindent 12 -}}
+            {{- with .Values.cronjob.cleanup.annotations }}
+              {{- toYaml . | nindent 12 }}
+            {{- end }}
+            {{- with $.Values.cronjob.cleanup.podMetadata.annotations }}
+              {{- toYaml . | nindent 12 }}
+            {{- end }}
+        spec:
+          restartPolicy: OnFailure
+          {{- with .Values.imagePullSecrets }}
+          imagePullSecrets:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          volumes:
+            - name: {{ include "kratos.name" . }}-config-volume
+              configMap:
+                name: {{ include "kratos.fullname" . }}-config
+          containers:
+            - name: cleanup
+              image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+              imagePullPolicy: {{ .Values.image.pullPolicy }}
+              {{- with .Values.cronjob.cleanup.securityContext }}
+              securityContext:
+                {{- toYaml . | nindent 16 }}
+              {{- end }}
+              command: ["kratos"]
+              args:
+                - cleanup
+                - sql
+                - --database.cleanup.batch_size
+                - {{ .Values.cleanup.batchSize | quote }}
+                - --database.cleanup.sleep.tables
+                - {{ .Values.cleanup.sleepTables | quote }}
+                - --keep-last
+                - {{ .Values.cleanup.keepLast | quote }}
+                - --config
+                - /etc/config/kratos.yaml
+              env:
+              {{- if not (empty ( include "kratos.dsn" . )) }}
+                - name: DSN
+                  valueFrom:
+                    secretKeyRef:
+                      name: {{ include "kratos.secretname" . }}
+                      key: dsn
+              {{- end }}
+              resources:
+                {{- toYaml .Values.cronjob.cleanup.resources | nindent 16 }}
+              volumeMounts:
+                - name: {{ include "kratos.name" . }}-config-volume
+                  mountPath: /etc/config
+                  readOnly: true
+          {{- with .Values.cronjob.cleanup.nodeSelector }}
+          nodeSelector:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with .Values.cronjob.cleanup.podSecurityContext }}
+          securityContext:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with .Values.cronjob.cleanup.tolerations }}
+          tolerations:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with .Values.cronjob.cleanup.affinity }}
+          affinity:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+{{- end }}

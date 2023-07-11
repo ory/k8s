@@ -23,6 +23,13 @@ kratos:
       - "--yes"
       - "--config"
       - "/etc/config/kratos.yaml"
+    resources:
+      limits:
+        cpu: 100m
+        memory: 128Mi
+      requests:
+        cpu: 100m
+        memory: 128Mi
   identitySchemas:
     "identity.default.schema.json": |
       {
@@ -206,6 +213,12 @@ deployment:
       ory.sh/pod_label: kratos
     annotations:
       ory.sh/pod_annotation: kratos
+  initContainerSecurityContext:
+    capabilities:
+      drop:
+        - ALL
+    podSecurityContext:
+      runAsNonRoot: false
   extraEnv:
     - name: FOO
       value: BAR
@@ -275,6 +288,35 @@ watcher:
       ory.sh/pod_label: kratos_watcher
     annotations:
       ory.sh/pod_annotation: kratos_watcher
+  securityContext:
+    capabilities:
+      drop:
+        - ALL
+  podSecurityContext:
+    runAsNonRoot: false
+
+cleanup:
+  enabled: true
+  securityContext:
+    capabilities:
+      drop:
+        - ALL
+  podSecurityContext:
+    runAsNonRoot: true
+
+cronjob:
+  cleanup:
+    labels:
+      ory.sh/test: kratos
+    annotations:
+      ory.sh/test: kratos
+    podMetadata:
+      labels:
+        ory.sh/pod_label: kratos
+      annotations:
+        ory.sh/pod_annotation: kratos
+    podSecurityContext:
+      runAsNonRoot: true
 
 serviceMonitor:
   labels:
