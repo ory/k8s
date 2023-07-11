@@ -192,7 +192,7 @@ spec:
             {{- toYaml .Values.deployment.customLivenessProbe | nindent 12 }}
           {{- else }}
             httpGet:
-              path: /health/alive
+              path: /admin/health/alive
               port: {{ .Values.kratos.config.serve.admin.port }}
               httpHeaders:
                 - name: Host
