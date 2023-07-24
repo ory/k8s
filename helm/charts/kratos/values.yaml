@@ -7,8 +7,8 @@ replicaCount: 1
 strategy:
   type: RollingUpdate
   rollingUpdate:
-    maxSurge: 30%
-    maxUnavailable: 0
+    maxSurge: "25%"
+    maxUnavailable: "25%"
 
 image:
   # -- ORY KRATOS image
