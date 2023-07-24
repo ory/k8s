@@ -238,6 +238,12 @@ keto:
 
 # -- Configure the probes for when the deployment is considered ready and ongoing health check
 deployment:
+  # -- Specify pod deployment strategy
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: "25%"
+      maxUnavailable: "25%"
   # -- DEPRECATED Set custom pod annotations
   podAnnotations: {}
 

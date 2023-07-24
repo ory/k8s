@@ -1,6 +1,6 @@
 # hydra
 
-![Version: 0.33.4](https://img.shields.io/badge/Version-0.33.4-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v2.1.1](https://img.shields.io/badge/AppVersion-v2.1.1-informational?style=flat-square)
+![Version: 0.33.5](https://img.shields.io/badge/Version-0.33.5-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v2.1.1](https://img.shields.io/badge/AppVersion-v2.1.1-informational?style=flat-square)
 
 A Helm chart for deploying ORY Hydra in Kubernetes
 
@@ -21,7 +21,7 @@ A Helm chart for deploying ORY Hydra in Kubernetes
 
 | Repository | Name | Version |
 |------------|------|---------|
-| file://../hydra-maester | hydra-maester(hydra-maester) | 0.33.4 |
+| file://../hydra-maester | hydra-maester(hydra-maester) | 0.33.5 |
 
 ## Values
 
@@ -79,7 +79,8 @@ A Helm chart for deploying ORY Hydra in Kubernetes
 | deployment.serviceAccount.create | bool | `true` | Specifies whether a service account should be created |
 | deployment.serviceAccount.name | string | `""` | The name of the service account to use. If not set and create is true, a name is generated using the fullname template |
 | deployment.startupProbe | object | `{"failureThreshold":60,"periodSeconds":1,"successThreshold":1,"timeoutSeconds":1}` | Default probe timers |
-| deployment.strategy.rollingUpdate | object | `{}` |  |
+| deployment.strategy.rollingUpdate.maxSurge | string | `"25%"` |  |
+| deployment.strategy.rollingUpdate.maxUnavailable | string | `"25%"` |  |
 | deployment.strategy.type | string | `"RollingUpdate"` |  |
 | deployment.tolerations | list | `[]` | Configure node tolerations. |
 | deployment.topologySpreadConstraints | list | `[]` | Configure pod topologySpreadConstraints. |
