@@ -1,6 +1,6 @@
 # oathkeeper
 
-![Version: 0.33.4](https://img.shields.io/badge/Version-0.33.4-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.40.3](https://img.shields.io/badge/AppVersion-v0.40.3-informational?style=flat-square)
+![Version: 0.33.5](https://img.shields.io/badge/Version-0.33.5-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.40.3](https://img.shields.io/badge/AppVersion-v0.40.3-informational?style=flat-square)
 
 A Helm chart for deploying ORY Oathkeeper in Kubernetes
 
@@ -21,7 +21,7 @@ A Helm chart for deploying ORY Oathkeeper in Kubernetes
 
 | Repository | Name | Version |
 |------------|------|---------|
-| file://../oathkeeper-maester | oathkeeper-maester(oathkeeper-maester) | 0.33.4 |
+| file://../oathkeeper-maester | oathkeeper-maester(oathkeeper-maester) | 0.33.5 |
 
 ## Values
 
