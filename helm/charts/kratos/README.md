@@ -161,7 +161,7 @@ A ORY Kratos Helm chart for Kubernetes
 | statefulSet.resources | object | `{}` |  |
 | statefulSet.tolerations | list | `[]` | Configure node tolerations. |
 | statefulSet.topologySpreadConstraints | list | `[]` | Configure pod topologySpreadConstraints. |
-| strategy | object | `{"rollingUpdate":{"maxSurge":"30%","maxUnavailable":0},"type":"RollingUpdate"}` | Deployment update strategy |
+| strategy | object | `{"rollingUpdate":{"maxSurge":"25%","maxUnavailable":"25%"},"type":"RollingUpdate"}` | Deployment update strategy |
 | test.busybox | object | `{"repository":"busybox","tag":1}` | use a busybox image from another repository |
 | watcher | object | `{"enabled":false,"image":"oryd/k8s-toolbox:0.0.5","mountFile":"","podMetadata":{"annotations":{},"labels":{}},"watchLabelKey":"ory.sh/watcher"}` | Configuration of the watcher sidecar |
 | watcher.mountFile | string | `""` | Path to mounted file, which wil be monitored for changes. eg: /etc/secrets/my-secret/foo |
