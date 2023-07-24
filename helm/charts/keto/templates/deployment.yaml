@@ -38,6 +38,8 @@ spec:
 {{- if not $autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
 {{- end }}
+  strategy:
+    {{- toYaml .Values.strategy | nindent 4 }}
   selector:
     matchLabels:
       {{- include "keto.selectorLabels" . | nindent 6 }}
