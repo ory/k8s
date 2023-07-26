@@ -1,0 +1,2 @@
+version: v1.26.5
+url: https://storage.googleapis.com/kubernetes-release/release/{{.Version}}/bin/{{.Os}}/{{.Architecture}}/kubectl

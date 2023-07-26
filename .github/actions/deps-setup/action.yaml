@@ -32,24 +32,11 @@ runs:
         HELM_INSTALL_DIR: ${{ github.workspace }}/.bin
         HELM_PLUGINS: ${{ github.workspace }}/.bin/plugins
         K3D_INSTALL_DIR: ${{ github.workspace }}/.bin
-        KUBECTL_VERSION: "1.26.1"
-        K3D_VERSION: "5.4.4"
       run: |
-        # Export .bin into PATH so k3d doesn't fail when installing
+        #Export .bin into PATH so k3d doesn't fail when installing
         export PATH=".bin:$PATH"
-        echo "PATH=.bin:$PATH" >> $GITHUB_ENV
+        echo "PATH=.bin:$PATH" >> "$GITHUB_ENV"
+        make deps
 
-        echo "Downloading 'helm' 3...."
-        curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
-        echo "Installing kubeval helm plugin"
-        mkdir .bin/plugins
-        helm plugin install https://github.com/instrumenta/helm-kubeval
-
-        echo "Installing k3d"
-        curl -s https://raw.githubusercontent.com/k3d-io/k3d/v${K3D_VERSION}/install.sh | USE_SUDO="false" bash
-
-        echo "Installing kubectl"
-        pushd .bin
-        curl -LO https://storage.googleapis.com/kubernetes-release/release/v${KUBECTL_VERSION}/bin/linux/amd64/kubectl
-        chmod +x ./kubectl
-        popd
+        mkdir .bin/plugins || true
+        helm plugin install https://github.com/instrumenta/helm-kubeval || true
