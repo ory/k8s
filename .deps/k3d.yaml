@@ -1,0 +1,2 @@
+version: v5.4.9
+url: https://github.com/rancher/k3d/releases/download/{{.Version}}/k3d-{{.Os}}-{{.Architecture}}
