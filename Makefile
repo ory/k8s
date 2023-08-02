@@ -65,7 +65,7 @@ export K3SIMAGE := docker.io/rancher/k3s:v1.26.1-k3s1
 deps: .bin/ory .bin/helm .bin/yq .bin/helm-docs .bin/k3d .bin/kubectl
 
 .PHONY: release
-release:
+release: ory-repo
 	yq w -i helm/charts/example-idp/Chart.yaml version "${VERSION}"
 	yq w -i helm/charts/hydra-maester/Chart.yaml version "${VERSION}"; \
 	yq w -i helm/charts/hydra/Chart.yaml version "${VERSION}"; \
