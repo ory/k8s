@@ -10,7 +10,7 @@ image:
   # SELFSERVICE image
   repository: oryd/kratos-selfservice-ui-node
   # -- ORY KRATOS VERSION
-  tag: v0.10.1
+  tag: "v0.13.0-4"
   pullPolicy: IfNotPresent
 
 imagePullSecrets: []
@@ -51,9 +51,9 @@ securityContext:
       - ALL
   seccompProfile:
     type: RuntimeDefault
-  readOnlyRootFilesystem: true
+  readOnlyRootFilesystem: false
   runAsNonRoot: true
-  runAsUser: 1000
+  runAsUser: 10000
   allowPrivilegeEscalation: false
   privileged: false
 

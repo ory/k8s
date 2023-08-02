@@ -1,6 +1,6 @@
 # oathkeeper
 
-![Version: 0.34.1](https://img.shields.io/badge/Version-0.34.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.40.3](https://img.shields.io/badge/AppVersion-v0.40.3-informational?style=flat-square)
+![Version: 0.34.1](https://img.shields.io/badge/Version-0.34.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.40.6](https://img.shields.io/badge/AppVersion-v0.40.6-informational?style=flat-square)
 
 A Helm chart for deploying ORY Oathkeeper in Kubernetes
 
@@ -73,7 +73,7 @@ A Helm chart for deploying ORY Oathkeeper in Kubernetes
 | image.initContainer | object | `{"repository":"busybox","tag":1}` | use a busybox image from another repository |
 | image.pullPolicy | string | `"IfNotPresent"` | Image pull policy |
 | image.repository | string | `"oryd/oathkeeper"` | ORY Oathkeeper image |
-| image.tag | string | `"v0.40.3"` | ORY Oathkeeper version |
+| image.tag | string | `"v0.40.6"` | ORY Oathkeeper version |
 | imagePullSecrets | list | `[]` | Image pull secrets |
 | ingress | object | `{"api":{"annotations":{},"className":"","enabled":false,"hosts":[{"host":"api.oathkeeper.localhost","paths":[{"path":"/","pathType":"ImplementationSpecific"}]}]},"proxy":{"annotations":{},"className":"","defaultBackend":{},"enabled":false,"hosts":[{"host":"proxy.oathkeeper.localhost","paths":[{"path":"/","pathType":"ImplementationSpecific"}]}]}}` | Configure ingress |
 | ingress.api.enabled | bool | `false` | En-/Disable the api ingress. |

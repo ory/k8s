@@ -1,6 +1,6 @@
 # kratos-selfservice-ui-node
 
-![Version: 0.34.1](https://img.shields.io/badge/Version-0.34.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.10.1](https://img.shields.io/badge/AppVersion-v0.10.1-informational?style=flat-square)
+![Version: 0.34.1](https://img.shields.io/badge/Version-0.34.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.13.0-4](https://img.shields.io/badge/AppVersion-v0.13.0--4-informational?style=flat-square)
 
 A Helm chart for ORY Kratos's example ui for Kubernetes
 
@@ -18,8 +18,8 @@ A Helm chart for ORY Kratos's example ui for Kubernetes
 | deployment.tolerations | list | `[]` | Configure node tolerations. |
 | deployment.topologySpreadConstraints | list | `[]` | Configure pod topologySpreadConstraints. |
 | fullnameOverride | string | `""` |  |
-| image | object | `{"pullPolicy":"IfNotPresent","repository":"oryd/kratos-selfservice-ui-node","tag":"v0.10.1"}` | Deployment image settings |
-| image.tag | string | `"v0.10.1"` | ORY KRATOS VERSION |
+| image | object | `{"pullPolicy":"IfNotPresent","repository":"oryd/kratos-selfservice-ui-node","tag":"v0.13.0-4"}` | Deployment image settings |
+| image.tag | string | `"v0.13.0-4"` | ORY KRATOS VERSION |
 | imagePullSecrets | list | `[]` |  |
 | ingress | object | `{"annotations":{},"className":"","enabled":false,"hosts":[{"host":"chart-example.local","paths":[{"path":"/","pathType":"ImplementationSpecific"}]}],"tls":[]}` | Ingress configration |
 | jwksUrl | string | `"http://oathkeeper-api"` | The jwksUrl |
@@ -29,7 +29,7 @@ A Helm chart for ORY Kratos's example ui for Kubernetes
 | nameOverride | string | `""` |  |
 | projectName | string | `"SecureApp"` |  |
 | replicaCount | int | `1` | Number of replicas in deployment |
-| securityContext | object | `{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"privileged":false,"readOnlyRootFilesystem":true,"runAsNonRoot":true,"runAsUser":1000,"seccompProfile":{"type":"RuntimeDefault"}}` | Deployment level securityContext |
+| securityContext | object | `{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"privileged":false,"readOnlyRootFilesystem":false,"runAsNonRoot":true,"runAsUser":10000,"seccompProfile":{"type":"RuntimeDefault"}}` | Deployment level securityContext |
 | service | object | `{"loadBalancerIP":"","name":"http","port":80,"type":"ClusterIP"}` | Service configuration |
 | service.loadBalancerIP | string | `""` | The load balancer IP |
 | service.name | string | `"http"` | The service port name. Useful to set a custom service port name if it must follow a scheme (e.g. Istio) |
