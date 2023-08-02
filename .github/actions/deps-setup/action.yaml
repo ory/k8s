@@ -21,7 +21,7 @@ runs:
           ${{ github.workspace }}/.bin
         key:
           ${{ runner.os }}-${{ steps.extract_branch.outputs.branch }}-${{
-          hashFiles('**/go.sum') }}
+          hashFiles('**/go.sum', '.deps/*') }}
         restore-keys: |
           ${{ runner.os }}-${{ steps.extract_branch.outputs.branch }}-
 
@@ -35,8 +35,8 @@ runs:
       run: |
         #Export .bin into PATH so k3d doesn't fail when installing
         export PATH=".bin:$PATH"
-        echo "PATH=.bin:$PATH" >> "$GITHUB_ENV"
+        echo "PATH=.bin:$PATH" >> $GITHUB_ENV
         make deps
 
         mkdir .bin/plugins || true
-        helm plugin install https://github.com/instrumenta/helm-kubeval || true
+        helm plugin install https://github.com/jtyr/kubeconform-helm || true
