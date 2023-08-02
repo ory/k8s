@@ -51,9 +51,9 @@ securityContext:
       - ALL
   seccompProfile:
     type: RuntimeDefault
-  readOnlyRootFilesystem: true
+  readOnlyRootFilesystem: false
   runAsNonRoot: true
-  runAsUser: 1000
+  runAsUser: 10000
   allowPrivilegeEscalation: false
   privileged: false
 
