@@ -21,7 +21,7 @@ runs:
           ${{ github.workspace }}/.bin
         key:
           ${{ runner.os }}-${{ steps.extract_branch.outputs.branch }}-${{
-          hashFiles('**/go.sum') }}
+          hashFiles('**/go.sum', '.deps/*') }}
         restore-keys: |
           ${{ runner.os }}-${{ steps.extract_branch.outputs.branch }}-
 
