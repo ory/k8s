@@ -13,7 +13,7 @@ image:
   # -- ORY Oathkeeper image
   repository: oryd/oathkeeper
   # -- ORY Oathkeeper version
-  tag: v0.40.3
+  tag: "v0.40.6"
   # -- Image pull policy
   pullPolicy: IfNotPresent
   # -- use a busybox image from another repository
