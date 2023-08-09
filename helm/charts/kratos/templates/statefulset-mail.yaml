@@ -31,7 +31,7 @@ spec:
       app.kubernetes.io/name: {{ include "kratos.fullname" . }}-courier
       app.kubernetes.io/instance: {{ .Release.Name }}
   serviceName: {{ include "kratos.fullname" . }}-courier
-  replicas: {{ .Values.replicaCount }}
+  replicas: {{- if gt .Values.replicaCount 1.0 }} 1 {{- else }} {{ .Values.replicaCount }} {{- end }}
   template:
     metadata:
       labels:
