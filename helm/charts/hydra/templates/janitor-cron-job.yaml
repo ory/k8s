@@ -1,4 +1,6 @@
 {{- if .Values.janitor.enabled -}}
+{{- $janitorExtraEnv := ternary .Values.cronjob.janitor.extraEnv .Values.deployment.extraEnv (not (empty .Values.cronjob.janitor.extraEnv )) -}}
+---
 apiVersion: batch/v1
 kind: CronJob
 metadata:
@@ -86,6 +88,9 @@ spec:
                       name: {{ include "hydra.secretname" . }}
                       key: dsn
               {{- end }}
+                {{- with $janitorExtraEnv }}
+                  {{- toYaml . | nindent 16 }}
+                {{- end }}
               resources:
                 {{- toYaml .Values.cronjob.janitor.resources | nindent 16 }}
               volumeMounts:

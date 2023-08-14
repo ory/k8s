@@ -29,10 +29,11 @@ A Helm chart for deploying ORY Hydra in Kubernetes
 |-----|------|---------|-------------|
 | affinity | object | `{}` | Configure node affinity |
 | configmap.hashSumEnabled | bool | `true` | switch to false to prevent checksum annotations being maintained and propogated to the pods |
-| cronjob | object | `{"janitor":{"affinity":{},"annotations":{},"customArgs":[],"labels":{},"nodeSelector":{},"podMetadata":{"annotations":{},"labels":{}},"podSecurityContext":{},"resources":{"limits":{},"requests":{}},"schedule":"0 */1 * * *","securityContext":{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"privileged":false,"readOnlyRootFilesystem":true,"runAsNonRoot":true,"runAsUser":100},"tolerations":[]}}` | CronJob configuration |
+| cronjob | object | `{"janitor":{"affinity":{},"annotations":{},"customArgs":[],"extraEnv":[],"labels":{},"nodeSelector":{},"podMetadata":{"annotations":{},"labels":{}},"podSecurityContext":{},"resources":{"limits":{},"requests":{}},"schedule":"0 */1 * * *","securityContext":{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"privileged":false,"readOnlyRootFilesystem":true,"runAsNonRoot":true,"runAsUser":100},"tolerations":[]}}` | CronJob configuration |
 | cronjob.janitor.affinity | object | `{}` | Configure node affinity |
 | cronjob.janitor.annotations | object | `{}` | Set custom cron job level annotations |
 | cronjob.janitor.customArgs | list | `[]` | Configure the arguments of the entrypoint, overriding the default value |
+| cronjob.janitor.extraEnv | list | `[]` | Array of extra envs to be passed to the cronjob. This takes precedence over deployment variables. Kubernetes format is expected - name: FOO   value: BAR |
 | cronjob.janitor.labels | object | `{}` | Set custom cron job level labels |
 | cronjob.janitor.nodeSelector | object | `{}` | Configure node labels for pod assignment |
 | cronjob.janitor.podMetadata | object | `{"annotations":{},"labels":{}}` | Specify pod metadata, this metadata is added directly to the pod, and not higher objects |
