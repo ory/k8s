@@ -258,6 +258,7 @@ statefulSet:
       ory.sh/pod_label: kratos_courier
     annotations:
       ory.sh/pod_annotation: kratos_courier
+  revisionHistoryLimit: 10
 
 job:
   extraEnv:
