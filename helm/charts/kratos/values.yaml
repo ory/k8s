@@ -607,6 +607,11 @@ cronjob:
     # -- Configure the arguments of the entrypoint, overriding the default value
     customArgs: []
 
+    # -- Array of extra envs to be passed to the cronjob. This takes precedence over deployment variables. Kubernetes format is expected
+    # - name: FOO
+    #   value: BAR
+    extraEnv: []
+
     # -- Set custom cron job level labels
     labels: {}
 
