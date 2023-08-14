@@ -17,10 +17,11 @@ A ORY Kratos Helm chart for Kubernetes
 | configmap.annotations | object | `{}` | If you do want to specify annotations for configmap, uncomment the following lines, adjust them as necessary, and remove the curly braces after 'annotations:'. |
 | configmap.hashSumEnabled | bool | `true` | switch to false to prevent checksum annotations being maintained and propogated to the pods |
 | courier | object | `{"enabled":true}` | Configuration of the courier |
-| cronjob | object | `{"cleanup":{"affinity":{},"annotations":{},"customArgs":[],"labels":{},"nodeSelector":{},"podMetadata":{"annotations":{},"labels":{}},"podSecurityContext":{},"resources":{"limits":{},"requests":{}},"schedule":"0 */1 * * *","securityContext":{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"privileged":false,"readOnlyRootFilesystem":true,"runAsNonRoot":true,"runAsUser":100,"seccompProfile":{"type":"RuntimeDefault"}},"tolerations":[]}}` | CronJob configuration |
+| cronjob | object | `{"cleanup":{"affinity":{},"annotations":{},"customArgs":[],"extraEnv":[],"labels":{},"nodeSelector":{},"podMetadata":{"annotations":{},"labels":{}},"podSecurityContext":{},"resources":{"limits":{},"requests":{}},"schedule":"0 */1 * * *","securityContext":{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"privileged":false,"readOnlyRootFilesystem":true,"runAsNonRoot":true,"runAsUser":100,"seccompProfile":{"type":"RuntimeDefault"}},"tolerations":[]}}` | CronJob configuration |
 | cronjob.cleanup.affinity | object | `{}` | Configure node affinity |
 | cronjob.cleanup.annotations | object | `{}` | Set custom cron job level annotations |
 | cronjob.cleanup.customArgs | list | `[]` | Configure the arguments of the entrypoint, overriding the default value |
+| cronjob.cleanup.extraEnv | list | `[]` | Array of extra envs to be passed to the cronjob. This takes precedence over deployment variables. Kubernetes format is expected - name: FOO   value: BAR |
 | cronjob.cleanup.labels | object | `{}` | Set custom cron job level labels |
 | cronjob.cleanup.nodeSelector | object | `{}` | Configure node labels for pod assignment |
 | cronjob.cleanup.podMetadata | object | `{"annotations":{},"labels":{}}` | Specify pod metadata, this metadata is added directly to the pod, and not higher objects |
