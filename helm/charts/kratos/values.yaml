@@ -189,13 +189,13 @@ kratos:
 
 # -- Configuration options for the k8s deployment
 deployment:
-  ## -- initContainer securityContext for Kratos & migration init
+  # -- initContainer securityContext for Kratos & migration init
   initContainerSecurityContext: {}
 
-  ## -- pod securityContext for Kratos & migration init
+  # -- pod securityContext for Kratos & migration init
   podSecurityContext: {}
 
-  ## -- container securityContext for Kratos & migration init
+  # -- container securityContext for Kratos & migration init
   securityContext:
     allowPrivilegeEscalation: false
     capabilities:
@@ -361,6 +361,8 @@ deployment:
     # - name: FOO
     #   value: BAR
     extraEnv: []
+  # -- Number of revisions kept in history
+  revisionHistoryLimit: 5
 
 ## -- Configuration options for the k8s statefulSet
 statefulSet:
@@ -461,6 +463,8 @@ statefulSet:
     labels: {}
     # -- Extra pod level annotations
     annotations: {}
+  # -- Number of revisions kept in history
+  revisionHistoryLimit: 5
 
 securityContext:
   capabilities:
@@ -583,6 +587,8 @@ watcher:
     annotations: {}
   # -- Label key used for managing applications
   watchLabelKey: "ory.sh/watcher"
+  # -- Number of revisions kept in history
+  revisionHistoryLimit: 5
 
 # -- SQL cleanup cron job configuration
 cleanup:

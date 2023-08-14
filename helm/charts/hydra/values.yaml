@@ -352,6 +352,8 @@ deployment:
   customReadinessProbe: {}
   # -- Configure a custom startupProbe. This overwrites the default object
   customStartupProbe: {}
+  # -- Number of revisions kept in history
+  revisionHistoryLimit: 5
 
 # -- Values for initialization job
 job:
@@ -461,11 +463,13 @@ watcher:
     annotations: {}
   # -- Label key used for managing applications
   watchLabelKey: "ory.sh/watcher"
+  # -- Number of revisions kept in history
+  revisionHistoryLimit: 5
 
-  ## -- pod securityContext for watcher deployment
+  # -- pod securityContext for watcher deployment
   podSecurityContext: {}
 
-  ## -- container securityContext for watcher deployment
+  # -- container securityContext for watcher deployment
   securityContext:
     capabilities:
       drop:
@@ -478,24 +482,24 @@ watcher:
     allowPrivilegeEscalation: false
     privileged: false
 
-## -- Janitor cron job configuration
+# -- Janitor cron job configuration
 janitor:
   # -- Enable cleanup of stale database rows by periodically running the janitor command
   enabled: false
 
-  ## -- Configure if the trust relationships must be cleaned up
+  # -- Configure if the trust relationships must be cleaned up
   cleanupGrants: false
 
-  ## -- Configure if the consent and authentication requests must be cleaned up
+  # -- Configure if the consent and authentication requests must be cleaned up
   cleanupRequests: false
 
-  ## -- Configure if the access and refresh tokens must be cleaned up
+  # -- Configure if the access and refresh tokens must be cleaned up
   cleanupTokens: false
 
-  ## -- Configure how many records are deleted with each iteration
+  # -- Configure how many records are deleted with each iteration
   batchSize: 100
 
-  ## -- Configure how many records are retrieved from database for deletion
+  # -- Configure how many records are retrieved from database for deletion
   limit: 10000
 
 # -- CronJob configuration

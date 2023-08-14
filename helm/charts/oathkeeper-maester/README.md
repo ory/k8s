@@ -49,6 +49,7 @@ A Helm chart for deploying ORY Oathkeeper Rule Controller in Kubernetes
 | imagePullSecrets | list | `[]` | Image pull secrets |
 | pdb | object | `{"enabled":false,"spec":{"minAvailable":1}}` | PodDistributionBudget configuration |
 | replicaCount | int | `1` | Number of controller replicas in deployment mode |
+| revisionHistoryLimit | int | `5` | Number of revisions kept in history |
 | rulesConfigmapNamespace | string | `""` | Defines the Namespace in which the ConfigMap is stored. Defaults to the same Namespace as the ORY Maester Helm release. |
 | rulesFileName | string | `""` | Defines the name of the single root-level ConfigMap key used to store the entire array of Access Rules. When the ConfigMap is mounted in the Oathkeeper Pod, this becomes also the filename of the "rules file" to the Oathkeeper process. Defaults to `access-rules.json`. |
 | singleNamespaceMode | bool | `false` | Single namespace mode. If enabled the controller will watch for resources only from namespace it is deployed in, ignoring others |

@@ -6,6 +6,7 @@ metadata:
 {{ include "example-idp.labels" . | indent 4 }}
 spec:
   replicas: 1
+  revisionHistoryLimit: {{ .Values.revisionHistoryLimit }}
   selector:
     matchLabels:
       app.kubernetes.io/name: {{ include "example-idp.name" . }}

@@ -29,6 +29,7 @@ A Helm chart for ORY Kratos's example ui for Kubernetes
 | nameOverride | string | `""` |  |
 | projectName | string | `"SecureApp"` |  |
 | replicaCount | int | `1` | Number of replicas in deployment |
+| revisionHistoryLimit | int | `5` | Number of revisions kept in history |
 | securityContext | object | `{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"privileged":false,"readOnlyRootFilesystem":false,"runAsNonRoot":true,"runAsUser":10000,"seccompProfile":{"type":"RuntimeDefault"}}` | Deployment level securityContext |
 | service | object | `{"loadBalancerIP":"","name":"http","port":80,"type":"ClusterIP"}` | Service configuration |
 | service.loadBalancerIP | string | `""` | The load balancer IP |

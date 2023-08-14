@@ -89,6 +89,7 @@ A Helm chart for deploying ORY Oathkeeper in Kubernetes
 | oathkeeper.mutatorIdTokenJWKs | string | `""` | If set, uses the given JSON Web Key Set as the signing key for the ID Token Mutator. |
 | pdb | object | `{"enabled":false,"spec":{"minAvailable":1}}` | PodDistributionBudget configuration |
 | replicaCount | int | `1` | Number of ORY Oathkeeper members |
+| revisionHistoryLimit | int | `5` | Number of revisions kept in history |
 | secret.enabled | bool | `true` | switch to false to prevent creating the secret |
 | secret.filename | string | `"mutator.id_token.jwks.json"` | default filename of JWKS (mounted as secret) |
 | secret.hashSumEnabled | bool | `true` | switch to false to prevent checksum annotations being maintained and propogated to the pods |

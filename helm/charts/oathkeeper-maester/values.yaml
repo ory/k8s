@@ -8,7 +8,8 @@ global:
 
 # -- Number of controller replicas in deployment mode
 replicaCount: 1
-
+# -- Number of revisions kept in history
+revisionHistoryLimit: 5
 # -- Single namespace mode. If enabled the controller will watch for resources only from namespace it is deployed in, ignoring others
 singleNamespaceMode: false
 

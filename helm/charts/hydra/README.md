@@ -68,6 +68,7 @@ A Helm chart for deploying ORY Hydra in Kubernetes
 | deployment.podSecurityContext | object | `{}` |  |
 | deployment.readinessProbe | object | `{"failureThreshold":5,"initialDelaySeconds":5,"periodSeconds":10}` | Default probe timers |
 | deployment.resources | object | `{}` | We usually recommend not to specify default resources and to leave this as a conscious choice for the user.  This also increases chances charts run on environments with little  resources, such as Minikube. If you do want to specify resources, uncomment the following  lines, adjust them as necessary, and remove the curly braces after 'resources:'.  limits:    cpu: 100m    memory: 128Mi  requests:    cpu: 100m  memory: 128Mi |
+| deployment.revisionHistoryLimit | int | `5` | Number of revisions kept in history |
 | deployment.securityContext.allowPrivilegeEscalation | bool | `false` |  |
 | deployment.securityContext.capabilities.drop[0] | string | `"ALL"` |  |
 | deployment.securityContext.privileged | bool | `false` |  |
@@ -107,12 +108,13 @@ A Helm chart for deploying ORY Hydra in Kubernetes
 | ingress.admin.enabled | bool | `false` | En-/Disable the api ingress. |
 | ingress.public | object | `{"annotations":{},"className":"","enabled":false,"hosts":[{"host":"public.hydra.localhost","paths":[{"path":"/","pathType":"ImplementationSpecific"}]}]}` | Configure ingress for the proxy port. |
 | ingress.public.enabled | bool | `false` | En-/Disable the proxy ingress. |
-| janitor.batchSize | int | `100` |  |
-| janitor.cleanupGrants | bool | `false` |  |
-| janitor.cleanupRequests | bool | `false` |  |
-| janitor.cleanupTokens | bool | `false` |  |
+| janitor | object | `{"batchSize":100,"cleanupGrants":false,"cleanupRequests":false,"cleanupTokens":false,"enabled":false,"limit":10000}` | Janitor cron job configuration |
+| janitor.batchSize | int | `100` | Configure how many records are deleted with each iteration |
+| janitor.cleanupGrants | bool | `false` | Configure if the trust relationships must be cleaned up |
+| janitor.cleanupRequests | bool | `false` | Configure if the consent and authentication requests must be cleaned up |
+| janitor.cleanupTokens | bool | `false` | Configure if the access and refresh tokens must be cleaned up |
 | janitor.enabled | bool | `false` | Enable cleanup of stale database rows by periodically running the janitor command |
-| janitor.limit | int | `10000` |  |
+| janitor.limit | int | `10000` | Configure how many records are retrieved from database for deletion |
 | job | object | `{"annotations":{"helm.sh/hook":"pre-install, pre-upgrade","helm.sh/hook-delete-policy":"before-hook-creation","helm.sh/hook-weight":"1"},"automountServiceAccountToken":true,"extraContainers":"","extraEnv":[],"extraInitContainers":"","labels":{},"lifecycle":"","nodeSelector":{},"podMetadata":{"annotations":{},"labels":{}},"serviceAccount":{"annotations":{"helm.sh/hook":"pre-install, pre-upgrade","helm.sh/hook-delete-policy":"before-hook-creation","helm.sh/hook-weight":"0"},"create":true,"name":""},"shareProcessNamespace":false,"spec":{"backoffLimit":10},"tolerations":[]}` | Values for initialization job |
 | job.annotations | object | `{"helm.sh/hook":"pre-install, pre-upgrade","helm.sh/hook-delete-policy":"before-hook-creation","helm.sh/hook-weight":"1"}` | If you do want to specify annotations, uncomment the following lines, adjust them as necessary, and remove the curly braces after 'annotations:'. |
 | job.automountServiceAccountToken | bool | `true` | Set automounting of the SA token |
@@ -165,11 +167,14 @@ A Helm chart for deploying ORY Hydra in Kubernetes
 | serviceMonitor.tlsConfig | object | `{}` | TLS configuration to use when scraping the endpoint |
 | test.busybox | object | `{"repository":"busybox","tag":1}` | use a busybox image from another repository |
 | test.labels | object | `{}` | Provide additional labels to the test pod |
-| watcher | object | `{"enabled":false,"image":"oryd/k8s-toolbox:0.0.5","mountFile":"","podMetadata":{"annotations":{},"labels":{}},"podSecurityContext":{},"securityContext":{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"privileged":false,"readOnlyRootFilesystem":true,"runAsNonRoot":true,"runAsUser":100,"seccompProfile":{"type":"RuntimeDefault"}},"watchLabelKey":"ory.sh/watcher"}` | Sidecar watcher configuration |
+| watcher | object | `{"enabled":false,"image":"oryd/k8s-toolbox:0.0.5","mountFile":"","podMetadata":{"annotations":{},"labels":{}},"podSecurityContext":{},"revisionHistoryLimit":5,"securityContext":{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"privileged":false,"readOnlyRootFilesystem":true,"runAsNonRoot":true,"runAsUser":100,"seccompProfile":{"type":"RuntimeDefault"}},"watchLabelKey":"ory.sh/watcher"}` | Sidecar watcher configuration |
 | watcher.mountFile | string | `""` | Path to mounted file, which wil be monitored for changes. eg: /etc/secrets/my-secret/foo |
 | watcher.podMetadata | object | `{"annotations":{},"labels":{}}` | Specify pod metadata, this metadata is added directly to the pod, and not higher objects |
 | watcher.podMetadata.annotations | object | `{}` | Extra pod level annotations |
 | watcher.podMetadata.labels | object | `{}` | Extra pod level labels |
+| watcher.podSecurityContext | object | `{}` | pod securityContext for watcher deployment |
+| watcher.revisionHistoryLimit | int | `5` | Number of revisions kept in history |
+| watcher.securityContext | object | `{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"privileged":false,"readOnlyRootFilesystem":true,"runAsNonRoot":true,"runAsUser":100,"seccompProfile":{"type":"RuntimeDefault"}}` | container securityContext for watcher deployment |
 | watcher.watchLabelKey | string | `"ory.sh/watcher"` | Label key used for managing applications |
 
 ----------------------------------------------
