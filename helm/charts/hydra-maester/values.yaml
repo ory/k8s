@@ -1,6 +1,7 @@
 # -- Number of replicas in deployment
 replicaCount: 1
-
+# -- Number of revisions kept in history
+revisionHistoryLimit: 5
 # -- The Controller have CREATE and READ access to all Secrets in the namespaces listed below.
 enabledNamespaces: []
 

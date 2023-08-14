@@ -4,7 +4,8 @@
 
 # -- Number of replicas in deployment
 replicaCount: 1
-
+# -- Number of revisions kept in history
+revisionHistoryLimit: 5
 # -- Deployment image settings
 image:
   # SELFSERVICE image

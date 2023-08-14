@@ -8,7 +8,8 @@ global:
 
 # -- Number of ORY Oathkeeper members
 replicaCount: 1
-
+# -- Number of revisions kept in history
+revisionHistoryLimit: 5
 image:
   # -- ORY Oathkeeper image
   repository: oryd/oathkeeper

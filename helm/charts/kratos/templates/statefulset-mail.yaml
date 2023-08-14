@@ -32,6 +32,7 @@ spec:
       app.kubernetes.io/instance: {{ .Release.Name }}
   serviceName: {{ include "kratos.fullname" . }}-courier
   replicas: 1
+  revisionHistoryLimit: {{ .Values.statefulSet.revisionHistoryLimit }}
   template:
     metadata:
       labels:

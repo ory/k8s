@@ -377,6 +377,8 @@ deployment:
     # - name: FOO
     #   value: BAR
     extraEnv: []
+  # -- Number of revisions kept in history
+  revisionHistoryLimit: 5
 
 # -- Watcher sidecar configuration
 watcher:
@@ -392,6 +394,8 @@ watcher:
     annotations: {}
   # -- Label key used for managing applications
   watchLabelKey: "ory.sh/watcher"
+  # -- Number of revisions kept in history
+  revisionHistoryLimit: 5
 
 # -- PodDistributionBudget configuration
 pdb:

@@ -38,6 +38,7 @@ A Helm chart for Kubernetes
 | pdb | object | `{"enabled":false,"spec":{"minAvailable":1}}` | PodDistributionBudget configuration |
 | priorityClassName | string | `""` | Pod priority # https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/ |
 | replicaCount | int | `1` | Number of replicas in deployment |
+| revisionHistoryLimit | int | `5` | Number of revisions kept in history |
 | singleNamespaceMode | bool | `false` | Single namespace mode. If enabled the controller will watch for resources only from namespace it is deployed in, ignoring others |
 
 ----------------------------------------------

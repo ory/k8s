@@ -27,6 +27,7 @@ A Helm chart for deploying the reference implementation for the User Login and C
 | nameOverride | string | `""` |  |
 | nodeSelector | object | `{}` |  |
 | resources | object | `{}` | We usually recommend not to specify default resources and to leave this as a conscious choice for the user. This also increases chances charts run on environments with little resources, such as Minikube. If you do want to specify resources, uncomment the following lines, adjust them as necessary, and remove the curly braces after 'resources:'. limits:   cpu: 100m   memory: 128Mi requests:   cpu: 100m   memory: 128Mi |
+| revisionHistoryLimit | int | `5` | Number of revisions kept in history |
 | service.annotations | object | `{}` | If you do want to specify annotations, uncomment the following lines, adjust them as necessary, and remove the curly braces after 'annotations:'. |
 | service.port | int | `3000` |  |
 | service.type | string | `"ClusterIP"` |  |
