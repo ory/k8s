@@ -1,6 +1,6 @@
 # hydra-maester
 
-![Version: 0.35.0](https://img.shields.io/badge/Version-0.35.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.0.28](https://img.shields.io/badge/AppVersion-v0.0.28-informational?style=flat-square)
+![Version: 0.35.0](https://img.shields.io/badge/Version-0.35.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.0.29](https://img.shields.io/badge/AppVersion-v0.0.29-informational?style=flat-square)
 
 A Helm chart for Kubernetes
 
@@ -33,7 +33,7 @@ A Helm chart for Kubernetes
 | forwardedProto | string | `nil` |  |
 | image.pullPolicy | string | `"IfNotPresent"` | Image pull policy |
 | image.repository | string | `"oryd/hydra-maester"` | Ory Hydra-maester image |
-| image.tag | string | `"v0.0.28"` | Ory Hydra-maester version |
+| image.tag | string | `"v0.0.29"` | Ory Hydra-maester version |
 | imagePullSecrets | list | `[]` | Image pull secrets |
 | pdb | object | `{"enabled":false,"spec":{"minAvailable":1}}` | PodDistributionBudget configuration |
 | priorityClassName | string | `""` | Pod priority # https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/ |

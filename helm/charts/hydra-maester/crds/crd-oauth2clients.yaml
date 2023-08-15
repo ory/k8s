@@ -3,7 +3,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.5.0
+    controller-gen.kubebuilder.io/version: v0.11.3
   creationTimestamp: null
   name: oauth2clients.hydra.ory.sh
 spec:
@@ -116,8 +116,8 @@ spec:
                   type: object
                 jwksUri:
                   description:
-                    Define the URL where the JSON Web Key Set should be fetched
-                    from when performing the private_key_jwt client
+                    JwksUri Define the URL where the JSON Web Key Set should be
+                    fetched from when performing the private_key_jwt client
                     authentication method.
                   pattern: (^$|^https?://.*)
                   type: string
@@ -182,10 +182,10 @@ spec:
                   pattern: '[a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*'
                   type: string
                 skipConsent:
+                  default: false
                   description:
                     SkipConsent skips the consent screen for this client.
                   type: boolean
-                  default: false
                 tokenEndpointAuthMethod:
                   allOf:
                     - enum:
@@ -257,9 +257,3 @@ spec:
       storage: true
       subresources:
         status: {}
-status:
-  acceptedNames:
-    kind: ""
-    plural: ""
-  conditions: []
-  storedVersions: []
