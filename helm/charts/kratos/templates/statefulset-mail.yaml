@@ -32,7 +32,6 @@ spec:
       app.kubernetes.io/instance: {{ .Release.Name }}
   serviceName: {{ include "kratos.fullname" . }}-courier
   replicas: 1
-  revisionHistoryLimit: {{ .Values.statefulSet.revisionHistoryLimit }}
   template:
     metadata:
       labels:
@@ -58,7 +57,7 @@ spec:
           imagePullPolicy: {{ include "kratos.imagePullPolicy" . }}
           args:
             - courier
-            - watch 
+            - watch
             - --config
             - /etc/config/kratos.yaml
             {{- if .Values.statefulSet.extraArgs }}
