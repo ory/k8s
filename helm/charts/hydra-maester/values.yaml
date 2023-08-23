@@ -32,6 +32,12 @@ adminService:
   # -- Set the clients endpoint, should be `/clients` for Hydra 1.x and
   # `/admin/clients` for Hydra 2.x
   endpoint: /admin/clients
+  # -- Scheme used by Hydra client endpoint. May be "http" or "https"
+  scheme:
+  # -- TLS ca-cert path for hydra client
+  tlsTrustStorePath:
+  # -- Skip http client insecure verification
+  insecureSkipVerify:
 
 forwardedProto:
 
@@ -48,6 +54,16 @@ deployment:
     # requests:
     #   cpu: 100m
     #   memory: 20Mi
+
+  # -- If you want to mount external volume
+  extraVolumes: []
+  # - name: my-volume
+  #   secret:
+  #     secretName: my-secret
+  extraVolumeMounts: []
+  # - name: my-volume
+  #   mountPath: /etc/secrets/my-secret
+  #   readOnly: true
 
   # -- Default security context
   securityContext:
