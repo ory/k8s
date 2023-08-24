@@ -1,3 +1,6 @@
+{{- if and (ne .Values.adminService.scheme "http") (ne .Values.adminService.scheme "https") -}}
+{{ fail "invalid scheme: must be http or https" }}
+{{- end -}}
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -40,6 +43,10 @@ spec:
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+      volumes:
+        {{- if .Values.deployment.extraVolumes }}
+          {{- toYaml .Values.deployment.extraVolumes | nindent 8 }}
+        {{- end }}
       containers:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
@@ -48,8 +55,8 @@ spec:
             - /manager
           args:
             - --metrics-addr=127.0.0.1:8080
-            - --hydra-url=http://{{ .Values.adminService.name | default ( include "hydra-maester.adminService" . ) }}
-            - --hydra-port={{ .Values.adminService.port | default 4445 }}
+            - --hydra-url={{ required "scheme is required" .Values.adminService.scheme }}://{{ .Values.adminService.name | default ( include "hydra-maester.adminService" . ) }}
+            - --hydra-port={{ .Values.adminService.port }}
             {{- with .Values.adminService.endpoint }}
             - --endpoint={{ . }}
             {{- end }}
@@ -61,6 +68,16 @@ spec:
             {{- end }}
             {{- if .Values.deployment.args.syncPeriod }}
             - --sync-period={{ .Values.deployment.args.syncPeriod }}
+            {{- end }}
+            {{- if .Values.adminService.insecureSkipVerify }}
+            - --insecure-skip-verify={{ .Values.adminService.insecureSkipVerify }}
+            {{- end}}
+            {{- if .Values.adminService.tlsTrustStorePath }}
+            - --tls-trust-store={{ .Values.adminService.tlsTrustStorePath }}
+            {{- end }}
+          volumeMounts:
+            {{- if .Values.deployment.extraVolumeMounts }}
+              {{- toYaml .Values.deployment.extraVolumeMounts | nindent 12 }}
             {{- end }}
           resources:
             {{- toYaml .Values.deployment.resources | nindent 12 }}
