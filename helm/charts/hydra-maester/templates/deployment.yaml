@@ -52,7 +52,7 @@ spec:
             - /manager
           args:
             - --metrics-addr=127.0.0.1:8080
-            - --hydra-url={{ .Values.adminService.scheme | default "http" }}://{{ .Values.adminService.name | default ( include "hydra-maester.adminService" . ) }}
+            - --hydra-url={{ .Values.adminService.scheme }}://{{ .Values.adminService.name | default ( include "hydra-maester.adminService" . ) }}
             - --hydra-port={{ .Values.adminService.port | default 4445 }}
             {{- with .Values.adminService.endpoint }}
             - --endpoint={{ . }}
@@ -67,7 +67,7 @@ spec:
             - --sync-period={{ .Values.deployment.args.syncPeriod }}
             {{- end }}
             {{- if .Values.adminService.insecureSkipVerify }}
-            - --insecure-skip-verify=true
+            - --insecure-skip-verify={{ .Values.adminService.insecureSkipVerify }}
             {{- end}}
             {{- if .Values.adminService.tlsTrustStorePath }}
             - --tls-trust-store={{ .Values.adminService.tlsTrustStorePath }}

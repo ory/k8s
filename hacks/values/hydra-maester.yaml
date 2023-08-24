@@ -10,3 +10,10 @@ deployment:
   serviceAccount:
     annotations:
       ory.sh/pod_annotation: hydra-maester
+  extraVolumes:
+    - name: "test-volume"
+      emptyDir:
+        sizeLimit: 1Mi
+  extraVolumeMounts:
+    - name: "test-volume"
+      mountPath: /test-volume

@@ -33,11 +33,11 @@ adminService:
   # `/admin/clients` for Hydra 2.x
   endpoint: /admin/clients
   # -- Scheme used by Hydra client endpoint. May be "http" or "https"
-  scheme:
+  scheme: http
   # -- TLS ca-cert path for hydra client
-  tlsTrustStorePath:
+  tlsTrustStorePath: ""
   # -- Skip http client insecure verification
-  insecureSkipVerify:
+  insecureSkipVerify: false
 
 forwardedProto:
 
