@@ -28,7 +28,7 @@ adminService:
   # -- Service name
   name:
   # -- Service port
-  port:
+  port: 4445
   # -- Set the clients endpoint, should be `/clients` for Hydra 1.x and
   # `/admin/clients` for Hydra 2.x
   endpoint: /admin/clients

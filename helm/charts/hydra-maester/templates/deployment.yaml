@@ -1,3 +1,6 @@
+{{- if and (ne .Values.adminService.scheme "http") (ne .Values.adminService.scheme "https") -}}
+{{ fail "invalid scheme: must be http or https" }}
+{{- end -}}
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -52,8 +55,8 @@ spec:
             - /manager
           args:
             - --metrics-addr=127.0.0.1:8080
-            - --hydra-url={{ .Values.adminService.scheme }}://{{ .Values.adminService.name | default ( include "hydra-maester.adminService" . ) }}
-            - --hydra-port={{ .Values.adminService.port | default 4445 }}
+            - --hydra-url={{ required "scheme is required" .Values.adminService.scheme }}://{{ .Values.adminService.name | default ( include "hydra-maester.adminService" . ) }}
+            - --hydra-port={{ .Values.adminService.port }}
             {{- with .Values.adminService.endpoint }}
             - --endpoint={{ . }}
             {{- end }}
