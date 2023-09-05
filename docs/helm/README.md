@@ -10,6 +10,7 @@ $ helm repo update
 Documentation on each individual chart can be found for
 
 - [ORY Kratos Helm Chart](./kratos.md)
+- [ORY Keto Helm Chart](./keto.md)
 - [ORY Hydra Helm Chart](./hydra.md)
 - [ORY Oathkeeper Helm Chart](./oathkeeper.md)
 - [ORY Hydra Maester Helm Chart](./hydra-maester.md)
