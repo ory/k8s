@@ -58,6 +58,10 @@ deployment:
     allowPrivilegeEscalation: false
     privileged: false
 
+  # -- Pod priority
+  # https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/
+  priorityClassName: ""
+
   # -- Node labels for pod assignment.
   nodeSelector: {}
   # If you do want to specify node labels, uncomment the following

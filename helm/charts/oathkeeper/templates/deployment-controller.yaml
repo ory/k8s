@@ -164,6 +164,9 @@ spec:
         {{- if .Values.deployment.extraContainers }}
           {{- tpl .Values.deployment.extraContainers . | nindent 8 }}
         {{- end }}
+      {{- with .Values.priorityClassName }}
+      priorityClassName: {{ . }}
+      {{- end }}
       {{- with .Values.deployment.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

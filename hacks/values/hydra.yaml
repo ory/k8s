@@ -40,6 +40,8 @@ janitor:
   podSecurityContext:
     runAsNonRoot: true
 
+priorityClassName: "system-cluster-critical"
+
 deployment:
   autoscaling:
     enabled: true

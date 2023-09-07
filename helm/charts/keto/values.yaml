@@ -17,6 +17,10 @@ imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
 
+# -- Pod priority
+# https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/
+priorityClassName: ""
+
 serviceAccount:
   # -- Specifies whether a service account should be created
   create: true

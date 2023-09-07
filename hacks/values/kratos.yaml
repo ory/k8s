@@ -246,6 +246,7 @@ deployment:
     periodSeconds: 10
     successThreshold: 1
     timeoutSeconds: 1
+  priorityClassName: "system-cluster-critical"
 
   environmentSecretsName: env-secrets
 
@@ -259,6 +260,7 @@ statefulSet:
     annotations:
       ory.sh/pod_annotation: kratos_courier
   revisionHistoryLimit: 10
+  priorityClassName: "system-cluster-critical"
 
 job:
   extraEnv:

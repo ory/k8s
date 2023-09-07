@@ -150,6 +150,9 @@ spec:
             name: {{ include "kratos.fullname" $root }}-template-{{ $method | kebabcase }}-{{ $result }}
         {{- end }}
         {{- end }}
+      {{- with .Values.priorityClassName }}
+      priorityClassName: {{ . }}
+      {{- end }}
       {{- with .Values.statefulSet.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

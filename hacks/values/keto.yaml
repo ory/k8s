@@ -11,6 +11,7 @@ ingress:
     enabled: true
   write:
     enabled: true
+priorityClassName: "system-cluster-critical"
 deployment:
   autoscaling:
     enabled: true
