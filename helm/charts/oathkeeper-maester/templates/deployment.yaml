@@ -83,6 +83,9 @@ spec:
       restartPolicy: Always
       securityContext: {}
       terminationGracePeriodSeconds: 10
+      {{- with .Values.priorityClassName }}
+      priorityClassName: {{ . }}
+      {{- end }}
       nodeSelector:
       {{- with .Values.deployment.nodeSelector }}
         {{- toYaml . | nindent 8 }}

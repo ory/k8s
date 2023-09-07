@@ -1,5 +1,6 @@
 ---
 # singleNamespaceMode: true
+priorityClassName: "system-cluster-critical"
 deployment:
   podMetadata:
     labels:

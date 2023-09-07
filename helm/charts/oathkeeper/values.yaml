@@ -29,6 +29,10 @@ sidecar:
     tag: v0.1.2
   envs: {}
 
+# -- Pod priority
+# https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/
+priorityClassName: ""
+
 # -- Image pull secrets
 imagePullSecrets: []
 # -- Chart name override

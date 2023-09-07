@@ -18,7 +18,7 @@ fullnameOverride: ""
 
 # -- Pod priority
 # https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/
-# priorityClassName: ""
+priorityClassName: ""
 
 # -- Configures the Kubernetes service
 service:

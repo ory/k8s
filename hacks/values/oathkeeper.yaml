@@ -28,6 +28,7 @@ ingress:
       kubernetes.io/tls-acme: "true"
   api:
     enabled: true
+priorityClassName: "system-cluster-critical"
 deployment:
   extraInitContainers: |
     - name: "hello-world"

@@ -288,6 +288,10 @@ deployment:
   #    cpu: 100m
   #  memory: 128Mi
 
+  # -- Pod priority
+  # https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/
+  priorityClassName: ""
+
   # -- Node labels for pod assignment.
   nodeSelector: {}
   # If you do want to specify node labels, uncomment the following
@@ -424,6 +428,10 @@ statefulSet:
   #      If you do want to specify additional labels, uncomment the following
   #      lines, adjust them as necessary, and remove the curly braces after 'labels:'.
   #      e.g.  type: app
+
+  # -- Pod priority
+  # https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/
+  priorityClassName: ""
 
   # -- Node labels for pod assignment.
   nodeSelector: {}
