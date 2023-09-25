@@ -26,6 +26,7 @@ A Helm chart for deploying ORY Oathkeeper Rule Controller in Kubernetes
 | deployment.automountServiceAccountToken | bool | `true` |  |
 | deployment.dnsConfig | object | `{}` | Configure pod dnsConfig. |
 | deployment.envs | object | `{}` | Configure environment variables. |
+| deployment.extraLabels | object | `{}` | Deployment level extra labels |
 | deployment.nodeSelector | object | `{}` | Node labels for pod assignment. |
 | deployment.podMetadata | object | `{"annotations":{},"labels":{}}` | Specify pod metadata, this metadata is added directly to the pod, and not higher objects |
 | deployment.podMetadata.annotations | object | `{}` | Extra pod level annotations |

@@ -8,7 +8,10 @@ metadata:
   namespace: {{ .Release.Namespace }}
   {{- end }}
   labels:
-{{ include "oathkeeper-maester.labels" . | indent 4 }}
+    {{- include "oathkeeper-maester.labels" . | nindent 4 }}
+    {{- with .Values.deployment.extraLabels }}
+      {{- toYaml . | nindent 4 }}
+    {{- end }}
 spec:
   replicas: {{ .Values.replicaCount }}
   revisionHistoryLimit: {{ .Values.revisionHistoryLimit }}

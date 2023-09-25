@@ -70,6 +70,8 @@ deployment:
 
   # -- Configure node tolerations.
   tolerations: []
+  # -- Deployment level extra labels
+  extraLabels: {}
 
   # -- Configure pod topologySpreadConstraints.
   topologySpreadConstraints: []
