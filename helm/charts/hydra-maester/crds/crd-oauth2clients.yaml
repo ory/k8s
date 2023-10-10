@@ -58,10 +58,44 @@ spec:
                   items:
                     type: string
                   type: array
+                backChannelLogoutSessionRequired:
+                  default: false
+                  description:
+                    BackChannelLogoutSessionRequired Boolean value specifying
+                    whether the RP requires that a sid (session ID) Claim be
+                    included in the Logout Token to identify the RP session with
+                    the OP when the backchannel_logout_uri is used. If omitted,
+                    the default value is false.
+                  type: boolean
+                backChannelLogoutURI:
+                  description:
+                    BackChannelLogoutURI RP URL that will cause the RP to log
+                    itself out when sent a Logout Token by the OP
+                  pattern: (^$|^https?://.*)
+                  type: string
                 clientName:
                   description:
                     ClientName is the human-readable string name of the client
                     to be presented to the end-user during authorization.
+                  type: string
+                frontChannelLogoutSessionRequired:
+                  default: false
+                  description:
+                    FrontChannelLogoutSessionRequired Boolean value specifying
+                    whether the RP requires that iss (issuer) and sid (session
+                    ID) query parameters be included to identify the RP session
+                    with the OP when the frontchannel_logout_uri is used
+                  type: boolean
+                frontChannelLogoutURI:
+                  description:
+                    FrontChannelLogoutURI RP URL that will cause the RP to log
+                    itself out when rendered in an iframe by the OP. An iss
+                    (issuer) query parameter and a sid (session ID) query
+                    parameter MAY be included by the OP to enable the RP to
+                    validate the request and to determine which of the
+                    potentially multiple sessions is to be logged out; if either
+                    is included, both MUST be
+                  pattern: (^$|^https?://.*)
                   type: string
                 grantTypes:
                   description:
@@ -122,7 +156,7 @@ spec:
                   pattern: (^$|^https?://.*)
                   type: string
                 metadata:
-                  description: Metadata is abritrary data
+                  description: Metadata is arbitrary data
                   nullable: true
                   type: object
                   x-kubernetes-preserve-unknown-fields: true

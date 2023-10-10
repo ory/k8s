@@ -32,7 +32,7 @@ A ORY Kratos Helm chart for Kubernetes
 | cronjob.cleanup.schedule | string | `"0 */1 * * *"` | Configure how often the cron job is ran |
 | cronjob.cleanup.securityContext | object | `{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"privileged":false,"readOnlyRootFilesystem":true,"runAsNonRoot":true,"runAsUser":100,"seccompProfile":{"type":"RuntimeDefault"}}` | Configure the containers' SecurityContext for the cleanup cronjob |
 | cronjob.cleanup.tolerations | list | `[]` | Configure node tolerations |
-| deployment | object | `{"affinity":{},"annotations":{},"automigration":{"extraEnv":[]},"automountServiceAccountToken":true,"customLivenessProbe":{},"customReadinessProbe":{},"customStartupProbe":{},"dnsConfig":{},"extraArgs":[],"extraContainers":"","extraEnv":[],"extraInitContainers":"","extraVolumeMounts":[],"extraVolumes":[],"initContainerSecurityContext":{},"labels":{},"lifecycle":{},"livenessProbe":{"failureThreshold":5,"initialDelaySeconds":5,"periodSeconds":10},"nodeSelector":{},"podMetadata":{"annotations":{},"labels":{}},"podSecurityContext":{},"readinessProbe":{"failureThreshold":5,"initialDelaySeconds":5,"periodSeconds":10},"resources":{},"revisionHistoryLimit":5,"securityContext":{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"privileged":false,"readOnlyRootFilesystem":true,"runAsNonRoot":true,"runAsUser":100,"seccompProfile":{"type":"RuntimeDefault"}},"serviceAccount":{"annotations":{},"create":true,"name":""},"startupProbe":{"failureThreshold":60,"periodSeconds":1,"successThreshold":1,"timeoutSeconds":1},"tolerations":[],"topologySpreadConstraints":[]}` | Configuration options for the k8s deployment |
+| deployment | object | `{"affinity":{},"annotations":{},"automigration":{"extraEnv":[]},"automountServiceAccountToken":true,"customLivenessProbe":{},"customReadinessProbe":{},"customStartupProbe":{},"dnsConfig":{},"extraArgs":[],"extraContainers":"","extraEnv":[],"extraInitContainers":"","extraVolumeMounts":[],"extraVolumes":[],"initContainerSecurityContext":{},"labels":{},"lifecycle":{},"livenessProbe":{"failureThreshold":5,"initialDelaySeconds":5,"periodSeconds":10},"nodeSelector":{},"podMetadata":{"annotations":{},"labels":{}},"podSecurityContext":{},"priorityClassName":"","readinessProbe":{"failureThreshold":5,"initialDelaySeconds":5,"periodSeconds":10},"resources":{},"revisionHistoryLimit":5,"securityContext":{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"privileged":false,"readOnlyRootFilesystem":true,"runAsNonRoot":true,"runAsUser":100,"seccompProfile":{"type":"RuntimeDefault"}},"serviceAccount":{"annotations":{},"create":true,"name":""},"startupProbe":{"failureThreshold":60,"periodSeconds":1,"successThreshold":1,"timeoutSeconds":1},"tolerations":[],"topologySpreadConstraints":[]}` | Configuration options for the k8s deployment |
 | deployment.affinity | object | `{}` | Configure node affinity |
 | deployment.automigration | object | `{"extraEnv":[]}` | Parameters for the automigration initContainer |
 | deployment.automigration.extraEnv | list | `[]` | Array of extra envs to be passed to the initContainer. Kubernetes format is expected - name: FOO   value: BAR |
@@ -52,6 +52,7 @@ A ORY Kratos Helm chart for Kubernetes
 | deployment.podMetadata.annotations | object | `{}` | Extra pod level annotations |
 | deployment.podMetadata.labels | object | `{}` | Extra pod level labels |
 | deployment.podSecurityContext | object | `{}` | pod securityContext for Kratos & migration init |
+| deployment.priorityClassName | string | `""` | Pod priority https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/ |
 | deployment.readinessProbe | object | `{"failureThreshold":5,"initialDelaySeconds":5,"periodSeconds":10}` | Configure the readinessProbe parameters |
 | deployment.resources | object | `{}` | Set desired resource parameters  We usually recommend not to specify default resources and to leave this as a conscious  choice for the user. This also increases chances charts run on environments with little  resources, such as Minikube. If you do want to specify resources, uncomment the following  lines, adjust them as necessary, and remove the curly braces after 'resources:'. |
 | deployment.revisionHistoryLimit | int | `5` | Number of revisions kept in history |
@@ -163,6 +164,7 @@ A ORY Kratos Helm chart for Kubernetes
 | statefulSet.nodeSelector | object | `{}` | Node labels for pod assignment. |
 | statefulSet.podMetadata.annotations | object | `{}` | Extra pod level annotations |
 | statefulSet.podMetadata.labels | object | `{}` | Extra pod level labels |
+| statefulSet.priorityClassName | string | `""` | Pod priority https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/ |
 | statefulSet.resources | object | `{}` |  |
 | statefulSet.revisionHistoryLimit | int | `5` | Number of revisions kept in history |
 | statefulSet.tolerations | list | `[]` | Configure node tolerations. |

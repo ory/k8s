@@ -137,6 +137,7 @@ A Helm chart for deploying ORY Hydra in Kubernetes
 | maester | object | `{"enabled":true}` | Configures controller setup |
 | nameOverride | string | `""` |  |
 | pdb | object | `{"enabled":false,"spec":{"minAvailable":1}}` | PodDistributionBudget configuration |
+| priorityClassName | string | `""` | Pod priority https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/ |
 | replicaCount | int | `1` | Number of ORY Hydra members |
 | secret.enabled | bool | `true` | switch to false to prevent creating the secret |
 | secret.hashSumEnabled | bool | `true` | switch to false to prevent checksum annotations being maintained and propogated to the pods |
