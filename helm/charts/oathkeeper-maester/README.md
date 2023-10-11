@@ -31,6 +31,7 @@ A Helm chart for deploying ORY Oathkeeper Rule Controller in Kubernetes
 | deployment.podMetadata | object | `{"annotations":{},"labels":{}}` | Specify pod metadata, this metadata is added directly to the pod, and not higher objects |
 | deployment.podMetadata.annotations | object | `{}` | Extra pod level annotations |
 | deployment.podMetadata.labels | object | `{}` | Extra pod level labels |
+| deployment.priorityClassName | string | `""` | Pod priority https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/ |
 | deployment.resources | object | `{}` |  |
 | deployment.securityContext.allowPrivilegeEscalation | bool | `false` |  |
 | deployment.securityContext.capabilities.drop[0] | string | `"ALL"` |  |

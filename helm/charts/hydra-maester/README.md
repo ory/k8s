@@ -8,10 +8,13 @@ A Helm chart for Kubernetes
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| adminService | object | `{"endpoint":"/admin/clients","name":null,"port":null}` | Connection data to admin service of Hydra |
+| adminService | object | `{"endpoint":"/admin/clients","insecureSkipVerify":false,"name":null,"port":4445,"scheme":"http","tlsTrustStorePath":""}` | Connection data to admin service of Hydra |
 | adminService.endpoint | string | `"/admin/clients"` | Set the clients endpoint, should be `/clients` for Hydra 1.x and `/admin/clients` for Hydra 2.x |
+| adminService.insecureSkipVerify | bool | `false` | Skip http client insecure verification |
 | adminService.name | string | `nil` | Service name |
-| adminService.port | string | `nil` | Service port |
+| adminService.port | int | `4445` | Service port |
+| adminService.scheme | string | `"http"` | Scheme used by Hydra client endpoint. May be "http" or "https" |
+| adminService.tlsTrustStorePath | string | `""` | TLS ca-cert path for hydra client |
 | affinity | object | `{}` | Configure node affinity |
 | deployment.args | object | `{"syncPeriod":""}` | Arguments to be passed to the program |
 | deployment.args.syncPeriod | string | `""` | The minimum frequency at which watched resources are reconciled |
@@ -19,6 +22,8 @@ A Helm chart for Kubernetes
 | deployment.dnsConfig | object | `{}` | Configure pod dnsConfig. |
 | deployment.extraAnnotations | object | `{}` | Deployment level extra annotations |
 | deployment.extraLabels | object | `{}` | Deployment level extra labels |
+| deployment.extraVolumeMounts | list | `[]` |  |
+| deployment.extraVolumes | list | `[]` | If you want to mount external volume |
 | deployment.nodeSelector | object | `{}` | Node labels for pod assignment. |
 | deployment.podMetadata | object | `{"annotations":{},"labels":{}}` | Specify pod metadata, this metadata is added directly to the pod, and not higher objects |
 | deployment.podMetadata.annotations | object | `{}` | Extra pod level annotations |
@@ -33,7 +38,7 @@ A Helm chart for Kubernetes
 | forwardedProto | string | `nil` |  |
 | image.pullPolicy | string | `"IfNotPresent"` | Image pull policy |
 | image.repository | string | `"oryd/hydra-maester"` | Ory Hydra-maester image |
-| image.tag | string | `"v0.0.29"` | Ory Hydra-maester version |
+| image.tag | string | `"v0.0.30"` | Ory Hydra-maester version |
 | imagePullSecrets | list | `[]` | Image pull secrets |
 | pdb | object | `{"enabled":false,"spec":{"minAvailable":1}}` | PodDistributionBudget configuration |
 | priorityClassName | string | `""` | Pod priority # https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/ |
