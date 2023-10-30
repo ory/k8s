@@ -39,6 +39,16 @@ janitor:
         - ALL
   podSecurityContext:
     runAsNonRoot: true
+  extraInitContainers: |
+    - name: "hello-world"
+      image: "alpine:latest"
+      command: ["/bin/sh"]
+      args: ["-c", "echo hello, world!"]
+  extraContainers: |
+    - name: "sidecar"
+      image: "alpine:latest"
+      command: ["/bin/sh"]
+      args: ["-c", "sleep infinity"]
 
 priorityClassName: "system-cluster-critical"
 
