@@ -46,6 +46,8 @@ spec:
           imagePullSecrets:
             {{- toYaml . | nindent 12 }}
           {{- end }}
+          serviceAccountName: {{ include "hydra.cronjob.janitor.serviceAccountName" . }}
+          automountServiceAccountToken: {{ .Values.cronjob.janitor.automountServiceAccountToken }}
           volumes:
             - name: {{ include "hydra.name" . }}-config-volume
               configMap:
