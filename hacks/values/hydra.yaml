@@ -40,19 +40,6 @@ janitor:
   podSecurityContext:
     runAsNonRoot: true
 
-cronjob:
-  janitor:
-    extraInitContainers: |
-      - name: "hello-world"
-        image: "alpine:latest"
-        command: ["/bin/sh"]
-        args: ["-c", "echo hello, world!"]
-    extraContainers: |
-      - name: "sidecar"
-        image: "alpine:latest"
-        command: ["/bin/sh"]
-        args: ["-c", "sleep infinity"]
-
 priorityClassName: "system-cluster-critical"
 
 deployment:
@@ -153,6 +140,16 @@ cronjob:
       ory.sh/test: hydra
     annotations:
       ory.sh/test: hydra
+    extraInitContainers: |
+      - name: "hello-world"
+        image: "alpine:latest"
+        command: ["/bin/sh"]
+        args: ["-c", "echo hello, world!"]
+    extraContainers: |
+      - name: "sidecar"
+        image: "alpine:latest"
+        command: ["/bin/sh"]
+        args: ["-c", "sleep infinity"]
     podMetadata:
       labels:
         ory.sh/pod_label: hydra
