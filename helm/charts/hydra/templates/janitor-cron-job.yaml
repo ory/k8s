@@ -99,6 +99,13 @@ spec:
                 - name: {{ include "hydra.name" . }}-config-volume
                   mountPath: /etc/config
                   readOnly: true
+            {{- if .Values.cronjob.janitor.extraContainers }}
+              {{- tpl .Values.cronjob.janitor.extraContainers . | nindent 12 }}
+            {{- end }}
+          {{- if .Values.cronjob.janitor.extraInitContainers }}
+          initContainers:
+            {{- tpl .Values.cronjob.janitor.extraInitContainers . | nindent 10 }}
+          {{- end }}
           {{- with .Values.cronjob.janitor.nodeSelector }}
           nodeSelector:
             {{- toYaml . | nindent 12 }}
