@@ -98,11 +98,11 @@ spec:
                   mountPath: /etc/config
                   readOnly: true
             {{- if .Values.cronjob.janitor.extraContainers }}
-              {{- tpl .Values.cronjob.janitor.extraContainers . | nindent 14 }}
+              {{- tpl .Values.cronjob.janitor.extraContainers . | nindent 12 }}
             {{- end }}
           {{- if .Values.cronjob.janitor.extraInitContainers }}
           initContainers:
-            {{- tpl .Values.cronjob.janitor.extraInitContainers . | nindent 12 }}
+            {{- tpl .Values.cronjob.janitor.extraInitContainers . | nindent 10 }}
           {{- end }}
           {{- with .Values.cronjob.janitor.nodeSelector }}
           nodeSelector:
