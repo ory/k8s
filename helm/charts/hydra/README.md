@@ -1,6 +1,6 @@
 # hydra
 
-![Version: 0.36.0](https://img.shields.io/badge/Version-0.36.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v2.1.2](https://img.shields.io/badge/AppVersion-v2.1.2-informational?style=flat-square)
+![Version: 0.37.0](https://img.shields.io/badge/Version-0.37.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v2.1.2](https://img.shields.io/badge/AppVersion-v2.1.2-informational?style=flat-square)
 
 A Helm chart for deploying ORY Hydra in Kubernetes
 
@@ -21,7 +21,7 @@ A Helm chart for deploying ORY Hydra in Kubernetes
 
 | Repository | Name | Version |
 |------------|------|---------|
-| file://../hydra-maester | hydra-maester(hydra-maester) | 0.36.0 |
+| file://../hydra-maester | hydra-maester(hydra-maester) | 0.37.0 |
 
 ## Values
 
@@ -29,7 +29,7 @@ A Helm chart for deploying ORY Hydra in Kubernetes
 |-----|------|---------|-------------|
 | affinity | object | `{}` | Configure node affinity |
 | configmap.hashSumEnabled | bool | `true` | switch to false to prevent checksum annotations being maintained and propogated to the pods |
-| cronjob | object | `{"janitor":{"affinity":{},"annotations":{},"customArgs":[],"extraContainers":"","extraEnv":[],"extraInitContainers":"","labels":{},"nodeSelector":{},"podMetadata":{"annotations":{},"labels":{}},"podSecurityContext":{},"resources":{"limits":{},"requests":{}},"schedule":"0 */1 * * *","securityContext":{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"privileged":false,"readOnlyRootFilesystem":true,"runAsNonRoot":true,"runAsUser":100},"tolerations":[]}}` | CronJob configuration |
+| cronjob | object | `{"janitor":{"affinity":{},"annotations":{},"automountServiceAccountToken":true,"customArgs":[],"extraContainers":"","extraEnv":[],"extraInitContainers":"","labels":{},"nodeSelector":{},"podMetadata":{"annotations":{},"labels":{}},"podSecurityContext":{},"resources":{"limits":{},"requests":{}},"schedule":"0 */1 * * *","securityContext":{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"privileged":false,"readOnlyRootFilesystem":true,"runAsNonRoot":true,"runAsUser":100},"serviceAccount":{"annotations":{"helm.sh/hook":"pre-install, pre-upgrade","helm.sh/hook-delete-policy":"before-hook-creation","helm.sh/hook-weight":"0"},"create":true,"name":""},"tolerations":[]}}` | CronJob configuration |
 | cronjob.janitor.affinity | object | `{}` | Configure node affinity |
 | cronjob.janitor.annotations | object | `{}` | Set custom cron job level annotations |
 | cronjob.janitor.automountServiceAccountToken | bool | `true` | Set automounting of the SA token |
