@@ -173,6 +173,17 @@ Create the name of the service account for the Job to use
 {{- end }}
 
 {{/*
+Create the name of the service account for the Job to use
+*/}}
+{{- define "hydra.cronjob.janitor.serviceAccountName" -}}
+{{- if .Values.cronjob.janitor.serviceAccount.create }}
+{{- printf "%s-cronjob-janitor" (default (include "hydra.fullname" .) .Values.cronjob.janitor.serviceAccount.name) }}
+{{- else }}
+{{- include "hydra.serviceAccountName" . }}
+{{- end }}
+{{- end }}
+
+{{/*
 Checksum annotations generated from configmaps and secrets
 */}}
 {{- define "hydra.annotations.checksum" -}}

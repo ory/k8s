@@ -32,6 +32,7 @@ A Helm chart for deploying ORY Hydra in Kubernetes
 | cronjob | object | `{"janitor":{"affinity":{},"annotations":{},"customArgs":[],"extraContainers":"","extraEnv":[],"extraInitContainers":"","labels":{},"nodeSelector":{},"podMetadata":{"annotations":{},"labels":{}},"podSecurityContext":{},"resources":{"limits":{},"requests":{}},"schedule":"0 */1 * * *","securityContext":{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"privileged":false,"readOnlyRootFilesystem":true,"runAsNonRoot":true,"runAsUser":100},"tolerations":[]}}` | CronJob configuration |
 | cronjob.janitor.affinity | object | `{}` | Configure node affinity |
 | cronjob.janitor.annotations | object | `{}` | Set custom cron job level annotations |
+| cronjob.janitor.automountServiceAccountToken | bool | `true` | Set automounting of the SA token |
 | cronjob.janitor.customArgs | list | `[]` | Configure the arguments of the entrypoint, overriding the default value |
 | cronjob.janitor.extraContainers | string | `""` | If you want to add extra sidecar containers. |
 | cronjob.janitor.extraEnv | list | `[]` | Array of extra envs to be passed to the cronjob. This takes precedence over deployment variables. Kubernetes format is expected - name: FOO   value: BAR |
@@ -44,6 +45,10 @@ A Helm chart for deploying ORY Hydra in Kubernetes
 | cronjob.janitor.resources | object | `{"limits":{},"requests":{}}` | We usually recommend not to specify default resources and to leave this as a conscious choice for the user.  This also increases chances charts run on environments with little  resources, such as Minikube. If you do want to specify resources, uncomment the following  lines, adjust them as necessary, and remove the curly braces after 'resources:'.  limits:    cpu: 100m    memory: 128Mi  requests:    cpu: 100m  memory: 128Mi |
 | cronjob.janitor.schedule | string | `"0 */1 * * *"` | Configure how often the cron job is ran |
 | cronjob.janitor.securityContext | object | `{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"privileged":false,"readOnlyRootFilesystem":true,"runAsNonRoot":true,"runAsUser":100}` | Configure the containers' SecurityContext for the janitor cronjob |
+| cronjob.janitor.serviceAccount | object | `{"annotations":{"helm.sh/hook":"pre-install, pre-upgrade","helm.sh/hook-delete-policy":"before-hook-creation","helm.sh/hook-weight":"0"},"create":true,"name":""}` | Specify the serviceAccountName value. In some situations it is needed to provides specific permissions to Hydra deployments Like for example installing Hydra on a cluster with a PosSecurityPolicy and Istio. Uncoment if it is needed to provide a ServiceAccount for the Hydra deployment. |
+| cronjob.janitor.serviceAccount.annotations | object | `{"helm.sh/hook":"pre-install, pre-upgrade","helm.sh/hook-delete-policy":"before-hook-creation","helm.sh/hook-weight":"0"}` | Annotations to add to the service account |
+| cronjob.janitor.serviceAccount.create | bool | `true` | Specifies whether a service account should be created |
+| cronjob.janitor.serviceAccount.name | string | `""` | The name of the service account to use. If not set and create is true, a name is generated using the fullname template |
 | cronjob.janitor.tolerations | list | `[]` | Configure node tolerations |
 | deployment.annotations | object | `{}` | Set custom deployment level annotations |
 | deployment.automigration | object | `{"extraEnv":[]}` | Parameters for the automigration initContainer |
