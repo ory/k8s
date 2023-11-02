@@ -193,7 +193,7 @@ kratos:
 kratos:
   identitySchemas:
     <schema-name>.schema.json: |-
-      {{ .Values.<your-key> }}
+      {{ .Values.<your_key> }}
   config:
     identity:
       schemas:
@@ -207,7 +207,7 @@ Install Kratos using the following command:
 ```bash
 helm install kratos ory/kratos \
     -f values.yaml \
-    --set-file <your-key>=/path/to/<your-file>.json
+    --set-file <your_key>=/path/to/<your-file>.json
 ```
 
 ## Upgrade
