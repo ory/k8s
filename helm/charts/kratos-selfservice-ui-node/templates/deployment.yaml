@@ -53,8 +53,8 @@ spec:
             value: {{ .Values.kratosBrowserUrl | quote }}
           - name: PROJECT_NAME
             value: {{ .Values.projectName | quote }}
-          - name: BASE_URL
-            value: {{ .Values.baseUrl | quote }}
+          - name: BASE_PATH
+            value: {{ .Values.basePath | quote }}
           - name: JWKS_URL
             value: {{ .Values.jwksUrl | quote }}
           - name: KRATOS_ADMIN_URL
@@ -74,11 +74,11 @@ spec:
               protocol: TCP
           livenessProbe:
             httpGet:
-              path: /health/alive
+              path: {{ .Values.basePath }}/health/alive
               port: http
           readinessProbe:
             httpGet:
-              path: /health/ready
+              path: {{ .Values.basePath }}/health/ready
               port: http
           resources:
             {{- toYaml .Values.deployment.resources | nindent 12 }}

@@ -9,7 +9,7 @@ A Helm chart for ORY Kratos's example ui for Kubernetes
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | affinity | object | `{}` |  |
-| baseUrl | string | `""` | The baseUrl |
+| basePath | string | `""` | The basePath |
 | deployment | object | `{"annotations":{},"automountServiceAccountToken":false,"dnsConfig":{},"extraEnv":[],"extraVolumeMounts":[],"extraVolumes":[],"labels":{},"nodeSelector":{},"resources":{},"tolerations":[],"topologySpreadConstraints":[]}` | Deployment configuration |
 | deployment.dnsConfig | object | `{}` | Configure pod dnsConfig. |
 | deployment.extraEnv | list | `[]` | Array of extra envs to be passed to the deployment. Kubernetes format is expected - name: FOO   value: BAR |

@@ -14,6 +14,8 @@ deployment:
     - name: dummy
       mountPath: /opt/dummy/
 
+basePath: /auth
+
 test:
   busybox:
     repository: docker.io/library/busybox

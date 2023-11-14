@@ -14,5 +14,5 @@ spec:
     - name: wget
       image: "{{ .Values.test.busybox.repository }}:{{ .Values.test.busybox.tag }}"
       command: ['wget']
-      args:  ['{{ include "kratos-selfservice-ui-node.fullname" . }}:{{ .Values.service.port }}/health/ready']
+      args:  ['{{ include "kratos-selfservice-ui-node.fullname" . }}:{{ .Values.service.port }}{{ .Values.basePath }}/health/ready']
   restartPolicy: Never

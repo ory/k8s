@@ -137,8 +137,8 @@ kratosPublicUrl: "http://kratos-public"
 # -- Set this to ORY Kratos's public URL accessible from the outside world.
 kratosBrowserUrl: "http://kratos-browserui"
 
-# -- The baseUrl
-baseUrl: ""
+# -- The basePath
+basePath: ""
 
 # -- The jwksUrl
 jwksUrl: "http://oathkeeper-api"
