@@ -53,7 +53,7 @@ metadata:
   {{- end }}
 spec:
   endpoints:
-  - path: /admin/metrics/prometheus
+  - path: {{ .Values.service.admin.metricsPath }}
     port: {{ .Values.service.admin.name }}
     scheme: {{ .Values.serviceMonitor.scheme }}
     interval: {{ .Values.serviceMonitor.scrapeInterval }}
