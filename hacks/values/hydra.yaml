@@ -129,6 +129,7 @@ watcher:
     runAsNonRoot: true
 
 serviceMonitor:
+  enabled: true
   labels:
     release: "prometheus"
   tlsConfig:
