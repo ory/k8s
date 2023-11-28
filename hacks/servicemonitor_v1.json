@@ -50,9 +50,7 @@
                         "type": "boolean"
                       }
                     },
-                    "required": [
-                      "key"
-                    ],
+                    "required": ["key"],
                     "type": "object",
                     "x-kubernetes-map-type": "atomic",
                     "additionalProperties": false
@@ -84,9 +82,7 @@
                         "type": "boolean"
                       }
                     },
-                    "required": [
-                      "key"
-                    ],
+                    "required": ["key"],
                     "type": "object",
                     "x-kubernetes-map-type": "atomic",
                     "additionalProperties": false
@@ -107,9 +103,7 @@
                         "type": "boolean"
                       }
                     },
-                    "required": [
-                      "key"
-                    ],
+                    "required": ["key"],
                     "type": "object",
                     "x-kubernetes-map-type": "atomic",
                     "additionalProperties": false
@@ -138,9 +132,7 @@
                     "type": "boolean"
                   }
                 },
-                "required": [
-                  "key"
-                ],
+                "required": ["key"],
                 "type": "object",
                 "x-kubernetes-map-type": "atomic",
                 "additionalProperties": false
@@ -262,9 +254,7 @@
                             "type": "boolean"
                           }
                         },
-                        "required": [
-                          "key"
-                        ],
+                        "required": ["key"],
                         "type": "object",
                         "x-kubernetes-map-type": "atomic",
                         "additionalProperties": false
@@ -285,9 +275,7 @@
                             "type": "boolean"
                           }
                         },
-                        "required": [
-                          "key"
-                        ],
+                        "required": ["key"],
                         "type": "object",
                         "x-kubernetes-map-type": "atomic",
                         "additionalProperties": false
@@ -312,9 +300,7 @@
                         "type": "boolean"
                       }
                     },
-                    "required": [
-                      "key"
-                    ],
+                    "required": ["key"],
                     "type": "object",
                     "x-kubernetes-map-type": "atomic",
                     "additionalProperties": false
@@ -339,11 +325,7 @@
                     "type": "string"
                   }
                 },
-                "required": [
-                  "clientId",
-                  "clientSecret",
-                  "tokenUrl"
-                ],
+                "required": ["clientId", "clientSecret", "tokenUrl"],
                 "type": "object",
                 "additionalProperties": false
               },
@@ -441,10 +423,7 @@
               },
               "scheme": {
                 "description": "HTTP scheme to use for scraping. \n `http` and `https` are the expected values unless you rewrite the `__scheme__` label via relabeling. \n If empty, Prometheus uses the default value `http`.",
-                "enum": [
-                  "http",
-                  "https"
-                ],
+                "enum": ["http", "https"],
                 "type": "string"
               },
               "scrapeTimeout": {
@@ -486,9 +465,7 @@
                             "type": "boolean"
                           }
                         },
-                        "required": [
-                          "key"
-                        ],
+                        "required": ["key"],
                         "type": "object",
                         "x-kubernetes-map-type": "atomic",
                         "additionalProperties": false
@@ -509,9 +486,7 @@
                             "type": "boolean"
                           }
                         },
-                        "required": [
-                          "key"
-                        ],
+                        "required": ["key"],
                         "type": "object",
                         "x-kubernetes-map-type": "atomic",
                         "additionalProperties": false
@@ -543,9 +518,7 @@
                             "type": "boolean"
                           }
                         },
-                        "required": [
-                          "key"
-                        ],
+                        "required": ["key"],
                         "type": "object",
                         "x-kubernetes-map-type": "atomic",
                         "additionalProperties": false
@@ -566,9 +539,7 @@
                             "type": "boolean"
                           }
                         },
-                        "required": [
-                          "key"
-                        ],
+                        "required": ["key"],
                         "type": "object",
                         "x-kubernetes-map-type": "atomic",
                         "additionalProperties": false
@@ -605,9 +576,7 @@
                         "type": "boolean"
                       }
                     },
-                    "required": [
-                      "key"
-                    ],
+                    "required": ["key"],
                     "type": "object",
                     "x-kubernetes-map-type": "atomic",
                     "additionalProperties": false
@@ -708,10 +677,7 @@
                     "type": "array"
                   }
                 },
-                "required": [
-                  "key",
-                  "operator"
-                ],
+                "required": ["key", "operator"],
                 "type": "object",
                 "additionalProperties": false
               },
@@ -742,15 +708,11 @@
           "type": "integer"
         }
       },
-      "required": [
-        "selector"
-      ],
+      "required": ["selector"],
       "type": "object",
       "additionalProperties": false
     }
   },
-  "required": [
-    "spec"
-  ],
+  "required": ["spec"],
   "type": "object"
 }
