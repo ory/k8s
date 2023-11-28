@@ -39,6 +39,8 @@ service:
     annotations: {}
     # kubernetes.io/ingress.class: nginx
     # kubernetes.io/tls-acme: "true"
+    # -- Path to the metrics endpoint
+    metricsPath: /admin/metrics/prometheus
   public:
     enabled: true
     type: ClusterIP
