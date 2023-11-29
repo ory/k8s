@@ -8,6 +8,6 @@ spec:
   selector:
     matchLabels:
       app.kubernetes.io/name: {{ include "hydra.name" . }}
-      app.kubernetes.io/instance: {{ .Release.Name }} 
-  {{ toYaml .Values.pdb.spec }}
+      app.kubernetes.io/instance: {{ .Release.Name }}
+  {{- toYaml .Values.pdb.spec | indent 2 }}
 {{- end -}}

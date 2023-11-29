@@ -11,5 +11,5 @@ spec:
   selector:
     matchLabels:
       {{- include "keto.selectorLabels" . | nindent 6 }}
-  {{ toYaml .Values.pdb.spec }}
+  {{- toYaml .Values.pdb.spec | indent 2 }}
 {{- end -}}

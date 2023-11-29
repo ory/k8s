@@ -10,5 +10,5 @@ spec:
       control-plane: controller-manager
       app.kubernetes.io/name: {{ include "hydra-maester.fullname" . }}
       app.kubernetes.io/instance: {{ .Release.Name }}
-  {{ toYaml .Values.pdb.spec }}
+  {{- toYaml .Values.pdb.spec | indent 2 }}
 {{- end -}}
