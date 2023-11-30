@@ -11,5 +11,10 @@ spec:
   selector:
     matchLabels:
       {{- include "keto.selectorLabels" . | nindent 6 }}
-  {{- toYaml .Values.pdb.spec | indent 2 }}
+  {{- with .Values.pdb.spec.maxUnavailable }}
+  maxUnavailable: {{ . }}
+  {{- end }}
+  {{- with .Values.pdb.spec.minAvailable }}
+  minAvailable: {{ . }}
+  {{- end }}
 {{- end -}}

@@ -9,5 +9,10 @@ spec:
     matchLabels:
       app.kubernetes.io/name: {{ include "oathkeeper.name" . }}
       app.kubernetes.io/instance: {{ .Release.Name }}
-  {{- toYaml .Values.pdb.spec | indent 2 }}
+  {{- with .Values.pdb.spec.maxUnavailable }}
+  maxUnavailable: {{ . }}
+  {{- end }}
+  {{- with .Values.pdb.spec.minAvailable }}
+  minAvailable: {{ . }}
+  {{- end }}
 {{- end -}}

@@ -29,6 +29,12 @@ ingress:
   api:
     enabled: true
 priorityClassName: "system-cluster-critical"
+
+pdb:
+  enabled: true
+  spec:
+    maxUnavailable: 25%
+
 deployment:
   extraInitContainers: |
     - name: "hello-world"
