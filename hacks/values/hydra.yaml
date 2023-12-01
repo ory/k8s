@@ -28,6 +28,13 @@ hydra:
         - "foo bar 123 456 lorem 1"
         - "foo bar 123 456 lorem 2"
         - "foo bar 123 456 lorem 3"
+      cookie:
+        - "OG5XbmxXa3dYeGplQXpQanYxeEFuRUFa"
+        - "foo bar 123 456 lorem"
+        - "foo bar 123 456 lorem 1"
+        - "foo bar 123 456 lorem 2"
+        - "foo bar 123 456 lorem 3"
+
 maester:
   enabled: false
 
