@@ -103,11 +103,19 @@ Generate the secrets.system value
 Generate the secrets.cookie value
 */}}
 {{- define "hydra.secrets.cookie" -}}
-{{- if (.Values.hydra.config.secrets).cookie -}}
-{{- .Values.hydra.config.secrets.cookie }}
-{{- else -}}
-{{- include "hydra.secrets.system" . }}
-{{- end -}}
+  {{- if (.Values.hydra.config.secrets).cookie -}}
+    {{- if kindIs "slice" .Values.hydra.config.secrets.cookie -}}
+      {{- if gt (len .Values.hydra.config.secrets.cookie) 1 -}}
+        "{{- join "\",\"" .Values.hydra.config.secrets.cookie -}}"
+      {{- else -}}
+        {{- join "" .Values.hydra.config.secrets.cookie -}}
+      {{- end -}}
+    {{- else -}}
+      {{- fail "Expected hydra.config.secrets.cookie to be a list of strings" -}}
+    {{- end -}}
+  {{- else -}}
+    {{- include "hydra.secrets.system" . }}
+  {{- end -}}
 {{- end -}}
 
 {{/*

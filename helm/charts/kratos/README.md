@@ -1,6 +1,6 @@
 # kratos
 
-![Version: 0.37.0](https://img.shields.io/badge/Version-0.37.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v1.0.0](https://img.shields.io/badge/AppVersion-v1.0.0-informational?style=flat-square)
+![Version: 0.37.1](https://img.shields.io/badge/Version-0.37.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v1.0.0](https://img.shields.io/badge/AppVersion-v1.0.0-informational?style=flat-square)
 
 A ORY Kratos Helm chart for Kubernetes
 
@@ -132,6 +132,7 @@ A ORY Kratos Helm chart for Kubernetes
 | service.admin.enabled | bool | `true` |  |
 | service.admin.labels | object | `{}` | Provide custom labels. Use the same syntax as for annotations. |
 | service.admin.loadBalancerIP | string | `""` | Load balancer IP |
+| service.admin.metricsPath | string | `"/admin/metrics/prometheus"` | Path to the metrics endpoint |
 | service.admin.name | string | `"http"` | The service port name. Useful to set a custom service port name if it must follow a scheme (e.g. Istio) |
 | service.admin.port | int | `80` |  |
 | service.admin.type | string | `"ClusterIP"` |  |
@@ -142,8 +143,8 @@ A ORY Kratos Helm chart for Kubernetes
 | service.public.name | string | `"http"` | The service port name. Useful to set a custom service port name if it must follow a scheme (e.g. Istio) |
 | service.public.port | int | `80` |  |
 | service.public.type | string | `"ClusterIP"` |  |
-| serviceMonitor | object | `{"enabled":true,"labels":{},"scheme":"http","scrapeInterval":"60s","scrapeTimeout":"30s","tlsConfig":{}}` | Parameters for the Prometheus ServiceMonitor objects. Reference: https://docs.openshift.com/container-platform/4.6/rest_api/monitoring_apis/servicemonitor-monitoring-coreos-com-v1.html |
-| serviceMonitor.enabled | bool | `true` | switch to false to prevent creating the ServiceMonitor |
+| serviceMonitor | object | `{"enabled":false,"labels":{},"scheme":"http","scrapeInterval":"60s","scrapeTimeout":"30s","tlsConfig":{}}` | Parameters for the Prometheus ServiceMonitor objects. Reference: https://docs.openshift.com/container-platform/4.6/rest_api/monitoring_apis/servicemonitor-monitoring-coreos-com-v1.html |
+| serviceMonitor.enabled | bool | `false` | switch to true to enable creating the ServiceMonitor |
 | serviceMonitor.labels | object | `{}` | Provide additional labels to the ServiceMonitor ressource metadata |
 | serviceMonitor.scheme | string | `"http"` | HTTP scheme to use for scraping. |
 | serviceMonitor.scrapeInterval | string | `"60s"` | Interval at which metrics should be scraped |
