@@ -1,6 +1,6 @@
 # oathkeeper-maester
 
-![Version: 0.37.1](https://img.shields.io/badge/Version-0.37.1-informational?style=flat-square) ![AppVersion: v0.1.8](https://img.shields.io/badge/AppVersion-v0.1.8-informational?style=flat-square)
+![Version: 0.38.0](https://img.shields.io/badge/Version-0.38.0-informational?style=flat-square) ![AppVersion: v0.1.8](https://img.shields.io/badge/AppVersion-v0.1.8-informational?style=flat-square)
 
 A Helm chart for deploying ORY Oathkeeper Rule Controller in Kubernetes
 
@@ -33,13 +33,6 @@ A Helm chart for deploying ORY Oathkeeper Rule Controller in Kubernetes
 | deployment.podMetadata.labels | object | `{}` | Extra pod level labels |
 | deployment.priorityClassName | string | `""` | Pod priority https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/ |
 | deployment.resources | object | `{}` |  |
-| deployment.securityContext.allowPrivilegeEscalation | bool | `false` |  |
-| deployment.securityContext.capabilities.drop[0] | string | `"ALL"` |  |
-| deployment.securityContext.privileged | bool | `false` |  |
-| deployment.securityContext.readOnlyRootFilesystem | bool | `true` |  |
-| deployment.securityContext.runAsNonRoot | bool | `true` |  |
-| deployment.securityContext.runAsUser | int | `1000` |  |
-| deployment.securityContext.seccompProfile.type | string | `"RuntimeDefault"` |  |
 | deployment.serviceAccount | object | `{"annotations":{}}` | Configure service account |
 | deployment.serviceAccount.annotations | object | `{}` | Annotations to add to the service account |
 | deployment.tolerations | list | `[]` | Configure node tolerations. |
@@ -49,11 +42,13 @@ A Helm chart for deploying ORY Oathkeeper Rule Controller in Kubernetes
 | image.repository | string | `"oryd/oathkeeper-maester"` | ORY Oathkeeper Rule Controller image |
 | image.tag | string | `"v0.1.10-amd64"` | ORY Oathkeeper Rule Controller version |
 | imagePullSecrets | list | `[]` | Image pull secrets |
-| pdb | object | `{"enabled":false,"spec":{"minAvailable":1}}` | PodDistributionBudget configuration |
+| pdb | object | `{"enabled":false,"spec":{"maxUnavailable":"","minAvailable":""}}` | PodDistributionBudget configuration |
+| podSecurityContext | object | `{"fsGroup":65534,"fsGroupChangePolicy":"OnRootMismatch","runAsGroup":65534,"runAsNonRoot":true,"runAsUser":65534,"seccompProfile":{"type":"RuntimeDefault"},"supplementalGroups":[],"sysctls":[]}` | Pod level security context |
 | replicaCount | int | `1` | Number of controller replicas in deployment mode |
 | revisionHistoryLimit | int | `5` | Number of revisions kept in history |
 | rulesConfigmapNamespace | string | `""` | Defines the Namespace in which the ConfigMap is stored. Defaults to the same Namespace as the ORY Maester Helm release. |
 | rulesFileName | string | `""` | Defines the name of the single root-level ConfigMap key used to store the entire array of Access Rules. When the ConfigMap is mounted in the Oathkeeper Pod, this becomes also the filename of the "rules file" to the Oathkeeper process. Defaults to `access-rules.json`. |
+| securityContext | object | `{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"privileged":false,"readOnlyRootFilesystem":true,"runAsGroup":65534,"runAsNonRoot":true,"runAsUser":65534,"seLinuxOptions":{"level":"s0:c123,c456"},"seccompProfile":{"type":"RuntimeDefault"}}` | Container level security context |
 | singleNamespaceMode | bool | `false` | Single namespace mode. If enabled the controller will watch for resources only from namespace it is deployed in, ignoring others |
 
 ----------------------------------------------

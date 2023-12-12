@@ -1,6 +1,6 @@
 # hydra-maester
 
-![Version: 0.37.1](https://img.shields.io/badge/Version-0.37.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.0.29](https://img.shields.io/badge/AppVersion-v0.0.29-informational?style=flat-square)
+![Version: 0.38.0](https://img.shields.io/badge/Version-0.38.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.0.29](https://img.shields.io/badge/AppVersion-v0.0.29-informational?style=flat-square)
 
 A Helm chart for Kubernetes
 
@@ -28,8 +28,24 @@ A Helm chart for Kubernetes
 | deployment.podMetadata | object | `{"annotations":{},"labels":{}}` | Specify pod metadata, this metadata is added directly to the pod, and not higher objects |
 | deployment.podMetadata.annotations | object | `{}` | Extra pod level annotations |
 | deployment.podMetadata.labels | object | `{}` | Extra pod level labels |
+| deployment.podSecurityContext.fsGroup | int | `65534` |  |
+| deployment.podSecurityContext.fsGroupChangePolicy | string | `"OnRootMismatch"` |  |
+| deployment.podSecurityContext.runAsGroup | int | `65534` |  |
+| deployment.podSecurityContext.runAsNonRoot | bool | `true` |  |
+| deployment.podSecurityContext.runAsUser | int | `65534` |  |
+| deployment.podSecurityContext.seccompProfile.type | string | `"RuntimeDefault"` |  |
+| deployment.podSecurityContext.supplementalGroups | list | `[]` |  |
+| deployment.podSecurityContext.sysctls | list | `[]` |  |
 | deployment.resources | object | `{}` |  |
-| deployment.securityContext | object | `{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"privileged":false,"readOnlyRootFilesystem":true,"runAsNonRoot":true,"runAsUser":1000,"seccompProfile":{"type":"RuntimeDefault"}}` | Default security context |
+| deployment.securityContext.allowPrivilegeEscalation | bool | `false` |  |
+| deployment.securityContext.capabilities.drop[0] | string | `"ALL"` |  |
+| deployment.securityContext.privileged | bool | `false` |  |
+| deployment.securityContext.readOnlyRootFilesystem | bool | `true` |  |
+| deployment.securityContext.runAsGroup | int | `65534` |  |
+| deployment.securityContext.runAsNonRoot | bool | `true` |  |
+| deployment.securityContext.runAsUser | int | `65534` |  |
+| deployment.securityContext.seLinuxOptions.level | string | `"s0:c123,c456"` |  |
+| deployment.securityContext.seccompProfile.type | string | `"RuntimeDefault"` |  |
 | deployment.serviceAccount | object | `{"annotations":{}}` | Configure service account |
 | deployment.serviceAccount.annotations | object | `{}` | Annotations to add to the service account |
 | deployment.tolerations | list | `[]` | Configure node tolerations. |
@@ -40,7 +56,7 @@ A Helm chart for Kubernetes
 | image.repository | string | `"oryd/hydra-maester"` | Ory Hydra-maester image |
 | image.tag | string | `"v0.0.32-amd64"` | Ory Hydra-maester version |
 | imagePullSecrets | list | `[]` | Image pull secrets |
-| pdb | object | `{"enabled":false,"spec":{"minAvailable":1}}` | PodDistributionBudget configuration |
+| pdb | object | `{"enabled":false,"spec":{"maxUnavailable":"","minAvailable":""}}` | PodDistributionBudget configuration |
 | priorityClassName | string | `""` | Pod priority # https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/ |
 | replicaCount | int | `1` | Number of replicas in deployment |
 | revisionHistoryLimit | int | `5` | Number of revisions kept in history |

@@ -1,6 +1,6 @@
 # hydra
 
-![Version: 0.37.1](https://img.shields.io/badge/Version-0.37.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v2.1.2](https://img.shields.io/badge/AppVersion-v2.1.2-informational?style=flat-square)
+![Version: 0.38.0](https://img.shields.io/badge/Version-0.38.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v2.1.2](https://img.shields.io/badge/AppVersion-v2.1.2-informational?style=flat-square)
 
 A Helm chart for deploying ORY Hydra in Kubernetes
 
@@ -21,7 +21,7 @@ A Helm chart for deploying ORY Hydra in Kubernetes
 
 | Repository | Name | Version |
 |------------|------|---------|
-| file://../hydra-maester | hydra-maester(hydra-maester) | 0.37.1 |
+| file://../hydra-maester | hydra-maester(hydra-maester) | 0.38.0 |
 
 ## Values
 
@@ -72,7 +72,14 @@ A Helm chart for deploying ORY Hydra in Kubernetes
 | deployment.podMetadata | object | `{"annotations":{},"labels":{}}` | Specify pod metadata, this metadata is added directly to the pod, and not higher objects |
 | deployment.podMetadata.annotations | object | `{}` | Extra pod level annotations |
 | deployment.podMetadata.labels | object | `{}` | Extra pod level labels |
-| deployment.podSecurityContext | object | `{}` |  |
+| deployment.podSecurityContext.fsGroup | int | `65534` |  |
+| deployment.podSecurityContext.fsGroupChangePolicy | string | `"OnRootMismatch"` |  |
+| deployment.podSecurityContext.runAsGroup | int | `65534` |  |
+| deployment.podSecurityContext.runAsNonRoot | bool | `true` |  |
+| deployment.podSecurityContext.runAsUser | int | `65534` |  |
+| deployment.podSecurityContext.seccompProfile.type | string | `"RuntimeDefault"` |  |
+| deployment.podSecurityContext.supplementalGroups | list | `[]` |  |
+| deployment.podSecurityContext.sysctls | list | `[]` |  |
 | deployment.readinessProbe | object | `{"failureThreshold":5,"initialDelaySeconds":5,"periodSeconds":10}` | Default probe timers |
 | deployment.resources | object | `{}` | We usually recommend not to specify default resources and to leave this as a conscious choice for the user.  This also increases chances charts run on environments with little  resources, such as Minikube. If you do want to specify resources, uncomment the following  lines, adjust them as necessary, and remove the curly braces after 'resources:'.  limits:    cpu: 100m    memory: 128Mi  requests:    cpu: 100m  memory: 128Mi |
 | deployment.revisionHistoryLimit | int | `5` | Number of revisions kept in history |
@@ -80,8 +87,10 @@ A Helm chart for deploying ORY Hydra in Kubernetes
 | deployment.securityContext.capabilities.drop[0] | string | `"ALL"` |  |
 | deployment.securityContext.privileged | bool | `false` |  |
 | deployment.securityContext.readOnlyRootFilesystem | bool | `true` |  |
+| deployment.securityContext.runAsGroup | int | `65534` |  |
 | deployment.securityContext.runAsNonRoot | bool | `true` |  |
-| deployment.securityContext.runAsUser | int | `100` |  |
+| deployment.securityContext.runAsUser | int | `65534` |  |
+| deployment.securityContext.seLinuxOptions.level | string | `"s0:c123,c456"` |  |
 | deployment.securityContext.seccompProfile.type | string | `"RuntimeDefault"` |  |
 | deployment.serviceAccount | object | `{"annotations":{},"create":true,"name":""}` | Specify the serviceAccountName value. In some situations it is needed to provides specific permissions to Hydra deployments Like for example installing Hydra on a cluster with a PosSecurityPolicy and Istio. Uncoment if it is needed to provide a ServiceAccount for the Hydra deployment. |
 | deployment.serviceAccount.annotations | object | `{}` | Annotations to add to the service account |
@@ -143,7 +152,7 @@ A Helm chart for deploying ORY Hydra in Kubernetes
 | job.tolerations | list | `[]` | Configure node tolerations. |
 | maester | object | `{"enabled":true}` | Configures controller setup |
 | nameOverride | string | `""` |  |
-| pdb | object | `{"enabled":false,"spec":{"minAvailable":1}}` | PodDistributionBudget configuration |
+| pdb | object | `{"enabled":false,"spec":{"maxUnavailable":"","minAvailable":""}}` | PodDistributionBudget configuration |
 | priorityClassName | string | `""` | Pod priority https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/ |
 | replicaCount | int | `1` | Number of ORY Hydra members |
 | secret.enabled | bool | `true` | switch to false to prevent creating the secret |

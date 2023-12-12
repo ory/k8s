@@ -1,6 +1,6 @@
 # kratos-selfservice-ui-node
 
-![Version: 0.37.1](https://img.shields.io/badge/Version-0.37.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.13.0-4](https://img.shields.io/badge/AppVersion-v0.13.0--4-informational?style=flat-square)
+![Version: 0.38.0](https://img.shields.io/badge/Version-0.38.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.13.0-4](https://img.shields.io/badge/AppVersion-v0.13.0--4-informational?style=flat-square)
 
 A Helm chart for ORY Kratos's example ui for Kubernetes
 
@@ -10,6 +10,7 @@ A Helm chart for ORY Kratos's example ui for Kubernetes
 |-----|------|---------|-------------|
 | affinity | object | `{}` |  |
 | basePath | string | `""` | The basePath |
+| config | object | `{"csrfCookieName":"","secrets":{}}` | Application config |
 | deployment | object | `{"annotations":{},"automountServiceAccountToken":false,"dnsConfig":{},"extraEnv":[],"extraVolumeMounts":[],"extraVolumes":[],"labels":{},"nodeSelector":{},"resources":{},"tolerations":[],"topologySpreadConstraints":[]}` | Deployment configuration |
 | deployment.dnsConfig | object | `{}` | Configure pod dnsConfig. |
 | deployment.extraEnv | list | `[]` | Array of extra envs to be passed to the deployment. Kubernetes format is expected - name: FOO   value: BAR |
@@ -18,8 +19,8 @@ A Helm chart for ORY Kratos's example ui for Kubernetes
 | deployment.tolerations | list | `[]` | Configure node tolerations. |
 | deployment.topologySpreadConstraints | list | `[]` | Configure pod topologySpreadConstraints. |
 | fullnameOverride | string | `""` |  |
-| image | object | `{"pullPolicy":"IfNotPresent","repository":"oryd/kratos-selfservice-ui-node","tag":"v0.13.0-4"}` | Deployment image settings |
-| image.tag | string | `"v0.13.0-4"` | ORY KRATOS VERSION |
+| image | object | `{"pullPolicy":"IfNotPresent","repository":"oryd/kratos-selfservice-ui-node","tag":"v0.13.0-20"}` | Deployment image settings |
+| image.tag | string | `"v0.13.0-20"` | ORY KRATOS VERSION |
 | imagePullSecrets | list | `[]` |  |
 | ingress | object | `{"annotations":{},"className":"","enabled":false,"hosts":[{"host":"chart-example.local","paths":[{"path":"/","pathType":"ImplementationSpecific"}]}],"tls":[]}` | Ingress configration |
 | jwksUrl | string | `"http://oathkeeper-api"` | The jwksUrl |
@@ -27,10 +28,15 @@ A Helm chart for ORY Kratos's example ui for Kubernetes
 | kratosBrowserUrl | string | `"http://kratos-browserui"` | Set this to ORY Kratos's public URL accessible from the outside world. |
 | kratosPublicUrl | string | `"http://kratos-public"` | Set this to ORY Kratos's public URL |
 | nameOverride | string | `""` |  |
+| podSecurityContext | object | `{"fsGroup":10000,"fsGroupChangePolicy":"OnRootMismatch","runAsGroup":10000,"runAsNonRoot":true,"runAsUser":10000,"seccompProfile":{"type":"RuntimeDefault"},"supplementalGroups":[],"sysctls":[]}` | Pod level security context |
 | projectName | string | `"SecureApp"` |  |
 | replicaCount | int | `1` | Number of replicas in deployment |
 | revisionHistoryLimit | int | `5` | Number of revisions kept in history |
-| securityContext | object | `{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"privileged":false,"readOnlyRootFilesystem":false,"runAsNonRoot":true,"runAsUser":10000,"seccompProfile":{"type":"RuntimeDefault"}}` | Deployment level securityContext |
+| secret.enabled | bool | `true` | switch to false to prevent creating the secret |
+| secret.hashSumEnabled | bool | `true` | switch to false to prevent checksum annotations being maintained and propogated to the pods |
+| secret.nameOverride | string | `""` | Provide custom name of existing secret, or custom name of secret to be created |
+| secret.secretAnnotations | object | `{"helm.sh/hook":"pre-install, pre-upgrade","helm.sh/hook-delete-policy":"before-hook-creation","helm.sh/hook-weight":"0","helm.sh/resource-policy":"keep"}` | Annotations to be added to secret. Annotations are added only when secret is being created. Existing secret will not be modified. |
+| securityContext | object | `{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"privileged":false,"readOnlyRootFilesystem":false,"runAsGroup":10000,"runAsNonRoot":true,"runAsUser":10000,"seLinuxOptions":{"level":"s0:c123,c456"},"seccompProfile":{"type":"RuntimeDefault"}}` | Container level security context |
 | service | object | `{"loadBalancerIP":"","name":"http","port":80,"type":"ClusterIP"}` | Service configuration |
 | service.loadBalancerIP | string | `""` | The load balancer IP |
 | service.name | string | `"http"` | The service port name. Useful to set a custom service port name if it must follow a scheme (e.g. Istio) |
