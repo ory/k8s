@@ -158,6 +158,8 @@ There are three options to provide identity schemas:
 
 Note: You are free to name `<schema-id>` and `<schema-name>` whatever you want.
 
+> **Important:** Those code snippets are known to be smetimes rendered incorrectly by github-pages. Please always refer to the source files in the repostiory when in doubt.
+
 1. Write json to `kratos.identitySchemas`:
 
 ```yaml
