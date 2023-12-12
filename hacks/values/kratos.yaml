@@ -186,6 +186,11 @@ ingress:
           - path: /
             pathType: Prefix
 
+pdb:
+  enabled: true
+  spec:
+    maxUnavailable: 25%
+
 deployment:
   extraInitContainers: |
     - name: "hello-world"

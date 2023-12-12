@@ -10,5 +10,10 @@ spec:
       control-plane: controller-manager
       app.kubernetes.io/name: {{ include "oathkeeper-maester.fullname" . }}
       app.kubernetes.io/instance: {{ .Release.Name }}
-  {{ toYaml .Values.pdb.spec }}
+  {{- with .Values.pdb.spec.maxUnavailable }}
+  maxUnavailable: {{ . }}
+  {{- end }}
+  {{- with .Values.pdb.spec.minAvailable }}
+  minAvailable: {{ . }}
+  {{- end }}
 {{- end -}}

@@ -12,6 +12,12 @@ ingress:
   write:
     enabled: true
 priorityClassName: "system-cluster-critical"
+
+pdb:
+  enabled: true
+  spec:
+    maxUnavailable: 25%
+
 deployment:
   autoscaling:
     enabled: true
