@@ -54,7 +54,7 @@ spec:
             - name: cleanup
               image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
               imagePullPolicy: {{ .Values.image.pullPolicy }}
-              {{- with .Values.cronjob.cleanup.securityContext }}
+              {{- with .Values.securityContext }}
               securityContext:
                 {{- toYaml . | nindent 16 }}
               {{- end }}
@@ -91,7 +91,7 @@ spec:
           nodeSelector:
             {{- toYaml . | nindent 12 }}
           {{- end }}
-          {{- with .Values.cronjob.cleanup.podSecurityContext }}
+          {{- with .Values.podSecurityContext }}
           securityContext:
             {{- toYaml . | nindent 12 }}
           {{- end }}

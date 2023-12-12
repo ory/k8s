@@ -65,7 +65,19 @@ deployment:
   #   mountPath: /etc/secrets/my-secret
   #   readOnly: true
 
-  # -- Default security context
+  ## -- pod securityContext
+  podSecurityContext:
+    fsGroupChangePolicy: "OnRootMismatch"
+    runAsNonRoot: true
+    runAsUser: 65534
+    fsGroup: 65534
+    runAsGroup: 65534
+    seccompProfile:
+      type: RuntimeDefault
+    sysctls: []
+    supplementalGroups: []
+
+  ## -- container securityContext
   securityContext:
     capabilities:
       drop:
@@ -74,9 +86,12 @@ deployment:
       type: RuntimeDefault
     readOnlyRootFilesystem: true
     runAsNonRoot: true
-    runAsUser: 1000
+    runAsUser: 65534
+    runAsGroup: 65534
     allowPrivilegeEscalation: false
     privileged: false
+    seLinuxOptions:
+      level: "s0:c123,c456"
 
   # -- Node labels for pod assignment.
   nodeSelector: {}

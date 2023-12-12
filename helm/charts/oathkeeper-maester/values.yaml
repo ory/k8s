@@ -33,6 +33,34 @@ image:
 # -- Image pull secrets
 imagePullSecrets: []
 
+# -- Container level security context
+securityContext:
+  capabilities:
+    drop:
+      - ALL
+  readOnlyRootFilesystem: true
+  runAsNonRoot: true
+  runAsUser: 65534
+  runAsGroup: 65534
+  allowPrivilegeEscalation: false
+  privileged: false
+  seccompProfile:
+    type: RuntimeDefault
+  seLinuxOptions:
+    level: "s0:c123,c456"
+
+# -- Pod level security context
+podSecurityContext:
+  fsGroupChangePolicy: "OnRootMismatch"
+  runAsNonRoot: true
+  runAsUser: 65534
+  fsGroup: 65534
+  runAsGroup: 65534
+  seccompProfile:
+    type: RuntimeDefault
+  sysctls: []
+  supplementalGroups: []
+
 deployment:
   resources:
     {}
@@ -46,17 +74,6 @@ deployment:
     # requests:
     #   cpu: 100m
     #   memory: 20Mi
-  securityContext:
-    capabilities:
-      drop:
-        - ALL
-    seccompProfile:
-      type: RuntimeDefault
-    readOnlyRootFilesystem: true
-    runAsNonRoot: true
-    runAsUser: 1000
-    allowPrivilegeEscalation: false
-    privileged: false
 
   # -- Pod priority
   # https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/

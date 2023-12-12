@@ -40,6 +40,8 @@ spec:
     spec:
       automountServiceAccountToken: {{ .Values.deployment.automountServiceAccountToken }}
       serviceAccountName: {{ include "keto.serviceAccountName" . }}-watcher
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
         - name: watcher
           {{- if .Values.securityContext }}

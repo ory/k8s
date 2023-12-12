@@ -40,6 +40,34 @@ nameOverride: ""
 # -- Full chart name override
 fullnameOverride: ""
 
+# -- Container level security context
+securityContext:
+  capabilities:
+    drop:
+      - ALL
+  readOnlyRootFilesystem: true
+  runAsNonRoot: true
+  runAsUser: 65534
+  runAsGroup: 65534
+  allowPrivilegeEscalation: false
+  privileged: false
+  seccompProfile:
+    type: RuntimeDefault
+  seLinuxOptions:
+    level: "s0:c123,c456"
+
+# -- Pod level security context
+podSecurityContext:
+  fsGroupChangePolicy: "OnRootMismatch"
+  runAsNonRoot: true
+  runAsUser: 65534
+  fsGroup: 65534
+  runAsGroup: 65534
+  seccompProfile:
+    type: RuntimeDefault
+  sysctls: []
+  supplementalGroups: []
+
 # -- If enabled, a demo deployment with exemplary access rules and JSON Web Key Secrets will be generated.
 demo: false
 
@@ -217,17 +245,6 @@ deployment:
   #  requests:
   #    cpu: 100m
   #  memory: 128Mi
-  securityContext:
-    capabilities:
-      drop:
-        - ALL
-    seccompProfile:
-      type: RuntimeDefault
-    readOnlyRootFilesystem: true
-    runAsNonRoot: true
-    runAsUser: 1000
-    allowPrivilegeEscalation: false
-    privileged: false
 
   lifecycle: {}
   # -- Configure the livenessProbe parameters

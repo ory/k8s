@@ -43,3 +43,14 @@ app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{- end -}}
+
+{{/*
+Create a secret name which can be overridden.
+*/}}
+{{- define "kratos-selfservice-ui-node.secretname" -}}
+{{- if .Values.secret.nameOverride -}}
+{{- .Values.secret.nameOverride | trunc 63 | trimSuffix "-" -}}
+{{- else -}}
+{{ include "kratos-selfservice-ui-node.fullname" . }}
+{{- end -}}
+{{- end -}}

@@ -30,7 +30,19 @@ serviceAccount:
   # If not set and create is true, a name is generated using the fullname template
   name: ""
 
-# -- Default security context configuration
+## -- pod securityContext for hydra & migration init
+podSecurityContext:
+  fsGroupChangePolicy: "OnRootMismatch"
+  runAsNonRoot: true
+  runAsUser: 65534
+  fsGroup: 65534
+  runAsGroup: 65534
+  seccompProfile:
+    type: RuntimeDefault
+  sysctls: []
+  supplementalGroups: []
+
+## -- container securityContext for hydra & migration init
 securityContext:
   capabilities:
     drop:
@@ -39,9 +51,12 @@ securityContext:
     type: RuntimeDefault
   readOnlyRootFilesystem: true
   runAsNonRoot: true
-  runAsUser: 100
+  runAsUser: 65534
+  runAsGroup: 65534
   allowPrivilegeEscalation: false
   privileged: false
+  seLinuxOptions:
+    level: "s0:c123,c456"
 
 # -- Values for initialization job
 job:
