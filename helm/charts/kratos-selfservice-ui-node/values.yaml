@@ -11,7 +11,7 @@ image:
   # SELFSERVICE image
   repository: oryd/kratos-selfservice-ui-node
   # -- ORY KRATOS VERSION
-  tag: "v0.13.0-4"
+  tag: "v0.13.0-20"
   pullPolicy: IfNotPresent
 
 imagePullSecrets: []
@@ -52,8 +52,8 @@ securityContext:
       - ALL
   readOnlyRootFilesystem: false
   runAsNonRoot: true
-  runAsUser: 65534
-  runAsGroup: 65534
+  runAsUser: 10000
+  runAsGroup: 10000
   allowPrivilegeEscalation: false
   privileged: false
   seccompProfile:
@@ -65,9 +65,9 @@ securityContext:
 podSecurityContext:
   fsGroupChangePolicy: "OnRootMismatch"
   runAsNonRoot: true
-  runAsUser: 65534
-  fsGroup: 65534
-  runAsGroup: 65534
+  runAsUser: 10000
+  fsGroup: 10000
+  runAsGroup: 10000
   seccompProfile:
     type: RuntimeDefault
   sysctls: []
