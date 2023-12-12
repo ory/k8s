@@ -20,3 +20,6 @@ test:
   busybox:
     repository: docker.io/library/busybox
     tag: 1.36
+
+config:
+  csrfCookieName: "some-random-cookie-name"
