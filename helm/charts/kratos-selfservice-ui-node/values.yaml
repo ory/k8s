@@ -45,18 +45,33 @@ ingress:
   #    hosts:
   #      - chart-example.local
 
-# -- Deployment level securityContext
+# -- Container level security context
 securityContext:
   capabilities:
     drop:
       - ALL
-  seccompProfile:
-    type: RuntimeDefault
-  readOnlyRootFilesystem: false
+  readOnlyRootFilesystem: true
   runAsNonRoot: true
-  runAsUser: 10000
+  runAsUser: 65534
+  runAsGroup: 65534
   allowPrivilegeEscalation: false
   privileged: false
+  seccompProfile:
+    type: RuntimeDefault
+  seLinuxOptions:
+    level: "s0:c123,c456"
+
+# -- Pod level security context
+podSecurityContext:
+  fsGroupChangePolicy: "OnRootMismatch"
+  runAsNonRoot: true
+  runAsUser: 65534
+  fsGroup: 65534
+  runAsGroup: 65534
+  seccompProfile:
+    type: RuntimeDefault
+  sysctls: []
+  supplementalGroups: []
 
 # -- Deployment configuration
 deployment:
