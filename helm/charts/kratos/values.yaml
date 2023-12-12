@@ -191,25 +191,6 @@ kratos:
 
 # -- Configuration options for the k8s deployment
 deployment:
-  # -- initContainer securityContext for Kratos & migration init
-  initContainerSecurityContext: {}
-
-  # -- pod securityContext for Kratos & migration init
-  podSecurityContext: {}
-
-  # -- container securityContext for Kratos & migration init
-  securityContext:
-    allowPrivilegeEscalation: false
-    capabilities:
-      drop:
-        - ALL
-    privileged: false
-    readOnlyRootFilesystem: true
-    runAsNonRoot: true
-    runAsUser: 100
-    seccompProfile:
-      type: RuntimeDefault
-
   lifecycle: {}
   # -- Configure the livenessProbe parameters
   livenessProbe:
@@ -476,17 +457,33 @@ statefulSet:
   # -- Number of revisions kept in history
   revisionHistoryLimit: 5
 
+# -- Container level security context
 securityContext:
   capabilities:
     drop:
-      - ALL
-  seccompProfile:
-    type: RuntimeDefault
+    - ALL
   readOnlyRootFilesystem: true
   runAsNonRoot: true
-  runAsUser: 100
+  runAsUser: 65534
+  runAsGroup: 65534
   allowPrivilegeEscalation: false
   privileged: false
+  seccompProfile:
+    type: RuntimeDefault
+  seLinuxOptions:
+    level: "s0:c123,c456"
+
+# -- Pod level security context
+podSecurityContext:
+  fsGroupChangePolicy: "OnRootMismatch"
+  runAsNonRoot: true
+  runAsUser: 65534
+  fsGroup: 65534
+  runAsGroup: 65534
+  seccompProfile:
+    type: RuntimeDefault
+  sysctls: []
+  supplementalGroups: []
 
 # -- Horizontal pod autoscaling configuration
 autoscaling:
@@ -650,22 +647,6 @@ cronjob:
 
     # -- Configure node affinity
     affinity: {}
-
-    # -- Configure the containers' SecurityContext for the cleanup cronjob
-    securityContext:
-      allowPrivilegeEscalation: false
-      capabilities:
-        drop:
-          - ALL
-      privileged: false
-      readOnlyRootFilesystem: true
-      runAsNonRoot: true
-      runAsUser: 100
-      seccompProfile:
-        type: RuntimeDefault
-
-    # -- pod securityContext for the cleanup cronjob
-    podSecurityContext: {}
 
     # -- We usually recommend not to specify default resources and to leave this as a conscious choice for the user.
     #  This also increases chances charts run on environments with little

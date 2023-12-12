@@ -90,7 +90,7 @@ spec:
           resources:
             {{- toYaml . | nindent 12 }}
           {{- end }}
-          {{- with .Values.deployment.initContainerSecurityContext }}
+          {{- with .Values.securityContext }}
           securityContext:
             {{- toYaml . | nindent 12 }}
           {{- end }}
@@ -260,7 +260,7 @@ spec:
       topologySpreadConstraints:
         {{- toYaml . | nindent 8 }}
     {{- end }}
-    {{- with .Values.deployment.podSecurityContext }}
+    {{- with .Values.podSecurityContext }}
       securityContext:
         {{- toYaml . | nindent 8 }}
     {{- end }}

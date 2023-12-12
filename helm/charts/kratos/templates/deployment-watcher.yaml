@@ -40,6 +40,10 @@ spec:
     spec:
       automountServiceAccountToken: {{ .Values.deployment.automountServiceAccountToken }}
       serviceAccountName: {{ include "kratos.serviceAccountName" . }}-watcher
+      {{- with .Values.podSecurityContext }}
+      securityContext:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
       containers:
         - name: watcher
           {{- if .Values.securityContext }}
