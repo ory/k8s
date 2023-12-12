@@ -1,5 +1,4 @@
 {{- $podAnnotations := ternary .Values.deployment.podAnnotations .Values.podAnnotations (not (empty .Values.deployment.podAnnotations )) -}}
-{{- $podSecurityContext := ternary .Values.deployment.podSecurityContext .Values.podSecurityContext (not (empty .Values.deployment.podSecurityContext )) -}}
 {{- $automountServiceAccountToken := ternary .Values.deployment.automountServiceAccountToken .Values.automountServiceAccountToken (not (empty .Values.deployment.automountServiceAccountToken )) -}}
 {{- $livenessProbe := ternary .Values.deployment.livenessProbe .Values.livenessProbe (not (empty .Values.deployment.livenessProbe )) -}}
 {{- $readinessProbe := ternary .Values.deployment.readinessProbe .Values.readinessProbe (not (empty .Values.deployment.readinessProbe )) -}}
@@ -105,12 +104,12 @@ spec:
       serviceAccountName: {{ include "keto.serviceAccountName" . }}
       automountServiceAccountToken: {{ $automountServiceAccountToken }}
       securityContext:
-        {{- toYaml $podSecurityContext | nindent 8 }}
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
         - name: {{ .Chart.Name }}
-          {{- if .Values.securityContext }}
+          {{- with .Values.securityContext }}
           securityContext:
-            {{- toYaml .Values.securityContext | nindent 12 }}
+            {{- toYaml . | nindent 12 }}
           {{- end }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}

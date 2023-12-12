@@ -198,7 +198,16 @@ deployment:
   initContainerSecurityContext: {}
 
   ## -- pod securityContext for hydra & migration init
-  podSecurityContext: {}
+  podSecurityContext:
+    fsGroupChangePolicy: "OnRootMismatch"
+    runAsNonRoot: true
+    runAsUser: 65534
+    fsGroup: 65534
+    runAsGroup: 65534
+    seccompProfile:
+      type: RuntimeDefault
+    sysctls: []
+    supplementalGroups: []
 
   ## -- container securityContext for hydra & migration init
   securityContext:
@@ -209,9 +218,12 @@ deployment:
       type: RuntimeDefault
     readOnlyRootFilesystem: true
     runAsNonRoot: true
-    runAsUser: 100
+    runAsUser: 65534
+    runAsGroup: 65534
     allowPrivilegeEscalation: false
     privileged: false
+    seLinuxOptions:
+      level: "s0:c123,c456"
 
   lifecycle: {}
 

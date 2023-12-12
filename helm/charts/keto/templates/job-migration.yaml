@@ -48,6 +48,8 @@ spec:
       {{- end }}
       serviceAccountName: {{ include "keto.job.serviceAccountName" . }}
       automountServiceAccountToken: {{ .Values.job.automountServiceAccountToken }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
       - name: {{ .Chart.Name }}-automigrate
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
@@ -63,7 +65,7 @@ spec:
         args: [ "migrate", "up", "-y", "--config", "/etc/config/keto.yaml" ]
         {{- end }}
         {{- if .Values.job.lifecycle }}
-{{ tpl .Values.job.lifecycle . | indent 8 }}
+          {{- tpl .Values.job.lifecycle . | nindent 8 }}
         {{- end }}
         volumeMounts:
           - name: {{ include "keto.name" . }}-config-volume
