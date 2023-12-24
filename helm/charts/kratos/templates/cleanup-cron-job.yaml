@@ -71,7 +71,7 @@ spec:
                 - --config
                 - /etc/config/kratos.yaml
               env:
-              {{- if not (empty ( include "kratos.dsn" . )) }}
+              {{- if .Values.kratos.config.dsn }}
                 - name: DSN
                   valueFrom:
                     secretKeyRef:
