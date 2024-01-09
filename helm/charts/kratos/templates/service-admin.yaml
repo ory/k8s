@@ -29,6 +29,11 @@ spec:
       targetPort: http-admin
       protocol: TCP
       name: {{ .Values.service.admin.name }}
+      {{- if eq .Values.service.admin.type "NodePort" }}
+      {{- with .Values.service.admin.nodePort }}
+      nodePort: {{ . }}
+      {{- end }}
+      {{- end }}
   selector:
     app.kubernetes.io/name: {{ include "kratos.name" . }}
     app.kubernetes.io/instance: {{ .Release.Name }}
