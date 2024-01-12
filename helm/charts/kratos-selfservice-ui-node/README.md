@@ -10,25 +10,42 @@ A Helm chart for ORY Kratos's example ui for Kubernetes
 |-----|------|---------|-------------|
 | affinity | object | `{}` |  |
 | basePath | string | `""` | The basePath |
-| config | object | `{"csrfCookieName":"","secrets":{}}` | Application config |
-| deployment | object | `{"annotations":{},"automountServiceAccountToken":false,"dnsConfig":{},"extraEnv":[],"extraVolumeMounts":[],"extraVolumes":[],"labels":{},"nodeSelector":{},"resources":{},"tolerations":[],"topologySpreadConstraints":[]}` | Deployment configuration |
+| config.csrfCookieName | string | `""` |  |
+| config.secrets | object | `{}` |  |
+| deployment.annotations | object | `{}` |  |
+| deployment.automountServiceAccountToken | bool | `false` |  |
 | deployment.dnsConfig | object | `{}` | Configure pod dnsConfig. |
 | deployment.extraEnv | list | `[]` | Array of extra envs to be passed to the deployment. Kubernetes format is expected - name: FOO   value: BAR |
+| deployment.extraVolumeMounts | list | `[]` |  |
 | deployment.extraVolumes | list | `[]` | If you want to mount external volume For example, mount a secret containing Certificate root CA to verify database TLS connection. |
+| deployment.labels | object | `{}` |  |
 | deployment.nodeSelector | object | `{}` | Node labels for pod assignment. |
+| deployment.resources | object | `{}` |  |
 | deployment.tolerations | list | `[]` | Configure node tolerations. |
 | deployment.topologySpreadConstraints | list | `[]` | Configure pod topologySpreadConstraints. |
 | fullnameOverride | string | `""` |  |
-| image | object | `{"pullPolicy":"IfNotPresent","repository":"oryd/kratos-selfservice-ui-node","tag":"v0.13.0-20"}` | Deployment image settings |
+| image.pullPolicy | string | `"IfNotPresent"` |  |
+| image.repository | string | `"oryd/kratos-selfservice-ui-node"` |  |
 | image.tag | string | `"v0.13.0-20"` | ORY KRATOS VERSION |
 | imagePullSecrets | list | `[]` |  |
-| ingress | object | `{"annotations":{},"className":"","enabled":false,"hosts":[{"host":"chart-example.local","paths":[{"path":"/","pathType":"ImplementationSpecific"}]}],"tls":[]}` | Ingress configration |
+| ingress.annotations | object | `{}` |  |
+| ingress.className | string | `""` |  |
+| ingress.enabled | bool | `false` |  |
+| ingress.hosts[0].host | string | `"chart-example.local"` |  |
+| ingress.hosts[0].paths[0].path | string | `"/"` |  |
+| ingress.hosts[0].paths[0].pathType | string | `"ImplementationSpecific"` |  |
+| ingress.tls | list | `[]` |  |
 | jwksUrl | string | `"http://oathkeeper-api"` | The jwksUrl |
 | kratosAdminUrl | string | `"http://kratos-admin"` | Set this to ORY Kratos's Admin URL |
 | kratosBrowserUrl | string | `"http://kratos-browserui"` | Set this to ORY Kratos's public URL accessible from the outside world. |
 | kratosPublicUrl | string | `"http://kratos-public"` | Set this to ORY Kratos's public URL |
 | nameOverride | string | `""` |  |
-| podSecurityContext | object | `{"fsGroup":10000,"fsGroupChangePolicy":"OnRootMismatch","runAsGroup":10000,"runAsNonRoot":true,"runAsUser":10000,"seccompProfile":{"type":"RuntimeDefault"},"supplementalGroups":[],"sysctls":[]}` | Pod level security context |
+| podSecurityContext.fsGroup | int | `10000` |  |
+| podSecurityContext.fsGroupChangePolicy | string | `"OnRootMismatch"` |  |
+| podSecurityContext.runAsGroup | int | `10000` |  |
+| podSecurityContext.runAsNonRoot | bool | `true` |  |
+| podSecurityContext.runAsUser | int | `10000` |  |
+| podSecurityContext.seccompProfile.type | string | `"RuntimeDefault"` |  |
 | projectName | string | `"SecureApp"` |  |
 | replicaCount | int | `1` | Number of replicas in deployment |
 | revisionHistoryLimit | int | `5` | Number of revisions kept in history |
@@ -36,10 +53,19 @@ A Helm chart for ORY Kratos's example ui for Kubernetes
 | secret.hashSumEnabled | bool | `true` | switch to false to prevent checksum annotations being maintained and propogated to the pods |
 | secret.nameOverride | string | `""` | Provide custom name of existing secret, or custom name of secret to be created |
 | secret.secretAnnotations | object | `{"helm.sh/hook":"pre-install, pre-upgrade","helm.sh/hook-delete-policy":"before-hook-creation","helm.sh/hook-weight":"0","helm.sh/resource-policy":"keep"}` | Annotations to be added to secret. Annotations are added only when secret is being created. Existing secret will not be modified. |
-| securityContext | object | `{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"privileged":false,"readOnlyRootFilesystem":false,"runAsGroup":10000,"runAsNonRoot":true,"runAsUser":10000,"seLinuxOptions":{"level":"s0:c123,c456"},"seccompProfile":{"type":"RuntimeDefault"}}` | Container level security context |
-| service | object | `{"loadBalancerIP":"","name":"http","port":80,"type":"ClusterIP"}` | Service configuration |
+| securityContext.allowPrivilegeEscalation | bool | `false` |  |
+| securityContext.capabilities.drop[0] | string | `"ALL"` |  |
+| securityContext.privileged | bool | `false` |  |
+| securityContext.readOnlyRootFilesystem | bool | `false` |  |
+| securityContext.runAsGroup | int | `10000` |  |
+| securityContext.runAsNonRoot | bool | `true` |  |
+| securityContext.runAsUser | int | `10000` |  |
+| securityContext.seLinuxOptions.level | string | `"s0:c123,c456"` |  |
+| securityContext.seccompProfile.type | string | `"RuntimeDefault"` |  |
 | service.loadBalancerIP | string | `""` | The load balancer IP |
 | service.name | string | `"http"` | The service port name. Useful to set a custom service port name if it must follow a scheme (e.g. Istio) |
+| service.port | int | `80` |  |
+| service.type | string | `"ClusterIP"` |  |
 | test.busybox | object | `{"repository":"busybox","tag":1}` | use a busybox image from another repository |
 
 ----------------------------------------------

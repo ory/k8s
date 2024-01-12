@@ -21,7 +21,7 @@ A Helm chart for deploying ORY Oathkeeper Rule Controller in Kubernetes
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| affinity | object | `{}` | Configure node affinity |
+| affinity | object | `{}` |  |
 | deployment.annotations | object | `{}` | Configure annotations. |
 | deployment.automountServiceAccountToken | bool | `true` |  |
 | deployment.dnsConfig | object | `{}` | Configure pod dnsConfig. |
@@ -37,18 +37,33 @@ A Helm chart for deploying ORY Oathkeeper Rule Controller in Kubernetes
 | deployment.serviceAccount.annotations | object | `{}` | Annotations to add to the service account |
 | deployment.tolerations | list | `[]` | Configure node tolerations. |
 | deployment.topologySpreadConstraints | list | `[]` | Configure pod topologySpreadConstraints. |
-| global | object | `{"ory":{"oathkeeper":{"maester":{"mode":"controller"}}}}` | Two possible modes are: controller or sidecar |
+| global.ory.oathkeeper.maester.mode | string | `"controller"` |  |
 | image.pullPolicy | string | `"IfNotPresent"` | Image pull policy |
 | image.repository | string | `"oryd/oathkeeper-maester"` | ORY Oathkeeper Rule Controller image |
 | image.tag | string | `"v0.1.10-amd64"` | ORY Oathkeeper Rule Controller version |
 | imagePullSecrets | list | `[]` | Image pull secrets |
-| pdb | object | `{"enabled":false,"spec":{"maxUnavailable":"","minAvailable":""}}` | PodDistributionBudget configuration |
-| podSecurityContext | object | `{"fsGroup":65534,"fsGroupChangePolicy":"OnRootMismatch","runAsGroup":65534,"runAsNonRoot":true,"runAsUser":65534,"seccompProfile":{"type":"RuntimeDefault"},"supplementalGroups":[],"sysctls":[]}` | Pod level security context |
+| pdb.enabled | bool | `false` |  |
+| pdb.spec.maxUnavailable | string | `""` |  |
+| pdb.spec.minAvailable | string | `""` |  |
+| podSecurityContext.fsGroup | int | `65534` |  |
+| podSecurityContext.fsGroupChangePolicy | string | `"OnRootMismatch"` |  |
+| podSecurityContext.runAsGroup | int | `65534` |  |
+| podSecurityContext.runAsNonRoot | bool | `true` |  |
+| podSecurityContext.runAsUser | int | `65534` |  |
+| podSecurityContext.seccompProfile.type | string | `"RuntimeDefault"` |  |
 | replicaCount | int | `1` | Number of controller replicas in deployment mode |
 | revisionHistoryLimit | int | `5` | Number of revisions kept in history |
 | rulesConfigmapNamespace | string | `""` | Defines the Namespace in which the ConfigMap is stored. Defaults to the same Namespace as the ORY Maester Helm release. |
 | rulesFileName | string | `""` | Defines the name of the single root-level ConfigMap key used to store the entire array of Access Rules. When the ConfigMap is mounted in the Oathkeeper Pod, this becomes also the filename of the "rules file" to the Oathkeeper process. Defaults to `access-rules.json`. |
-| securityContext | object | `{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"privileged":false,"readOnlyRootFilesystem":true,"runAsGroup":65534,"runAsNonRoot":true,"runAsUser":65534,"seLinuxOptions":{"level":"s0:c123,c456"},"seccompProfile":{"type":"RuntimeDefault"}}` | Container level security context |
+| securityContext.allowPrivilegeEscalation | bool | `false` |  |
+| securityContext.capabilities.drop[0] | string | `"ALL"` |  |
+| securityContext.privileged | bool | `false` |  |
+| securityContext.readOnlyRootFilesystem | bool | `true` |  |
+| securityContext.runAsGroup | int | `65534` |  |
+| securityContext.runAsNonRoot | bool | `true` |  |
+| securityContext.runAsUser | int | `65534` |  |
+| securityContext.seLinuxOptions.level | string | `"s0:c123,c456"` |  |
+| securityContext.seccompProfile.type | string | `"RuntimeDefault"` |  |
 | singleNamespaceMode | bool | `false` | Single namespace mode. If enabled the controller will watch for resources only from namespace it is deployed in, ignoring others |
 
 ----------------------------------------------

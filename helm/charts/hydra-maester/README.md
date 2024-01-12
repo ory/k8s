@@ -8,7 +8,6 @@ A Helm chart for Kubernetes
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| adminService | object | `{"endpoint":"/admin/clients","insecureSkipVerify":false,"name":null,"port":4445,"scheme":"http","tlsTrustStorePath":""}` | Connection data to admin service of Hydra |
 | adminService.endpoint | string | `"/admin/clients"` | Set the clients endpoint, should be `/clients` for Hydra 1.x and `/admin/clients` for Hydra 2.x |
 | adminService.insecureSkipVerify | bool | `false` | Skip http client insecure verification |
 | adminService.name | string | `nil` | Service name |
@@ -34,8 +33,6 @@ A Helm chart for Kubernetes
 | deployment.podSecurityContext.runAsNonRoot | bool | `true` |  |
 | deployment.podSecurityContext.runAsUser | int | `65534` |  |
 | deployment.podSecurityContext.seccompProfile.type | string | `"RuntimeDefault"` |  |
-| deployment.podSecurityContext.supplementalGroups | list | `[]` |  |
-| deployment.podSecurityContext.sysctls | list | `[]` |  |
 | deployment.resources | object | `{}` |  |
 | deployment.securityContext.allowPrivilegeEscalation | bool | `false` |  |
 | deployment.securityContext.capabilities.drop[0] | string | `"ALL"` |  |
@@ -56,7 +53,9 @@ A Helm chart for Kubernetes
 | image.repository | string | `"oryd/hydra-maester"` | Ory Hydra-maester image |
 | image.tag | string | `"v0.0.32-amd64"` | Ory Hydra-maester version |
 | imagePullSecrets | list | `[]` | Image pull secrets |
-| pdb | object | `{"enabled":false,"spec":{"maxUnavailable":"","minAvailable":""}}` | PodDistributionBudget configuration |
+| pdb.enabled | bool | `false` |  |
+| pdb.spec.maxUnavailable | string | `""` |  |
+| pdb.spec.minAvailable | string | `""` |  |
 | priorityClassName | string | `""` | Pod priority # https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/ |
 | replicaCount | int | `1` | Number of replicas in deployment |
 | revisionHistoryLimit | int | `5` | Number of revisions kept in history |
