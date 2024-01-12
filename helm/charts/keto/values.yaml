@@ -4,6 +4,7 @@
 # -- Number of replicas in deployment
 replicaCount: 1
 
+## -- Image configuration
 image:
   # -- Ory KETO image
   repository: oryd/keto
@@ -21,6 +22,7 @@ fullnameOverride: ""
 # https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/
 priorityClassName: ""
 
+## -- ServiceAccount 
 serviceAccount:
   # -- Specifies whether a service account should be created
   create: true
@@ -39,6 +41,8 @@ podSecurityContext:
   runAsGroup: 65534
   seccompProfile:
     type: RuntimeDefault
+  sysctls: []
+  supplementalGroups: []
 
 ## -- container securityContext for hydra & migration init
 securityContext:
@@ -56,7 +60,7 @@ securityContext:
   seLinuxOptions:
     level: "s0:c123,c456"
 
-# -- Values for initialization job
+## -- Values for initialization job
 job:
   # -- If you do want to specify annotations, uncomment the following
   # lines, adjust them as necessary, and remove the curly braces after 'annotations:'.
@@ -132,7 +136,7 @@ job:
     # -- Set job back off limit
     backoffLimit: 10
 
-# -- Ingress definitions
+## -- Ingress definitions
 ingress:
   read:
     enabled: false
@@ -165,7 +169,7 @@ ingress:
     #    hosts:
     #      - chart-example.local
 
-# -- Service configurations
+## -- Service configurations
 service:
   # -- Read service
   read:
@@ -198,7 +202,7 @@ service:
 # -- Extra services to be deployed
 extraServices: {}
 
-# -- Secret management
+## -- Secret management
 secret:
   # -- Switch to false to prevent creating the secret
   enabled: true
@@ -216,7 +220,7 @@ secret:
   # -- switch to false to prevent checksum annotations being maintained and propogated to the pods
   hashSumEnabled: true
 
-# -- Main application config.
+## -- Main application config.
 keto:
   # -- Ability to override the entrypoint of keto container
   # (e.g. to source dynamic secrets or export environment dynamic variables)
@@ -253,7 +257,7 @@ keto:
         name: sample
     dsn: memory
 
-# -- Configure the probes for when the deployment is considered ready and ongoing health check
+## -- Configure the probes for when the deployment is considered ready and ongoing health check
 deployment:
   # -- Specify pod deployment strategy
   strategy:
@@ -397,7 +401,7 @@ deployment:
   # -- Number of revisions kept in history
   revisionHistoryLimit: 5
 
-# -- Watcher sidecar configuration
+## -- Watcher sidecar configuration
 watcher:
   enabled: false
   image: oryd/k8s-toolbox:0.0.5
@@ -414,14 +418,14 @@ watcher:
   # -- Number of revisions kept in history
   revisionHistoryLimit: 5
 
-# -- PodDistributionBudget configuration
+## -- PodDistributionBudget configuration
 pdb:
   enabled: false
   spec:
     minAvailable: ""
     maxUnavailable: ""
 
-# -- Parameters for the Prometheus ServiceMonitor objects.
+## -- Parameters for the Prometheus ServiceMonitor objects.
 # Reference: https://docs.openshift.com/container-platform/4.6/rest_api/monitoring_apis/servicemonitor-monitoring-coreos-com-v1.html
 serviceMonitor:
   # -- HTTP scheme to use for scraping.

@@ -1,5 +1,4 @@
-# -- Mode for oathkeeper controller
-# -- Two possible modes are: controller or sidecar
+## -- Mode for oathkeeper controller possible modes are: controller or sidecar
 global:
   ory:
     oathkeeper:
@@ -22,6 +21,7 @@ rulesConfigmapNamespace: ""
 rulesFileName: ""
 # rulesFileName: access-rules.json
 
+## -- Image configuration
 image:
   # -- ORY Oathkeeper Rule Controller image
   repository: oryd/oathkeeper-maester
@@ -33,7 +33,7 @@ image:
 # -- Image pull secrets
 imagePullSecrets: []
 
-# -- Container level security context
+## -- Container level security context
 securityContext:
   capabilities:
     drop:
@@ -49,7 +49,7 @@ securityContext:
   seLinuxOptions:
     level: "s0:c123,c456"
 
-# -- Pod level security context
+## -- Pod level security context
 podSecurityContext:
   fsGroupChangePolicy: "OnRootMismatch"
   runAsNonRoot: true
@@ -58,7 +58,10 @@ podSecurityContext:
   runAsGroup: 65534
   seccompProfile:
     type: RuntimeDefault
+  sysctls: []
+  supplementalGroups: []
 
+## -- Deployment specific configuration
 deployment:
   resources:
     {}
@@ -124,10 +127,10 @@ deployment:
     # -- Annotations to add to the service account
     annotations: {}
 
-# -- Configure node affinity
+## -- Configure node affinity
 affinity: {}
 
-# -- PodDistributionBudget configuration
+## -- PodDistributionBudget configuration
 pdb:
   enabled: false
   spec:

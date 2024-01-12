@@ -6,7 +6,7 @@
 replicaCount: 1
 # -- Number of revisions kept in history
 revisionHistoryLimit: 5
-# -- Deployment image settings
+## -- Deployment image settings
 image:
   # SELFSERVICE image
   repository: oryd/kratos-selfservice-ui-node
@@ -18,12 +18,12 @@ imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
 
-# -- Application config
+## -- Application config
 config:
   csrfCookieName: ""
   secrets: {}
 
-# -- Service configuration
+## -- Service configuration
 service:
   type: ClusterIP
   # -- The load balancer IP
@@ -32,6 +32,7 @@ service:
   # -- The service port name. Useful to set a custom service port name if it must follow a scheme (e.g. Istio)
   name: http
 
+## -- Secret configuration
 secret:
   # -- switch to false to prevent creating the secret
   enabled: true
@@ -49,7 +50,7 @@ secret:
   # -- switch to false to prevent checksum annotations being maintained and propogated to the pods
   hashSumEnabled: true
 
-# -- Ingress configration
+## -- Ingress configration
 ingress:
   enabled: false
   className: ""
@@ -67,7 +68,7 @@ ingress:
   #    hosts:
   #      - chart-example.local
 
-# -- Container level security context
+## -- Container level security context
 securityContext:
   capabilities:
     drop:
@@ -83,7 +84,7 @@ securityContext:
   seLinuxOptions:
     level: "s0:c123,c456"
 
-# -- Pod level security context
+## -- Pod level security context
 podSecurityContext:
   fsGroupChangePolicy: "OnRootMismatch"
   runAsNonRoot: true
@@ -92,8 +93,10 @@ podSecurityContext:
   runAsGroup: 10000
   seccompProfile:
     type: RuntimeDefault
+  sysctls: []
+  supplementalGroups: []
 
-# -- Deployment configuration
+## -- Deployment configuration
 deployment:
   resources: {}
   #  We usually recommend not to specify default resources and to leave this as a conscious

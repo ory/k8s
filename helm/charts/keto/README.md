@@ -22,10 +22,11 @@ Access Control Policies as a Server
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | configmap.hashSumEnabled | bool | `true` | switch to false to prevent checksum annotations being maintained and propogated to the pods |
-| deployment | object | `{"affinity":{},"annotations":{},"automigration":{"extraEnv":[]},"automountServiceAccountToken":true,"autoscaling":{"enabled":false,"maxReplicas":100,"minReplicas":1,"targetCPU":{},"targetMemory":{}},"customLivenessProbe":{},"customReadinessProbe":{},"customStartupProbe":{},"dnsConfig":{},"extraContainers":"","extraEnv":[],"extraInitContainers":{},"extraLabels":{},"extraPorts":[],"extraVolumeMounts":[],"extraVolumes":[],"lifecycle":{},"livenessProbe":{"failureThreshold":5,"initialDelaySeconds":5,"periodSeconds":10},"nodeSelector":{},"podAnnotations":{},"podMetadata":{"annotations":{},"labels":{}},"podSecurityContext":{},"readinessProbe":{"failureThreshold":5,"initialDelaySeconds":5,"periodSeconds":10},"resources":{},"revisionHistoryLimit":5,"startupProbe":{"failureThreshold":60,"periodSeconds":1,"successThreshold":1,"timeoutSeconds":1},"strategy":{"rollingUpdate":{"maxSurge":"25%","maxUnavailable":"25%"},"type":"RollingUpdate"},"tolerations":[],"topologySpreadConstraints":[]}` | Configure the probes for when the deployment is considered ready and ongoing health check |
+| deployment.affinity | object | `{}` |  |
 | deployment.annotations | object | `{}` | Add custom annotations to the deployment |
 | deployment.automigration | object | `{"extraEnv":[]}` | Parameters for the automigration initContainer |
 | deployment.automigration.extraEnv | list | `[]` | Array of extra envs to be passed to the initContainer. Kubernetes format is expected - name: FOO   value: BAR |
+| deployment.automountServiceAccountToken | bool | `true` |  |
 | deployment.autoscaling | object | `{"enabled":false,"maxReplicas":100,"minReplicas":1,"targetCPU":{},"targetMemory":{}}` | Autoscaling for keto deployment |
 | deployment.customLivenessProbe | object | `{}` | Configure a custom livenessProbe. This overwrites the default object |
 | deployment.customReadinessProbe | object | `{}` | Configure a custom readinessProbe. This overwrites the default object |
@@ -38,16 +39,20 @@ Access Control Policies as a Server
 | deployment.extraPorts | list | `[]` | Extra ports to be exposed by the main deployment |
 | deployment.extraVolumeMounts | list | `[]` | Array of extra VolumeMounts to be added to the deployment. K8s format expected - name: my-volume   mountPath: /etc/secrets/my-secret   readOnly: true |
 | deployment.extraVolumes | list | `[]` | Array of extra Volumes to be added to the deployment. K8s format expected - name: my-volume   secret:     secretName: my-secret |
+| deployment.lifecycle | object | `{}` |  |
 | deployment.livenessProbe | object | `{"failureThreshold":5,"initialDelaySeconds":5,"periodSeconds":10}` | Default probe timers |
+| deployment.nodeSelector | object | `{}` |  |
 | deployment.podAnnotations | object | `{}` | DEPRECATED Set custom pod annotations |
 | deployment.podMetadata | object | `{"annotations":{},"labels":{}}` | Specify pod metadata, this metadata is added directly to the pod, and not higher objects |
 | deployment.podMetadata.annotations | object | `{}` | Extra pod level annotations |
 | deployment.podMetadata.labels | object | `{}` | Extra pod level labels |
 | deployment.podSecurityContext | object | `{}` | Set custom security context for pods |
 | deployment.readinessProbe | object | `{"failureThreshold":5,"initialDelaySeconds":5,"periodSeconds":10}` | Default probe timers |
+| deployment.resources | object | `{}` |  |
 | deployment.revisionHistoryLimit | int | `5` | Number of revisions kept in history |
 | deployment.startupProbe | object | `{"failureThreshold":60,"periodSeconds":1,"successThreshold":1,"timeoutSeconds":1}` | Default probe timers |
 | deployment.strategy | object | `{"rollingUpdate":{"maxSurge":"25%","maxUnavailable":"25%"},"type":"RollingUpdate"}` | Specify pod deployment strategy |
+| deployment.tolerations | list | `[]` |  |
 | deployment.topologySpreadConstraints | list | `[]` | Configure pod topologySpreadConstraints. |
 | extraServices | object | `{}` | Extra services to be deployed |
 | fullnameOverride | string | `""` |  |
@@ -55,8 +60,20 @@ Access Control Policies as a Server
 | image.repository | string | `"oryd/keto"` | Ory KETO image |
 | image.tag | string | `"v0.11.1"` | Ory KETO version |
 | imagePullSecrets | list | `[]` |  |
-| ingress | object | `{"read":{"annotations":{},"className":"","enabled":false,"hosts":[{"host":"chart-example.local","paths":[{"path":"/read","pathType":"Prefix"}]}],"tls":[]},"write":{"annotations":{},"className":"","enabled":false,"hosts":[{"host":"chart-example.local","paths":[{"path":"/write","pathType":"Prefix"}]}],"tls":[]}}` | Ingress definitions |
-| job | object | `{"annotations":{"helm.sh/hook":"pre-install, pre-upgrade","helm.sh/hook-delete-policy":"before-hook-creation,hook-succeeded","helm.sh/hook-weight":"1"},"automountServiceAccountToken":true,"extraContainers":"","extraEnv":[],"extraInitContainers":"","lifecycle":"","nodeSelector":{},"podMetadata":{"annotations":{},"labels":{}},"serviceAccount":{"annotations":{"helm.sh/hook":"pre-install, pre-upgrade","helm.sh/hook-delete-policy":"before-hook-creation","helm.sh/hook-weight":"0"},"create":true,"name":""},"shareProcessNamespace":false,"spec":{"backoffLimit":10},"tolerations":[]}` | Values for initialization job |
+| ingress.read.annotations | object | `{}` |  |
+| ingress.read.className | string | `""` |  |
+| ingress.read.enabled | bool | `false` |  |
+| ingress.read.hosts[0].host | string | `"chart-example.local"` |  |
+| ingress.read.hosts[0].paths[0].path | string | `"/read"` |  |
+| ingress.read.hosts[0].paths[0].pathType | string | `"Prefix"` |  |
+| ingress.read.tls | list | `[]` |  |
+| ingress.write.annotations | object | `{}` |  |
+| ingress.write.className | string | `""` |  |
+| ingress.write.enabled | bool | `false` |  |
+| ingress.write.hosts[0].host | string | `"chart-example.local"` |  |
+| ingress.write.hosts[0].paths[0].path | string | `"/write"` |  |
+| ingress.write.hosts[0].paths[0].pathType | string | `"Prefix"` |  |
+| ingress.write.tls | list | `[]` |  |
 | job.annotations | object | `{"helm.sh/hook":"pre-install, pre-upgrade","helm.sh/hook-delete-policy":"before-hook-creation,hook-succeeded","helm.sh/hook-weight":"1"}` | If you do want to specify annotations, uncomment the following lines, adjust them as necessary, and remove the curly braces after 'annotations:'. |
 | job.automountServiceAccountToken | bool | `true` | Set automounting of the SA token |
 | job.extraContainers | string | `""` | If you want to add extra sidecar containers. |
@@ -74,7 +91,6 @@ Access Control Policies as a Server
 | job.shareProcessNamespace | bool | `false` | Set sharing process namespace |
 | job.spec.backoffLimit | int | `10` | Set job back off limit |
 | job.tolerations | list | `[]` | Configure node tolerations. |
-| keto | object | `{"automigration":{"customArgs":[],"customCommand":[],"enabled":false,"type":"job"},"command":["keto"],"config":{"dsn":"memory","namespaces":[{"id":0,"name":"sample"}],"serve":{"metrics":{"port":4468},"read":{"port":4466},"write":{"port":4467}}},"customArgs":[]}` | Main application config. |
 | keto.automigration | object | `{"customArgs":[],"customCommand":[],"enabled":false,"type":"job"}` | Enables database migration |
 | keto.automigration.customArgs | list | `[]` | Ability to override arguments of the entrypoint. Can be used in-depended of customCommand eg: - sleep 5;   - keto |
 | keto.automigration.customCommand | list | `[]` | Ability to override the entrypoint of the automigration container (e.g. to source dynamic secrets or export environment dynamic variables) |
@@ -83,16 +99,19 @@ Access Control Policies as a Server
 | keto.config | object | `{"dsn":"memory","namespaces":[{"id":0,"name":"sample"}],"serve":{"metrics":{"port":4468},"read":{"port":4466},"write":{"port":4467}}}` | Direct keto config. Full documentation can be found in https://www.ory.sh/keto/docs/reference/configuration |
 | keto.customArgs | list | `[]` | Ability to override arguments of the entrypoint. Can be used in-depended of customCommand |
 | nameOverride | string | `""` |  |
-| pdb | object | `{"enabled":false,"spec":{"maxUnavailable":"","minAvailable":""}}` | PodDistributionBudget configuration |
+| pdb.enabled | bool | `false` |  |
+| pdb.spec.maxUnavailable | string | `""` |  |
+| pdb.spec.minAvailable | string | `""` |  |
 | podSecurityContext.fsGroup | int | `65534` |  |
 | podSecurityContext.fsGroupChangePolicy | string | `"OnRootMismatch"` |  |
 | podSecurityContext.runAsGroup | int | `65534` |  |
 | podSecurityContext.runAsNonRoot | bool | `true` |  |
 | podSecurityContext.runAsUser | int | `65534` |  |
 | podSecurityContext.seccompProfile.type | string | `"RuntimeDefault"` |  |
+| podSecurityContext.supplementalGroups | list | `[]` |  |
+| podSecurityContext.sysctls | list | `[]` |  |
 | priorityClassName | string | `""` | Pod priority https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/ |
 | replicaCount | int | `1` | Number of replicas in deployment |
-| secret | object | `{"enabled":true,"hashSumEnabled":true,"nameOverride":"","secretAnnotations":{"helm.sh/hook":"pre-install, pre-upgrade","helm.sh/hook-delete-policy":"before-hook-creation","helm.sh/hook-weight":"0","helm.sh/resource-policy":"keep"}}` | Secret management |
 | secret.enabled | bool | `true` | Switch to false to prevent creating the secret |
 | secret.hashSumEnabled | bool | `true` | switch to false to prevent checksum annotations being maintained and propogated to the pods |
 | secret.nameOverride | string | `""` | Provide custom name of existing secret, or custom name of secret to be created |
@@ -106,7 +125,6 @@ Access Control Policies as a Server
 | securityContext.runAsUser | int | `65534` |  |
 | securityContext.seLinuxOptions.level | string | `"s0:c123,c456"` |  |
 | securityContext.seccompProfile.type | string | `"RuntimeDefault"` |  |
-| service | object | `{"metrics":{"annotations":{},"enabled":false,"loadBalancerIP":"","name":"http-metrics","port":80,"type":"ClusterIP"},"read":{"appProtocol":"grpc","enabled":true,"loadBalancerIP":"","name":"grpc-read","port":80,"type":"ClusterIP"},"write":{"appProtocol":"grpc","enabled":true,"loadBalancerIP":"","name":"grpc-write","port":80,"type":"ClusterIP"}}` | Service configurations |
 | service.metrics | object | `{"annotations":{},"enabled":false,"loadBalancerIP":"","name":"http-metrics","port":80,"type":"ClusterIP"}` | Metrics service |
 | service.metrics.loadBalancerIP | string | `""` | The load balancer IP |
 | service.read | object | `{"appProtocol":"grpc","enabled":true,"loadBalancerIP":"","name":"grpc-read","port":80,"type":"ClusterIP"}` | Read service |
@@ -116,7 +134,6 @@ Access Control Policies as a Server
 | serviceAccount.annotations | object | `{}` | Annotations to add to the service account |
 | serviceAccount.create | bool | `true` | Specifies whether a service account should be created |
 | serviceAccount.name | string | `""` | The name of the service account to use. If not set and create is true, a name is generated using the fullname template |
-| serviceMonitor | object | `{"labels":{},"scheme":"http","scrapeInterval":"60s","scrapeTimeout":"30s","tlsConfig":{}}` | Parameters for the Prometheus ServiceMonitor objects. Reference: https://docs.openshift.com/container-platform/4.6/rest_api/monitoring_apis/servicemonitor-monitoring-coreos-com-v1.html |
 | serviceMonitor.labels | object | `{}` | Provide additionnal labels to the ServiceMonitor ressource metadata |
 | serviceMonitor.scheme | string | `"http"` | HTTP scheme to use for scraping. |
 | serviceMonitor.scrapeInterval | string | `"60s"` | Interval at which metrics should be scraped |
@@ -124,7 +141,8 @@ Access Control Policies as a Server
 | serviceMonitor.tlsConfig | object | `{}` | TLS configuration to use when scraping the endpoint |
 | test.busybox | object | `{"repository":"busybox","tag":1}` | use a busybox image from another repository |
 | test.labels | object | `{}` | Provide additional labels to the test pod |
-| watcher | object | `{"enabled":false,"image":"oryd/k8s-toolbox:0.0.5","mountFile":"","podMetadata":{"annotations":{},"labels":{}},"revisionHistoryLimit":5,"watchLabelKey":"ory.sh/watcher"}` | Watcher sidecar configuration |
+| watcher.enabled | bool | `false` |  |
+| watcher.image | string | `"oryd/k8s-toolbox:0.0.5"` |  |
 | watcher.mountFile | string | `""` | Path to mounted file, which wil be monitored for changes. eg: /etc/secrets/my-secret/foo |
 | watcher.podMetadata | object | `{"annotations":{},"labels":{}}` | Specify pod metadata, this metadata is added directly to the pod, and not higher objects |
 | watcher.podMetadata.annotations | object | `{}` | Extra pod level annotations |

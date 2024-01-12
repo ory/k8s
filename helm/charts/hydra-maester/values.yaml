@@ -23,7 +23,7 @@ imagePullSecrets: []
 ## https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/
 priorityClassName: ""
 
-# -- Connection data to admin service of Hydra
+## -- Connection data to admin service of Hydra
 adminService:
   # -- Service name
   name:
@@ -41,6 +41,7 @@ adminService:
 
 forwardedProto:
 
+## -- Deployment specific config
 deployment:
   resources:
     {}
@@ -74,6 +75,8 @@ deployment:
     runAsGroup: 65534
     seccompProfile:
       type: RuntimeDefault
+    sysctls: []
+    supplementalGroups: []
 
   ## -- container securityContext
   securityContext:
@@ -145,7 +148,7 @@ deployment:
 # -- Configure node affinity
 affinity: {}
 
-# -- PodDistributionBudget configuration
+## -- PodDistributionBudget configuration
 pdb:
   enabled: false
   spec:

@@ -260,7 +260,7 @@ spec:
       topologySpreadConstraints:
         {{- toYaml . | nindent 8 }}
     {{- end }}
-    {{- with .Values.podSecurityContext }}
+    {{- with .Values.deployment.podSecurityContext }}
       securityContext:
         {{- toYaml . | nindent 8 }}
     {{- end }}
