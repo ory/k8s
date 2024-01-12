@@ -482,8 +482,6 @@ podSecurityContext:
   runAsGroup: 65534
   seccompProfile:
     type: RuntimeDefault
-  sysctls: []
-  supplementalGroups: []
 
 # -- Horizontal pod autoscaling configuration
 autoscaling:

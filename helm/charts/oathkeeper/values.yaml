@@ -65,8 +65,6 @@ podSecurityContext:
   runAsGroup: 65534
   seccompProfile:
     type: RuntimeDefault
-  sysctls: []
-  supplementalGroups: []
 
 # -- If enabled, a demo deployment with exemplary access rules and JSON Web Key Secrets will be generated.
 demo: false

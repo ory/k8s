@@ -28,7 +28,7 @@ A Helm chart for ORY Kratos's example ui for Kubernetes
 | kratosBrowserUrl | string | `"http://kratos-browserui"` | Set this to ORY Kratos's public URL accessible from the outside world. |
 | kratosPublicUrl | string | `"http://kratos-public"` | Set this to ORY Kratos's public URL |
 | nameOverride | string | `""` |  |
-| podSecurityContext | object | `{"fsGroup":10000,"fsGroupChangePolicy":"OnRootMismatch","runAsGroup":10000,"runAsNonRoot":true,"runAsUser":10000,"seccompProfile":{"type":"RuntimeDefault"},"supplementalGroups":[],"sysctls":[]}` | Pod level security context |
+| podSecurityContext | object | `{"fsGroup":10000,"fsGroupChangePolicy":"OnRootMismatch","runAsGroup":10000,"runAsNonRoot":true,"runAsUser":10000,"seccompProfile":{"type":"RuntimeDefault"}}` | Pod level security context |
 | projectName | string | `"SecureApp"` |  |
 | replicaCount | int | `1` | Number of replicas in deployment |
 | revisionHistoryLimit | int | `5` | Number of revisions kept in history |

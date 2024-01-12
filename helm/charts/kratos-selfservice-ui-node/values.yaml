@@ -92,8 +92,6 @@ podSecurityContext:
   runAsGroup: 10000
   seccompProfile:
     type: RuntimeDefault
-  sysctls: []
-  supplementalGroups: []
 
 # -- Deployment configuration
 deployment:

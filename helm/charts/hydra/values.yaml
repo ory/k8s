@@ -206,8 +206,6 @@ deployment:
     runAsGroup: 65534
     seccompProfile:
       type: RuntimeDefault
-    sysctls: []
-    supplementalGroups: []
 
   ## -- container securityContext for hydra & migration init
   securityContext:
