@@ -22,7 +22,7 @@ fullnameOverride: ""
 # https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/
 priorityClassName: ""
 
-## -- ServiceAccount 
+## -- ServiceAccount
 serviceAccount:
   # -- Specifies whether a service account should be created
   create: true

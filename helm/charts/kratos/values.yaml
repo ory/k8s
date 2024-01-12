@@ -19,7 +19,7 @@ image:
   pullPolicy: IfNotPresent
   # imagePullPolicy: Always
 
-imagePullSecrets: [ ]
+imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
 
@@ -34,10 +34,10 @@ service:
     # -- The service port name. Useful to set a custom service port name if it must follow a scheme (e.g. Istio)
     name: http
     # -- Provide custom labels. Use the same syntax as for annotations.
-    labels: { }
+    labels: {}
     # -- If you do want to specify annotations, uncomment the following
     # lines, adjust them as necessary, and remove the curly braces after 'annotations:'.
-    annotations: { }
+    annotations: {}
     # kubernetes.io/ingress.class: nginx
     # kubernetes.io/tls-acme: "true"
     # -- Path to the metrics endpoint
@@ -51,10 +51,10 @@ service:
     # -- The service port name. Useful to set a custom service port name if it must follow a scheme (e.g. Istio)
     name: http
     # -- Provide custom labels. Use the same syntax as for annotations.
-    labels: { }
+    labels: {}
     # -- If you do want to specify annotations, uncomment the following
     # lines, adjust them as necessary, and remove the curly braces after 'annotations:'.
-    annotations: { }
+    annotations: {}
     # kubernetes.io/ingress.class: nginx
     # kubernetes.io/tls-acme: "true"
 
@@ -81,8 +81,7 @@ ingress:
   admin:
     enabled: false
     className: ""
-    annotations:
-      { }
+    annotations: {}
     # kubernetes.io/ingress.class: nginx
     # kubernetes.io/tls-acme: "true"
     hosts:
@@ -90,15 +89,14 @@ ingress:
         paths:
           - path: /
             pathType: ImplementationSpecific
-    tls: [ ]
+    tls: []
     #  - secretName: chart-example-tls
     #    hosts:
     #      - chart-example.local
   public:
     enabled: false
     className: ""
-    annotations:
-      { }
+    annotations: {}
     # kubernetes.io/ingress.class: nginx
     # kubernetes.io/tls-acme: "true"
     hosts:
@@ -106,7 +104,7 @@ ingress:
         paths:
           - path: /
             pathType: ImplementationSpecific
-    tls: [ ]
+    tls: []
     #  - secretName: chart-example-tls
     #    hosts:
     #      - chart-example.local
@@ -126,17 +124,17 @@ kratos:
     type: job
     # -- Ability to override the entrypoint of the automigration container
     # (e.g. to source dynamic secrets or export environment dynamic variables)
-    customCommand: [ ]
+    customCommand: []
     # -- Ability to override arguments of the entrypoint. Can be used in-depended of customCommand
     # eg:
     # - sleep 5;
     #   - kratos
-    customArgs: [ ]
+    customArgs: []
     # -- resource requests and limits for the automigration initcontainer
-    resources: { }
+    resources: {}
 
   # -- You can add multiple identity schemas here. You can pass JSON schema using `--set-file` Helm CLI argument.
-  identitySchemas: { }
+  identitySchemas: {}
   # identitySchemas:
   #  "identity.default.schema.json": |
   #    {
@@ -150,7 +148,7 @@ kratos:
   #    {{ .Values.phone_schema }}
 
   # -- You can customize the emails Kratos is sending (also uncomment config.courier.template_override_path below)
-  emailTemplates: { }
+  emailTemplates: {}
   # emailTemplates:
   #   recovery:
   #     valid:
@@ -182,7 +180,7 @@ kratos:
 
   config:
     courier:
-      smtp: { }
+      smtp: {}
       #template_override_path: /conf/courier-templates
 
     serve:
@@ -191,11 +189,11 @@ kratos:
       admin:
         port: 4434
 
-    secrets: { }
+    secrets: {}
 
 ## -- Configuration options for the k8s deployment
 deployment:
-  lifecycle: { }
+  lifecycle: {}
   # -- Configure the livenessProbe parameters
   livenessProbe:
     initialDelaySeconds: 5
@@ -214,29 +212,29 @@ deployment:
     timeoutSeconds: 1
 
   # -- Configure a custom livenessProbe. This overwrites the default object
-  customLivenessProbe: { }
+  customLivenessProbe: {}
   # -- Configure a custom readinessProbe. This overwrites the default object
-  customReadinessProbe: { }
+  customReadinessProbe: {}
   # -- Configure a custom startupProbe. This overwrites the default object
-  customStartupProbe: { }
+  customStartupProbe: {}
 
   # -- Array of extra arguments to be passed down to the deployment. Kubernetes args format is expected
   # - --foo
   # - --sqa-opt-out
-  extraArgs: [ ]
+  extraArgs: []
 
   # -- Array of extra envs to be passed to the deployment. Kubernetes format is expected
   # - name: FOO
   #   value: BAR
-  extraEnv: [ ]
+  extraEnv: []
   # -- If you want to mount external volume
   # For example, mount a secret containing Certificate root CA to verify database
   # TLS connection.
-  extraVolumes: [ ]
+  extraVolumes: []
   # - name: my-volume
   #   secret:
   #     secretName: my-secret
-  extraVolumeMounts: [ ]
+  extraVolumeMounts: []
   # - name: my-volume
   #   mountPath: /etc/secrets/my-secret
   #   readOnly: true
@@ -267,7 +265,7 @@ deployment:
   #  choice for the user. This also increases chances charts run on environments with little
   #  resources, such as Minikube. If you do want to specify resources, uncomment the following
   #  lines, adjust them as necessary, and remove the curly braces after 'resources:'.
-  resources: { }
+  resources: {}
   #  limits:
   #    cpu: 100m
   #    memory: 128Mi
@@ -280,19 +278,19 @@ deployment:
   priorityClassName: ""
 
   # -- Node labels for pod assignment.
-  nodeSelector: { }
+  nodeSelector: {}
   # If you do want to specify node labels, uncomment the following
   # lines, adjust them as necessary, and remove the curly braces after 'nodeSelector:'.
   #   foo: bar
 
   # -- Configure node tolerations.
-  tolerations: [ ]
+  tolerations: []
 
   # -- Configure node affinity
-  affinity: { }
+  affinity: {}
 
   # -- Configure pod topologySpreadConstraints.
-  topologySpreadConstraints: [ ]
+  topologySpreadConstraints: []
   # - maxSkew: 1
   #   topologyKey: topology.kubernetes.io/zone
   #   whenUnsatisfiable: DoNotSchedule
@@ -302,17 +300,17 @@ deployment:
   #       app.kubernetes.io/instance: kratos
 
   # -- Configure pod dnsConfig.
-  dnsConfig: { }
+  dnsConfig: {}
   #   options:
   #     - name: "ndots"
   #       value: "1"
 
-  labels: { }
+  labels: {}
   #      If you do want to specify additional labels, uncomment the following
   #      lines, adjust them as necessary, and remove the curly braces after 'labels:'.
   #      e.g.  type: app
 
-  annotations: { }
+  annotations: {}
   #      If you do want to specify annotations, uncomment the following
   #      lines, adjust them as necessary, and remove the curly braces after 'annotations:'.
   #      e.g.  sidecar.istio.io/rewriteAppHTTPProbers: "true"
@@ -332,7 +330,7 @@ deployment:
     # -- Specifies whether a service account should be created
     create: true
     # -- Annotations to add to the service account
-    annotations: { }
+    annotations: {}
     # -- The name of the service account to use. If not set and create is true, a name is generated using the fullname template
     name: ""
 
@@ -342,16 +340,16 @@ deployment:
   # -- Specify pod metadata, this metadata is added directly to the pod, and not higher objects
   podMetadata:
     # -- Extra pod level labels
-    labels: { }
+    labels: {}
     # -- Extra pod level annotations
-    annotations: { }
+    annotations: {}
 
   # -- Parameters for the automigration initContainer
   automigration:
     # -- Array of extra envs to be passed to the initContainer. Kubernetes format is expected
     # - name: FOO
     #   value: BAR
-    extraEnv: [ ]
+    extraEnv: []
   # -- Number of revisions kept in history
   revisionHistoryLimit: 5
 
@@ -364,12 +362,12 @@ deployment:
     runAsGroup: 65534
     seccompProfile:
       type: RuntimeDefault
-    sysctls: [ ]
-    supplementalGroups: [ ]
+    sysctls: []
+    supplementalGroups: []
 
 ## -- Configuration options for the k8s statefulSet
 statefulSet:
-  resources: { }
+  resources: {}
   #  We usually recommend not to specify default resources and to leave this as a conscious
   #  choice for the user. This also increases chances charts run on environments with little
   #  resources, such as Minikube. If you do want to specify resources, uncomment the following
@@ -382,19 +380,19 @@ statefulSet:
   #  memory: 128Mi
 
   # -- Array of extra arguments to be passed down to the StatefulSet. Kubernetes args format is expected
-  extraArgs: [ ]
+  extraArgs: []
   # - --foo
   # - --sqa-opt-out
 
-  extraEnv: [ ]
+  extraEnv: []
   # -- If you want to mount external volume
   # For example, mount a secret containing Certificate root CA to verify database
   # TLS connection.
-  extraVolumes: [ ]
+  extraVolumes: []
   # - name: my-volume
   #   secret:
   #     secretName: my-secret
-  extraVolumeMounts: [ ]
+  extraVolumeMounts: []
   # - name: my-volume
   #   mountPath: /etc/secrets/my-secret
   #   readOnly: true
@@ -411,7 +409,7 @@ statefulSet:
   #  - name: ...
   #    image: ...
 
-  annotations: { }
+  annotations: {}
   #      If you do want to specify annotations, uncomment the following
   #      lines, adjust them as necessary, and remove the curly braces after 'annotations:'.
   #      e.g.  sidecar.istio.io/rewriteAppHTTPProbers: "true"
@@ -423,7 +421,7 @@ statefulSet:
   # https://kubernetes.io/docs/tasks/inject-data-application/distribute-credentials-secure/#configure-all-key-value-pairs-in-a-secret-as-container-environment-variables
   # environmentSecretsName:
 
-  labels: { }
+  labels: {}
   #      If you do want to specify additional labels, uncomment the following
   #      lines, adjust them as necessary, and remove the curly braces after 'labels:'.
   #      e.g.  type: app
@@ -433,19 +431,19 @@ statefulSet:
   priorityClassName: ""
 
   # -- Node labels for pod assignment.
-  nodeSelector: { }
+  nodeSelector: {}
   # If you do want to specify node labels, uncomment the following
   # lines, adjust them as necessary, and remove the curly braces after 'nodeSelector:'.
   #   foo: bar
 
   # -- Configure node tolerations.
-  tolerations: [ ]
+  tolerations: []
 
   # -- Configure node affinity
-  affinity: { }
+  affinity: {}
 
   # -- Configure pod topologySpreadConstraints.
-  topologySpreadConstraints: [ ]
+  topologySpreadConstraints: []
   # - maxSkew: 1
   #   topologyKey: topology.kubernetes.io/zone
   #   whenUnsatisfiable: DoNotSchedule
@@ -455,7 +453,7 @@ statefulSet:
   #       app.kubernetes.io/instance: kratos
 
   # -- Configure pod dnsConfig.
-  dnsConfig: { }
+  dnsConfig: {}
   #   options:
   #     - name: "ndots"
   #       value: "1"
@@ -467,9 +465,9 @@ statefulSet:
     # -- Specify pod metadata, this metadata is added directly to the pod, and not higher objects
   podMetadata:
     # -- Extra pod level labels
-    labels: { }
+    labels: {}
     # -- Extra pod level annotations
-    annotations: { }
+    annotations: {}
   # -- Number of revisions kept in history
   revisionHistoryLimit: 5
 
@@ -482,8 +480,8 @@ statefulSet:
     runAsGroup: 65534
     seccompProfile:
       type: RuntimeDefault
-    sysctls: [ ]
-    supplementalGroups: [ ]
+    sysctls: []
+    supplementalGroups: []
 
 ## -- Container level security context
 securityContext:
@@ -506,10 +504,10 @@ autoscaling:
   enabled: false
   minReplicas: 1
   maxReplicas: 3
-  targetCPU: { }
+  targetCPU: {}
   #   type: Utilization
   #   averageUtilization: 80
-  targetMemory: { }
+  targetMemory: {}
   #   type: Utilization
   #   averageUtilization: 80
 
@@ -539,19 +537,19 @@ job:
   # -- Array of extra envs to be passed to the job. This takes precedence over deployment variables. Kubernetes format is expected
   # - name: FOO
   #   value: BAR
-  extraEnv: [ ]
+  extraEnv: []
 
   # -- Node labels for pod assignment.
-  nodeSelector: { }
+  nodeSelector: {}
   # If you do want to specify node labels, uncomment the following
   # lines, adjust them as necessary, and remove the curly braces after 'nodeSelector:'.
   #   foo: bar
 
   # -- resource requests and limits for the job
-  resources: { }
+  resources: {}
 
   # -- Configure node tolerations.
-  tolerations: [ ]
+  tolerations: []
 
   # -- If you want to add lifecycle hooks.
   lifecycle: ""
@@ -584,9 +582,9 @@ job:
   # -- Specify pod metadata, this metadata is added directly to the pod, and not higher objects
   podMetadata:
     # -- Extra pod level labels
-    labels: { }
+    labels: {}
     # -- Extra pod level annotations
-    annotations: { }
+    annotations: {}
 
   spec:
     # -- Set job back off limit
@@ -605,9 +603,9 @@ watcher:
   # -- Specify pod metadata, this metadata is added directly to the pod, and not higher objects
   podMetadata:
     # -- Extra pod level labels
-    labels: { }
+    labels: {}
     # -- Extra pod level annotations
-    annotations: { }
+    annotations: {}
   # -- Label key used for managing applications
   watchLabelKey: "ory.sh/watcher"
   # -- Number of revisions kept in history
@@ -634,35 +632,35 @@ cronjob:
     schedule: "0 */1 * * *"
 
     # -- Configure the arguments of the entrypoint, overriding the default value
-    customArgs: [ ]
+    customArgs: []
 
     # -- Array of extra envs to be passed to the cronjob. This takes precedence over deployment variables. Kubernetes format is expected
     # - name: FOO
     #   value: BAR
-    extraEnv: [ ]
+    extraEnv: []
 
     # -- Set custom cron job level labels
-    labels: { }
+    labels: {}
 
     # -- Set custom cron job level annotations
-    annotations: { }
+    annotations: {}
 
     # -- Specify pod metadata, this metadata is added directly to the pod, and not higher objects
     podMetadata:
       # -- Extra pod level labels
-      labels: { }
+      labels: {}
 
       # -- Extra pod level annotations
-      annotations: { }
+      annotations: {}
 
     # -- Configure node labels for pod assignment
-    nodeSelector: { }
+    nodeSelector: {}
 
     # -- Configure node tolerations
-    tolerations: [ ]
+    tolerations: []
 
     # -- Configure node affinity
-    affinity: { }
+    affinity: {}
 
     # -- We usually recommend not to specify default resources and to leave this as a conscious choice for the user.
     #  This also increases chances charts run on environments with little
@@ -675,8 +673,8 @@ cronjob:
     #    cpu: 100m
     #  memory: 128Mi
     resources:
-      limits: { }
-      requests: { }
+      limits: {}
+      requests: {}
 
 ## -- PodDistributionBudget configuration
 pdb:
@@ -697,16 +695,16 @@ serviceMonitor:
   # -- Timeout after which the scrape is ended
   scrapeTimeout: 30s
   # -- Provide additional labels to the ServiceMonitor ressource metadata
-  labels: { }
+  labels: {}
   # -- TLS configuration to use when scraping the endpoint
-  tlsConfig: { }
+  tlsConfig: {}
 
 configmap:
   # -- switch to false to prevent checksum annotations being maintained and propogated to the pods
   hashSumEnabled: true
   # -- If you do want to specify annotations for configmap, uncomment the following
   # lines, adjust them as necessary, and remove the curly braces after 'annotations:'.
-  annotations: { }
+  annotations: {}
 
 test:
   # -- use a busybox image from another repository
