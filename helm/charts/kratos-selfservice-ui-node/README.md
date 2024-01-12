@@ -46,8 +46,6 @@ A Helm chart for ORY Kratos's example ui for Kubernetes
 | podSecurityContext.runAsNonRoot | bool | `true` |  |
 | podSecurityContext.runAsUser | int | `10000` |  |
 | podSecurityContext.seccompProfile.type | string | `"RuntimeDefault"` |  |
-| podSecurityContext.supplementalGroups | list | `[]` |  |
-| podSecurityContext.sysctls | list | `[]` |  |
 | projectName | string | `"SecureApp"` |  |
 | replicaCount | int | `1` | Number of replicas in deployment |
 | revisionHistoryLimit | int | `5` | Number of revisions kept in history |

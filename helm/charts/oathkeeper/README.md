@@ -92,8 +92,6 @@ A Helm chart for deploying ORY Oathkeeper in Kubernetes
 | podSecurityContext.runAsNonRoot | bool | `true` |  |
 | podSecurityContext.runAsUser | int | `65534` |  |
 | podSecurityContext.seccompProfile.type | string | `"RuntimeDefault"` |  |
-| podSecurityContext.supplementalGroups | list | `[]` |  |
-| podSecurityContext.sysctls | list | `[]` |  |
 | priorityClassName | string | `""` | Pod priority https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/ |
 | replicaCount | int | `1` | Number of ORY Oathkeeper members |
 | revisionHistoryLimit | int | `5` | Number of revisions kept in history |

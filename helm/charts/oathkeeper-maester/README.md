@@ -51,8 +51,6 @@ A Helm chart for deploying ORY Oathkeeper Rule Controller in Kubernetes
 | podSecurityContext.runAsNonRoot | bool | `true` |  |
 | podSecurityContext.runAsUser | int | `65534` |  |
 | podSecurityContext.seccompProfile.type | string | `"RuntimeDefault"` |  |
-| podSecurityContext.supplementalGroups | list | `[]` |  |
-| podSecurityContext.sysctls | list | `[]` |  |
 | replicaCount | int | `1` | Number of controller replicas in deployment mode |
 | revisionHistoryLimit | int | `5` | Number of revisions kept in history |
 | rulesConfigmapNamespace | string | `""` | Defines the Namespace in which the ConfigMap is stored. Defaults to the same Namespace as the ORY Maester Helm release. |

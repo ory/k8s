@@ -33,8 +33,6 @@ A Helm chart for Kubernetes
 | deployment.podSecurityContext.runAsNonRoot | bool | `true` |  |
 | deployment.podSecurityContext.runAsUser | int | `65534` |  |
 | deployment.podSecurityContext.seccompProfile.type | string | `"RuntimeDefault"` |  |
-| deployment.podSecurityContext.supplementalGroups | list | `[]` |  |
-| deployment.podSecurityContext.sysctls | list | `[]` |  |
 | deployment.resources | object | `{}` |  |
 | deployment.securityContext.allowPrivilegeEscalation | bool | `false` |  |
 | deployment.securityContext.capabilities.drop[0] | string | `"ALL"` |  |
