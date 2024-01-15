@@ -28,6 +28,11 @@ spec:
       targetPort: http-public
       protocol: TCP
       name: {{ .Values.service.public.name }}
+      {{- if eq .Values.service.public.type "NodePort" }}
+      {{- with .Values.service.public.nodePort }}
+      nodePort: {{ . }}
+      {{- end }}
+      {{- end }}
   selector:
     app.kubernetes.io/name: {{ include "kratos.name" . }}
     app.kubernetes.io/instance: {{ .Release.Name }}
