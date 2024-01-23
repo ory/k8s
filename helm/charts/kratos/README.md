@@ -1,6 +1,6 @@
 # kratos
 
-![Version: 0.38.1](https://img.shields.io/badge/Version-0.38.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v1.0.0](https://img.shields.io/badge/AppVersion-v1.0.0-informational?style=flat-square)
+![Version: 0.39.0](https://img.shields.io/badge/Version-0.39.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v1.0.0](https://img.shields.io/badge/AppVersion-v1.0.0-informational?style=flat-square)
 
 A ORY Kratos Helm chart for Kubernetes
 
@@ -145,6 +145,7 @@ A ORY Kratos Helm chart for Kubernetes
 | service.admin.loadBalancerIP | string | `""` | Load balancer IP |
 | service.admin.metricsPath | string | `"/admin/metrics/prometheus"` | Path to the metrics endpoint |
 | service.admin.name | string | `"http"` | The service port name. Useful to set a custom service port name if it must follow a scheme (e.g. Istio) |
+| service.admin.nodePort | string | `""` |  |
 | service.admin.port | int | `80` |  |
 | service.admin.type | string | `"ClusterIP"` |  |
 | service.public.annotations | object | `{}` | If you do want to specify annotations, uncomment the following lines, adjust them as necessary, and remove the curly braces after 'annotations:'. |
@@ -152,6 +153,7 @@ A ORY Kratos Helm chart for Kubernetes
 | service.public.labels | object | `{}` | Provide custom labels. Use the same syntax as for annotations. |
 | service.public.loadBalancerIP | string | `""` | Load balancer IP |
 | service.public.name | string | `"http"` | The service port name. Useful to set a custom service port name if it must follow a scheme (e.g. Istio) |
+| service.public.nodePort | string | `""` |  |
 | service.public.port | int | `80` |  |
 | service.public.type | string | `"ClusterIP"` |  |
 | serviceMonitor.enabled | bool | `false` | switch to true to enable creating the ServiceMonitor |

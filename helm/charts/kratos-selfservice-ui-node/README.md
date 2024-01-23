@@ -1,6 +1,6 @@
 # kratos-selfservice-ui-node
 
-![Version: 0.38.1](https://img.shields.io/badge/Version-0.38.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.13.0-4](https://img.shields.io/badge/AppVersion-v0.13.0--4-informational?style=flat-square)
+![Version: 0.39.0](https://img.shields.io/badge/Version-0.39.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.13.0-4](https://img.shields.io/badge/AppVersion-v0.13.0--4-informational?style=flat-square)
 
 A Helm chart for ORY Kratos's example ui for Kubernetes
 
@@ -64,6 +64,7 @@ A Helm chart for ORY Kratos's example ui for Kubernetes
 | securityContext.seccompProfile.type | string | `"RuntimeDefault"` |  |
 | service.loadBalancerIP | string | `""` | The load balancer IP |
 | service.name | string | `"http"` | The service port name. Useful to set a custom service port name if it must follow a scheme (e.g. Istio) |
+| service.nodePort | string | `""` |  |
 | service.port | int | `80` |  |
 | service.type | string | `"ClusterIP"` |  |
 | test.busybox | object | `{"repository":"busybox","tag":1}` | use a busybox image from another repository |

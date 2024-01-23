@@ -1,6 +1,6 @@
 # hydra-maester
 
-![Version: 0.38.1](https://img.shields.io/badge/Version-0.38.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.0.29](https://img.shields.io/badge/AppVersion-v0.0.29-informational?style=flat-square)
+![Version: 0.39.0](https://img.shields.io/badge/Version-0.39.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.0.33](https://img.shields.io/badge/AppVersion-v0.0.33-informational?style=flat-square)
 
 A Helm chart for Kubernetes
 
@@ -51,7 +51,7 @@ A Helm chart for Kubernetes
 | forwardedProto | string | `nil` |  |
 | image.pullPolicy | string | `"IfNotPresent"` | Image pull policy |
 | image.repository | string | `"oryd/hydra-maester"` | Ory Hydra-maester image |
-| image.tag | string | `"v0.0.32-amd64"` | Ory Hydra-maester version |
+| image.tag | string | `"v0.0.33-amd64"` | Ory Hydra-maester version |
 | imagePullSecrets | list | `[]` | Image pull secrets |
 | pdb.enabled | bool | `false` |  |
 | pdb.spec.maxUnavailable | string | `""` |  |
