@@ -1,6 +1,6 @@
 # keto
 
-![Version: 0.39.0](https://img.shields.io/badge/Version-0.39.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.11.1](https://img.shields.io/badge/AppVersion-v0.11.1-informational?style=flat-square)
+![Version: 0.39.1](https://img.shields.io/badge/Version-0.39.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.11.1](https://img.shields.io/badge/AppVersion-v0.11.1-informational?style=flat-square)
 
 Access Control Policies as a Server
 
@@ -52,6 +52,7 @@ Access Control Policies as a Server
 | deployment.revisionHistoryLimit | int | `5` | Number of revisions kept in history |
 | deployment.startupProbe | object | `{"failureThreshold":60,"periodSeconds":1,"successThreshold":1,"timeoutSeconds":1}` | Default probe timers |
 | deployment.strategy | object | `{"rollingUpdate":{"maxSurge":"25%","maxUnavailable":"25%"},"type":"RollingUpdate"}` | Specify pod deployment strategy |
+| deployment.terminationGracePeriodSeconds | int | `60` |  |
 | deployment.tolerations | list | `[]` |  |
 | deployment.topologySpreadConstraints | list | `[]` | Configure pod topologySpreadConstraints. |
 | extraServices | object | `{}` | Extra services to be deployed |

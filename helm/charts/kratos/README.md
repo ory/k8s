@@ -1,6 +1,6 @@
 # kratos
 
-![Version: 0.39.0](https://img.shields.io/badge/Version-0.39.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v1.0.0](https://img.shields.io/badge/AppVersion-v1.0.0-informational?style=flat-square)
+![Version: 0.39.1](https://img.shields.io/badge/Version-0.39.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v1.0.0](https://img.shields.io/badge/AppVersion-v1.0.0-informational?style=flat-square)
 
 A ORY Kratos Helm chart for Kubernetes
 
@@ -70,6 +70,7 @@ A ORY Kratos Helm chart for Kubernetes
 | deployment.serviceAccount.create | bool | `true` | Specifies whether a service account should be created |
 | deployment.serviceAccount.name | string | `""` | The name of the service account to use. If not set and create is true, a name is generated using the fullname template |
 | deployment.startupProbe | object | `{"failureThreshold":60,"periodSeconds":1,"successThreshold":1,"timeoutSeconds":1}` | Configure the startupProbe parameters |
+| deployment.terminationGracePeriodSeconds | int | `60` |  |
 | deployment.tolerations | list | `[]` | Configure node tolerations. |
 | deployment.topologySpreadConstraints | list | `[]` | Configure pod topologySpreadConstraints. |
 | fullnameOverride | string | `""` |  |
@@ -186,6 +187,7 @@ A ORY Kratos Helm chart for Kubernetes
 | statefulSet.priorityClassName | string | `""` | Pod priority https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/ |
 | statefulSet.resources | object | `{}` |  |
 | statefulSet.revisionHistoryLimit | int | `5` | Number of revisions kept in history |
+| statefulSet.terminationGracePeriodSeconds | int | `60` |  |
 | statefulSet.tolerations | list | `[]` | Configure node tolerations. |
 | statefulSet.topologySpreadConstraints | list | `[]` | Configure pod topologySpreadConstraints. |
 | strategy.rollingUpdate.maxSurge | string | `"25%"` |  |

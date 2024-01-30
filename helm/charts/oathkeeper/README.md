@@ -1,6 +1,6 @@
 # oathkeeper
 
-![Version: 0.39.0](https://img.shields.io/badge/Version-0.39.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.40.6](https://img.shields.io/badge/AppVersion-v0.40.6-informational?style=flat-square)
+![Version: 0.39.1](https://img.shields.io/badge/Version-0.39.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.40.6](https://img.shields.io/badge/AppVersion-v0.40.6-informational?style=flat-square)
 
 A Helm chart for deploying ORY Oathkeeper in Kubernetes
 
@@ -21,7 +21,7 @@ A Helm chart for deploying ORY Oathkeeper in Kubernetes
 
 | Repository | Name | Version |
 |------------|------|---------|
-| file://../oathkeeper-maester | oathkeeper-maester(oathkeeper-maester) | 0.39.0 |
+| file://../oathkeeper-maester | oathkeeper-maester(oathkeeper-maester) | 0.39.1 |
 
 ## Values
 
@@ -59,6 +59,7 @@ A Helm chart for deploying ORY Oathkeeper in Kubernetes
 | deployment.startupProbe | object | `{"failureThreshold":60,"periodSeconds":1,"successThreshold":1,"timeoutSeconds":1}` | Configure the startupProbe parameters |
 | deployment.strategy.rollingUpdate | object | `{}` |  |
 | deployment.strategy.type | string | `"RollingUpdate"` |  |
+| deployment.terminationGracePeriodSeconds | int | `60` |  |
 | deployment.tolerations | list | `[]` | Configure node tolerations. |
 | deployment.topologySpreadConstraints | list | `[]` | Configure pod topologySpreadConstraints. |
 | fullnameOverride | string | `""` | Full chart name override |

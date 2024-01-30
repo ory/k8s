@@ -1,6 +1,6 @@
 # hydra-maester
 
-![Version: 0.39.0](https://img.shields.io/badge/Version-0.39.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.0.33](https://img.shields.io/badge/AppVersion-v0.0.33-informational?style=flat-square)
+![Version: 0.39.1](https://img.shields.io/badge/Version-0.39.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.0.33](https://img.shields.io/badge/AppVersion-v0.0.33-informational?style=flat-square)
 
 A Helm chart for Kubernetes
 
@@ -45,6 +45,7 @@ A Helm chart for Kubernetes
 | deployment.securityContext.seccompProfile.type | string | `"RuntimeDefault"` |  |
 | deployment.serviceAccount | object | `{"annotations":{}}` | Configure service account |
 | deployment.serviceAccount.annotations | object | `{}` | Annotations to add to the service account |
+| deployment.terminationGracePeriodSeconds | int | `60` |  |
 | deployment.tolerations | list | `[]` | Configure node tolerations. |
 | deployment.topologySpreadConstraints | list | `[]` | Configure pod topologySpreadConstraints. |
 | enabledNamespaces | list | `[]` | The Controller have CREATE and READ access to all Secrets in the namespaces listed below. |

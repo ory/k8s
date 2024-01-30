@@ -1,6 +1,6 @@
 # oathkeeper-maester
 
-![Version: 0.39.0](https://img.shields.io/badge/Version-0.39.0-informational?style=flat-square) ![AppVersion: v0.1.8](https://img.shields.io/badge/AppVersion-v0.1.8-informational?style=flat-square)
+![Version: 0.39.1](https://img.shields.io/badge/Version-0.39.1-informational?style=flat-square) ![AppVersion: v0.1.8](https://img.shields.io/badge/AppVersion-v0.1.8-informational?style=flat-square)
 
 A Helm chart for deploying ORY Oathkeeper Rule Controller in Kubernetes
 
@@ -35,6 +35,7 @@ A Helm chart for deploying ORY Oathkeeper Rule Controller in Kubernetes
 | deployment.resources | object | `{}` |  |
 | deployment.serviceAccount | object | `{"annotations":{}}` | Configure service account |
 | deployment.serviceAccount.annotations | object | `{}` | Annotations to add to the service account |
+| deployment.terminationGracePeriodSeconds | int | `60` |  |
 | deployment.tolerations | list | `[]` | Configure node tolerations. |
 | deployment.topologySpreadConstraints | list | `[]` | Configure pod topologySpreadConstraints. |
 | global.ory.oathkeeper.maester.mode | string | `"controller"` |  |
