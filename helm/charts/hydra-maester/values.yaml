@@ -132,6 +132,8 @@ deployment:
   # -- This applications connects to the k8s API and requires the permissions
   automountServiceAccountToken: true
 
+  terminationGracePeriodSeconds: 60
+
   # -- Arguments to be passed to the program
   args:
     # -- The minimum frequency at which watched resources are reconciled

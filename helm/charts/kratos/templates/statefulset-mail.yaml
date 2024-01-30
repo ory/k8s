@@ -52,6 +52,7 @@ spec:
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+      terminationGracePeriodSeconds: {{ .Values.statefulSet.terminationGracePeriodSeconds }}
       containers:
         - name: {{ include "kratos.fullname" . }}-courier
           image: {{ include "kratos.image" . }}

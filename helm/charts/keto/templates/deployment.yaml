@@ -105,6 +105,7 @@ spec:
       automountServiceAccountToken: {{ $automountServiceAccountToken }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      terminationGracePeriodSeconds: {{ .Values.deployment.terminationGracePeriodSeconds }}
       containers:
         - name: {{ .Chart.Name }}
           {{- with .Values.securityContext }}

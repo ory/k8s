@@ -42,6 +42,7 @@ spec:
       volumes:
         {{- toYaml . | nindent 6 }}
       {{- end }}
+      terminationGracePeriodSeconds: {{ .Values.deployment.terminationGracePeriodSeconds }}
       containers:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
