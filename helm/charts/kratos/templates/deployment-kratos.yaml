@@ -112,6 +112,7 @@ spec:
         {{- end }}
       automountServiceAccountToken: {{ .Values.deployment.automountServiceAccountToken }}
       serviceAccountName: {{ include "kratos.serviceAccountName" . }}
+      terminationGracePeriodSeconds: {{ .Values.deployment.terminationGracePeriodSeconds }}
       containers:
         - name: {{ .Chart.Name }}
           image: {{ include "kratos.image" . }}

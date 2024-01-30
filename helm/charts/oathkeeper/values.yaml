@@ -286,6 +286,8 @@ deployment:
   # https://github.com/kubernetes/kubernetes/issues/57601
   automountServiceAccountToken: false
 
+  terminationGracePeriodSeconds: 60
+
   # -- Node labels for pod assignment.
   nodeSelector: {}
   # If you do want to specify node labels, uncomment the following

@@ -42,6 +42,7 @@ spec:
       serviceAccountName: {{ include "keto.serviceAccountName" . }}-watcher
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      terminationGracePeriodSeconds: {{ .Values.deployment.terminationGracePeriodSeconds }}
       containers:
         - name: watcher
           {{- if .Values.securityContext }}

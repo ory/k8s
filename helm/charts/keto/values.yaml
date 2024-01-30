@@ -398,6 +398,7 @@ deployment:
     extraEnv: []
   # -- Number of revisions kept in history
   revisionHistoryLimit: 5
+  terminationGracePeriodSeconds: 60
 
 ## -- Watcher sidecar configuration
 watcher:

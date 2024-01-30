@@ -83,6 +83,7 @@ spec:
       {{- if .Values.deployment.extraInitContainers }}
         {{- tpl  .Values.deployment.extraInitContainers . | nindent 8 }}
       {{- end }}
+      terminationGracePeriodSeconds: {{ .Values.deployment.terminationGracePeriodSeconds }}
       containers:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"

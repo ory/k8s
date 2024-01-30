@@ -339,6 +339,8 @@ deployment:
   # https://github.com/kubernetes/kubernetes/issues/57601
   automountServiceAccountToken: true
 
+  terminationGracePeriodSeconds: 60
+
   # -- Specify pod metadata, this metadata is added directly to the pod, and not higher objects
   podMetadata:
     # -- Extra pod level labels
@@ -470,6 +472,8 @@ statefulSet:
     annotations: {}
   # -- Number of revisions kept in history
   revisionHistoryLimit: 5
+
+  terminationGracePeriodSeconds: 60
 
   ## -- Pod level security context
   podSecurityContext:
