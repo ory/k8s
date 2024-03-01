@@ -1,6 +1,6 @@
 # hydra
 
-![Version: 0.39.1](https://img.shields.io/badge/Version-0.39.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v2.1.2](https://img.shields.io/badge/AppVersion-v2.1.2-informational?style=flat-square)
+![Version: 0.39.1](https://img.shields.io/badge/Version-0.39.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v2.2.0](https://img.shields.io/badge/AppVersion-v2.2.0-informational?style=flat-square)
 
 A Helm chart for deploying ORY Hydra in Kubernetes
 
@@ -116,7 +116,7 @@ A Helm chart for deploying ORY Hydra in Kubernetes
 | hydra.dev | bool | `false` | Enable dev mode, not secure in production environments |
 | image.pullPolicy | string | `"IfNotPresent"` | Image pull policy |
 | image.repository | string | `"oryd/hydra"` | ORY Hydra image |
-| image.tag | string | `"v2.1.2"` | ORY Hydra version |
+| image.tag | string | `"v2.2.0"` | ORY Hydra version |
 | imagePullSecrets | list | `[]` | Image pull secrets |
 | ingress.admin.annotations | object | `{}` |  |
 | ingress.admin.className | string | `""` |  |
