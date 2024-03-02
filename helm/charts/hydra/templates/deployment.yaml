@@ -135,7 +135,7 @@ spec:
             - name: URLS_SELF_ISSUER
               value: {{ $issuer | quote }}
             {{- end }}
-            {{- if not (empty ( include "hydra.dsn" . )) }}
+            {{- if empty ( include "hydra.dsn" . ) }}
             - name: DSN
               valueFrom:
                 secretKeyRef:
