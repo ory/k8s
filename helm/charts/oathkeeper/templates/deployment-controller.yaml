@@ -62,14 +62,38 @@ spec:
             name: {{ include "oathkeeper.fullname" . }}-config
             {{- end }}
         - name: {{ include "oathkeeper.name" . }}-rules-volume
+          {{- if .Values.oathkeeper.managedAccessRules }}
           configMap:
             name: {{ include "oathkeeper.fullname" . }}-rules
+          {{- else }}
+          emptyDir: {}
+          {{- end }}
+        {{- if .Values.secret.enabled }}
         - name: {{ include "oathkeeper.name" . }}-secrets-volume
           secret:
             secretName: {{ include "oathkeeper.secretname" . }}
+        {{- end }}
       serviceAccountName: {{ include "oathkeeper.serviceAccountName" . }}
       automountServiceAccountToken: {{ .Values.deployment.automountServiceAccountToken }}
       initContainers:
+      {{- if (not .Values.oathkeeper.managedAccessRules) }}
+        - name: init
+          image: "{{ .Values.image.initContainer.repository }}:{{ .Values.image.initContainer.tag }}"
+          volumeMounts:
+            - name: {{ include "oathkeeper.name" . }}-rules-volume
+              mountPath: /etc/rules
+              readOnly: false
+          command:
+            - sh
+            - -c
+            - |
+              touch /etc/rules/access-rules.json
+              chmod 666 /etc/rules/access-rules.json
+          {{- if .Values.securityContext }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          {{- end }}
+      {{- end }}
       {{- if .Values.deployment.extraInitContainers }}
         {{- tpl  .Values.deployment.extraInitContainers . | nindent 8 }}
       {{- end }}
@@ -88,7 +112,7 @@ spec:
               {{- toYaml . | nindent 12 }}
             {{- end }}
           env:
-            {{- if .Values.oathkeeper.mutatorIdTokenJWKs }}
+            {{- if and .Values.secret.enabled .Values.oathkeeper.mutatorIdTokenJWKs }}
             - name: MUTATORS_ID_TOKEN_CONFIG_JWKS_URL
               value: "file://{{ .Values.secret.mountPath }}/{{ .Values.secret.filename }}"
             {{- end }}
@@ -105,9 +129,11 @@ spec:
             - name: {{ include "oathkeeper.name" . }}-rules-volume
               mountPath: /etc/rules
               readOnly: true
+            {{- if .Values.secret.enabled }}
             - name: {{ include "oathkeeper.name" . }}-secrets-volume
               mountPath: {{ .Values.secret.mountPath }}
               readOnly: true
+            {{- end }}
           ports:
             - name: http-api
               containerPort: {{ .Values.oathkeeper.config.serve.api.port }}
