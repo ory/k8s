@@ -38,6 +38,12 @@
       },
       {
         "controlID": "C-0050"
+      },
+      {
+        "controlID": "C-0270"
+      },
+      {
+        "controlID": "C-0271"
       }
     ],
     "resources": [
