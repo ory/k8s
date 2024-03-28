@@ -332,7 +332,7 @@ deployment:
     #   averageUtilization: 80
     # -- Set custom behavior
     # https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/#configurable-scaling-behavior
-    behavior: []
+    behavior: {}
 
   nodeSelector: {}
 

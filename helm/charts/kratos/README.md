@@ -8,7 +8,7 @@ A ORY Kratos Helm chart for Kubernetes
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| autoscaling.behavior | list | `[]` | Set custom behavior https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/#configurable-scaling-behavior |
+| autoscaling.behavior | object | `{}` | Set custom behavior https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/#configurable-scaling-behavior |
 | autoscaling.enabled | bool | `false` |  |
 | autoscaling.maxReplicas | int | `3` |  |
 | autoscaling.minReplicas | int | `1` |  |
