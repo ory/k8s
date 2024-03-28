@@ -10,6 +10,9 @@ autoscaling:
   targetMemory:
     type: Utilization
     averageUtilization: 80
+  behavior:
+    scaleDown:
+      selectPolicy: Disabled
 
 kratos:
   automigration:

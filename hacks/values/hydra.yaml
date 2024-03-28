@@ -63,6 +63,9 @@ deployment:
     targetMemory:
       type: Utilization
       averageUtilization: 80
+    behavior:
+      scaleUp:
+        stabilizationWindowSeconds: 60
   strategy:
     type: RollingUpdate
     rollingUpdate:

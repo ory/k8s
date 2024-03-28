@@ -9,6 +9,9 @@ metadata:
   labels:
     {{- include "hydra.labels" . | nindent 4 }}
 spec:
+  {{- with .Values.deployment.autoscaling.behavior }}
+  behavior: {{- toYaml . | nindent 4 }}
+  {{- end }}
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
