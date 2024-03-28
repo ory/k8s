@@ -27,6 +27,9 @@ deployment:
     targetMemory:
       type: Utilization
       averageUtilization: 80
+    behavior:
+      scaleDown:
+        stabilizationWindowSeconds: 42
   extraLabels:
     ory.sh/test: keto
   podMetadata:
