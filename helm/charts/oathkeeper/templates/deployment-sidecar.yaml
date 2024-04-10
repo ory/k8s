@@ -60,9 +60,11 @@ spec:
             {{- end }}
         - name: {{ include "oathkeeper.name" . }}-rules-volume
           emptyDir: {}
+        {{- if .Values.secret.enabled }}
         - name: {{ include "oathkeeper.name" . }}-secrets-volume
           secret:
             secretName: {{ include "oathkeeper.secretname" . }}
+        {{- end }}
       initContainers:
         - name: init
           image: "{{ .Values.image.initContainer.repository }}:{{ .Values.image.initContainer.tag }}"
@@ -90,7 +92,7 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           command: [ "oathkeeper", "serve", "--config", "/etc/config/config.yaml" ]
           env:
-            {{- if .Values.oathkeeper.mutatorIdTokenJWKs }}
+            {{- if .Values.secret.enabled }}
             - name: MUTATORS_ID_TOKEN_CONFIG_JWKS_URL
               value: "file://{{ .Values.secret.mountPath }}/{{ .Values.secret.filename }}"
             {{- end }}
@@ -107,9 +109,11 @@ spec:
             - name: {{ include "oathkeeper.name" . }}-rules-volume
               mountPath: /etc/rules
               readOnly: true
+            {{- if .Values.secret.enabled }}
             - name: {{ include "oathkeeper.name" . }}-secrets-volume
               mountPath: {{ .Values.secret.mountPath }}
               readOnly: true
+            {{- end }}
           ports:
             - name: http-api
               containerPort: {{ .Values.oathkeeper.config.serve.api.port }}

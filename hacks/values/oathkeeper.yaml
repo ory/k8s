@@ -130,6 +130,9 @@ oathkeeper:
       noop:
         enabled: true
 
+secret:
+  enabled: true
+
 service:
   metrics:
     labels:
