@@ -16,6 +16,11 @@ spec:
   loadBalancerIP: {{ . }}
   {{- end }}
   {{- end }}
+  {{- if eq .Values.service.write.type "ClusterIP" }}
+  {{- with .Values.service.write.clusterIP }}
+  clusterIP: {{ . }}
+  {{- end }}
+  {{- end }}
   ports:
     - port: {{ .Values.service.write.port }}
       targetPort: {{ .Values.service.write.name }}

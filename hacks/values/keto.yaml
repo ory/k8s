@@ -19,6 +19,7 @@ pdb:
     maxUnavailable: 25%
 
 deployment:
+  minReadySeconds: 30s
   autoscaling:
     enabled: true
     targetCPU:
@@ -82,6 +83,10 @@ job:
 service:
   metrics:
     enabled: true
+  read:
+    clusterIP: "None"
+  write:
+    clusterIP: "None"
 
 extraServices:
   opl:
