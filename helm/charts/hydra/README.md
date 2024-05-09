@@ -104,7 +104,6 @@ A Helm chart for deploying ORY Hydra in Kubernetes
 | deployment.topologySpreadConstraints | list | `[]` | Configure pod topologySpreadConstraints. |
 | fullnameOverride | string | `""` | Full chart name override |
 | hydra-maester.adminService.name | string | `""` | The service name value may need to be set if you use `fullnameOverride` for the parent chart |
-| hydra-maester.adminService.port | string | `nil` | You only need to set this port if you change the value for `service.admin.port` in the parent chart |
 | hydra.automigration.customArgs | list | `[]` | Ability to override arguments of the entrypoint. Can be used in-depended of customCommand eg: - sleep 5;   - kratos |
 | hydra.automigration.customCommand | list | `[]` | Ability to override the entrypoint of the automigration container (e.g. to source dynamic secrets or export environment dynamic variables) |
 | hydra.automigration.enabled | bool | `false` |  |
