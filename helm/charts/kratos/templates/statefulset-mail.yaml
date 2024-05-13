@@ -85,11 +85,13 @@ spec:
               value: {{ .Values.statefulSet.log.format }}
             - name: LOG_LEVEL
               value: {{ .Values.statefulSet.log.level }}
+            {{- if not (empty ( include "kratos.dsn" . )) }}
             - name: DSN
               valueFrom:
                 secretKeyRef:
                   name: {{ include "kratos.secretname" . }}
                   key: dsn
+            {{- end }}
             - name: SECRETS_DEFAULT
               valueFrom:
                 secretKeyRef:

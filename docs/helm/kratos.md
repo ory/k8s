@@ -137,6 +137,21 @@ Additionally, the following extra settings are available:
 - `ingress.public.enabled` (bool): If enabled, an ingress is created on public
   endpoint Check values.yaml for more configuration options.
 
+### Set up DSN variable on runtime
+
+If you use need to construct DSN environment variable on the fly, you can leave
+`kratos.config.dsn` empty and provide custom DSN variable via `extraEnv`, e.g.:
+
+```yaml
+deployment:
+  extraEnv:
+    - name: DSN
+      valueFrom:
+        secretKeyRef:
+          name: kratos-dsn-secret
+          key: dsn
+```
+
 ### Custom Secrets
 
 ```
