@@ -282,6 +282,11 @@ statefulSet:
 
 job:
   extraEnv:
+    - name: DSN
+      valueFrom:
+        secretKeyRef:
+          name: dsn-secret
+          key: dsn
     - name: LOREM
       value: IPSUM
   extraInitContainers: |
