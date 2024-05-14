@@ -78,7 +78,7 @@ spec:
             {{- toYaml . | nindent 12 }}
           {{- end }}
           env:
-            {{- if not ( include "kratos.dsn" . ) }}
+            {{- if not (empty ( include "kratos.dsn" . )) }}
             - name: DSN
               valueFrom:
                 secretKeyRef:
@@ -148,7 +148,7 @@ spec:
             {{- end }}
             {{- end }}
           env:
-            {{- if not ( include "kratos.dsn" . ) }}
+            {{- if not (empty ( include "kratos.dsn" . )) }}
             - name: DSN
               valueFrom:
                 secretKeyRef:
