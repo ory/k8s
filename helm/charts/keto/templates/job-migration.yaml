@@ -75,7 +75,7 @@ spec:
           {{- toYaml . | nindent 10 }}
         {{- end }}
         env:
-          {{- if not (empty ( include "keto.dsn" . )) }}
+          {{- if not ( include "keto.dsn" . ) }}
           - name: DSN
             valueFrom:
               secretKeyRef:
