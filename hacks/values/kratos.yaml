@@ -272,6 +272,12 @@ statefulSet:
   extraArgs:
     - --expose-metrics-port
     - "8080"
+  extraEnv:
+    - name: DSN
+      valueFrom:
+        secretKeyRef:
+          name: dsn-secret
+          key: dsn
   podMetadata:
     labels:
       ory.sh/pod_label: kratos_courier
@@ -343,6 +349,12 @@ cronjob:
         ory.sh/pod_annotation: kratos
     podSecurityContext:
       runAsNonRoot: true
+    extraEnv:
+      - name: DSN
+        valueFrom:
+          secretKeyRef:
+            name: dsn-secret
+            key: dsn
 
 serviceMonitor:
   enabled: true
