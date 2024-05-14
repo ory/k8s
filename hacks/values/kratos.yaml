@@ -26,6 +26,12 @@ kratos:
       - "--yes"
       - "--config"
       - "/etc/config/kratos.yaml"
+    extraEnv:
+      - name: DSN
+        valueFrom:
+          secretKeyRef:
+            name: dsn-secret
+            key: dsn
     resources:
       limits:
         cpu: 100m
