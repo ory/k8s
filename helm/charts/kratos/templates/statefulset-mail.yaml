@@ -17,6 +17,7 @@ metadata:
   namespace: {{ .Release.Namespace }}
   {{- end }}
   labels:
+    app.kubernetes.io/component: courier
     {{- include "kratos.labels" . | nindent 4 }}
     {{- with $labels }}
       {{- toYaml . | nindent 4 }}
@@ -38,6 +39,7 @@ spec:
       labels:
         app.kubernetes.io/name: {{ include "kratos.fullname" . }}-courier
         app.kubernetes.io/instance: {{ .Release.Name }}
+        app.kubernetes.io/component: courier
         {{- with $labels }}
           {{- toYaml . | nindent 8 }}
         {{- end }}
@@ -62,6 +64,8 @@ spec:
             - watch 
             - --config
             - /etc/config/kratos.yaml
+            - --expose-metrics-port
+            - {{ .Values.service.courier.containerPort | quote }}
             {{- if .Values.statefulSet.extraArgs }}
               {{- toYaml .Values.statefulSet.extraArgs | nindent 12 }}
             {{- end }}
@@ -125,6 +129,10 @@ spec:
             - secretRef:
                 name: {{ $environmentSecretsName }}
           {{- end}}
+          ports:
+            - name: http-metrics
+              containerPort: {{ .Values.service.courier.containerPort }}
+              protocol: TCP
           resources:
               {{- toYaml $resources | nindent 12 }}
           {{- if .Values.securityContext }}

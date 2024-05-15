@@ -150,6 +150,14 @@ A ORY Kratos Helm chart for Kubernetes
 | service.admin.nodePort | string | `""` |  |
 | service.admin.port | int | `80` |  |
 | service.admin.type | string | `"ClusterIP"` |  |
+| service.courier.annotations | object | `{}` | Provide custom annotations. |
+| service.courier.containerPort | int | `4434` | Container Port |
+| service.courier.enabled | bool | `true` |  |
+| service.courier.labels | object | `{}` | Provide custom labels. Use the same syntax as for annotations. |
+| service.courier.metricsPath | string | `"/metrics/prometheus"` | Path to the metrics endpoint |
+| service.courier.name | string | `"http-metrics"` | The service port name. Useful to set a custom service port name if it must follow a scheme (e.g. Istio) |
+| service.courier.port | int | `80` | Service Port |
+| service.courier.type | string | `"ClusterIP"` |  |
 | service.public.annotations | object | `{}` | If you do want to specify annotations, uncomment the following lines, adjust them as necessary, and remove the curly braces after 'annotations:'. |
 | service.public.enabled | bool | `true` |  |
 | service.public.labels | object | `{}` | Provide custom labels. Use the same syntax as for annotations. |

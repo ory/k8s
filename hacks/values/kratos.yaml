@@ -263,9 +263,6 @@ deployment:
   environmentSecretsName: env-secrets
 
 statefulSet:
-  extraArgs:
-    - --expose-metrics-port
-    - "8080"
   extraEnv:
     - name: DSN
       valueFrom:
@@ -361,6 +358,3 @@ test:
   busybox:
     repository: docker.io/library/busybox
     tag: 1.36
-service:
-  admin:
-    metricsPath: "/admin/metrics/different-prometheus-path"
