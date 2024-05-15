@@ -75,11 +75,13 @@ spec:
           {{- toYaml . | nindent 10 }}
         {{- end }}
         env:
+          {{- if not (empty ( include "keto.dsn" . )) }}
           - name: DSN
             valueFrom:
               secretKeyRef:
                 name: {{ include "keto.secretname" . }}
                 key: dsn
+          {{- end }}
           {{- with $migrationExtraEnv }}
             {{- toYaml . | nindent 10 }}
           {{- end }}

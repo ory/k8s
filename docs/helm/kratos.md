@@ -137,6 +137,48 @@ Additionally, the following extra settings are available:
 - `ingress.public.enabled` (bool): If enabled, an ingress is created on public
   endpoint Check values.yaml for more configuration options.
 
+### Set up DSN variable on runtime
+
+If you use need to construct DSN environment variable on the fly, you can leave
+`kratos.config.dsn` empty and provide custom DSN variable via `extraEnv`, e.g.:
+
+> **Note:** extraEnvs are defined separatly for individual objects (deployments,
+> statefulsets, jobs etc), and therefore you need to define the env for all
+> objects using it. Please refer to
+> [kratos values as an example](https://github.dev/ory/k8s/blob/master/helm/charts/kratos/values.yaml)
+
+```yaml
+deployment:
+  extraEnv:
+    - name: DSN
+      valueFrom:
+        secretKeyRef:
+          name: dsn-secret
+          key: dsn
+statefulSet:
+  extraEnv:
+    - name: DSN
+      valueFrom:
+        secretKeyRef:
+          name: dsn-secret
+          key: dsn
+job:
+  extraEnv:
+    - name: DSN
+      valueFrom:
+        secretKeyRef:
+          name: dsn-secret
+          key: dsn
+cronjob:
+  cleanup:
+    extraEnv:
+      - name: DSN
+        valueFrom:
+          secretKeyRef:
+            name: dsn-secret
+            key: dsn
+```
+
 ### Custom Secrets
 
 ```

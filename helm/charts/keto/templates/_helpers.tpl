@@ -45,7 +45,9 @@ Create chart name and version as used by the chart label.
 Generate the dsn value
 */}}
 {{- define "keto.dsn" -}}
+{{ if .Values.keto.config.dsn }}
 {{- .Values.keto.config.dsn }}
+{{- end }}
 {{- end -}}
 
 {{/*
@@ -115,12 +117,12 @@ checksum/keto-secrets: {{ include (print $.Template.BasePath "/secrets.yaml") . 
 {{- end }}
 
 {{/*
-Check the migration type value and fail if unexpected 
+Check the migration type value and fail if unexpected
 */}}
 {{- define "keto.automigration.typeVerification" -}}
 {{- if and .Values.keto.automigration.enabled  .Values.keto.automigration.type }}
   {{- if and (ne .Values.keto.automigration.type "initContainer") (ne .Values.keto.automigration.type "job") }}
     {{- fail "keto.automigration.type must be either 'initContainer' or 'job'" -}}
-  {{- end }}  
+  {{- end }}
 {{- end }}
 {{- end }}
