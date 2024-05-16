@@ -83,10 +83,6 @@ job:
 service:
   metrics:
     enabled: true
-  read:
-    clusterIP: "None"
-  write:
-    clusterIP: "None"
 
 extraServices:
   opl:
