@@ -46,7 +46,9 @@ Create chart name and version as used by the chart label.
 Generate the dsn value
 */}}
 {{- define "kratos.dsn" -}}
+{{ if .Values.kratos.config.dsn }}
 {{- .Values.kratos.config.dsn }}
+{{- end }}
 {{- end -}}
 
 {{/*

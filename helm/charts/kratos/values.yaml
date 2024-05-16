@@ -59,6 +59,21 @@ service:
     annotations: {}
     # kubernetes.io/ingress.class: nginx
     # kubernetes.io/tls-acme: "true"
+  courier:
+    enabled: true
+    type: ClusterIP
+    # -- Service Port
+    port: 80
+    # -- Container Port
+    containerPort: 4434
+    # -- The service port name. Useful to set a custom service port name if it must follow a scheme (e.g. Istio)
+    name: http-metrics
+    # -- Provide custom labels. Use the same syntax as for annotations.
+    labels: {}
+    # -- Provide custom annotations.
+    annotations: {}
+    # -- Path to the metrics endpoint
+    metricsPath: /metrics/prometheus
 
 ## -- Secret management
 secret:

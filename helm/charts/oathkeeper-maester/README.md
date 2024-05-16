@@ -1,6 +1,6 @@
 # oathkeeper-maester
 
-![Version: 0.41.0](https://img.shields.io/badge/Version-0.41.0-informational?style=flat-square) ![AppVersion: v0.1.8](https://img.shields.io/badge/AppVersion-v0.1.8-informational?style=flat-square)
+![Version: 0.42.1](https://img.shields.io/badge/Version-0.42.1-informational?style=flat-square) ![AppVersion: v0.1.8](https://img.shields.io/badge/AppVersion-v0.1.8-informational?style=flat-square)
 
 A Helm chart for deploying ORY Oathkeeper Rule Controller in Kubernetes
 
