@@ -64,7 +64,9 @@ Generate the dsn value
 {{- define "hydra.dsn" -}}
 {{- if .Values.demo -}}
 memory
-{{- else if .Values.hydra.config.dsn -}}
+{{- else if and .Values.secret.nameOverride (not .Values.secret.enabled) -}}
+dsn-loaded-from-env
+{{- else if not (empty (.Values.hydra.config.dsn)) -}}
 {{- .Values.hydra.config.dsn }}
 {{- end -}}
 {{- end -}}

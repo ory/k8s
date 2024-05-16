@@ -46,9 +46,11 @@ Create chart name and version as used by the chart label.
 Generate the dsn value
 */}}
 {{- define "kratos.dsn" -}}
-{{ if .Values.kratos.config.dsn }}
+{{- if and .Values.secret.nameOverride (not .Values.secret.enabled) -}}
+dsn-loaded-from-env
+{{- else if not (empty (.Values.kratos.config.dsn)) -}}
 {{- .Values.kratos.config.dsn }}
-{{- end }}
+{{- end -}}
 {{- end -}}
 
 {{/*
