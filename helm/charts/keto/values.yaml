@@ -169,35 +169,37 @@ ingress:
 
 ## -- Service configurations
 service:
-  # -- Read service
+  ## -- Read service
   read:
     enabled: true
     type: ClusterIP
-    # -- The load balancer IP
+    clusterIP: ""
+    ## -- The load balancer IP
     loadBalancerIP: ""
     name: grpc-read
     port: 80
     appProtocol: grpc
-  # -- Write service
+  ## -- Write service
   write:
     enabled: true
     type: ClusterIP
-    # -- The load balancer IP
+    clusterIP: ""
+    ## -- The load balancer IP
     loadBalancerIP: ""
     name: grpc-write
     port: 80
     appProtocol: grpc
-  # -- Metrics service
+  ## -- Metrics service
   metrics:
     enabled: false
     type: ClusterIP
-    # -- The load balancer IP
+    ## -- The load balancer IP
     loadBalancerIP: ""
     name: http-metrics
     port: 80
     annotations: {}
 
-# -- Extra services to be deployed
+## -- Extra services to be deployed
 extraServices: {}
 
 ## -- Secret management
@@ -259,23 +261,27 @@ keto:
 
 ## -- Configure the probes for when the deployment is considered ready and ongoing health check
 deployment:
-  # -- Specify pod deployment strategy
+  ## -- Specify pod deployment strategy
   strategy:
     type: RollingUpdate
     rollingUpdate:
       maxSurge: "25%"
       maxUnavailable: "25%"
-  # -- DEPRECATED Set custom pod annotations
+
+  ## -- Minimum number of seconds for which a newly created pod should be ready without any of its container crashing, for it to be considered available. Defaults to 0 (pod will be considered available as soon as it is ready)
+  minReadySeconds: 0
+
+  ## -- DEPRECATED Set custom pod annotations
   podAnnotations: {}
 
-  # -- Specify pod metadata, this metadata is added directly to the pod, and not higher objects
+  ## -- Specify pod metadata, this metadata is added directly to the pod, and not higher objects
   podMetadata:
-    # -- Extra pod level labels
+    ## -- Extra pod level labels
     labels: {}
-    # -- Extra pod level annotations
+    ## -- Extra pod level annotations
     annotations: {}
 
-  # -- Set custom security context for pods
+  ## -- Set custom security context for pods
   podSecurityContext: {}
   # fsGroup: 2000
 
@@ -283,30 +289,30 @@ deployment:
   automountServiceAccountToken: true
 
   lifecycle: {}
-  # -- Default probe timers
+  ## -- Default probe timers
   livenessProbe:
     initialDelaySeconds: 5
     periodSeconds: 10
     failureThreshold: 5
-  # -- Default probe timers
+  ## -- Default probe timers
   readinessProbe:
     initialDelaySeconds: 5
     periodSeconds: 10
     failureThreshold: 5
-  # -- Default probe timers
+  ## -- Default probe timers
   startupProbe:
     failureThreshold: 60
     successThreshold: 1
     periodSeconds: 1
     timeoutSeconds: 1
-  # -- Configure a custom livenessProbe. This overwrites the default object
+  ## -- Configure a custom livenessProbe. This overwrites the default object
   customLivenessProbe: {}
-  # -- Configure a custom readinessProbe. This overwrites the default object
+  ## -- Configure a custom readinessProbe. This overwrites the default object
   customReadinessProbe: {}
-  # -- Configure a custom startupProbe. This overwrites the default object
+  ## -- Configure a custom startupProbe. This overwrites the default object
   customStartupProbe: {}
 
-  # -- Add custom annotations to the deployment
+  ## -- Add custom annotations to the deployment
   annotations: {}
 
   resources: {}

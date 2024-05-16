@@ -34,6 +34,7 @@ metadata:
       {{- toYaml . | nindent 4 }}
     {{- end }}
 spec:
+  minReadySeconds: {{ .Values.deployment.minReadySeconds }}
 {{- if not $autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
 {{- end }}

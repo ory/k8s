@@ -19,6 +19,7 @@ pdb:
     maxUnavailable: 25%
 
 deployment:
+  minReadySeconds: 30
   autoscaling:
     enabled: true
     targetCPU:

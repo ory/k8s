@@ -23,15 +23,15 @@ Access Control Policies as a Server
 |-----|------|---------|-------------|
 | configmap.hashSumEnabled | bool | `true` | switch to false to prevent checksum annotations being maintained and propogated to the pods |
 | deployment.affinity | object | `{}` |  |
-| deployment.annotations | object | `{}` | Add custom annotations to the deployment |
+| deployment.annotations | object | `{}` |  |
 | deployment.automigration | object | `{"extraEnv":[]}` | Parameters for the automigration initContainer |
 | deployment.automigration.extraEnv | list | `[]` | Array of extra envs to be passed to the initContainer. Kubernetes format is expected - name: FOO   value: BAR |
 | deployment.automountServiceAccountToken | bool | `true` |  |
 | deployment.autoscaling | object | `{"behavior":{},"enabled":false,"maxReplicas":100,"minReplicas":1,"targetCPU":{},"targetMemory":{}}` | Autoscaling for keto deployment |
 | deployment.autoscaling.behavior | object | `{}` | Set custom behavior https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/#configurable-scaling-behavior |
-| deployment.customLivenessProbe | object | `{}` | Configure a custom livenessProbe. This overwrites the default object |
-| deployment.customReadinessProbe | object | `{}` | Configure a custom readinessProbe. This overwrites the default object |
-| deployment.customStartupProbe | object | `{}` | Configure a custom startupProbe. This overwrites the default object |
+| deployment.customLivenessProbe | object | `{}` |  |
+| deployment.customReadinessProbe | object | `{}` |  |
+| deployment.customStartupProbe | object | `{}` |  |
 | deployment.dnsConfig | object | `{}` | Configure pod dnsConfig. |
 | deployment.extraContainers | string | `""` | If you want to add extra sidecar containers. |
 | deployment.extraEnv | list | `[]` | Array of extra Envs to be added to the deployment. K8s format expected - name: FOO   value: BAR |
@@ -41,22 +41,31 @@ Access Control Policies as a Server
 | deployment.extraVolumeMounts | list | `[]` | Array of extra VolumeMounts to be added to the deployment. K8s format expected - name: my-volume   mountPath: /etc/secrets/my-secret   readOnly: true |
 | deployment.extraVolumes | list | `[]` | Array of extra Volumes to be added to the deployment. K8s format expected - name: my-volume   secret:     secretName: my-secret |
 | deployment.lifecycle | object | `{}` |  |
-| deployment.livenessProbe | object | `{"failureThreshold":5,"initialDelaySeconds":5,"periodSeconds":10}` | Default probe timers |
+| deployment.livenessProbe.failureThreshold | int | `5` |  |
+| deployment.livenessProbe.initialDelaySeconds | int | `5` |  |
+| deployment.livenessProbe.periodSeconds | int | `10` |  |
+| deployment.minReadySeconds | int | `0` |  |
 | deployment.nodeSelector | object | `{}` |  |
-| deployment.podAnnotations | object | `{}` | DEPRECATED Set custom pod annotations |
-| deployment.podMetadata | object | `{"annotations":{},"labels":{}}` | Specify pod metadata, this metadata is added directly to the pod, and not higher objects |
-| deployment.podMetadata.annotations | object | `{}` | Extra pod level annotations |
-| deployment.podMetadata.labels | object | `{}` | Extra pod level labels |
-| deployment.podSecurityContext | object | `{}` | Set custom security context for pods |
-| deployment.readinessProbe | object | `{"failureThreshold":5,"initialDelaySeconds":5,"periodSeconds":10}` | Default probe timers |
+| deployment.podAnnotations | object | `{}` |  |
+| deployment.podMetadata.annotations | object | `{}` |  |
+| deployment.podMetadata.labels | object | `{}` |  |
+| deployment.podSecurityContext | object | `{}` |  |
+| deployment.readinessProbe.failureThreshold | int | `5` |  |
+| deployment.readinessProbe.initialDelaySeconds | int | `5` |  |
+| deployment.readinessProbe.periodSeconds | int | `10` |  |
 | deployment.resources | object | `{}` |  |
 | deployment.revisionHistoryLimit | int | `5` | Number of revisions kept in history |
-| deployment.startupProbe | object | `{"failureThreshold":60,"periodSeconds":1,"successThreshold":1,"timeoutSeconds":1}` | Default probe timers |
-| deployment.strategy | object | `{"rollingUpdate":{"maxSurge":"25%","maxUnavailable":"25%"},"type":"RollingUpdate"}` | Specify pod deployment strategy |
+| deployment.startupProbe.failureThreshold | int | `60` |  |
+| deployment.startupProbe.periodSeconds | int | `1` |  |
+| deployment.startupProbe.successThreshold | int | `1` |  |
+| deployment.startupProbe.timeoutSeconds | int | `1` |  |
+| deployment.strategy.rollingUpdate.maxSurge | string | `"25%"` |  |
+| deployment.strategy.rollingUpdate.maxUnavailable | string | `"25%"` |  |
+| deployment.strategy.type | string | `"RollingUpdate"` |  |
 | deployment.terminationGracePeriodSeconds | int | `60` |  |
 | deployment.tolerations | list | `[]` |  |
 | deployment.topologySpreadConstraints | list | `[]` | Configure pod topologySpreadConstraints. |
-| extraServices | object | `{}` | Extra services to be deployed |
+| extraServices | object | `{}` |  |
 | fullnameOverride | string | `""` |  |
 | image.pullPolicy | string | `"IfNotPresent"` | Default image pull policy |
 | image.repository | string | `"oryd/keto"` | Ory KETO image |
@@ -126,12 +135,26 @@ Access Control Policies as a Server
 | securityContext.runAsUser | int | `65534` |  |
 | securityContext.seLinuxOptions.level | string | `"s0:c123,c456"` |  |
 | securityContext.seccompProfile.type | string | `"RuntimeDefault"` |  |
-| service.metrics | object | `{"annotations":{},"enabled":false,"loadBalancerIP":"","name":"http-metrics","port":80,"type":"ClusterIP"}` | Metrics service |
-| service.metrics.loadBalancerIP | string | `""` | The load balancer IP |
-| service.read | object | `{"appProtocol":"grpc","enabled":true,"loadBalancerIP":"","name":"grpc-read","port":80,"type":"ClusterIP"}` | Read service |
-| service.read.loadBalancerIP | string | `""` | The load balancer IP |
-| service.write | object | `{"appProtocol":"grpc","enabled":true,"loadBalancerIP":"","name":"grpc-write","port":80,"type":"ClusterIP"}` | Write service |
-| service.write.loadBalancerIP | string | `""` | The load balancer IP |
+| service.metrics.annotations | object | `{}` |  |
+| service.metrics.enabled | bool | `false` |  |
+| service.metrics.loadBalancerIP | string | `""` |  |
+| service.metrics.name | string | `"http-metrics"` |  |
+| service.metrics.port | int | `80` |  |
+| service.metrics.type | string | `"ClusterIP"` |  |
+| service.read.appProtocol | string | `"grpc"` |  |
+| service.read.clusterIP | string | `""` |  |
+| service.read.enabled | bool | `true` |  |
+| service.read.loadBalancerIP | string | `""` |  |
+| service.read.name | string | `"grpc-read"` |  |
+| service.read.port | int | `80` |  |
+| service.read.type | string | `"ClusterIP"` |  |
+| service.write.appProtocol | string | `"grpc"` |  |
+| service.write.clusterIP | string | `""` |  |
+| service.write.enabled | bool | `true` |  |
+| service.write.loadBalancerIP | string | `""` |  |
+| service.write.name | string | `"grpc-write"` |  |
+| service.write.port | int | `80` |  |
+| service.write.type | string | `"ClusterIP"` |  |
 | serviceAccount.annotations | object | `{}` | Annotations to add to the service account |
 | serviceAccount.create | bool | `true` | Specifies whether a service account should be created |
 | serviceAccount.name | string | `""` | The name of the service account to use. If not set and create is true, a name is generated using the fullname template |
