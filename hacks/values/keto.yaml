@@ -18,6 +18,10 @@ pdb:
   spec:
     maxUnavailable: 25%
 
+secret:
+  enabled: true
+  nameOverride: "keto-custom"
+
 deployment:
   minReadySeconds: 30
   autoscaling:

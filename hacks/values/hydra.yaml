@@ -13,7 +13,6 @@ hydra:
 
   dev: true
   config:
-    dsn: "postgres://postgres:ory@postgresql.default.svc.cluster.local/ory_kratos?sslmode=disable&max_conn_lifetime=10s"
     secrets:
       system:
         - "OG5XbmxXa3dYeGplQXpQanYxeEFuRUFa"
@@ -27,6 +26,10 @@ hydra:
         - "foo bar 123 456 lorem 1"
         - "foo bar 123 456 lorem 2"
         - "foo bar 123 456 lorem 3"
+
+secret:
+  enabled: false
+  nameOverride: "hydra-custom"
 
 maester:
   enabled: false
