@@ -79,6 +79,7 @@ spec:
         securityContext:
           {{- toYaml . | nindent 10 }}
         {{- end }}
+        {{- with .Values.hydra.automigration.resources }}
         resources:
           {{- toYaml .Values.hydra.automigration.resources | nindent 10 }}
         {{- end }}
