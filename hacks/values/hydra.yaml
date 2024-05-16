@@ -10,13 +10,6 @@ hydra:
     # type: initContainer
     customCommand:
       - hydra
-    resources:
-      limits:
-        cpu: 100m
-        memory: 128Mi
-      requests:
-        cpu: 100m
-        memory: 128Mi
 
   dev: true
   config:
@@ -127,6 +120,13 @@ job:
       ory.sh/pod_label: hydra_init
     annotations:
       ory.sh/pod_annotation: hydra_init
+  resources:
+    limits:
+      cpu: 100m
+      memory: 128Mi
+    requests:
+      cpu: 100m
+      memory: 128Mi
 
 watcher:
   enabled: true

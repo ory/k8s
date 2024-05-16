@@ -2,6 +2,7 @@
 {{- if and  ( .Values.hydra.automigration.enabled ) ( eq .Values.hydra.automigration.type "job" ) }}
 {{- $nodeSelector := ternary .Values.job.nodeSelector .Values.deployment.nodeSelector (not (empty .Values.job.nodeSelector )) -}}
 {{- $migrationExtraEnv := ternary .Values.job.extraEnv .Values.deployment.extraEnv (not (empty .Values.job.extraEnv )) -}}
+{{- $resources := ternary .Values.job.resources .Values.hydra.automigration.resources (not (empty .Values.job.resources)) -}}
 
 ---
 apiVersion: batch/v1
@@ -79,9 +80,9 @@ spec:
         securityContext:
           {{- toYaml . | nindent 10 }}
         {{- end }}
-        {{- with .Values.hydra.automigration.resources }}
+        {{- with $resources }}
         resources:
-          {{- toYaml .Values.hydra.automigration.resources | nindent 10 }}
+          {{- toYaml . | nindent 10 }}
         {{- end }}
         volumeMounts:
           - name: {{ include "hydra.name" . }}-config-volume
