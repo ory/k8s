@@ -57,7 +57,7 @@ spec:
           args:
             - --metrics-addr=127.0.0.1:8080
             - --hydra-url={{ required "scheme is required" .Values.adminService.scheme }}://{{ .Values.adminService.name | default ( include "hydra-maester.adminService" . ) }}
-            - --hydra-port={{ .Values.adminService.port }}
+            - --hydra-port={{ required "port must be set and non-empty" .Values.adminService.port }}
             {{- with .Values.adminService.endpoint }}
             - --endpoint={{ . }}
             {{- end }}

@@ -60,11 +60,13 @@ spec:
         args: ["migrate", "sql", "-e", "--yes", "--config", "/etc/config/kratos.yaml"]
         {{- end }}
         env:
+          {{- if not (empty ( include "kratos.dsn" . )) }}
           - name: DSN
             valueFrom:
               secretKeyRef:
                 name: {{ include "kratos.secretname" . }}
                 key: dsn
+          {{- end }}
           {{- if $migrationExtraEnv }}
             {{- toYaml $migrationExtraEnv | nindent 10 }}
           {{- end }}

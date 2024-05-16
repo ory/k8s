@@ -93,14 +93,20 @@ spec:
             {{- toYaml . | nindent 12 }}
           {{- end }}
           env:
+            {{- if not (empty ( include "keto.dsn" . )) }}
             - name: DSN
               valueFrom:
                 secretKeyRef:
                   name: {{ include "keto.secretname" . }}
                   key: dsn
+            {{- end }}
             {{- with $migrationExtraEnv }}
               {{- toYaml . | nindent 12 }}
             {{- end }}
+          {{- with .Values.keto.automigration.resources }}
+          resources:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
       {{- end }}
       serviceAccountName: {{ include "keto.serviceAccountName" . }}
       automountServiceAccountToken: {{ $automountServiceAccountToken }}
@@ -178,11 +184,13 @@ spec:
           resources:
             {{- toYaml $resources | nindent 12 }}
           env:
+            {{- if not (empty ( include "keto.dsn" . )) }}
             - name: DSN
               valueFrom:
                 secretKeyRef:
                   name: {{ include "keto.secretname" . }}
                   key: dsn
+            {{- end }}
             {{- with .Values.deployment.extraEnv }}
               {{- toYaml . | nindent 12 }}
             {{- end }}

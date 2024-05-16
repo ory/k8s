@@ -243,6 +243,8 @@ keto:
     # - sleep 5;
     #   - keto
     customArgs: []
+    # -- resource requests and limits for the automigration initcontainer
+    resources: {}
   # -- Direct keto config. Full documentation can be found in https://www.ory.sh/keto/docs/reference/configuration
   config:
     serve:

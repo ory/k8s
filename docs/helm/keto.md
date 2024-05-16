@@ -63,6 +63,26 @@ $ helm install \
     ory/keto
 ```
 
+### Set up DSN variable on runtime
+
+If you use need to construct DSN environment variable on the fly, you can leave
+`keto.config.dsn` empty and provide custom DSN variable via `extraEnv`, e.g.:
+
+> **Note:** extraEnvs are defined separatly for individual objects (deployments,
+> statefulsets, jobs etc), and therefore you need to define the env for all
+> objects using it. Please refer to
+> [kratos values as an example](https://github.dev/ory/k8s/blob/master/helm/charts/kratos/values.yaml)
+
+```yaml
+deployment:
+  extraEnv:
+    - name: DSN
+      valueFrom:
+        secretKeyRef:
+          name: keto-dsn-secret
+          key: dsn
+```
+
 ## Configuration
 
 You can pass your
