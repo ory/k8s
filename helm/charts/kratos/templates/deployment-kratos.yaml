@@ -60,6 +60,11 @@ spec:
         - name: {{ .Chart.Name }}-automigrate
           image: {{ include "kratos.image" . }}
           imagePullPolicy: {{ include "kratos.imagePullPolicy" . }}
+          {{- if .Values.deployment.environmentSecretsName }}
+          envFrom:
+            - secretRef:
+                name: {{ .Values.deployment.environmentSecretsName }}
+          {{- end}}
           {{- if .Values.kratos.automigration.customCommand }}
           command: {{- toYaml .Values.kratos.automigration.customCommand | nindent 12 }}
           {{- else }}
