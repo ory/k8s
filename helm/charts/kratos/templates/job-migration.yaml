@@ -70,6 +70,11 @@ spec:
           {{- if $migrationExtraEnv }}
             {{- toYaml $migrationExtraEnv | nindent 10 }}
           {{- end }}
+        {{- if .Values.deployment.environmentSecretsName }}
+          envFrom:
+          - secretRef:
+              name: {{ .Values.deployment.environmentSecretsName }}
+        {{- end}}
         {{- with .Values.kratos.automigration.resources }}
         resources:
           {{- toYaml . | nindent 10 }}
