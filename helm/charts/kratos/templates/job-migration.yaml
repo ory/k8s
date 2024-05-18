@@ -71,7 +71,7 @@ spec:
             {{- toYaml $migrationExtraEnv | nindent 10 }}
           {{- end }}
         {{- if .Values.deployment.environmentSecretsName }}
-          envFrom:
+        envFrom:
           - secretRef:
               name: {{ .Values.deployment.environmentSecretsName }}
         {{- end}}
