@@ -24,6 +24,21 @@ If release name contains chart name it will be used as a full name.
 {{- end -}}
 {{- end -}}
 
+
+{{/*
+Create a config map name for rules.
+If maester is enabled, use the child chart named template to get the value.
+*/}}
+{{- define "oathkeeper.rulesConfigMapName" -}}
+{{- if .Values.maester.enabled -}}
+{{- $childChart := (dict "Name" "oathkeeper-maester") -}}
+{{- include "oathkeeper-maester.getCM" (dict "Values" (index .Values "oathkeeper-maester") "Release" $.Release "Chart" $childChart) }}
+{{- else -}}
+{{ include "oathkeeper.fullname" . }}-rules
+{{- end -}}
+{{- end -}}
+
+
 {{/*
 Create a secret name which can be overridden.
 */}}
@@ -86,7 +101,9 @@ Checksum annotations generated from configmaps and secrets
 {{- if .Values.configmap.hashSumEnabled }}
 {{- $oathkeeperConfigMapFile := ternary "/configmap-config-demo.yaml" "/configmap-config.yaml" (.Values.demo) }}
 checksum/oathkeeper-config: {{ include (print $.Template.BasePath $oathkeeperConfigMapFile) . | sha256sum }}
+{{- if .Values.oathkeeper.managedAccessRules }}
 checksum/oathkeeper-rules: {{ include (print $.Template.BasePath "/configmap-rules.yaml") . | sha256sum }}
+{{- end }}
 {{- end }}
 {{- if and .Values.secret.enabled .Values.secret.hashSumEnabled }}
 checksum/oauthkeeper-secrets: {{ include (print $.Template.BasePath "/secrets.yaml") . | sha256sum }}
