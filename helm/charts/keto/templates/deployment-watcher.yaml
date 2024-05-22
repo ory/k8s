@@ -38,7 +38,7 @@ spec:
           {{- toYaml . | nindent 8 }}
         {{- end }}
     spec:
-      automountServiceAccountToken: {{ .Values.deployment.automountServiceAccountToken }}
+      automountServiceAccountToken: {{ .Values.watcher.automountServiceAccountToken }}
       serviceAccountName: {{ include "keto.serviceAccountName" . }}-watcher
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}

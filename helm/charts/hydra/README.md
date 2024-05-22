@@ -53,7 +53,7 @@ A Helm chart for deploying ORY Hydra in Kubernetes
 | deployment.annotations | object | `{}` | Set custom deployment level annotations |
 | deployment.automigration | object | `{"extraEnv":[]}` | Parameters for the automigration initContainer |
 | deployment.automigration.extraEnv | list | `[]` | Array of extra envs to be passed to the initContainer. Kubernetes format is expected - name: FOO   value: BAR |
-| deployment.automountServiceAccountToken | bool | `true` |  |
+| deployment.automountServiceAccountToken | bool | `false` |  |
 | deployment.autoscaling | object | `{"behavior":{},"enabled":false,"maxReplicas":3,"minReplicas":1,"targetCPU":{},"targetMemory":{}}` | Configure HPA |
 | deployment.autoscaling.behavior | object | `{}` | Set custom behavior https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/#configurable-scaling-behavior |
 | deployment.customLivenessProbe | object | `{}` | Configure a custom livenessProbe. This overwrites the default object |
@@ -185,6 +185,7 @@ A Helm chart for deploying ORY Hydra in Kubernetes
 | serviceMonitor.tlsConfig | object | `{}` | TLS configuration to use when scraping the endpoint |
 | test.busybox | object | `{"repository":"busybox","tag":1}` | use a busybox image from another repository |
 | test.labels | object | `{}` | Provide additional labels to the test pod |
+| watcher.automountServiceAccountToken | bool | `true` |  |
 | watcher.enabled | bool | `false` |  |
 | watcher.image | string | `"oryd/k8s-toolbox:0.0.5"` |  |
 | watcher.mountFile | string | `""` | Path to mounted file, which wil be monitored for changes. eg: /etc/secrets/my-secret/foo |

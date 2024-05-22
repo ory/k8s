@@ -31,7 +31,7 @@ A Helm chart for deploying ORY Oathkeeper in Kubernetes
 | configmap.hashSumEnabled | bool | `true` | switch to false to prevent checksum annotations being maintained and propogated to the pods |
 | demo | bool | `false` | If enabled, a demo deployment with exemplary access rules and JSON Web Key Secrets will be generated. |
 | deployment.annotations | object | `{}` |  |
-| deployment.automountServiceAccountToken | bool | `false` |  |
+| deployment.automountServiceAccountToken | bool | `true` |  |
 | deployment.autoscaling | object | `{"behavior":{},"enabled":false,"maxReplicas":5,"minReplicas":1,"targetCPU":{},"targetMemory":{}}` | Configure horizontal pod autoscaler for deployment |
 | deployment.autoscaling.behavior | object | `{}` | Set custom behavior https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/#configurable-scaling-behavior |
 | deployment.customLivenessProbe | object | `{}` | Configure a custom livenessProbe. This overwrites the default object |

@@ -351,8 +351,7 @@ deployment:
     # -- The name of the service account to use. If not set and create is true, a name is generated using the fullname template
     name: ""
 
-  # https://github.com/kubernetes/kubernetes/issues/57601
-  automountServiceAccountToken: true
+  automountServiceAccountToken: false
 
   terminationGracePeriodSeconds: 60
 
@@ -579,7 +578,7 @@ job:
   #       command: [...]
 
   # -- Set automounting of the SA token
-  automountServiceAccountToken: true
+  automountServiceAccountToken: false
 
   # -- Set sharing process namespace
   shareProcessNamespace: false
@@ -630,6 +629,7 @@ watcher:
   watchLabelKey: "ory.sh/watcher"
   # -- Number of revisions kept in history
   revisionHistoryLimit: 5
+  automountServiceAccountToken: true
 
 # -- SQL cleanup cron job configuration
 cleanup:

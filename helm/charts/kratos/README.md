@@ -38,7 +38,7 @@ A ORY Kratos Helm chart for Kubernetes
 | deployment.annotations | object | `{}` |  |
 | deployment.automigration | object | `{"extraEnv":[]}` | Parameters for the automigration initContainer |
 | deployment.automigration.extraEnv | list | `[]` | Array of extra envs to be passed to the initContainer. Kubernetes format is expected - name: FOO   value: BAR |
-| deployment.automountServiceAccountToken | bool | `true` |  |
+| deployment.automountServiceAccountToken | bool | `false` |  |
 | deployment.customLivenessProbe | object | `{}` | Configure a custom livenessProbe. This overwrites the default object |
 | deployment.customReadinessProbe | object | `{}` | Configure a custom readinessProbe. This overwrites the default object |
 | deployment.customStartupProbe | object | `{}` | Configure a custom startupProbe. This overwrites the default object |
@@ -94,7 +94,7 @@ A ORY Kratos Helm chart for Kubernetes
 | ingress.public.hosts[0].paths[0].pathType | string | `"ImplementationSpecific"` |  |
 | ingress.public.tls | list | `[]` |  |
 | job.annotations | object | `{"helm.sh/hook":"pre-install, pre-upgrade","helm.sh/hook-delete-policy":"before-hook-creation,hook-succeeded","helm.sh/hook-weight":"1"}` | If you do want to specify annotations, uncomment the following lines, adjust them as necessary, and remove the curly braces after 'annotations:'. |
-| job.automountServiceAccountToken | bool | `true` | Set automounting of the SA token |
+| job.automountServiceAccountToken | bool | `false` | Set automounting of the SA token |
 | job.extraContainers | string | `""` | If you want to add extra sidecar containers. |
 | job.extraEnv | list | `[]` | Array of extra envs to be passed to the job. This takes precedence over deployment variables. Kubernetes format is expected - name: FOO   value: BAR |
 | job.extraInitContainers | string | `""` | If you want to add extra init containers. |
@@ -203,6 +203,7 @@ A ORY Kratos Helm chart for Kubernetes
 | strategy.rollingUpdate.maxUnavailable | string | `"25%"` |  |
 | strategy.type | string | `"RollingUpdate"` |  |
 | test.busybox | object | `{"repository":"busybox","tag":1}` | use a busybox image from another repository |
+| watcher.automountServiceAccountToken | bool | `true` |  |
 | watcher.enabled | bool | `false` |  |
 | watcher.image | string | `"oryd/k8s-toolbox:0.0.5"` |  |
 | watcher.mountFile | string | `""` | Path to mounted file, which wil be monitored for changes. eg: /etc/secrets/my-secret/foo |
