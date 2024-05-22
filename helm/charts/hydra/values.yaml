@@ -346,8 +346,7 @@ deployment:
     periodSeconds: 1
     timeoutSeconds: 1
 
-  # https://github.com/kubernetes/kubernetes/issues/57601
-  automountServiceAccountToken: true
+  automountServiceAccountToken: false
 
   terminationGracePeriodSeconds: 60
 
@@ -488,6 +487,8 @@ watcher:
 
   # -- pod securityContext for watcher deployment
   podSecurityContext: {}
+  resources: {}
+  automountServiceAccountToken: true
 
   # -- container securityContext for watcher deployment
   securityContext:

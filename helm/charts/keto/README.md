@@ -86,7 +86,7 @@ Access Control Policies as a Server
 | ingress.write.hosts[0].paths[0].pathType | string | `"Prefix"` |  |
 | ingress.write.tls | list | `[]` |  |
 | job.annotations | object | `{"helm.sh/hook":"pre-install, pre-upgrade","helm.sh/hook-delete-policy":"before-hook-creation,hook-succeeded","helm.sh/hook-weight":"1"}` | If you do want to specify annotations, uncomment the following lines, adjust them as necessary, and remove the curly braces after 'annotations:'. |
-| job.automountServiceAccountToken | bool | `true` | Set automounting of the SA token |
+| job.automountServiceAccountToken | bool | `false` | Set automounting of the SA token |
 | job.extraContainers | string | `""` | If you want to add extra sidecar containers. |
 | job.extraEnv | list | `[]` | Array of extra envs to be passed to the job. This takes precedence over deployment variables. Kubernetes format is expected - name: FOO   value: BAR |
 | job.extraInitContainers | string | `""` | If you want to add extra init containers. |
@@ -165,12 +165,14 @@ Access Control Policies as a Server
 | serviceMonitor.tlsConfig | object | `{}` | TLS configuration to use when scraping the endpoint |
 | test.busybox | object | `{"repository":"busybox","tag":1}` | use a busybox image from another repository |
 | test.labels | object | `{}` | Provide additional labels to the test pod |
+| watcher.automountServiceAccountToken | bool | `true` |  |
 | watcher.enabled | bool | `false` |  |
 | watcher.image | string | `"oryd/k8s-toolbox:0.0.5"` |  |
 | watcher.mountFile | string | `""` | Path to mounted file, which wil be monitored for changes. eg: /etc/secrets/my-secret/foo |
 | watcher.podMetadata | object | `{"annotations":{},"labels":{}}` | Specify pod metadata, this metadata is added directly to the pod, and not higher objects |
 | watcher.podMetadata.annotations | object | `{}` | Extra pod level annotations |
 | watcher.podMetadata.labels | object | `{}` | Extra pod level labels |
+| watcher.resources | object | `{}` |  |
 | watcher.revisionHistoryLimit | int | `5` | Number of revisions kept in history |
 | watcher.watchLabelKey | string | `"ory.sh/watcher"` | Label key used for managing applications |
 

@@ -103,7 +103,7 @@ job:
   #       command: [...]
 
   # -- Set automounting of the SA token
-  automountServiceAccountToken: true
+  automountServiceAccountToken: false
 
   # -- Set sharing process namespace
   shareProcessNamespace: false
@@ -427,6 +427,8 @@ watcher:
   watchLabelKey: "ory.sh/watcher"
   # -- Number of revisions kept in history
   revisionHistoryLimit: 5
+  automountServiceAccountToken: true
+  resources: {}
 
 ## -- PodDistributionBudget configuration
 pdb:

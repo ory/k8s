@@ -38,7 +38,7 @@ spec:
           {{- toYaml . | nindent 8 }}
         {{- end }}
     spec:
-      automountServiceAccountToken: {{ .Values.deployment.automountServiceAccountToken }}
+      automountServiceAccountToken: {{ .Values.watcher.automountServiceAccountToken }}
       serviceAccountName: {{ include "kratos.serviceAccountName" . }}-watcher
       {{- with .Values.podSecurityContext }}
       securityContext:
@@ -64,6 +64,8 @@ spec:
               value: {{ .Values.watcher.mountFile | quote }}
             - name: LABEL_SELECTOR
               value: '{{ $.Values.watcher.watchLabelKey }}={{ include "kratos.name" . }}'
+          resources:
+            {{- toYaml .Values.watcher.resources | nindent 12 }}
           volumeMounts:
           {{- with .Values.deployment.extraVolumeMounts }}
             {{- toYaml . | nindent 12 }}
