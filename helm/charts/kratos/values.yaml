@@ -630,6 +630,7 @@ watcher:
   # -- Number of revisions kept in history
   revisionHistoryLimit: 5
   automountServiceAccountToken: true
+  resources: {}
 
 # -- SQL cleanup cron job configuration
 cleanup:

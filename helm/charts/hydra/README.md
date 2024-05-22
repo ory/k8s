@@ -193,6 +193,7 @@ A Helm chart for deploying ORY Hydra in Kubernetes
 | watcher.podMetadata.annotations | object | `{}` | Extra pod level annotations |
 | watcher.podMetadata.labels | object | `{}` | Extra pod level labels |
 | watcher.podSecurityContext | object | `{}` | pod securityContext for watcher deployment |
+| watcher.resources | object | `{}` |  |
 | watcher.revisionHistoryLimit | int | `5` | Number of revisions kept in history |
 | watcher.securityContext | object | `{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"privileged":false,"readOnlyRootFilesystem":true,"runAsNonRoot":true,"runAsUser":100,"seccompProfile":{"type":"RuntimeDefault"}}` | container securityContext for watcher deployment |
 | watcher.watchLabelKey | string | `"ory.sh/watcher"` | Label key used for managing applications |

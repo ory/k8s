@@ -428,6 +428,7 @@ watcher:
   # -- Number of revisions kept in history
   revisionHistoryLimit: 5
   automountServiceAccountToken: true
+  resources: {}
 
 ## -- PodDistributionBudget configuration
 pdb:

@@ -172,6 +172,7 @@ Access Control Policies as a Server
 | watcher.podMetadata | object | `{"annotations":{},"labels":{}}` | Specify pod metadata, this metadata is added directly to the pod, and not higher objects |
 | watcher.podMetadata.annotations | object | `{}` | Extra pod level annotations |
 | watcher.podMetadata.labels | object | `{}` | Extra pod level labels |
+| watcher.resources | object | `{}` |  |
 | watcher.revisionHistoryLimit | int | `5` | Number of revisions kept in history |
 | watcher.watchLabelKey | string | `"ory.sh/watcher"` | Label key used for managing applications |
 
