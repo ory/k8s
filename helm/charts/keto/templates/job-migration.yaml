@@ -85,7 +85,7 @@ spec:
           {{- with $migrationExtraEnv }}
             {{- toYaml . | nindent 10 }}
           {{- end }}
-        {{- with .Values.keto.automigration.resources }}
+        {{- with .Values.job.resources }}
         resources:
           {{- toYaml . | nindent 10 }}
         {{- end }}

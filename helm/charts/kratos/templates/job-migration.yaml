@@ -75,7 +75,7 @@ spec:
           - secretRef:
               name: {{ .Values.deployment.environmentSecretsName }}
         {{- end}}
-        {{- with .Values.kratos.automigration.resources }}
+        {{- with .Values.job.resources }}
         resources:
           {{- toYaml . | nindent 10 }}
         {{- end }}

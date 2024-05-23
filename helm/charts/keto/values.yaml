@@ -95,6 +95,9 @@ job:
   # -- Configure node tolerations.
   tolerations: []
 
+  # -- Job resources
+  resources: {}
+
   # -- If you want to add lifecycle hooks.
   lifecycle: ""
   # lifecycle: |
