@@ -2,7 +2,8 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   # The name comes from oathkeeper's subchart.
-  name: {{ include "oathkeeper.fullname" . }}-rules
+  name: '{{ include "oathkeeper.fullname" . }}-rules'
+
 data:
   access-rules.json: |-
     [
