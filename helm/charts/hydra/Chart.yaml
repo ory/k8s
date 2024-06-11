@@ -22,9 +22,13 @@ maintainers: # (optional)
     url: https://www.ory.sh/
 type: application
 dependencies:
+  - name: ory-commons
+    version: 0.1.0
+    repository: file://../ory-commons
+    alias: ory
   - name: hydra-maester
     version: 0.43.1
     condition: maester.enabled
     alias: hydra-maester
     repository: file://../hydra-maester
-    # repository: https://k8s.ory.sh/helm/charts
+

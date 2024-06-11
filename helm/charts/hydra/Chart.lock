@@ -1,6 +1,9 @@
 dependencies:
+- name: ory-commons
+  repository: file://../ory-commons
+  version: 0.1.0
 - name: hydra-maester
   repository: file://../hydra-maester
   version: 0.43.1
-digest: sha256:d28f966a3e6b68126e932e9a6357aa1aea15496b5b6006f2d1d4f2f62e219a64
-generated: "2024-05-23T11:52:47.4059612Z"
+digest: sha256:3ec061d9abc96913b4991d2f57557d144829945e669329e4d8723d896c9a523f
+generated: "2024-06-11T14:58:01.616059+02:00"

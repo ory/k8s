@@ -6,7 +6,7 @@ icon: https://raw.githubusercontent.com/ory/docs/master/docs/static/img/logo-kra
 version: 0.43.1
 type: application
 dependencies:
-- name: ory-commons
-  version: 0.1.0
-  repository: file://../ory-commons
-  alias: ory
+  - name: ory-commons
+    version: 0.1.0
+    repository: file://../ory-commons
+    alias: ory

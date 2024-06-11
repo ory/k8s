@@ -84,11 +84,13 @@ spec:
               {{- end }}
               env:
               {{- if not (empty ( include "hydra.dsn" . )) }}
+                {{- if not (include "ory.extraEnvContainsEnvName" (list $janitorExtraEnv "DSN")) }}
                 - name: DSN
                   valueFrom:
                     secretKeyRef:
                       name: {{ include "hydra.secretname" . }}
                       key: dsn
+                {{- end }}
               {{- end }}
                 {{- with $janitorExtraEnv }}
                   {{- toYaml . | nindent 16 }}
