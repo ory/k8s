@@ -87,7 +87,7 @@ jobs:
           if [[ "$FORCE_FULL_RUN" == "true" ]]; then 
            echo "Forcing tests to be running on every charts as CI running in release context"
            # shellcheck disable=SC2012
-           updated_charts=$(ls ${{ github.workspace }}/helm/charts/ | tr -d " " | jq --raw-input --slurp 'split("\n") | map(select(. != ""))')
+           updated_charts=$(ls ${{ github.workspace }}/helm/charts/ -I "ory-commons" | tr -d " " | jq --raw-input --slurp 'split("\n") | map(select(. != ""))')
           fi
 
           if [[ "$updated_charts" == "[]" ]]; then 
