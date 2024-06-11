@@ -90,11 +90,13 @@ spec:
             - name: LOG_LEVEL
               value: {{ .Values.statefulSet.log.level }}
             {{- if not (empty ( include "kratos.dsn" . )) }}
+              {{- if not (include "ory.extraEnvContainsEnvName" (list $extraEnv "DSN")) }}
             - name: DSN
               valueFrom:
                 secretKeyRef:
                   name: {{ include "kratos.secretname" . }}
                   key: dsn
+              {{- end }}
             {{- end }}
             - name: SECRETS_DEFAULT
               valueFrom:

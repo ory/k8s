@@ -4,6 +4,12 @@
 
 A ORY Kratos Helm chart for Kubernetes
 
+## Requirements
+
+| Repository | Name | Version |
+|------------|------|---------|
+| file://../ory-commons | ory(ory-commons) | 0.1.0 |
+
 ## Values
 
 | Key | Type | Default | Description |

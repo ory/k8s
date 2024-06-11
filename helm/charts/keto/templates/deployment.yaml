@@ -94,11 +94,13 @@ spec:
           {{- end }}
           env:
             {{- if not (empty ( include "keto.dsn" . )) }}
+              {{- if not (include "ory.extraEnvContainsEnvName" (list $migrationExtraEnv "DSN")) }}
             - name: DSN
               valueFrom:
                 secretKeyRef:
                   name: {{ include "keto.secretname" . }}
                   key: dsn
+              {{- end }}
             {{- end }}
             {{- with $migrationExtraEnv }}
               {{- toYaml . | nindent 12 }}
@@ -185,11 +187,13 @@ spec:
             {{- toYaml $resources | nindent 12 }}
           env:
             {{- if not (empty ( include "keto.dsn" . )) }}
+              {{- if not (include "ory.extraEnvContainsEnvName" (list .Values.deployment.extraEnv "DSN")) }}
             - name: DSN
               valueFrom:
                 secretKeyRef:
                   name: {{ include "keto.secretname" . }}
                   key: dsn
+              {{- end }}
             {{- end }}
             {{- with .Values.deployment.extraEnv }}
               {{- toYaml . | nindent 12 }}

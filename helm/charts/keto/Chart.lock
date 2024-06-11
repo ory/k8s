@@ -1,0 +1,6 @@
+dependencies:
+- name: ory-commons
+  repository: file://../ory-commons
+  version: 0.1.0
+digest: sha256:eec8978215334aad38275f0171681f1200220dccef4762ddeb197679fd287abb
+generated: "2024-06-11T14:47:42.552973+02:00"

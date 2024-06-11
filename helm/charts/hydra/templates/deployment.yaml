@@ -136,11 +136,13 @@ spec:
               value: {{ $issuer | quote }}
             {{- end }}
             {{- if not (empty ( include "hydra.dsn" . )) }}
+              {{- if not (include "ory.extraEnvContainsEnvName" (list .Values.deployment.extraEnv "DSN")) }}
             - name: DSN
               valueFrom:
                 secretKeyRef:
                   name: {{ include "hydra.secretname" . }}
                   key: dsn
+              {{- end }}
             {{- end }}
             - name: SECRETS_SYSTEM
               valueFrom:
@@ -193,11 +195,13 @@ spec:
           {{- end }}
           env:
             {{- if not (empty ( include "hydra.dsn" . )) }}
+              {{- if not (include "ory.extraEnvContainsEnvName" (list $migrationExtraEnv "DSN")) }}
             - name: DSN
               valueFrom:
                 secretKeyRef:
                   name: {{ include "hydra.secretname" . }}
                   key: dsn
+              {{- end }}
             {{- end }}
             {{- with $migrationExtraEnv }}
               {{- toYaml . | nindent 12 }}

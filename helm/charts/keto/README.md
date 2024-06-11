@@ -17,6 +17,12 @@ Access Control Policies as a Server
 * <https://github.com/ory/keto>
 * <https://github.com/ory/k8s>
 
+## Requirements
+
+| Repository | Name | Version |
+|------------|------|---------|
+| file://../ory-commons | ory(ory-commons) | 0.1.0 |
+
 ## Values
 
 | Key | Type | Default | Description |

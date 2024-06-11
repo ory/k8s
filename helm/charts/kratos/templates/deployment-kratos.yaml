@@ -84,11 +84,13 @@ spec:
           {{- end }}
           env:
             {{- if not (empty ( include "kratos.dsn" . )) }}
+              {{- if not (include "ory.extraEnvContainsEnvName" (list $migrationExtraEnv "DSN")) }}
             - name: DSN
               valueFrom:
                 secretKeyRef:
                   name: {{ include "kratos.secretname" . }}
                   key: dsn
+              {{- end }}
             {{- end }}
           {{- if $migrationExtraEnv }}
             {{- toYaml $migrationExtraEnv | nindent 12 }}
@@ -104,7 +106,7 @@ spec:
       {{- end }}
       volumes:
         {{- if .Values.deployment.extraVolumes }}
-{{ toYaml .Values.deployment.extraVolumes | indent 8 }}
+          {{- toYaml .Values.deployment.extraVolumes | nindent 8 }}
         {{- end }}
         - name: {{ include "kratos.name" . }}-config-volume
           configMap:
@@ -154,11 +156,13 @@ spec:
             {{- end }}
           env:
             {{- if not (empty ( include "kratos.dsn" . )) }}
+              {{- if not (include "ory.extraEnvContainsEnvName" (list .Values.deployment.extraEnv "DSN")) }}
             - name: DSN
               valueFrom:
                 secretKeyRef:
                   name: {{ include "kratos.secretname" . }}
                   key: dsn
+              {{- end }}
             {{- end }}
             - name: SECRETS_DEFAULT
               valueFrom:
