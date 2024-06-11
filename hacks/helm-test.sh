@@ -8,6 +8,11 @@ cd "$( dirname "${BASH_SOURCE[0]}" )/.."
 
 export release=$(echo "$1-$(date +%s)" | cut -c 1-31)
 
+if [[ "$1" == "ory-commons" ]]; then
+  echo "---> Library chart, exitting"
+  exit 0
+fi
+
 helm dep update "./helm/charts/$1"
 
 echo "---> Installing $1"
