@@ -31,4 +31,3 @@ dependencies:
     condition: maester.enabled
     alias: hydra-maester
     repository: file://../hydra-maester
-

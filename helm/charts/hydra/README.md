@@ -22,6 +22,7 @@ A Helm chart for deploying ORY Hydra in Kubernetes
 | Repository | Name | Version |
 |------------|------|---------|
 | file://../hydra-maester | hydra-maester(hydra-maester) | 0.43.1 |
+| file://../ory-commons | ory(ory-commons) | 0.1.0 |
 
 ## Values
 
