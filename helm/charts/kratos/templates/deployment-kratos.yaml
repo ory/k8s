@@ -84,11 +84,13 @@ spec:
           {{- end }}
           env:
             {{- if not (empty ( include "kratos.dsn" . )) }}
+              {{- if not (include "ory.extraEnvContainsEnvName" (list $migrationExtraEnv "DSN")) }}
             - name: DSN
               valueFrom:
                 secretKeyRef:
                   name: {{ include "kratos.secretname" . }}
                   key: dsn
+              {{- end }}
             {{- end }}
           {{- if $migrationExtraEnv }}
             {{- toYaml $migrationExtraEnv | nindent 12 }}
@@ -154,11 +156,13 @@ spec:
             {{- end }}
           env:
             {{- if not (empty ( include "kratos.dsn" . )) }}
+              {{- if not (include "ory.extraEnvContainsEnvName" (list .Values.deployment.extraEnv "DSN")) }}
             - name: DSN
               valueFrom:
                 secretKeyRef:
                   name: {{ include "kratos.secretname" . }}
                   key: dsn
+              {{- end }}
             {{- end }}
             - name: SECRETS_DEFAULT
               valueFrom:
