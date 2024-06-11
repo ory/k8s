@@ -104,7 +104,7 @@ spec:
       {{- end }}
       volumes:
         {{- if .Values.deployment.extraVolumes }}
-{{ toYaml .Values.deployment.extraVolumes | indent 8 }}
+          {{- toYaml .Values.deployment.extraVolumes | nindent 8 }}
         {{- end }}
         - name: {{ include "kratos.name" . }}-config-volume
           configMap:

@@ -213,3 +213,16 @@ Common labels for the cleanup cron job
 "app.kubernetes.io/component": cleanup
 "helm.sh/chart": {{ include "kratos.chart" . | quote }}
 {{- end -}}
+
+{{/*
+Check if list contains object
+*/}}
+{{- define "kratos.extraEnvContainsEnvName" -}}
+  {{- $extraEnvs := index . 0 -}}
+  {{- $envName := index . 1 -}}
+  {{- range $k, $v := $extraEnvs -}}
+    {{- if eq $v.name $envName -}}
+      found
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
