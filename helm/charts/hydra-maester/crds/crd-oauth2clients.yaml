@@ -236,6 +236,70 @@ spec:
                     Indication which authentication method shoud be used for the
                     token endpoint
                   type: string
+                tokenLifespans:
+                  description: Configuration about token lifespans.
+                  properties:
+                    authorization_code_grant_access_token_lifespan:
+                      description:
+                        The lifespan of the access token issued during
+                        authorization_code grant type.
+                      pattern: "[0-9]+(ns|us|ms|s|m|h)"
+                      type: string
+                    authorization_code_grant_id_token_lifespan:
+                      description:
+                        The lifespan of the id token issued during
+                        authorization_code grant type.
+                      pattern: "[0-9]+(ns|us|ms|s|m|h)"
+                      type: string
+                    authorization_code_grant_refresh_token_lifespan:
+                      description:
+                        The lifespan of the refresh token issued during
+                        authorization_code grant type.
+                      pattern: "[0-9]+(ns|us|ms|s|m|h)"
+                      type: string
+                    client_credentials_grant_access_token_lifespan:
+                      description:
+                        The lifespan of the access token issued during
+                        client_credentials grant type.
+                      pattern: "[0-9]+(ns|us|ms|s|m|h)"
+                      type: string
+                    implicit_grant_access_token_lifespan:
+                      description:
+                        The lifespan of the access token issued during implicit
+                        grant type.
+                      pattern: "[0-9]+(ns|us|ms|s|m|h)"
+                      type: string
+                    implicit_grant_id_token_lifespan:
+                      description:
+                        The lifespan of the id token issued during implicit
+                        grant type.
+                      pattern: "[0-9]+(ns|us|ms|s|m|h)"
+                      type: string
+                    jwt_bearer_grant_access_token_lifespan:
+                      description:
+                        The lifespan of the access token issued during
+                        jwt_bearer grant type.
+                      pattern: "[0-9]+(ns|us|ms|s|m|h)"
+                      type: string
+                    refresh_token_grant_access_token_lifespan:
+                      description:
+                        The lifespan of the access token issued during
+                        refresh_token grant type.
+                      pattern: "[0-9]+(ns|us|ms|s|m|h)"
+                      type: string
+                    refresh_token_grant_id_token_lifespan:
+                      description:
+                        The lifespan of the id token issued during refresh_token
+                        grant type.
+                      pattern: "[0-9]+(ns|us|ms|s|m|h)"
+                      type: string
+                    refresh_token_grant_refresh_token_lifespan:
+                      description:
+                        The lifespan of the refresh token issued during
+                        refresh_token grant type.
+                      pattern: "[0-9]+(ns|us|ms|s|m|h)"
+                      type: string
+                  type: object
               required:
                 - grantTypes
                 - scope
