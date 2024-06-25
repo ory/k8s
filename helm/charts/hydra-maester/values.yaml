@@ -12,7 +12,7 @@ image:
   # -- Ory Hydra-maester image
   repository: oryd/hydra-maester
   # -- Ory Hydra-maester version
-  tag: v0.0.33-amd64
+  tag: v0.0.34-amd64
   # -- Image pull policy
   pullPolicy: IfNotPresent
 
