@@ -1,0 +1,37 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  # The name comes from oathkeeper's subchart.
+  name: '{{ include "oathkeeper.fullname" . }}-rules'
+
+data:
+  access-rules.json: |-
+    [
+      {
+        "id": "rule-foobar",
+        "upstream": {
+          "url": "https://httpbin.org/anything"
+        },
+        "match": {
+          "url": "http://<[^/]+>/authenticator/noop/authorizer/allow/mutator/noop",
+          "methods": [
+            "GET",
+            "POST",
+            "PUT",
+            "DELETE",
+            "PATCH"
+          ]
+        },
+        "authenticators": [
+          {
+            "handler": "noop"
+          }
+        ],
+        "authorizer": {
+          "handler": "allow"
+        },
+        "mutators": [{
+          "handler": "noop"
+        }]
+      }
+    ]
