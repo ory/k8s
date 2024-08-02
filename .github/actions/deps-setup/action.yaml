@@ -9,7 +9,7 @@ runs:
         echo "branch=$(echo ${GITHUB_REF#refs/heads/})" >> $GITHUB_ENV
       id: extract_branch
 
-    - uses: actions/cache@v3
+    - uses: actions/cache@v4
       id: cache-packages
       with:
         path: |
