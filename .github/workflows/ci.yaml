@@ -18,8 +18,8 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
-      - uses: actions/setup-go@v3
+        uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
         with:
           go-version: "1.21"
       - name: Setup dependencies
@@ -34,8 +34,8 @@ jobs:
       cicd-definition-changed: ${{ steps.filter.outputs.cicd-definitions }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
-      - uses: dorny/paths-filter@v2.11.1
+        uses: actions/checkout@v4
+      - uses: dorny/paths-filter@v3
         id: filter
         with:
           base: master
@@ -109,7 +109,7 @@ jobs:
       HELM_CHART: ${{ matrix.chart }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Checkout dependencies
         uses: ./.github/actions/deps-setup
       - name: Lint helm chart
@@ -142,7 +142,7 @@ jobs:
       HELM_CHART: ${{ matrix.chart }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Checkout dependencies
         uses: ./.github/actions/deps-setup
       - name: Test upgrade for helm chart
@@ -162,7 +162,7 @@ jobs:
       HELM_CHART: ${{ matrix.chart }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Checkout dependencies
         uses: ./.github/actions/deps-setup
       - name: Test install for helm chart
@@ -178,7 +178,7 @@ jobs:
       HELM_DOCS_VERSION: "1.11.0"
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           token: ${{ secrets.ORY_BOT_PAT }}
       - name: Checkout dependencies
@@ -203,7 +203,7 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           token: ${{ secrets.ORY_BOT_PAT }}
       - name: Checkout dependencies
@@ -234,7 +234,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: actionlint
         id: actionlint
         uses: raven-actions/actionlint@v1
