@@ -40,7 +40,7 @@ spec:
 {{- end }}
   revisionHistoryLimit: {{ .Values.deployment.revisionHistoryLimit }}
   strategy:
-    {{- toYaml .Values.strategy | nindent 4 }}
+    {{- toYaml .Values.deployment.strategy | nindent 4 }}
   selector:
     matchLabels:
       {{- include "keto.selectorLabels" . | nindent 6 }}
