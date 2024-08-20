@@ -4,5 +4,5 @@ description:
   A Helm chart for deploying the reference implementation for the User Login and
   Consent Flow in Kubernetes
 name: example-idp
-version: 0.45.0
+version: 0.46.0
 type: application
