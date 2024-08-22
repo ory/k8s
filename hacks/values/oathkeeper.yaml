@@ -68,6 +68,7 @@ deployment:
       maxSurge: 25%
       maxUnavailable: 25%
 oathkeeper:
+  managedAccessRules: true
   accessRules: |
     [
       {

@@ -378,7 +378,7 @@ affinity: {}
 
 ## -- Configures controller setup
 maester:
-  enabled: true
+  enabled: false
 
 ## -- PodDistributionBudget configuration
 pdb:

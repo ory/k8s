@@ -1,4 +1,7 @@
 {{- if .Values.oathkeeper.managedAccessRules }}
+{{- if .Values.maester.enabled -}}
+{{- fail "Both `managedAccessRules` and `maester.enabled` cannot be set to true at the same time" }}
+{{- end -}}
 ---
 apiVersion: v1
 kind: ConfigMap
