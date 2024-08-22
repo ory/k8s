@@ -65,7 +65,7 @@ or the [Ory Chat](https://www.ory.sh/chat).
   [a Contributors License Agreement?](https://cla-assistant.io/ory/k8s)
 
 - I would like updates about new versions of Ory Kubernetes Resources.
-  [How are new releases announced?](https://ory.us10.list-manage.com/subscribe?u=ffb1a878e4ec6c0ed312a3480&id=f605a41b53)
+  [How are new releases announced?](https://www.ory.sh/l/sign-up-newsletter)
 
 ## How can I contribute?
 
