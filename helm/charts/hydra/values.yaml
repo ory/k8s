@@ -529,6 +529,8 @@ cronjob:
     # -- Configure how often the cron job is ran
     schedule: "0 */1 * * *"
 
+    customCommand: []
+
     # -- Configure the arguments of the entrypoint, overriding the default value
     customArgs: []
 

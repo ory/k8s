@@ -60,7 +60,11 @@ spec:
               securityContext:
                 {{- toYaml . | nindent 16 }}
               {{- end }}
+              {{- if .Values.cronjob.janitor.customCommand }}
+              command: {{- toYaml .Values.cronjob.janitor.customCommand | nindent 14 }}
+              {{- else }}
               command: ["hydra"]
+              {{- end }}
               {{- if .Values.cronjob.janitor.customArgs }}
               args: {{- toYaml .Values.cronjob.janitor.customArgs | nindent 14 }}
               {{- else }}
