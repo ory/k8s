@@ -528,6 +528,8 @@ cronjob:
   janitor:
     # -- Configure how often the cron job is ran
     schedule: "0 */1 * * *"
+    # -- Configure a custom entrypoint, overriding the default value
+    customCommand: []
 
     # -- Configure the arguments of the entrypoint, overriding the default value
     customArgs: []
