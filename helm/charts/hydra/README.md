@@ -1,6 +1,6 @@
 # hydra
 
-![Version: 0.46.0](https://img.shields.io/badge/Version-0.46.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v2.2.0](https://img.shields.io/badge/AppVersion-v2.2.0-informational?style=flat-square)
+![Version: 0.47.0](https://img.shields.io/badge/Version-0.47.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v2.2.0](https://img.shields.io/badge/AppVersion-v2.2.0-informational?style=flat-square)
 
 A Helm chart for deploying ORY Hydra in Kubernetes
 
@@ -21,7 +21,7 @@ A Helm chart for deploying ORY Hydra in Kubernetes
 
 | Repository | Name | Version |
 |------------|------|---------|
-| file://../hydra-maester | hydra-maester(hydra-maester) | 0.46.0 |
+| file://../hydra-maester | hydra-maester(hydra-maester) | 0.47.0 |
 | file://../ory-commons | ory(ory-commons) | 0.1.0 |
 
 ## Values
@@ -34,6 +34,7 @@ A Helm chart for deploying ORY Hydra in Kubernetes
 | cronjob.janitor.annotations | object | `{}` | Set custom cron job level annotations |
 | cronjob.janitor.automountServiceAccountToken | bool | `true` | Set automounting of the SA token |
 | cronjob.janitor.customArgs | list | `[]` | Configure the arguments of the entrypoint, overriding the default value |
+| cronjob.janitor.customCommand | list | `[]` | Configure a custom entrypoint, overriding the default value |
 | cronjob.janitor.extraContainers | string | `""` | If you want to add extra sidecar containers. |
 | cronjob.janitor.extraEnv | list | `[]` | Array of extra envs to be passed to the cronjob. This takes precedence over deployment variables. Kubernetes format is expected - name: FOO   value: BAR |
 | cronjob.janitor.extraInitContainers | string | `""` | If you want to add extra init containers. These are processed before the migration init container. |

@@ -1,6 +1,6 @@
 # oathkeeper
 
-![Version: 0.46.0](https://img.shields.io/badge/Version-0.46.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.40.7](https://img.shields.io/badge/AppVersion-v0.40.7-informational?style=flat-square)
+![Version: 0.47.0](https://img.shields.io/badge/Version-0.47.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.40.7](https://img.shields.io/badge/AppVersion-v0.40.7-informational?style=flat-square)
 
 A Helm chart for deploying ORY Oathkeeper in Kubernetes
 
@@ -21,7 +21,7 @@ A Helm chart for deploying ORY Oathkeeper in Kubernetes
 
 | Repository | Name | Version |
 |------------|------|---------|
-| file://../oathkeeper-maester | oathkeeper-maester(oathkeeper-maester) | 0.46.0 |
+| file://../oathkeeper-maester | oathkeeper-maester(oathkeeper-maester) | 0.47.0 |
 
 ## Values
 
@@ -79,7 +79,7 @@ A Helm chart for deploying ORY Oathkeeper in Kubernetes
 | ingress.proxy | object | `{"annotations":{},"className":"","defaultBackend":{},"enabled":false,"hosts":[{"host":"proxy.oathkeeper.localhost","paths":[{"path":"/","pathType":"ImplementationSpecific"}]}]}` | Configure ingress for the proxy port. |
 | ingress.proxy.defaultBackend | object | `{}` | Configuration for custom default service. This service will be used to handle the response when the configured service in the Ingress rule does not have any active endpoints |
 | ingress.proxy.enabled | bool | `false` | En-/Disable the proxy ingress. |
-| maester.enabled | bool | `true` |  |
+| maester.enabled | bool | `false` |  |
 | nameOverride | string | `""` | Chart name override |
 | oathkeeper.accessRules | string | `""` | If set, uses the given access rules. |
 | oathkeeper.config | object | `{"access_rules":{"repositories":["file:///etc/rules/access-rules.json"]},"serve":{"api":{"port":4456},"prometheus":{"port":9000},"proxy":{"port":4455}}}` | The ORY Oathkeeper configuration. For a full list of available settings, check:   https://github.com/ory/oathkeeper/blob/master/docs/config.yaml |
