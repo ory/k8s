@@ -1,9 +1,18 @@
+{{- if .Values.service.enabled -}}
+---
 apiVersion: v1
 kind: Service
 metadata:
   name: {{ include "kratos-selfservice-ui-node.fullname" . }}
   labels:
-{{ include "kratos-selfservice-ui-node.labels" . | indent 4 }}
+    {{- include "kratos-selfservice-ui-node.labels" . | nindent 4 }}
+    {{- with .Values.service.labels }}
+      {{- toYaml . | nindent 4 }}
+    {{- end }}
+  annotations:
+    {{- with .Values.service.annotations }}
+      {{- toYaml . | nindent 4 }}
+    {{- end }}
 spec:
   type: {{ .Values.service.type }}
   {{- if eq .Values.service.type "LoadBalancer" }}
@@ -24,3 +33,4 @@ spec:
   selector:
     app.kubernetes.io/name: {{ include "kratos-selfservice-ui-node.name" . }}
     app.kubernetes.io/instance: {{ .Release.Name }}
+{{- end }}
