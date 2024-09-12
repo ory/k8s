@@ -38,6 +38,8 @@ A Helm chart for deploying ORY Hydra in Kubernetes
 | cronjob.janitor.extraContainers | string | `""` | If you want to add extra sidecar containers. |
 | cronjob.janitor.extraEnv | list | `[]` | Array of extra envs to be passed to the cronjob. This takes precedence over deployment variables. Kubernetes format is expected - name: FOO   value: BAR |
 | cronjob.janitor.extraInitContainers | string | `""` | If you want to add extra init containers. These are processed before the migration init container. |
+| cronjob.janitor.extraVolumeMounts | list | `[]` |  |
+| cronjob.janitor.extraVolumes | list | `[]` | If you want to mount external volume |
 | cronjob.janitor.labels | object | `{}` | Set custom cron job level labels |
 | cronjob.janitor.nodeSelector | object | `{}` | Configure node labels for pod assignment |
 | cronjob.janitor.podMetadata | object | `{"annotations":{},"labels":{}}` | Specify pod metadata, this metadata is added directly to the pod, and not higher objects |

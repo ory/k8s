@@ -169,6 +169,13 @@ cronjob:
         image: "alpine:latest"
         command: ["/bin/sh"]
         args: ["-c", "sleep infinity"]
+    extraVolumeMounts:
+      - mountPath: /testdir
+        name: test-volume
+    extraVolumes:
+      - name: test-volume
+        configMap:
+          name: cm-sample
     podMetadata:
       labels:
         ory.sh/pod_label: hydra

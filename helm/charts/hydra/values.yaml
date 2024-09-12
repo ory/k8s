@@ -551,6 +551,16 @@ cronjob:
     #  - name: ...
     #    image: ...
 
+    # -- If you want to mount external volume
+    extraVolumes: []
+    # - name: my-volume
+    #   secret:
+    #     secretName: my-secret
+    extraVolumeMounts: []
+    # - name: my-volume
+    #   mountPath: /etc/secrets/my-secret
+    #   readOnly: true
+
     # -- Set custom cron job level labels
     labels: {}
 
