@@ -52,6 +52,9 @@ spec:
             - name: {{ include "hydra.name" . }}-config-volume
               configMap:
                 name: {{ include "hydra.fullname" . }}
+            {{- if .Values.cronjob.janitor.extraVolumes }}
+              {{- toYaml .Values.cronjob.janitor.extraVolumes | nindent 12 }}
+            {{- end }}
           containers:
             - name: janitor
               image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
@@ -105,6 +108,9 @@ spec:
                 - name: {{ include "hydra.name" . }}-config-volume
                   mountPath: /etc/config
                   readOnly: true
+                {{- if .Values.cronjob.janitor.extraVolumeMounts }}
+                  {{- toYaml .Values.cronjob.janitor.extraVolumeMounts | nindent 16 }}
+                {{- end }}
             {{- if .Values.cronjob.janitor.extraContainers }}
               {{- tpl .Values.cronjob.janitor.extraContainers . | nindent 12 }}
             {{- end }}
