@@ -1,6 +1,6 @@
 # kratos-selfservice-ui-node
 
-![Version: 0.47.0](https://img.shields.io/badge/Version-0.47.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.13.0-4](https://img.shields.io/badge/AppVersion-v0.13.0--4-informational?style=flat-square)
+![Version: 0.48.0](https://img.shields.io/badge/Version-0.48.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.13.0-4](https://img.shields.io/badge/AppVersion-v0.13.0--4-informational?style=flat-square)
 
 A Helm chart for ORY Kratos's example ui for Kubernetes
 
@@ -64,7 +64,7 @@ A Helm chart for ORY Kratos's example ui for Kubernetes
 | securityContext.seLinuxOptions.level | string | `"s0:c123,c456"` |  |
 | securityContext.seccompProfile.type | string | `"RuntimeDefault"` |  |
 | service.annotations | object | `{}` | If you do want to specify annotations, uncomment the following lines, adjust them as necessary, and remove the curly braces after 'annotations:'. |
-| service.enabled | bool | `true` | En-/disable the service |
+| service.enabled | bool | `true` |  |
 | service.labels | object | `{}` | Provide custom labels. Use the same syntax as for annotations. |
 | service.loadBalancerIP | string | `""` | The load balancer IP |
 | service.name | string | `"http"` | The service port name. Useful to set a custom service port name if it must follow a scheme (e.g. Istio) |
