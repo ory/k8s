@@ -26,6 +26,14 @@ If release name contains chart name it will be used as a full name.
 
 
 {{/*
+Generate the configmap data, redacting secrets
+*/}}
+{{- define "oathkeeper.configmap" -}}
+{{- $config := .Values.oathkeeper.config -}}
+{{- tpl (toYaml $config) . -}}
+{{- end -}}
+
+{{/*
 Create a config map name for rules.
 If maester is enabled, use the child chart named template to get the value.
 */}}
