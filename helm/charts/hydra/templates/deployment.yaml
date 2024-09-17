@@ -154,8 +154,8 @@ spec:
                 secretKeyRef:
                   name: {{ include "hydra.secretname" . }}
                   key: secretsCookie
-            {{- with .Values.deployment.extraEnv }}
-              {{- toYaml . | nindent 12 }}
+            {{- if .Values.deployment.extraEnv }}
+              {{- tpl (toYaml .Values.deployment.extraEnv) . | nindent 12 }}
             {{- end }}
           resources:
             {{- toYaml .Values.deployment.resources | nindent 12 }}
@@ -203,8 +203,8 @@ spec:
                   key: dsn
               {{- end }}
             {{- end }}
-            {{- with $migrationExtraEnv }}
-              {{- toYaml . | nindent 12 }}
+            {{- if $migrationExtraEnv }}
+              {{- tpl (toYaml $migrationExtraEnv) . | nindent 12 }}
             {{- end }}
           {{- if .Values.hydra.automigration.resources }}
           resources:

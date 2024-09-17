@@ -31,7 +31,7 @@ Access Control Policies as a Server
 | deployment.affinity | object | `{}` |  |
 | deployment.annotations | object | `{}` |  |
 | deployment.automigration | object | `{"extraEnv":[]}` | Parameters for the automigration initContainer |
-| deployment.automigration.extraEnv | list | `[]` | Array of extra envs to be passed to the initContainer. Kubernetes format is expected - name: FOO   value: BAR |
+| deployment.automigration.extraEnv | list | `[]` | Array of extra envs to be passed to the initContainer. Kubernetes format is expected. Value is processed with Helm `tpl` - name: FOO   value: BAR |
 | deployment.automountServiceAccountToken | bool | `true` |  |
 | deployment.autoscaling | object | `{"behavior":{},"enabled":false,"maxReplicas":100,"minReplicas":1,"targetCPU":{},"targetMemory":{}}` | Autoscaling for keto deployment |
 | deployment.autoscaling.behavior | object | `{}` | Set custom behavior https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/#configurable-scaling-behavior |
@@ -40,7 +40,7 @@ Access Control Policies as a Server
 | deployment.customStartupProbe | object | `{}` |  |
 | deployment.dnsConfig | object | `{}` | Configure pod dnsConfig. |
 | deployment.extraContainers | string | `""` | If you want to add extra sidecar containers. |
-| deployment.extraEnv | list | `[]` | Array of extra Envs to be added to the deployment. K8s format expected - name: FOO   value: BAR |
+| deployment.extraEnv | list | `[]` | Array of extra Envs to be added to the deployment. Kubernetes format expected. Value is processed with Helm `tpl` - name: FOO   value: BAR |
 | deployment.extraInitContainers | object | `{}` | If you want to add extra init containers. These are processed before the migration init container. |
 | deployment.extraLabels | object | `{}` | Extra labels to be added to the deployment, and pods. K8s object format expected foo: bar my.special.label/type: value |
 | deployment.extraPorts | list | `[]` | Extra ports to be exposed by the main deployment |
@@ -94,7 +94,7 @@ Access Control Policies as a Server
 | job.annotations | object | `{"helm.sh/hook":"pre-install, pre-upgrade","helm.sh/hook-delete-policy":"before-hook-creation,hook-succeeded","helm.sh/hook-weight":"1"}` | If you do want to specify annotations, uncomment the following lines, adjust them as necessary, and remove the curly braces after 'annotations:'. |
 | job.automountServiceAccountToken | bool | `false` | Set automounting of the SA token |
 | job.extraContainers | string | `""` | If you want to add extra sidecar containers. |
-| job.extraEnv | list | `[]` | Array of extra envs to be passed to the job. This takes precedence over deployment variables. Kubernetes format is expected - name: FOO   value: BAR |
+| job.extraEnv | list | `[]` | Array of extra envs to be passed to the job. This takes precedence over deployment variables. Kubernetes format is expected. Value is processed with Helm `tpl` - name: FOO   value: BAR |
 | job.extraInitContainers | string | `""` | If you want to add extra init containers. |
 | job.lifecycle | string | `""` | If you want to add lifecycle hooks. |
 | job.nodeSelector | object | `{}` | Node labels for pod assignment. |

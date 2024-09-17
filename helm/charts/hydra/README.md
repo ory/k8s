@@ -36,7 +36,7 @@ A Helm chart for deploying ORY Hydra in Kubernetes
 | cronjob.janitor.customArgs | list | `[]` | Configure the arguments of the entrypoint, overriding the default value |
 | cronjob.janitor.customCommand | list | `[]` | Configure a custom entrypoint, overriding the default value |
 | cronjob.janitor.extraContainers | string | `""` | If you want to add extra sidecar containers. |
-| cronjob.janitor.extraEnv | list | `[]` | Array of extra envs to be passed to the cronjob. This takes precedence over deployment variables. Kubernetes format is expected - name: FOO   value: BAR |
+| cronjob.janitor.extraEnv | list | `[]` | Array of extra envs to be passed to the cronjob. This takes precedence over deployment variables. Kubernetes format is expected. Value is processed with Helm `tpl` - name: FOO   value: BAR |
 | cronjob.janitor.extraInitContainers | string | `""` | If you want to add extra init containers. These are processed before the migration init container. |
 | cronjob.janitor.extraVolumeMounts | list | `[]` |  |
 | cronjob.janitor.extraVolumes | list | `[]` | If you want to mount external volume |
@@ -56,7 +56,7 @@ A Helm chart for deploying ORY Hydra in Kubernetes
 | cronjob.janitor.tolerations | list | `[]` | Configure node tolerations |
 | deployment.annotations | object | `{}` | Set custom deployment level annotations |
 | deployment.automigration | object | `{"extraEnv":[]}` | Parameters for the automigration initContainer |
-| deployment.automigration.extraEnv | list | `[]` | Array of extra envs to be passed to the initContainer. Kubernetes format is expected - name: FOO   value: BAR |
+| deployment.automigration.extraEnv | list | `[]` | Array of extra envs to be passed to the initContainer. Kubernetes format is expected. Value is processed with Helm `tpl` - name: FOO   value: BAR |
 | deployment.automountServiceAccountToken | bool | `false` |  |
 | deployment.autoscaling | object | `{"behavior":{},"enabled":false,"maxReplicas":3,"minReplicas":1,"targetCPU":{},"targetMemory":{}}` | Configure HPA |
 | deployment.autoscaling.behavior | object | `{}` | Set custom behavior https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/#configurable-scaling-behavior |
@@ -65,7 +65,7 @@ A Helm chart for deploying ORY Hydra in Kubernetes
 | deployment.customStartupProbe | object | `{}` | Configure a custom startupProbe. This overwrites the default object |
 | deployment.dnsConfig | object | `{}` | Configure pod dnsConfig. |
 | deployment.extraContainers | string | `""` | If you want to add extra sidecar containers. |
-| deployment.extraEnv | list | `[]` | Array of extra envs to be passed to the deployment. Kubernetes format is expected - name: FOO   value: BAR |
+| deployment.extraEnv | list | `[]` | Array of extra envs to be passed to the deployment. Kubernetes format is expected. Value is processed with Helm `tpl` - name: FOO   value: BAR |
 | deployment.extraInitContainers | string | `""` | If you want to add extra init containers. These are processed before the migration init container. |
 | deployment.extraVolumeMounts | list | `[]` |  |
 | deployment.extraVolumes | list | `[]` | If you want to mount external volume |
@@ -139,7 +139,7 @@ A Helm chart for deploying ORY Hydra in Kubernetes
 | job.annotations | object | `{"helm.sh/hook":"pre-install, pre-upgrade","helm.sh/hook-delete-policy":"before-hook-creation","helm.sh/hook-weight":"1"}` | If you do want to specify annotations, uncomment the following lines, adjust them as necessary, and remove the curly braces after 'annotations:'. |
 | job.automountServiceAccountToken | bool | `true` | Set automounting of the SA token |
 | job.extraContainers | string | `""` | If you want to add extra sidecar containers. |
-| job.extraEnv | list | `[]` | Array of extra envs to be passed to the job. This takes precedence over deployment variables. Kubernetes format is expected - name: FOO   value: BAR |
+| job.extraEnv | list | `[]` | Array of extra envs to be passed to the job. This takes precedence over deployment variables. Kubernetes format is expected. Value is processed with Helm `tpl` - name: FOO   value: BAR |
 | job.extraInitContainers | string | `""` | If you want to add extra init containers. extraInitContainers: |  - name: ...    image: ... |
 | job.labels | object | `{}` | Set custom deployment level labels |
 | job.lifecycle | string | `""` | If you want to add lifecycle hooks. |

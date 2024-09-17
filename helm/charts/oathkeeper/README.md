@@ -40,7 +40,7 @@ A Helm chart for deploying ORY Oathkeeper in Kubernetes
 | deployment.dnsConfig | object | `{}` | Configure pod dnsConfig. |
 | deployment.extraArgs | list | `[]` | Array of extra arguments to be passed down to the Deployment. Kubernetes args format is expected |
 | deployment.extraContainers | string | `""` | If you want to add extra sidecar containers. |
-| deployment.extraEnv | list | `[]` |  |
+| deployment.extraEnv | list | `[]` | Array of extra envs to be passed to the deployment. Kubernetes format is expected. Value is processed with Helm `tpl` - name: FOO   value: BAR |
 | deployment.extraInitContainers | string | `""` | If you want to add extra init containers. |
 | deployment.extraVolumeMounts | list | `[]` | Extra volume mounts, allows mounting the extraVolumes to the container. |
 | deployment.extraVolumes | list | `[]` | Extra volumes you can attach to the pod. |

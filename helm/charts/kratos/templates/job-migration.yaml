@@ -70,7 +70,7 @@ spec:
             {{- end }}
           {{- end }}
           {{- if $migrationExtraEnv }}
-            {{- toYaml $migrationExtraEnv | nindent 10 }}
+            {{- tpl (toYaml $migrationExtraEnv) . | nindent 10 }}
           {{- end }}
         {{- if .Values.deployment.environmentSecretsName }}
         envFrom:

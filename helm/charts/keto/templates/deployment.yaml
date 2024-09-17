@@ -102,8 +102,8 @@ spec:
                   key: dsn
               {{- end }}
             {{- end }}
-            {{- with $migrationExtraEnv }}
-              {{- toYaml . | nindent 12 }}
+            {{- if $migrationExtraEnv }}
+              {{- tpl (toYaml $migrationExtraEnv) . | nindent 12 }}
             {{- end }}
           {{- with .Values.keto.automigration.resources }}
           resources:
@@ -195,8 +195,8 @@ spec:
                   key: dsn
               {{- end }}
             {{- end }}
-            {{- with .Values.deployment.extraEnv }}
-              {{- toYaml . | nindent 12 }}
+            {{- if .Values.deployment.extraEnv }}
+              {{- tpl (toYaml .Values.deployment.extraEnv) . | nindent 12 }}
             {{- end }}
           volumeMounts:
             - name: {{ include "keto.name" . }}-config-volume

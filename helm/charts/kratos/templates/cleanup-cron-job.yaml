@@ -78,8 +78,8 @@ spec:
                       name: {{ include "kratos.secretname" . }}
                       key: dsn
               {{- end }}
-                {{- with $cleanupCronjobExtraEnv }}
-                  {{- toYaml . | nindent 16 }}
+                {{- if $cleanupCronjobExtraEnv }}
+                  {{- tpl (toYaml $cleanupCronjobExtraEnv) . | nindent 16 }}
                 {{- end }}
               resources:
                 {{- toYaml .Values.cronjob.cleanup.resources | nindent 16 }}

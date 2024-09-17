@@ -81,7 +81,8 @@ job:
   #  - name: ...
   #    image: ...
 
-  # -- Array of extra envs to be passed to the job. This takes precedence over deployment variables. Kubernetes format is expected
+  # -- Array of extra envs to be passed to the job. This takes precedence over deployment variables. Kubernetes format
+  # is expected. Value is processed with Helm `tpl`
   # - name: FOO
   #   value: BAR
   extraEnv: []
@@ -353,7 +354,7 @@ deployment:
   #  - name: ...
   #    image: ...
 
-  # -- Array of extra Envs to be added to the deployment. K8s format expected
+  # -- Array of extra Envs to be added to the deployment. Kubernetes format expected. Value is processed with Helm `tpl`
   # - name: FOO
   #   value: BAR
   extraEnv: []
@@ -406,7 +407,8 @@ deployment:
 
   # -- Parameters for the automigration initContainer
   automigration:
-    # -- Array of extra envs to be passed to the initContainer. Kubernetes format is expected
+    # -- Array of extra envs to be passed to the initContainer. Kubernetes format is expected. Value is processed with
+    # Helm `tpl`
     # - name: FOO
     #   value: BAR
     extraEnv: []

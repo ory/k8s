@@ -96,8 +96,8 @@ spec:
             - name: MUTATORS_ID_TOKEN_CONFIG_JWKS_URL
               value: "file://{{ .Values.secret.mountPath }}/{{ .Values.secret.filename }}"
             {{- end }}
-            {{- with .Values.deployment.extraEnv }}
-              {{- toYaml . | nindent 12 }}
+            {{- if .Values.deployment.extraEnv }}
+              {{- tpl (toYaml .Values.deployment.extraEnv) . | nindent 12 }}
             {{- end }}
           volumeMounts:
             {{- with .Values.deployment.extraVolumeMounts }}

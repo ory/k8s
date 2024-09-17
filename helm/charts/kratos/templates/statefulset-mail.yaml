@@ -124,7 +124,7 @@ spec:
                   key: smtpConnectionURI
             {{- end }}
             {{- if $extraEnv }}
-              {{- toYaml $extraEnv | nindent 12 }}
+              {{- tpl (toYaml $extraEnv) . | nindent 12 }}
             {{- end }}
           {{- if $environmentSecretsName }}
           envFrom:
