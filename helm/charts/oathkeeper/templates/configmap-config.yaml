@@ -11,7 +11,5 @@ metadata:
 {{ include "oathkeeper.labels" . | indent 4 }}
 data:
   "config.yaml": |
-{{- with .Values.oathkeeper.config -}}  
-  {{- toYaml . | nindent 4 }} 
-{{- end -}}
+    {{- include "oathkeeper.configmap" . | nindent 4 }}
 {{ end }}

@@ -133,6 +133,8 @@ oathkeeper:
     authenticators:
       noop:
         enabled: true
+    log:
+      redaction_text: "example template {{ .Release.Name }}"
 
 secret:
   enabled: true

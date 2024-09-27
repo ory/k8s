@@ -57,7 +57,7 @@ Generate the configmap data, redacting secrets
 */}}
 {{- define "keto.configmap" -}}
 {{- $config := omit .Values.keto.config "dsn" -}}
-{{- toYaml $config -}}
+{{- tpl (toYaml $config) . -}}
 {{- end -}}
 
 {{/*
