@@ -246,14 +246,16 @@ deployment:
   # lines, adjust them as necessary, and remove the curly braces after 'nodeSelector:'.
   #   foo: bar
 
-  # -- Array of extra envs to be passed to the deployment. Kubernetes format is expected
+  # -- Array of extra envs to be passed to the deployment. Kubernetes format is expected. Value is processed with Helm
+  # `tpl`
   # - name: FOO
   #   value: BAR
   extraEnv: []
 
   # -- Parameters for the automigration initContainer
   automigration:
-    # -- Array of extra envs to be passed to the initContainer. Kubernetes format is expected
+    # -- Array of extra envs to be passed to the initContainer. Kubernetes format is expected. Value is processed with
+    # Helm `tpl`
     # - name: FOO
     #   value: BAR
     extraEnv: []
@@ -391,7 +393,8 @@ job:
   #  - name: ...
   #    image: ...
 
-  # -- Array of extra envs to be passed to the job. This takes precedence over deployment variables. Kubernetes format is expected
+  # -- Array of extra envs to be passed to the job. This takes precedence over deployment variables. Kubernetes format
+  # is expected. Value is processed with Helm `tpl`
   # - name: FOO
   #   value: BAR
   extraEnv: []
@@ -534,7 +537,8 @@ cronjob:
     # -- Configure the arguments of the entrypoint, overriding the default value
     customArgs: []
 
-    # -- Array of extra envs to be passed to the cronjob. This takes precedence over deployment variables. Kubernetes format is expected
+    # -- Array of extra envs to be passed to the cronjob. This takes precedence over deployment variables. Kubernetes
+    # format is expected. Value is processed with Helm `tpl`
     # - name: FOO
     #   value: BAR
     extraEnv: []

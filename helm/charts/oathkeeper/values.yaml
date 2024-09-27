@@ -293,6 +293,10 @@ deployment:
   # lines, adjust them as necessary, and remove the curly braces after 'annotations:'.
   #   foo: bar
 
+  # -- Array of extra envs to be passed to the deployment. Kubernetes format is expected. Value is processed with Helm
+  # `tpl`
+  # - name: FOO
+  #   value: BAR
   extraEnv: []
 
   # -- Array of extra arguments to be passed down to the Deployment. Kubernetes args format is expected

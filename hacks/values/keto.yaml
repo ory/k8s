@@ -52,6 +52,8 @@ deployment:
   extraEnv:
     - name: FOO
       value: BAR
+    - name: RELEASE_NAME
+      value: "{{ .Release.Name }}"
   extraVolumeMounts:
     - mountPath: /testdir
       name: test-volume

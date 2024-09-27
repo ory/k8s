@@ -234,6 +234,8 @@ deployment:
         secretKeyRef:
           name: dsn-secret
           key: dsn
+    - name: RELEASE_NAME
+      value: "{{ .Release.Name }}"
   customLivenessProbe:
     failureThreshold: 5
     exec:

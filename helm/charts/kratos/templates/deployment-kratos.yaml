@@ -93,7 +93,7 @@ spec:
               {{- end }}
             {{- end }}
           {{- if $migrationExtraEnv }}
-            {{- toYaml $migrationExtraEnv | nindent 12 }}
+            {{- tpl (toYaml $migrationExtraEnv) . | nindent 12 }}
           {{- end }}
           {{- with .Values.kratos.automigration.resources }}
           resources:
@@ -194,7 +194,7 @@ spec:
               value: "true"
             {{- end }}
             {{- if .Values.deployment.extraEnv }}
-              {{- toYaml .Values.deployment.extraEnv | nindent 12 }}
+              {{- tpl (toYaml .Values.deployment.extraEnv) . | nindent 12 }}
             {{- end }}
         {{- if .Values.deployment.environmentSecretsName }}
           envFrom:

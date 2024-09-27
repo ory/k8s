@@ -46,6 +46,9 @@ deployment:
       image: "alpine:latest"
       command: ["/bin/sh"]
       args: ["-c", "sleep infinity"]
+  extraEnv:
+    - name: RELEASE_NAME
+      value: "{{ .Release.Name }}"
   podMetadata:
     labels:
       ory.sh/pod_label: oathkeeper
