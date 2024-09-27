@@ -26,6 +26,8 @@ hydra:
         - "foo bar 123 456 lorem 1"
         - "foo bar 123 456 lorem 2"
         - "foo bar 123 456 lorem 3"
+    log:
+      redaction_text: "example template {{ .Release.Name }}"
 
 secret:
   enabled: false
