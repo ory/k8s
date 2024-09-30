@@ -1,3 +1,4 @@
+{{- if .Values.separateAdminAndPublicDeploys | not }}
 {{- if .Values.deployment.autoscaling.enabled }}
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
@@ -33,4 +34,5 @@ spec:
       target:
         {{- toYaml . | nindent 8 }}
   {{- end }}
+{{- end }}
 {{- end }}

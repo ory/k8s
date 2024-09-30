@@ -11,6 +11,7 @@ metadata:
     {{- with .Values.service.public.labels }}
       {{- toYaml . | nindent 4 }}
     {{- end }}
+    app.kubernetes.io/component: public
   annotations:
     {{- with .Values.service.public.annotations }}
       {{- toYaml . | nindent 4 }}
@@ -30,4 +31,7 @@ spec:
   selector:
     app.kubernetes.io/name: {{ include "hydra.name" . }}
     app.kubernetes.io/instance: {{ .Release.Name }}
+    {{- if .Values.separateAdminAndPublicDeploys }}
+    app.kubernetes.io/component: public
+    {{- end }}
 {{- end }}
