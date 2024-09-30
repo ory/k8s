@@ -54,6 +54,9 @@ A Helm chart for deploying ORY Hydra in Kubernetes
 | cronjob.janitor.serviceAccount.create | bool | `true` | Specifies whether a service account should be created |
 | cronjob.janitor.serviceAccount.name | string | `""` | The name of the service account to use. If not set and create is true, a name is generated using the fullname template |
 | cronjob.janitor.tolerations | list | `[]` | Configure node tolerations |
+| separateAdminAndPublicDeploys | bool | `false` | When `true` separate deploys will be created for admin and public components. Use `deployment.admin` and `deployment.public` to configure component specific options. |
+| deployment.admin | object | `{}` | When separateAdminAndPublicDeploys is enabled, this field acts as overrides only for the `hydra-admin` deployment object. |
+| deployment.public | object | `{}` | When separateAdminAndPublicDeploys is enabled, this field acts as overrides only for the `hydra-public` deployment object. |
 | deployment.annotations | object | `{}` | Set custom deployment level annotations |
 | deployment.automigration | object | `{"extraEnv":[]}` | Parameters for the automigration initContainer |
 | deployment.automigration.extraEnv | list | `[]` | Array of extra envs to be passed to the initContainer. Kubernetes format is expected. Value is processed with Helm `tpl` - name: FOO   value: BAR |
