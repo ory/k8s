@@ -116,6 +116,7 @@ A Helm chart for deploying ORY Hydra in Kubernetes
 | hydra.command | list | `["hydra"]` | Ability to override the entrypoint of hydra container (e.g. to source dynamic secrets or export environment dynamic variables) |
 | hydra.config | object | `{"secrets":{},"serve":{"admin":{"port":4445},"public":{"port":4444},"tls":{"allow_termination_from":["10.0.0.0/8","172.16.0.0/12","192.168.0.0/16"]}},"urls":{"self":{}}}` | The ORY Hydra configuration. For a full list of available settings, check:  https://www.ory.sh/docs/hydra/reference/configuration |
 | hydra.config.secrets | object | `{}` | The secrets have to be provided as a string slice, example: system:   - "OG5XbmxXa3dYeGplQXpQanYxeEFuRUFa"   - "foo bar 123 456 lorem"   - "foo bar 123 456 lorem 1"   - "foo bar 123 456 lorem 2"   - "foo bar 123 456 lorem 3" |
+| hydra.config.urls | object | `{"self":{}}` | Configure the urls used by hydra itself, such as the issuer. Note: some values are required for hydra to start, please refer to https://www.ory.sh/docs/hydra/self-hosted/kubernetes-helm-chart self:   issuer: "https://public.hydra.localhost:4444/" |
 | hydra.customArgs | list | `[]` | Ability to override arguments of the entrypoint. Can be used in-depended of customCommand |
 | hydra.dev | bool | `false` | Enable dev mode, not secure in production environments |
 | image.pullPolicy | string | `"IfNotPresent"` | Image pull policy |
