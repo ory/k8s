@@ -23,9 +23,7 @@ ingress:
         name: myservice
         port:
           number: 80
-    annotations:
-      kubernetes.io/ingress.class: nginx
-      kubernetes.io/tls-acme: "true"
+    annotations: {}
   api:
     enabled: true
 priorityClassName: "system-cluster-critical"

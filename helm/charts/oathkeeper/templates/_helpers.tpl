@@ -30,7 +30,11 @@ Generate the configmap data, redacting secrets
 */}}
 {{- define "oathkeeper.configmap" -}}
 {{- $config := .Values.oathkeeper.config -}}
+{{-  if .Values.oathkeeper.helmTemplatedConfigEnabled -}}
 {{- tpl (toYaml $config) . -}}
+{{- else -}}
+{{- toYaml $config -}}
+{{- end -}}
 {{- end -}}
 
 {{/*
