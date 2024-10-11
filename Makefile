@@ -34,7 +34,8 @@ export K3SIMAGE := docker.io/rancher/k3s:v1.29.4-k3s1
 	HELM_INSTALL_DIR=.bin bash <(curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3) -v v3.12.0 --no-sudo
 
 .bin/ory: Makefile
-	curl https://raw.githubusercontent.com/ory/meta/master/install.sh | bash -s -- -b .bin ory
+	# pin to version v0.3.4 due to a bug in validation
+	curl https://raw.githubusercontent.com/ory/meta/master/install.sh | bash -s -- -b .bin ory v0.3.4
 	touch .bin/ory
 
 .bin/goimports:

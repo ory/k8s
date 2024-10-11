@@ -1,6 +1,5 @@
 version: v1.14.2
-# url: https://github.com/norwoodj/helm-docs/releases/download/{{.Version}}/helm-docs_{{.Version}}_{{.Os}}_{{.Architecture}}.tar.gz
-url:
+url: |
   https://github.com/norwoodj/helm-docs/releases/download/{{.Version}}/helm-docs_{{slice
   .Version 1}}_{{.Os}}_{{.Architecture}}.tar.gz
 mappings:
