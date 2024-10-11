@@ -151,6 +151,10 @@ hydra:
     #   - "foo bar 123 456 lorem 3"
     secrets: {}
 
+    # -- Configure the urls used by hydra itself, such as the issuer.
+    # Note: some values are required for hydra to start, please refer to https://www.ory.sh/docs/hydra/self-hosted/kubernetes-helm-chart
+    # self:
+    #   issuer: "https://public.hydra.localhost:4444/"
     urls:
       self: {}
 
