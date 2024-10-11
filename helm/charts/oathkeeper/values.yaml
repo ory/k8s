@@ -182,6 +182,9 @@ ingress:
 
 ## -- Configure ORY Oathkeeper itself
 oathkeeper:
+  # -- Runs the `tpl` function on the config object.
+  # Warrning! This may break configuration settings that use go templates, like https://github.com/ory/k8s/issues/707
+  helmTemplatedConfigEnabled: false
   # -- The ORY Oathkeeper configuration. For a full list of available settings, check:
   #   https://github.com/ory/oathkeeper/blob/master/docs/config.yaml
   config:
