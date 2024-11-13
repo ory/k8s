@@ -192,7 +192,7 @@ A Helm chart for deploying ORY Hydra in Kubernetes
 | test.labels | object | `{}` | Provide additional labels to the test pod |
 | watcher.automountServiceAccountToken | bool | `true` |  |
 | watcher.enabled | bool | `false` |  |
-| watcher.image | string | `"oryd/k8s-toolbox:0.0.6"` |  |
+| watcher.image | string | `"oryd/k8s-toolbox:v0.0.7"` |  |
 | watcher.mountFile | string | `""` | Path to mounted file, which wil be monitored for changes. eg: /etc/secrets/my-secret/foo |
 | watcher.podMetadata | object | `{"annotations":{},"labels":{}}` | Specify pod metadata, this metadata is added directly to the pod, and not higher objects |
 | watcher.podMetadata.annotations | object | `{}` | Extra pod level annotations |

@@ -15,7 +15,7 @@ A Helm chart for deploying the reference implementation for the User Login and C
 | fullnameOverride | string | `""` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"oryd/hydra-login-consent-node"` |  |
-| image.tag | string | `"v1.4.6"` |  |
+| image.tag | string | `"v2.2.0"` |  |
 | imagePullSecrets | list | `[]` |  |
 | ingress.annotations | object | `{}` |  |
 | ingress.className | string | `""` |  |
