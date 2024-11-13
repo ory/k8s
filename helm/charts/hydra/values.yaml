@@ -478,7 +478,7 @@ hydra-maester:
 ## -- Sidecar watcher configuration
 watcher:
   enabled: false
-  image: oryd/k8s-toolbox:0.0.6
+  image: oryd/k8s-toolbox:v0.0.7
   # -- Path to mounted file, which wil be monitored for changes. eg: /etc/secrets/my-secret/foo
   mountFile: ""
   # -- Specify pod metadata, this metadata is added directly to the pod, and not higher objects

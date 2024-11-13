@@ -27,7 +27,7 @@ A Helm chart for ORY Kratos's example ui for Kubernetes
 | fullnameOverride | string | `""` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"oryd/kratos-selfservice-ui-node"` |  |
-| image.tag | string | `"v0.13.0-20"` | ORY KRATOS VERSION |
+| image.tag | string | `"v1.3.1"` | ORY KRATOS VERSION |
 | imagePullSecrets | list | `[]` |  |
 | ingress.annotations | object | `{}` |  |
 | ingress.className | string | `""` |  |

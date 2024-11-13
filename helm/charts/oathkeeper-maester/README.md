@@ -41,7 +41,7 @@ A Helm chart for deploying ORY Oathkeeper Rule Controller in Kubernetes
 | global.ory.oathkeeper.maester.mode | string | `"controller"` |  |
 | image.pullPolicy | string | `"IfNotPresent"` | Image pull policy |
 | image.repository | string | `"oryd/oathkeeper-maester"` | ORY Oathkeeper Rule Controller image |
-| image.tag | string | `"v0.1.10-amd64"` | ORY Oathkeeper Rule Controller version |
+| image.tag | string | `"v0.1.11-amd64"` | ORY Oathkeeper Rule Controller version |
 | imagePullSecrets | list | `[]` | Image pull secrets |
 | pdb.enabled | bool | `false` |  |
 | pdb.spec.maxUnavailable | string | `""` |  |
