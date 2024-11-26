@@ -211,11 +211,6 @@ kratos:
 ## -- Configuration options for the k8s deployment
 deployment:
   lifecycle: {}
-  # -- Configure the livenessProbe parameters
-  livenessProbe:
-    initialDelaySeconds: 5
-    periodSeconds: 10
-    failureThreshold: 5
   # -- Configure the readinessProbe parameters
   readinessProbe:
     initialDelaySeconds: 5
@@ -223,10 +218,11 @@ deployment:
     failureThreshold: 5
   # -- Configure the startupProbe parameters
   startupProbe:
-    failureThreshold: 60
+    failureThreshold: 5
     successThreshold: 1
     periodSeconds: 1
     timeoutSeconds: 1
+    initialDelaySeconds: 0
 
   # -- Configure a custom livenessProbe. This overwrites the default object
   customLivenessProbe: {}

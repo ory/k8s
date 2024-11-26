@@ -93,24 +93,16 @@ spec:
             - name: http-admin
               containerPort: {{ .Values.hydra.config.serve.admin.port }}
               protocol: TCP
+          {{- if .Values.deployment.customLivenessProbe }}
           livenessProbe:
-            {{- if .Values.deployment.customLivenessProbe }}  
-              {{- toYaml .Values.deployment.customLivenessProbe | nindent 12 }} 
-            {{- else }}
-            httpGet:
-              path: /health/alive
-              port: {{ .Values.hydra.config.serve.admin.port }}
-              httpHeaders:
-                - name: Host
-                  value: '127.0.0.1'
-            {{- toYaml .Values.deployment.livenessProbe | nindent 12 }}
-            {{- end }}
+            {{- toYaml .Values.deployment.customLivenessProbe | nindent 12 }}
+          {{- end }}
           readinessProbe:
-            {{- if .Values.deployment.customReadinessProbe }} 
+            {{- if .Values.deployment.customReadinessProbe }}
               {{- toYaml .Values.deployment.customReadinessProbe | nindent 12 }}
             {{- else }}
             httpGet:
-              path: /health/ready
+              path: /health/alive
               port: {{ .Values.hydra.config.serve.admin.port }}
               httpHeaders:
                 - name: Host
