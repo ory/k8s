@@ -210,24 +210,16 @@ spec:
               protocol: TCP
           lifecycle:
             {{- toYaml .Values.deployment.lifecycle | nindent 12 }}
-          livenessProbe:
           {{- if .Values.deployment.customLivenessProbe }}
+          livenessProbe:
             {{- toYaml .Values.deployment.customLivenessProbe | nindent 12 }}
-          {{- else }}
-            httpGet:
-              path: /admin/health/alive
-              port: {{ .Values.kratos.config.serve.admin.port }}
-              httpHeaders:
-                - name: Host
-                  value: '127.0.0.1'
-            {{- toYaml .Values.deployment.livenessProbe | nindent 12 }}
           {{- end }}
           readinessProbe:
           {{- if .Values.deployment.customReadinessProbe }}
             {{- toYaml .Values.deployment.customReadinessProbe | nindent 12 }}
           {{- else }}
             httpGet:
-              path: /admin/health/ready
+              path: /admin/health/alive
               port: {{ .Values.kratos.config.serve.admin.port }}
               httpHeaders:
                 - name: Host

@@ -57,7 +57,6 @@ A ORY Kratos Helm chart for Kubernetes
 | deployment.extraVolumes | list | `[]` | If you want to mount external volume For example, mount a secret containing Certificate root CA to verify database TLS connection. |
 | deployment.labels | object | `{}` |  |
 | deployment.lifecycle | object | `{}` |  |
-| deployment.livenessProbe | object | `{"failureThreshold":5,"initialDelaySeconds":5,"periodSeconds":10}` | Configure the livenessProbe parameters |
 | deployment.nodeSelector | object | `{}` | Node labels for pod assignment. |
 | deployment.podMetadata | object | `{"annotations":{},"labels":{}}` | Specify pod metadata, this metadata is added directly to the pod, and not higher objects |
 | deployment.podMetadata.annotations | object | `{}` | Extra pod level annotations |
@@ -76,7 +75,7 @@ A ORY Kratos Helm chart for Kubernetes
 | deployment.serviceAccount.annotations | object | `{}` | Annotations to add to the service account |
 | deployment.serviceAccount.create | bool | `true` | Specifies whether a service account should be created |
 | deployment.serviceAccount.name | string | `""` | The name of the service account to use. If not set and create is true, a name is generated using the fullname template |
-| deployment.startupProbe | object | `{"failureThreshold":60,"periodSeconds":1,"successThreshold":1,"timeoutSeconds":1}` | Configure the startupProbe parameters |
+| deployment.startupProbe | object | `{"failureThreshold":5,"initialDelaySeconds":0,"periodSeconds":1,"successThreshold":1,"timeoutSeconds":1}` | Configure the startupProbe parameters |
 | deployment.terminationGracePeriodSeconds | int | `60` |  |
 | deployment.tolerations | list | `[]` | Configure node tolerations. |
 | deployment.topologySpreadConstraints | list | `[]` | Configure pod topologySpreadConstraints. |

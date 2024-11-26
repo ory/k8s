@@ -47,9 +47,6 @@ Access Control Policies as a Server
 | deployment.extraVolumeMounts | list | `[]` | Array of extra VolumeMounts to be added to the deployment. K8s format expected - name: my-volume   mountPath: /etc/secrets/my-secret   readOnly: true |
 | deployment.extraVolumes | list | `[]` | Array of extra Volumes to be added to the deployment. K8s format expected - name: my-volume   secret:     secretName: my-secret |
 | deployment.lifecycle | object | `{}` |  |
-| deployment.livenessProbe.failureThreshold | int | `5` |  |
-| deployment.livenessProbe.initialDelaySeconds | int | `5` |  |
-| deployment.livenessProbe.periodSeconds | int | `10` |  |
 | deployment.minReadySeconds | int | `0` |  |
 | deployment.nodeSelector | object | `{}` |  |
 | deployment.podAnnotations | object | `{}` |  |
@@ -61,7 +58,8 @@ Access Control Policies as a Server
 | deployment.readinessProbe.periodSeconds | int | `10` |  |
 | deployment.resources | object | `{}` |  |
 | deployment.revisionHistoryLimit | int | `5` | Number of revisions kept in history |
-| deployment.startupProbe.failureThreshold | int | `60` |  |
+| deployment.startupProbe.failureThreshold | int | `5` |  |
+| deployment.startupProbe.initialDelaySeconds | int | `0` |  |
 | deployment.startupProbe.periodSeconds | int | `1` |  |
 | deployment.startupProbe.successThreshold | int | `1` |  |
 | deployment.startupProbe.timeoutSeconds | int | `1` |  |

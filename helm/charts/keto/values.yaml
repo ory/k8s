@@ -294,21 +294,17 @@ deployment:
 
   lifecycle: {}
   ## -- Default probe timers
-  livenessProbe:
-    initialDelaySeconds: 5
-    periodSeconds: 10
-    failureThreshold: 5
-  ## -- Default probe timers
   readinessProbe:
     initialDelaySeconds: 5
     periodSeconds: 10
     failureThreshold: 5
   ## -- Default probe timers
   startupProbe:
-    failureThreshold: 60
+    failureThreshold: 5
     successThreshold: 1
     periodSeconds: 1
     timeoutSeconds: 1
+    initialDelaySeconds: 0
   ## -- Configure a custom livenessProbe. This overwrites the default object
   customLivenessProbe: {}
   ## -- Configure a custom readinessProbe. This overwrites the default object
