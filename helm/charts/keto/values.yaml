@@ -183,6 +183,9 @@ service:
     name: grpc-read
     port: 80
     appProtocol: grpc
+    ## -- Enable extra headless service
+    headless:
+      enabled: true
   ## -- Write service
   write:
     enabled: true
@@ -193,6 +196,9 @@ service:
     name: grpc-write
     port: 80
     appProtocol: grpc
+    ## -- Enable extra headless service
+    headless:
+      enabled: true
   ## -- Metrics service
   metrics:
     enabled: false
