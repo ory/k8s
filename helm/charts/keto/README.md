@@ -149,6 +149,7 @@ Access Control Policies as a Server
 | service.read.appProtocol | string | `"grpc"` |  |
 | service.read.clusterIP | string | `""` |  |
 | service.read.enabled | bool | `true` |  |
+| service.read.headless.enabled | bool | `true` |  |
 | service.read.loadBalancerIP | string | `""` |  |
 | service.read.name | string | `"grpc-read"` |  |
 | service.read.port | int | `80` |  |
@@ -156,6 +157,7 @@ Access Control Policies as a Server
 | service.write.appProtocol | string | `"grpc"` |  |
 | service.write.clusterIP | string | `""` |  |
 | service.write.enabled | bool | `true` |  |
+| service.write.headless.enabled | bool | `true` |  |
 | service.write.loadBalancerIP | string | `""` |  |
 | service.write.name | string | `"grpc-write"` |  |
 | service.write.port | int | `80` |  |
