@@ -78,6 +78,13 @@ spec:
                     ClientName is the human-readable string name of the client
                     to be presented to the end-user during authorization.
                   type: string
+                deletionPolicy:
+                  description:
+                    Indicates if a deleted OAuth2Client custom resource should
+                    delete the database row or not. Value 1 means deletion of
+                    the OAuth2 client, value 2 means keep an orphan oauth2
+                    client.
+                  type: integer
                 frontChannelLogoutSessionRequired:
                   default: false
                   description:
