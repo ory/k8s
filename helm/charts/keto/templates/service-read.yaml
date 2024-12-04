@@ -1,4 +1,5 @@
 {{- if .Values.service.read.enabled }}
+---
 apiVersion: v1
 kind: Service
 metadata:
@@ -30,4 +31,30 @@ spec:
   selector:
     app.kubernetes.io/name: {{ include "keto.name" . }}
     app.kubernetes.io/instance: {{ .Release.Name }}
-{{ end }}
+{{- if .Values.service.read.headless.enabled }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "keto.fullname" . }}-read-headless
+  {{- if .Release.Namespace }}
+  namespace: {{ .Release.Namespace }}
+  {{- end }}
+  labels:
+    service.ory.sh/type: headless
+    app.kubernetes.io/component: read
+    {{- include "keto.labels" . | nindent 4 }}
+spec:
+  type: "ClusterIP"
+  clusterIP: "None"
+  ports:
+    - port: {{ .Values.keto.config.serve.read.port }}
+      targetPort: {{ .Values.service.read.name }}
+      protocol: TCP
+      name: {{ .Values.service.read.name }}
+      appProtocol: {{ .Values.service.read.appProtocol }}
+  selector:
+    app.kubernetes.io/name: {{ include "keto.name" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+{{- end }}
+{{- end }}

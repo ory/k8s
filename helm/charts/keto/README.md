@@ -1,6 +1,6 @@
 # keto
 
-![Version: 0.50.1](https://img.shields.io/badge/Version-0.50.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.12.0](https://img.shields.io/badge/AppVersion-v0.12.0-informational?style=flat-square)
+![Version: 0.50.2](https://img.shields.io/badge/Version-0.50.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.12.0](https://img.shields.io/badge/AppVersion-v0.12.0-informational?style=flat-square)
 
 Access Control Policies as a Server
 
@@ -149,6 +149,7 @@ Access Control Policies as a Server
 | service.read.appProtocol | string | `"grpc"` |  |
 | service.read.clusterIP | string | `""` |  |
 | service.read.enabled | bool | `true` |  |
+| service.read.headless.enabled | bool | `true` |  |
 | service.read.loadBalancerIP | string | `""` |  |
 | service.read.name | string | `"grpc-read"` |  |
 | service.read.port | int | `80` |  |
@@ -156,6 +157,7 @@ Access Control Policies as a Server
 | service.write.appProtocol | string | `"grpc"` |  |
 | service.write.clusterIP | string | `""` |  |
 | service.write.enabled | bool | `true` |  |
+| service.write.headless.enabled | bool | `true` |  |
 | service.write.loadBalancerIP | string | `""` |  |
 | service.write.name | string | `"grpc-write"` |  |
 | service.write.port | int | `80` |  |

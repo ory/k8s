@@ -30,4 +30,30 @@ spec:
   selector:
     app.kubernetes.io/name: {{ include "keto.name" . }}
     app.kubernetes.io/instance: {{ .Release.Name }}
-{{ end }}
+{{- if .Values.service.write.headless.enabled }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "keto.fullname" . }}-write-headless
+  {{- if .Release.Namespace }}
+  namespace: {{ .Release.Namespace }}
+  {{- end }}
+  labels:
+    service.ory.sh/type: headless
+    app.kubernetes.io/component: write
+    {{- include "keto.labels" . | nindent 4 }}
+spec:
+  type: "ClusterIP"
+  clusterIP: "None"
+  ports:
+    - port: {{ .Values.keto.config.serve.write.port }}
+      targetPort: {{ .Values.service.write.name }}
+      protocol: TCP
+      name: {{ .Values.service.write.name }}
+      appProtocol: {{ .Values.service.write.appProtocol }}
+  selector:
+    app.kubernetes.io/name: {{ include "keto.name" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+{{- end }}
+{{- end }}
