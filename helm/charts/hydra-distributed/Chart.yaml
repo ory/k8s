@@ -1,0 +1,33 @@
+apiVersion: v2
+appVersion: "v2.2.0"
+description: A Helm chart for deploying ORY Hydra in Kubernetes with a distributed layout.
+name: hydra
+icon: https://raw.githubusercontent.com/ory/docs/master/docs/static/img/logo-hydra.svg
+version: 0.50.3
+keywords:
+  - oauth2
+  - openid-connect
+  - openid
+  - oidc
+  - op
+  - api-security
+  - security
+home: https://www.ory.sh/
+sources:
+  - https://github.com/ory/hydra
+  - https://github.com/ory/k8s
+maintainers: # (optional)
+  - name: ORY Team
+    email: hi@ory.sh
+    url: https://www.ory.sh/
+type: application
+dependencies:
+  - name: ory-commons
+    version: 0.1.0
+    repository: file://../ory-commons
+    alias: ory
+  - name: hydra-maester
+    version: 0.50.3
+    condition: maester.enabled
+    alias: hydra-maester
+    repository: file://../hydra-maester
