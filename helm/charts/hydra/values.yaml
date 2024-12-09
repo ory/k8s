@@ -180,15 +180,8 @@ hydra:
   # -- Enable dev mode, not secure in production environments
   dev: false
 
-# When `true` separate deploys will be created for admin and public components. Use `deployment.admin` and `deployment.public` to configure component specific options.
-separateAdminAndPublicDeploys: false
-
 ## -- Deployment specific config
 deployment:
-  # When separateAdminAndPublicDeploys is enabled, the admin/public fields act as overrides for the individual deploys.
-  admin: {}
-  public: {}
-
   strategy:
     type: RollingUpdate
     rollingUpdate:
