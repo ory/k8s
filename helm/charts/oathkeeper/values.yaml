@@ -262,10 +262,10 @@ deployment:
     failureThreshold: 5
   # -- Configure the startupProbe parameters
   startupProbe:
-    failureThreshold: 60
+    failureThreshold: 5
     successThreshold: 1
-    periodSeconds: 1
-    timeoutSeconds: 1
+    timeoutSeconds: 2
+    initialDelaySeconds: 1
 
   # -- Configure a custom livenessProbe. This overwrites the default object
   customLivenessProbe: {}

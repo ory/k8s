@@ -98,7 +98,7 @@ A Helm chart for deploying ORY Hydra in Kubernetes
 | deployment.serviceAccount.annotations | object | `{}` | Annotations to add to the service account |
 | deployment.serviceAccount.create | bool | `true` | Specifies whether a service account should be created |
 | deployment.serviceAccount.name | string | `""` | The name of the service account to use. If not set and create is true, a name is generated using the fullname template |
-| deployment.startupProbe | object | `{"failureThreshold":5,"initialDelaySeconds":0,"periodSeconds":1,"successThreshold":1,"timeoutSeconds":1}` | Default probe timers |
+| deployment.startupProbe | object | `{"failureThreshold":5,"initialDelaySeconds":1,"periodSeconds":1,"successThreshold":1,"timeoutSeconds":2}` | Default probe timers |
 | deployment.strategy.rollingUpdate.maxSurge | string | `"25%"` |  |
 | deployment.strategy.rollingUpdate.maxUnavailable | string | `"25%"` |  |
 | deployment.strategy.type | string | `"RollingUpdate"` |  |

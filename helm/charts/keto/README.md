@@ -59,10 +59,10 @@ Access Control Policies as a Server
 | deployment.resources | object | `{}` |  |
 | deployment.revisionHistoryLimit | int | `5` | Number of revisions kept in history |
 | deployment.startupProbe.failureThreshold | int | `5` |  |
-| deployment.startupProbe.initialDelaySeconds | int | `0` |  |
+| deployment.startupProbe.initialDelaySeconds | int | `1` |  |
 | deployment.startupProbe.periodSeconds | int | `1` |  |
 | deployment.startupProbe.successThreshold | int | `1` |  |
-| deployment.startupProbe.timeoutSeconds | int | `1` |  |
+| deployment.startupProbe.timeoutSeconds | int | `2` |  |
 | deployment.strategy.rollingUpdate.maxSurge | string | `"25%"` |  |
 | deployment.strategy.rollingUpdate.maxUnavailable | string | `"25%"` |  |
 | deployment.strategy.type | string | `"RollingUpdate"` |  |
