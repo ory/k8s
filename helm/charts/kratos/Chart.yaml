@@ -3,7 +3,7 @@ appVersion: "v1.3.0"
 description: A ORY Kratos Helm chart for Kubernetes
 name: kratos
 icon: https://raw.githubusercontent.com/ory/docs/master/docs/static/img/logo-kratos.svg
-version: 0.50.3
+version: 0.50.4
 type: application
 dependencies:
   - name: ory-commons
