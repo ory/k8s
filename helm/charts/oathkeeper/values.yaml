@@ -250,11 +250,6 @@ deployment:
   #  memory: 128Mi
 
   lifecycle: {}
-  # -- Configure the livenessProbe parameters
-  livenessProbe:
-    initialDelaySeconds: 5
-    periodSeconds: 10
-    failureThreshold: 5
   # -- Configure the readinessProbe parameters
   readinessProbe:
     initialDelaySeconds: 5
