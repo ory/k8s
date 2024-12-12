@@ -80,6 +80,10 @@ spec:
             {{- if .Values.deployment.extraVolumeMounts }}
               {{- toYaml .Values.deployment.extraVolumeMounts | nindent 12 }}
             {{- end }}
+          {{- if .Values.deployment.extraEnv }}
+          env:
+            {{- tpl (toYaml .Values.deployment.extraEnv) . | nindent 12 }}
+          {{- end }}
           resources:
             {{- toYaml .Values.deployment.resources | nindent 12 }}
           terminationMessagePath: /dev/termination-log
