@@ -56,6 +56,9 @@ deployment:
     #   cpu: 100m
     #   memory: 20Mi
 
+  # -- To set extra env vars for the container.
+  extraEnv: []
+
   # -- If you want to mount external volume
   extraVolumes: []
   # - name: my-volume
