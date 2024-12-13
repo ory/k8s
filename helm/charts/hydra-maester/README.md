@@ -20,7 +20,7 @@ A Helm chart for Kubernetes
 | deployment.automountServiceAccountToken | bool | `true` | This applications connects to the k8s API and requires the permissions |
 | deployment.dnsConfig | object | `{}` | Configure pod dnsConfig. |
 | deployment.extraAnnotations | object | `{}` | Deployment level extra annotations |
-| deployment.extraEnv | list | `[]` | Extra environment variables |
+| deployment.extraEnv | list | `[]` | To set extra env vars for the container. |
 | deployment.extraLabels | object | `{}` | Deployment level extra labels |
 | deployment.extraVolumeMounts | list | `[]` |  |
 | deployment.extraVolumes | list | `[]` | If you want to mount external volume |
