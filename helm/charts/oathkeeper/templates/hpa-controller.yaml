@@ -1,4 +1,5 @@
 {{- if .Values.deployment.autoscaling.enabled }}
+{{- $kubeVersion := .Capabilities.KubeVersion.GitVersion -}}
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
@@ -20,17 +21,34 @@ spec:
   maxReplicas: {{ .Values.deployment.autoscaling.maxReplicas }}
   metrics:
   {{- with .Values.deployment.autoscaling.targetMemory }}
+  {{- if and (and (not (empty $kubeVersion)) (semverCompare ">=1.30-0" $kubeVersion) (not (empty $.Values.deployment.autoscaling.extraMetrics))) }}
+  - type: ContainerResource
+    containerResource:
+      name: memory
+      container: {{ $.Chart.Name }}
+  {{- else }}
   - type: Resource
     resource:
       name: memory
+  {{- end }}
       target:
         {{- toYaml . | nindent 8 }}
   {{- end }}
   {{- with .Values.deployment.autoscaling.targetCPU}}
+  {{- if and (and (not (empty $kubeVersion)) (semverCompare ">=1.30-0" $kubeVersion) (not (empty $.Values.deployment.autoscaling.extraMetrics))) }}
+  - type: ContainerResource
+    containerResource:
+      name: cpu
+      container: {{ $.Chart.Name }}
+  {{- else }}
   - type: Resource
     resource:
       name: cpu
+  {{- end }}
       target:
         {{- toYaml . | nindent 8 }}
+  {{- end }}
+  {{- if and (and (not (empty $kubeVersion)) (semverCompare ">=1.30-0" $kubeVersion) (not (empty $.Values.deployment.autoscaling.extraMetrics))) }}
+  {{- toYaml .Values.deployment.autoscaling.extraMetrics | nindent 2}}
   {{- end }}
 {{- end }}
