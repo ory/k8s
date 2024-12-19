@@ -1,7 +1,7 @@
 apiVersion: v2
-appVersion: "v0.0.34"
+appVersion: "v0.0.36"
 description: A Helm chart for Kubernetes
 name: hydra-maester
 icon: https://raw.githubusercontent.com/ory/docs/master/docs/static/img/logo-hydra.svg
-version: 0.50.3
+version: 0.50.6
 type: application

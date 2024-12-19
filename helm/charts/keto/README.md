@@ -1,6 +1,6 @@
 # keto
 
-![Version: 0.50.3](https://img.shields.io/badge/Version-0.50.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.12.0](https://img.shields.io/badge/AppVersion-v0.12.0-informational?style=flat-square)
+![Version: 0.50.6](https://img.shields.io/badge/Version-0.50.6-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.12.0](https://img.shields.io/badge/AppVersion-v0.12.0-informational?style=flat-square)
 
 Access Control Policies as a Server
 
@@ -59,10 +59,10 @@ Access Control Policies as a Server
 | deployment.resources | object | `{}` |  |
 | deployment.revisionHistoryLimit | int | `5` | Number of revisions kept in history |
 | deployment.startupProbe.failureThreshold | int | `5` |  |
-| deployment.startupProbe.initialDelaySeconds | int | `0` |  |
+| deployment.startupProbe.initialDelaySeconds | int | `1` |  |
 | deployment.startupProbe.periodSeconds | int | `1` |  |
 | deployment.startupProbe.successThreshold | int | `1` |  |
-| deployment.startupProbe.timeoutSeconds | int | `1` |  |
+| deployment.startupProbe.timeoutSeconds | int | `2` |  |
 | deployment.strategy.rollingUpdate.maxSurge | string | `"25%"` |  |
 | deployment.strategy.rollingUpdate.maxUnavailable | string | `"25%"` |  |
 | deployment.strategy.type | string | `"RollingUpdate"` |  |

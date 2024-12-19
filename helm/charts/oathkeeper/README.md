@@ -1,6 +1,6 @@
 # oathkeeper
 
-![Version: 0.50.3](https://img.shields.io/badge/Version-0.50.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.40.7](https://img.shields.io/badge/AppVersion-v0.40.7-informational?style=flat-square)
+![Version: 0.50.6](https://img.shields.io/badge/Version-0.50.6-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.40.8](https://img.shields.io/badge/AppVersion-v0.40.8-informational?style=flat-square)
 
 A Helm chart for deploying ORY Oathkeeper in Kubernetes
 
@@ -21,7 +21,7 @@ A Helm chart for deploying ORY Oathkeeper in Kubernetes
 
 | Repository | Name | Version |
 |------------|------|---------|
-| file://../oathkeeper-maester | oathkeeper-maester(oathkeeper-maester) | 0.50.3 |
+| file://../oathkeeper-maester | oathkeeper-maester(oathkeeper-maester) | 0.50.6 |
 
 ## Values
 
@@ -46,7 +46,6 @@ A Helm chart for deploying ORY Oathkeeper in Kubernetes
 | deployment.extraVolumes | list | `[]` | Extra volumes you can attach to the pod. |
 | deployment.labels | object | `{}` |  |
 | deployment.lifecycle | object | `{}` |  |
-| deployment.livenessProbe | object | `{"failureThreshold":5,"initialDelaySeconds":5,"periodSeconds":10}` | Configure the livenessProbe parameters |
 | deployment.nodeSelector | object | `{}` | Node labels for pod assignment. |
 | deployment.podMetadata | object | `{"annotations":{},"labels":{}}` | Specify pod metadata, this metadata is added directly to the pod, and not higher objects |
 | deployment.podMetadata.annotations | object | `{}` | Extra pod level annotations |
@@ -57,7 +56,7 @@ A Helm chart for deploying ORY Oathkeeper in Kubernetes
 | deployment.serviceAccount.annotations | object | `{}` | Annotations to add to the service account |
 | deployment.serviceAccount.create | bool | `true` | Specifies whether a service account should be created |
 | deployment.serviceAccount.name | string | `""` | The name of the service account to use. If not set and create is true, a name is generated using the fullname template |
-| deployment.startupProbe | object | `{"failureThreshold":60,"periodSeconds":1,"successThreshold":1,"timeoutSeconds":1}` | Configure the startupProbe parameters |
+| deployment.startupProbe | object | `{"failureThreshold":5,"initialDelaySeconds":1,"successThreshold":1,"timeoutSeconds":2}` | Configure the startupProbe parameters |
 | deployment.strategy.rollingUpdate | object | `{}` |  |
 | deployment.strategy.type | string | `"RollingUpdate"` |  |
 | deployment.terminationGracePeriodSeconds | int | `60` |  |
@@ -68,7 +67,7 @@ A Helm chart for deploying ORY Oathkeeper in Kubernetes
 | image.initContainer | object | `{"repository":"busybox","tag":1}` | use a busybox image from another repository |
 | image.pullPolicy | string | `"IfNotPresent"` | Image pull policy |
 | image.repository | string | `"oryd/oathkeeper"` | ORY Oathkeeper image |
-| image.tag | string | `"v0.40.7"` | ORY Oathkeeper version |
+| image.tag | string | `"v0.40.8"` | ORY Oathkeeper version |
 | imagePullSecrets | list | `[]` | Image pull secrets |
 | ingress.api.annotations | object | `{}` |  |
 | ingress.api.className | string | `""` |  |

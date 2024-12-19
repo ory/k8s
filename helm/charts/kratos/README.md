@@ -1,6 +1,6 @@
 # kratos
 
-![Version: 0.50.3](https://img.shields.io/badge/Version-0.50.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v1.3.0](https://img.shields.io/badge/AppVersion-v1.3.0-informational?style=flat-square)
+![Version: 0.50.6](https://img.shields.io/badge/Version-0.50.6-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v1.3.0](https://img.shields.io/badge/AppVersion-v1.3.0-informational?style=flat-square)
 
 A ORY Kratos Helm chart for Kubernetes
 
@@ -75,7 +75,7 @@ A ORY Kratos Helm chart for Kubernetes
 | deployment.serviceAccount.annotations | object | `{}` | Annotations to add to the service account |
 | deployment.serviceAccount.create | bool | `true` | Specifies whether a service account should be created |
 | deployment.serviceAccount.name | string | `""` | The name of the service account to use. If not set and create is true, a name is generated using the fullname template |
-| deployment.startupProbe | object | `{"failureThreshold":5,"initialDelaySeconds":0,"periodSeconds":1,"successThreshold":1,"timeoutSeconds":1}` | Configure the startupProbe parameters |
+| deployment.startupProbe | object | `{"failureThreshold":5,"initialDelaySeconds":1,"periodSeconds":1,"successThreshold":1,"timeoutSeconds":2}` | Configure the startupProbe parameters |
 | deployment.terminationGracePeriodSeconds | int | `60` |  |
 | deployment.tolerations | list | `[]` | Configure node tolerations. |
 | deployment.topologySpreadConstraints | list | `[]` | Configure pod topologySpreadConstraints. |
