@@ -12,6 +12,10 @@ metadata:
     {{- with .Values.deployment.extraLabels }}
       {{- toYaml . | nindent 4 }}
     {{- end }}
+  {{- with .Values.deployment.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
 spec:
   replicas: {{ .Values.replicaCount }}
   revisionHistoryLimit: {{ .Values.revisionHistoryLimit }}
