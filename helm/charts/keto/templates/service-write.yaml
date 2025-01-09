@@ -9,6 +9,10 @@ metadata:
   labels:
     app.kubernetes.io/component: write
     {{- include "keto.labels" . | nindent 4 }}
+  {{- with .Values.service.write.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
 spec:
   type: {{ .Values.service.write.type }}
   {{- if eq .Values.service.write.type "LoadBalancer" }}
