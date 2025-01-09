@@ -181,6 +181,8 @@ service:
     ## -- The load balancer IP
     loadBalancerIP: ""
     name: grpc-read
+    # -- If you do want to specify annotations, uncomment the following lines, adjust them as necessary, and remove the curly braces after 'annotations:'.
+    annotations: {}
     port: 80
     appProtocol: grpc
     ## -- Enable extra headless service
@@ -194,6 +196,8 @@ service:
     ## -- The load balancer IP
     loadBalancerIP: ""
     name: grpc-write
+    # -- If you do want to specify annotations, uncomment the following lines, adjust them as necessary, and remove the curly braces after 'annotations:'.
+    annotations: {}
     port: 80
     appProtocol: grpc
     ## -- Enable extra headless service
@@ -207,6 +211,7 @@ service:
     loadBalancerIP: ""
     name: http-metrics
     port: 80
+    # -- If you do want to specify annotations, uncomment the following lines, adjust them as necessary, and remove the curly braces after 'annotations:'.
     annotations: {}
 
 ## -- Extra services to be deployed

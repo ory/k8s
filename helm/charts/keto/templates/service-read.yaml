@@ -10,6 +10,10 @@ metadata:
   labels:
     app.kubernetes.io/component: read
     {{- include "keto.labels" . | nindent 4 }}
+  {{- with .Values.service.read.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
 spec:
   type: {{ .Values.service.read.type }}
   {{- if eq .Values.service.read.type "LoadBalancer" }}
