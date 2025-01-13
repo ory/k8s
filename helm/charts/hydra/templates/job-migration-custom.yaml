@@ -1,0 +1,125 @@
+{{- include "hydra.customMigration.typeVerification" . -}}
+{{- if and  ( .Values.hydra.customMigration.enabled ) ( eq .Values.hydra.customMigration.type "job" ) }}
+{{- $nodeSelector := ternary .Values.job.nodeSelector .Values.deployment.nodeSelector (not (empty .Values.job.nodeSelector )) -}}
+{{- $migrationExtraEnv := ternary .Values.job.extraEnv .Values.deployment.extraEnv (not (empty .Values.job.extraEnv )) -}}
+{{- $resources := ternary .Values.job.resources .Values.hydra.customMigration.resources (not (empty .Values.job.resources)) -}}
+
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ include "hydra.fullname" . }}-automigrate
+  {{- if .Release.Namespace }}
+  namespace: {{ .Release.Namespace }}
+  {{- end }}
+  labels:
+    {{- include "hydra.labels" . | nindent 4 }}
+    {{- with .Values.job.labels }}
+      {{- toYaml . | nindent 4 }}
+    {{- end }}
+  annotations:
+    {{- with .Values.job.annotations }}
+      {{- toYaml . | nindent 4 }}
+    {{- end }}
+spec:
+  template:
+    metadata:
+      annotations:
+        {{- with .Values.job.annotations }}
+          {{- toYaml . | nindent 8 }}
+        {{- end }}
+        {{- with .Values.job.podMetadata.annotations }}
+          {{- toYaml . | nindent 8 }}
+        {{- end }}
+      labels:
+        app.kubernetes.io/name: {{ include "hydra.fullname" . }}-automigrate
+        app.kubernetes.io/instance: {{ .Release.Name }}        
+        {{- with .Values.job.labels }}
+          {{- toYaml . | nindent 8 }}
+        {{- end }}
+        {{- with .Values.job.podMetadata.labels }}
+          {{- toYaml . | nindent 8 }}
+        {{- end }}
+    spec:
+    {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+      serviceAccountName: {{ include "hydra.job.serviceAccountName" . }}
+      automountServiceAccountToken: {{ .Values.job.automountServiceAccountToken }}
+      containers:
+      - name: {{ .Chart.Name }}-automigrate
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        {{- if .Values.hydra.customMigration.customCommand }}
+        command: {{- toYaml .Values.hydra.customMigration.customCommand | nindent 10 }}
+        {{- else }}
+        command: ["hydra"]
+        {{- end }}
+        {{- if .Values.hydra.customMigration.customArgs }}
+        args: {{- toYaml .Values.hydra.customMigration.customArgs | nindent 10 }}
+        {{- else }}
+        args: ["migrate", "sql", "-e", "--yes", "--config", "/etc/config/hydra.yaml"]
+        {{- end }}
+        env:
+        {{- if not (empty ( include "hydra.dsn" . )) }}
+          {{- if not (include "ory.extraEnvContainsEnvName" (list $migrationExtraEnv "DSN")) }}
+          - name: DSN
+            valueFrom:
+              secretKeyRef:
+                name: {{ include "hydra.secretname" . }}
+                key: dsn
+          {{- end }}
+        {{- end }}
+        {{- with $migrationExtraEnv }}
+          {{- toYaml . | nindent 10 }}
+        {{- end }}
+        lifecycle:
+          {{- if .Values.job.lifecycle }}
+            {{- tpl .Values.job.lifecycle . | nindent 10 }}
+          {{- end }}
+        {{- with .Values.deployment.securityContext }}
+        securityContext:
+          {{- toYaml . | nindent 10 }}
+        {{- end }}
+        {{- with $resources }}
+        resources:
+          {{- toYaml . | nindent 10 }}
+        {{- end }}
+        volumeMounts:
+          - name: {{ include "hydra.name" . }}-config-volume
+            mountPath: /etc/config
+            readOnly: true
+          {{- if .Values.deployment.extraVolumeMounts }}
+            {{- toYaml .Values.deployment.extraVolumeMounts | nindent 10 }}
+         {{- end }}
+      {{- if .Values.job.extraContainers }}
+        {{- tpl .Values.job.extraContainers . | nindent 6 }}
+      {{- end }}
+      {{- if .Values.job.extraInitContainers }}
+      initContainers:
+        {{- tpl .Values.job.extraInitContainers . | nindent 8 }}
+      {{- end }}
+      restartPolicy: Never
+      {{- with .Values.deployment.podSecurityContext }}
+      securityContext:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      shareProcessNamespace: {{ .Values.job.shareProcessNamespace }}
+      volumes:
+        - name: {{ include "hydra.name" . }}-config-volume
+          configMap:
+            name: {{ include "hydra.fullname" . }}-migrate
+        {{- if .Values.deployment.extraVolumes }}
+          {{- toYaml .Values.deployment.extraVolumes | nindent 8 }}
+        {{- end }}
+      {{- with $nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.job.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+  backoffLimit: {{ .Values.job.spec.backoffLimit }}
+{{- end }}

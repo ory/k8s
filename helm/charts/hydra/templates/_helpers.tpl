@@ -198,7 +198,7 @@ Checksum annotations generated from configmaps and secrets
 */}}
 {{- define "hydra.annotations.checksum" -}}
 {{- if .Values.configmap.hashSumEnabled }}
-checksum/hydra-config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
+checksum/hydra-config: {{ inclautomigrationude (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
 {{- end }}
 {{- if and .Values.secret.enabled .Values.secret.hashSumEnabled }}
 checksum/hydra-secrets: {{ include (print $.Template.BasePath "/secrets.yaml") . | sha256sum }}
@@ -215,6 +215,18 @@ Check the migration type value and fail if unexpected
   {{- end }}  
 {{- end }}
 {{- end }}
+
+{{/*
+Check the migration type value and fail if unexpected
+*/}}
+{{- define "hydra.customMigration.typeVerification" -}}
+{{- if and .Values.hydra.customMigration.enabled  .Values.hydra.automigration.type }}
+  {{- if and (ne .Values.hydra.automigration.type "initContainer") (ne .Values.hydra.automigration.type "job") }}
+    {{- fail "hydra.customMigration.type must be either 'initContainer' or 'job'" -}}
+  {{- end }}
+{{- end }}
+{{- end }}
+
 
 {{/*
 Common labels for the janitor cron job
