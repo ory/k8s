@@ -1,15 +1,15 @@
 {{- $kubeVersion := .Capabilities.KubeVersion.GitVersion -}}
 {{- $containerResourceAvailable := and (not (empty $kubeVersion)) (semverCompare ">=1.30.0" $kubeVersion) -}}
-{{- if and .Values.deployment.autoscaling.enabled (not $containerResourceAvailable) }}
+{{- if and .Values.deployment.autoscaling.enabled $containerResourceAvailable }}
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
+  name: {{ include "oathkeeper.fullname" . }}
   {{- if .Release.Namespace }}
   namespace: {{ .Release.Namespace }}
   {{- end }}
-  name: {{ include "hydra.fullname" . }}
   labels:
-    {{- include "hydra.labels" . | nindent 4 }}
+    {{- include "oathkeeper.labels" . | nindent 4 }}
 spec:
   {{- with .Values.deployment.autoscaling.behavior }}
   behavior: {{- toYaml . | nindent 4 }}
@@ -17,22 +17,27 @@ spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: {{ include "hydra.fullname" . }}
+    name: {{ include "oathkeeper.fullname" . }}
   minReplicas: {{ .Values.deployment.autoscaling.minReplicas }}
   maxReplicas: {{ .Values.deployment.autoscaling.maxReplicas }}
   metrics:
   {{- with .Values.deployment.autoscaling.targetMemory }}
-  - type: Resource
-    resource:
+  - type: ContainerResource
+    containerResource:
       name: memory
+      container: {{ $.Chart.Name }}
       target:
         {{- toYaml . | nindent 8 }}
   {{- end }}
   {{- with .Values.deployment.autoscaling.targetCPU}}
-  - type: Resource
-    resource:
+  - type: ContainerResource
+    containerResource:
       name: cpu
+      container: {{ $.Chart.Name }}
       target:
         {{- toYaml . | nindent 8 }}
+  {{- end }}
+  {{- if not (empty $.Values.deployment.autoscaling.extraMetrics) }}
+  {{- toYaml .Values.deployment.autoscaling.extraMetrics | nindent 2 }}
   {{- end }}
 {{- end }}

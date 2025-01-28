@@ -63,6 +63,21 @@ deployment:
     behavior:
       scaleDown:
         stabilizationWindowSeconds: 60
+    extraMetrics:
+      - type: ContainerResource
+        containerResource:
+          name: cpu
+          container: sidecar
+          target:
+            type: Utilization
+            averageUtilization: 80
+      - type: ContainerResource
+        containerResource:
+          name: memory
+          container: sidecar
+          target:
+            type: Utilization
+            averageUtilization: 80
   strategy:
     type: RollingUpdate
     rollingUpdate:
