@@ -1,6 +1,6 @@
 # oathkeeper
 
-![Version: 0.50.6](https://img.shields.io/badge/Version-0.50.6-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.40.8](https://img.shields.io/badge/AppVersion-v0.40.8-informational?style=flat-square)
+![Version: 0.50.6](https://img.shields.io/badge/Version-0.50.6-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.40.9](https://img.shields.io/badge/AppVersion-v0.40.9-informational?style=flat-square)
 
 A Helm chart for deploying ORY Oathkeeper in Kubernetes
 
@@ -67,7 +67,7 @@ A Helm chart for deploying ORY Oathkeeper in Kubernetes
 | image.initContainer | object | `{"repository":"busybox","tag":1}` | use a busybox image from another repository |
 | image.pullPolicy | string | `"IfNotPresent"` | Image pull policy |
 | image.repository | string | `"oryd/oathkeeper"` | ORY Oathkeeper image |
-| image.tag | string | `"v0.40.8"` | ORY Oathkeeper version |
+| image.tag | string | `"v0.40.9"` | ORY Oathkeeper version |
 | imagePullSecrets | list | `[]` | Image pull secrets |
 | ingress.api.annotations | object | `{}` |  |
 | ingress.api.className | string | `""` |  |
