@@ -186,7 +186,7 @@ hydra:
 #        nodeSelector: {}
 #        resources: {}
 
-    # -- Enable dev mode, not secure in production environments
+  # -- Enable dev mode, not secure in production environments
   dev: false
 
 ## -- Deployment specific config

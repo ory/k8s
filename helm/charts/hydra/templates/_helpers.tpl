@@ -206,17 +206,6 @@ checksum/hydra-secrets: {{ include (print $.Template.BasePath "/secrets.yaml") .
 {{- end }}
 
 {{/*
-Check the migration type value and fail if unexpected 
-*/}}
-{{- define "hydra.automigration.typeVerification" -}}
-{{- if and .Values.hydra.automigration.enabled  .Values.hydra.automigration.type }}
-  {{- if and (ne .Values.hydra.automigration.type "initContainer") (ne .Values.hydra.automigration.type "job") }}
-    {{- fail "hydra.automigration.type must be either 'initContainer' or 'job'" -}}
-  {{- end }}  
-{{- end }}
-{{- end }}
-
-{{/*
 Check the migration type value and fail if unexpected
 */}}
 {{- define "hydra.customMigration.typeVerification" -}}
