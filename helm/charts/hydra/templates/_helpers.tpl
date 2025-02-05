@@ -198,7 +198,7 @@ Checksum annotations generated from configmaps and secrets
 */}}
 {{- define "hydra.annotations.checksum" -}}
 {{- if .Values.configmap.hashSumEnabled }}
-checksum/hydra-config: {{ inclautomigrationude (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
+checksum/hydra-config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
 {{- end }}
 {{- if and .Values.secret.enabled .Values.secret.hashSumEnabled }}
 checksum/hydra-secrets: {{ include (print $.Template.BasePath "/secrets.yaml") . | sha256sum }}
