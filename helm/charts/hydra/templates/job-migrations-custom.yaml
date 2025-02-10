@@ -1,5 +1,5 @@
-{{- if $.Values.hydra.customMigrations.enabled -}}
 {{- range $index, $job := $.Values.hydra.customMigrations.jobs }}
+{{- if $job.enabled -}}
 {{- $nodeSelector := ternary $job.nodeSelector $.Values.job.nodeSelector (not (empty $job.nodeSelector)) -}}
 {{- $migrationExtraEnv := ternary $job.extraEnv $.Values.job.extraEnv (not (empty $job.extraEnv)) -}}
 {{- $resources := ternary $job.resources $.Values.job.resources (not (empty $job.resources)) -}}
