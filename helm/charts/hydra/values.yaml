@@ -180,8 +180,8 @@ hydra:
   customMigrations:
     jobs:
 #      -- Example of custom migration job (TTL migrations are available only in Hydra with Enterprise license)
-      - name: "oel-automigrate-ttl"
-        enabled: false
+      oel-automigrate-ttl:
+        enabled: true
         customArgs: ["migrate", "postgresql-addons", "up", "--hydra-db-name", "ory_hydra", "--pgcron-db-name", "postgres"]
         nodeSelector: {}
         resources: {}

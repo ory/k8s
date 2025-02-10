@@ -1,4 +1,4 @@
-{{- range $index, $job := $.Values.hydra.customMigrations.jobs }}
+{{- range $jobName, $job := $.Values.hydra.customMigrations.jobs }}
 {{- if $job.enabled -}}
 {{- $nodeSelector := ternary $job.nodeSelector $.Values.job.nodeSelector (not (empty $job.nodeSelector)) -}}
 {{- $migrationExtraEnv := ternary $job.extraEnv $.Values.job.extraEnv (not (empty $job.extraEnv)) -}}
@@ -7,7 +7,7 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: {{ include "hydra.fullname" $ }}-{{ $job.name | default (printf "automigrate-%d" $index) }}
+  name: {{ include "hydra.fullname" $ }}-{{ $jobName }}
   {{- if $.Release.Namespace }}
   namespace: {{ $.Release.Namespace }}
   {{- end }}
@@ -47,7 +47,7 @@ spec:
       serviceAccountName: {{ include "hydra.job.serviceAccountName" $ }}
       automountServiceAccountToken: {{ $.Values.job.automountServiceAccountToken }}
       containers:
-        - name: {{ $.Chart.Name }}-{{ $job.name | default (printf "automigrate-%d" $index) }}
+        - name: {{ $.Chart.Name }}-{{ $jobName }}
           image: "{{ $.Values.image.repository }}:{{ $.Values.image.tag }}"
           imagePullPolicy: {{ $.Values.image.pullPolicy }}
         {{- if $job.customCommand }}
@@ -55,14 +55,13 @@ spec:
         {{- else }}
           command: ["hydra"]
         {{- end }}
-
         {{- if $job.customArgs }}
           args: {{- toYaml $job.customArgs | nindent 10 }}
         {{- else }}
           args: ["migrate", "sql", "-e", "--yes", "--config", "/etc/config/hydra.yaml"]
         {{- end }}
           env:
-          {{- /* If DSN exists, ensure it’s passed through as well (as in your original) */}}
+          {{- /* If DSN exists, ensure it’s passed through as well */}}
           {{- if not (empty ( include "hydra.dsn" $ )) }}
             {{- if not (include "ory.extraEnvContainsEnvName" (list $migrationExtraEnv "DSN")) }}
             - name: DSN
