@@ -3,6 +3,9 @@
 {{- $nodeSelector := ternary $job.nodeSelector $.Values.job.nodeSelector (not (empty $job.nodeSelector)) -}}
 {{- $migrationExtraEnv := ternary $job.extraEnv $.Values.job.extraEnv (not (empty $job.extraEnv)) -}}
 {{- $resources := ternary $job.resources $.Values.job.resources (not (empty $job.resources)) -}}
+{{- $annotations := merge $.Values.job.annotations (default dict $job.annotations) -}}
+{{- $labels := merge $.Values.job.labels (default dict $job.labels) -}}
+
 ---
 apiVersion: batch/v1
 kind: Job
@@ -13,27 +16,27 @@ metadata:
   {{- end }}
   labels:
     {{- include "hydra.labels" $ | nindent 4 }}
-    {{- with $.Values.job.labels }}
+    {{- with $labels }}
       {{- toYaml . | nindent 4 }}
     {{- end }}
   annotations:
-    {{- with $.Values.job.annotations }}
+    {{- with $annotations }}
       {{- toYaml . | nindent 4 }}
     {{- end }}
 spec:
   template:
     metadata:
       annotations:
-        {{- with $.Values.job.annotations }}
+        {{- with $annotations }}
           {{- toYaml . | nindent 8 }}
         {{- end }}
         {{- with $.Values.job.podMetadata.annotations }}
           {{- toYaml . | nindent 8 }}
         {{- end }}
       labels:
-        app.kubernetes.io/name: {{ include "hydra.fullname" $ }}-automigrate
+        app.kubernetes.io/name: {{ include "hydra.fullname" $ }}-{{ $jobName }}-automigrate
         app.kubernetes.io/instance: {{ $.Release.Name }}
-        {{- with $.Values.job.labels }}
+        {{- with $labels }}
           {{- toYaml . | nindent 8 }}
         {{- end }}
         {{- with $.Values.job.podMetadata.labels }}
@@ -61,13 +64,12 @@ spec:
           args: ["migrate", "sql", "-e", "--yes", "--config", "/etc/config/hydra.yaml"]
         {{- end }}
           env:
-          {{- /* If DSN exists, ensure it’s passed through as well */}}
           {{- if not (empty ( include "hydra.dsn" $ )) }}
             {{- if not (include "ory.extraEnvContainsEnvName" (list $migrationExtraEnv "DSN")) }}
             - name: DSN
               valueFrom:
                 secretKeyRef:
-                  name: {{ include "hydra.secretname" . }}
+                  name: {{ include "hydra.secretname" $ }}
                   key: dsn
             {{- end }}
           {{- end }}
@@ -76,7 +78,7 @@ spec:
           {{- end }}
           lifecycle:
           {{- if $.Values.job.lifecycle }}
-            {{- tpl $.Values.job.lifecycle . | nindent 10 }}
+            {{- tpl $.Values.job.lifecycle $ | nindent 10 }}
           {{- end }}
         {{- with $.Values.deployment.securityContext }}
           securityContext:
@@ -90,15 +92,17 @@ spec:
             - name: {{ include "hydra.name" $ }}-config-volume
               mountPath: /etc/config
               readOnly: true
-          {{- if $.Values.deployment.extraVolumeMounts }}
-            {{- toYaml $.Values.deployment.extraVolumeMounts | nindent 10 }}
-          {{- end }}
+            {{- if $job.extraVolumeMounts }}
+              {{- toYaml $job.extraVolumeMounts | nindent 12 }}
+            {{- else if $.Values.deployment.extraVolumeMounts }}
+              {{- toYaml $.Values.deployment.extraVolumeMounts | nindent 12 }}
+            {{- end }}
       {{- if $.Values.job.extraContainers }}
-        {{- tpl $.Values.job.extraContainers . | nindent 6 }}
+        {{- tpl $.Values.job.extraContainers $ | nindent 6 }}
       {{- end }}
       {{- if $.Values.job.extraInitContainers }}
       initContainers:
-        {{- tpl $.Values.job.extraInitContainers . | nindent 8 }}
+        {{- tpl $.Values.job.extraInitContainers $ | nindent 8 }}
       {{- end }}
       restartPolicy: Never
       {{- with $.Values.deployment.podSecurityContext }}
@@ -110,7 +114,9 @@ spec:
         - name: {{ include "hydra.name" $ }}-config-volume
           configMap:
             name: {{ include "hydra.fullname" $ }}-migrate
-        {{- if $.Values.deployment.extraVolumes }}
+        {{- if $job.extraVolumes }}
+          {{- toYaml $job.extraVolumes | nindent 8 }}
+        {{- else if $.Values.deployment.extraVolumes }}
           {{- toYaml $.Values.deployment.extraVolumes | nindent 8 }}
         {{- end }}
       {{- with $nodeSelector }}
@@ -122,6 +128,5 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
   backoffLimit: {{ $.Values.job.spec.backoffLimit }}
-
 {{- end }}
 {{- end }}
