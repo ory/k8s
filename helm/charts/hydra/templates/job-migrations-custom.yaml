@@ -58,11 +58,7 @@ spec:
         {{- else }}
           command: ["hydra"]
         {{- end }}
-        {{- if $job.customArgs }}
           args: {{- toYaml $job.customArgs | nindent 10 }}
-        {{- else }}
-          args: ["migrate", "sql", "-e", "--yes", "--config", "/etc/config/hydra.yaml"]
-        {{- end }}
           env:
           {{- if not (empty ( include "hydra.dsn" $ )) }}
             {{- if not (include "ory.extraEnvContainsEnvName" (list $migrationExtraEnv "DSN")) }}
