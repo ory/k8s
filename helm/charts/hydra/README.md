@@ -1,6 +1,6 @@
 # hydra
 
-![Version: 0.50.8](https://img.shields.io/badge/Version-0.50.8-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v2.2.0](https://img.shields.io/badge/AppVersion-v2.2.0-informational?style=flat-square)
+![Version: 0.50.9](https://img.shields.io/badge/Version-0.50.9-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v2.2.0](https://img.shields.io/badge/AppVersion-v2.2.0-informational?style=flat-square)
 
 A Helm chart for deploying ORY Hydra in Kubernetes
 
@@ -21,7 +21,7 @@ A Helm chart for deploying ORY Hydra in Kubernetes
 
 | Repository | Name | Version |
 |------------|------|---------|
-| file://../hydra-maester | hydra-maester(hydra-maester) | 0.50.8 |
+| file://../hydra-maester | hydra-maester(hydra-maester) | 0.50.9 |
 | file://../ory-commons | ory(ory-commons) | 0.1.0 |
 
 ## Values

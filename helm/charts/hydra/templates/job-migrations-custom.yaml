@@ -43,56 +43,56 @@ spec:
           {{- toYaml . | nindent 8 }}
         {{- end }}
     spec:
-      {{- with $.Values.imagePullSecrets }}
+    {{- with $.Values.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
-      {{- end }}
+    {{- end }}
       serviceAccountName: {{ include "hydra.job.serviceAccountName" $ }}
       automountServiceAccountToken: {{ $.Values.job.automountServiceAccountToken }}
       containers:
-        - name: {{ $.Chart.Name }}-{{ $jobName }}
-          image: "{{ $.Values.image.repository }}:{{ $.Values.image.tag }}"
-          imagePullPolicy: {{ $.Values.image.pullPolicy }}
-        {{- if $job.customCommand }}
-          command: {{- toYaml $job.customCommand | nindent 10 }}
-        {{- else }}
-          command: ["hydra"]
+      - name: {{ $.Chart.Name }}-{{ $jobName }}
+        image: "{{ $.Values.image.repository }}:{{ $.Values.image.tag }}"
+        imagePullPolicy: {{ $.Values.image.pullPolicy }}
+      {{- if $job.customCommand }}
+        command: {{- toYaml $job.customCommand | nindent 10 }}
+      {{- else }}
+        command: ["hydra"]
+      {{- end }}
+        args: {{- toYaml $job.customArgs | nindent 10 }}
+        env:
+        {{- if not (empty ( include "hydra.dsn" $ )) }}
+          {{- if not (include "ory.extraEnvContainsEnvName" (list $migrationExtraEnv "DSN")) }}
+          - name: DSN
+            valueFrom:
+              secretKeyRef:
+                name: {{ include "hydra.secretname" $ }}
+                key: dsn
+          {{- end }}
         {{- end }}
-          args: {{- toYaml $job.customArgs | nindent 10 }}
-          env:
-          {{- if not (empty ( include "hydra.dsn" $ )) }}
-            {{- if not (include "ory.extraEnvContainsEnvName" (list $migrationExtraEnv "DSN")) }}
-            - name: DSN
-              valueFrom:
-                secretKeyRef:
-                  name: {{ include "hydra.secretname" $ }}
-                  key: dsn
-            {{- end }}
-          {{- end }}
-          {{- with $migrationExtraEnv }}
-            {{- toYaml . | nindent 10 }}
-          {{- end }}
-          lifecycle:
+        {{- with $migrationExtraEnv }}
+          {{- toYaml . | nindent 10 }}
+        {{- end }}
+        lifecycle:
           {{- if $.Values.job.lifecycle }}
             {{- tpl $.Values.job.lifecycle $ | nindent 10 }}
           {{- end }}
         {{- with $.Values.deployment.securityContext }}
-          securityContext:
+        securityContext:
           {{- toYaml . | nindent 10 }}
         {{- end }}
         {{- with $resources }}
-          resources:
+        resources:
           {{- toYaml . | nindent 10 }}
         {{- end }}
-          volumeMounts:
-            - name: {{ include "hydra.name" $ }}-config-volume
-              mountPath: /etc/config
-              readOnly: true
-            {{- if $job.extraVolumeMounts }}
-              {{- toYaml $job.extraVolumeMounts | nindent 12 }}
-            {{- else if $.Values.deployment.extraVolumeMounts }}
-              {{- toYaml $.Values.deployment.extraVolumeMounts | nindent 12 }}
-            {{- end }}
+        volumeMounts:
+          - name: {{ include "hydra.name" $ }}-config-volume
+            mountPath: /etc/config
+            readOnly: true
+          {{- if $job.extraVolumeMounts }}
+            {{- toYaml $job.extraVolumeMounts | nindent 12 }}
+          {{- else if $.Values.deployment.extraVolumeMounts }}
+            {{- toYaml $.Values.deployment.extraVolumeMounts | nindent 12 }}
+          {{- end }}
       {{- if $.Values.job.extraContainers }}
         {{- tpl $.Values.job.extraContainers $ | nindent 6 }}
       {{- end }}
