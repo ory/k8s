@@ -1,4 +1,6 @@
-{{- if .Values.deployment.autoscaling.enabled }}
+{{- $kubeVersion := .Capabilities.KubeVersion.GitVersion -}}
+{{- $containerResourceAvailable := and (not (empty $kubeVersion)) (semverCompare ">=1.30.0" $kubeVersion) -}}
+{{- if and .Values.deployment.autoscaling.enabled (not $containerResourceAvailable) }}
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:

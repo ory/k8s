@@ -25,13 +25,13 @@ SHELL=/bin/bash -euo pipefail
 export PATH := .bin:${PATH}
 export PWD := $(shell pwd)
 export VERSION=$(shell echo ${RELEASE_VERSION} | sed s/v//g)
-export K3SIMAGE := docker.io/rancher/k3s:v1.29.4-k3s1
+export K3SIMAGE := docker.io/rancher/k3s:v1.32.1-k3s1
 
 .bin/yq: go.mod
 	go build -o .bin/yq github.com/mikefarah/yq/v3
 
 .bin/helm: Makefile
-	HELM_INSTALL_DIR=.bin bash <(curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3) -v v3.12.0 --no-sudo
+	HELM_INSTALL_DIR=.bin bash <(curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3) -v v3.17.0 --no-sudo
 
 .bin/ory: Makefile
 	# pin to version v0.3.4 due to a bug in validation

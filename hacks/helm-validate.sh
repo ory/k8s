@@ -5,10 +5,10 @@ set -Eeuo pipefail
 cd "$( dirname "${BASH_SOURCE[0]}" )/.."
 
 schema_url="https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/"
-k8s_version="1.27.2"
+k8s_version="1.32.1"
 
 if [[ "$1" == "ory-commons" ]]; then
-  echo "---> Library chart, exitting"
+  echo "---> Library chart, exiting"
   exit 0
 fi
 

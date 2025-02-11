@@ -531,6 +531,9 @@ autoscaling:
   # -- Set custom behavior
   # https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/#configurable-scaling-behavior
   behavior: {}
+  # -- Add extraContainer container resource metrics
+  # https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/#container-resource-metrics
+  extraMetrics: []
 
 ## -- Values for initialization job
 job:
