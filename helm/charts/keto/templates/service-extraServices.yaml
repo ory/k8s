@@ -12,6 +12,10 @@ metadata:
   labels:
     app.kubernetes.io/component: {{ $ServiceName }}
     {{- include "keto.labels" $ | nindent 4 }}
+  {{- with $ServiceData.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
 spec:
   type: {{ $ServiceData.type }}
   {{- if eq $ServiceData.type "LoadBalancer" }}
