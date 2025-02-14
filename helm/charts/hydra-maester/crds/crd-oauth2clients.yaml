@@ -3,8 +3,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.11.3
-  creationTimestamp: null
+    controller-gen.kubebuilder.io/version: v0.15.0
   name: oauth2clients.hydra.ory.sh
 spec:
   group: hydra.ory.sh
@@ -21,20 +20,19 @@ spec:
           description: OAuth2Client is the Schema for the oauth2clients API
           properties:
             apiVersion:
-              description:
-                "APIVersion defines the versioned schema of this representation
-                of an object. Servers should convert recognized schemas to the
-                latest internal value, and may reject unrecognized values. More
-                info:
-                https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources"
+              description: |-
+                APIVersion defines the versioned schema of this representation of an object.
+                Servers should convert recognized schemas to the latest internal value, and
+                may reject unrecognized values.
+                More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
               type: string
             kind:
-              description:
-                "Kind is a string value representing the REST resource this
-                object represents. Servers may infer this from the endpoint the
-                client submits requests to. Cannot be updated. In CamelCase.
-                More info:
-                https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds"
+              description: |-
+                Kind is a string value representing the REST resource this object represents.
+                Servers may infer this from the endpoint the client submits requests to.
+                Cannot be updated.
+                In CamelCase.
+                More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
               type: string
             metadata:
               type: object
@@ -79,11 +77,12 @@ spec:
                     to be presented to the end-user during authorization.
                   type: string
                 deletionPolicy:
-                  description:
-                    Indicates if a deleted OAuth2Client custom resource should
-                    delete the database row or not. Value 1 means deletion of
-                    the OAuth2 client, value 2 means keep an orphan oauth2
-                    client.
+                  description: |-
+                    Indicates if a deleted OAuth2Client custom resource should delete the database row or not.
+                    Value 0 means deletion of the OAuth2 client, value 1 means keep an orphan oauth2 client.
+                  enum:
+                    - 0
+                    - 1
                   type: integer
                 frontChannelLogoutSessionRequired:
                   default: false
@@ -120,37 +119,37 @@ spec:
                   minItems: 1
                   type: array
                 hydraAdmin:
-                  description:
+                  description: |-
                     HydraAdmin is the optional configuration to use for managing
                     this client
                   properties:
                     endpoint:
-                      description:
+                      description: |-
                         Endpoint is the endpoint for the hydra instance on which
                         to set up the client. This value will override the value
-                        provided to `--endpoint` (defaults to `"/clients"` in
-                        the application)
+                        provided to `--endpoint` (defaults to `"/clients"` in the
+                        application)
                       pattern: (^$|^/.*)
                       type: string
                     forwardedProto:
-                      description:
-                        ForwardedProto overrides the `--forwarded-proto` flag.
-                        The value "off" will force this to be off even if
+                      description: |-
+                        ForwardedProto overrides the `--forwarded-proto` flag. The
+                        value "off" will force this to be off even if
                         `--forwarded-proto` is specified
                       pattern: (^$|https?|off)
                       type: string
                     port:
-                      description:
-                        Port is the port for the hydra instance on which to set
-                        up the client. This value will override the value
+                      description: |-
+                        Port is the port for the hydra instance on
+                        which to set up the client. This value will override the value
                         provided to `--hydra-port`
                       maximum: 65535
                       type: integer
                     url:
-                      description:
-                        URL is the URL for the hydra instance on which to set up
-                        the client. This value will override the value provided
-                        to `--hydra-url`
+                      description: |-
+                        URL is the URL for the hydra instance on
+                        which to set up the client. This value will override the value
+                        provided to `--hydra-url`
                       maxLength: 64
                       pattern: (^$|^https?://.*)
                       type: string
@@ -188,10 +187,9 @@ spec:
                     type: string
                   type: array
                 responseTypes:
-                  description:
-                    ResponseTypes is an array of the OAuth 2.0 response type
-                    strings that the client can use at the authorization
-                    endpoint.
+                  description: |-
+                    ResponseTypes is an array of the OAuth 2.0 response type strings that the client can
+                    use at the authorization endpoint.
                   items:
                     description:
                       ResponseType represents an OAuth 2.0 response type strings
@@ -208,12 +206,20 @@ spec:
                   minItems: 1
                   type: array
                 scope:
-                  description:
-                    Scope is a string containing a space-separated list of scope
-                    values (as described in Section 3.3 of OAuth 2.0 [RFC6749])
-                    that the client can use when requesting access tokens.
-                  pattern: ([a-zA-Z0-9\.\*]+\s?)+
+                  description: |-
+                    Scope is a string containing a space-separated list of scope values (as
+                    described in Section 3.3 of OAuth 2.0 [RFC6749]) that the client
+                    can use when requesting access tokens.
+                    Use scopeArray instead.
+                  pattern: ([a-zA-Z0-9\.\*]+\s?)*
                   type: string
+                scopeArray:
+                  description: |-
+                    Scope is an array of scope values (as described in Section 3.3 of OAuth 2.0 [RFC6749])
+                    that the client can use when requesting access tokens.
+                  items:
+                    type: string
+                  type: array
                 secretName:
                   description:
                     SecretName points to the K8s secret that contains this
@@ -240,76 +246,77 @@ spec:
                         - private_key_jwt
                         - none
                   description:
-                    Indication which authentication method shoud be used for the
-                    token endpoint
+                    Indication which authentication method should be used for
+                    the token endpoint
                   type: string
                 tokenLifespans:
-                  description: Configuration about token lifespans.
+                  description: |-
+                    TokenLifespans is the configuration to use for managing different token lifespans
+                    depending on the used grant type.
                   properties:
                     authorization_code_grant_access_token_lifespan:
-                      description:
-                        The lifespan of the access token issued during
-                        authorization_code grant type.
+                      description: |-
+                        AuthorizationCodeGrantAccessTokenLifespan is the access token lifespan
+                        issued on an authorization_code grant.
                       pattern: "[0-9]+(ns|us|ms|s|m|h)"
                       type: string
                     authorization_code_grant_id_token_lifespan:
-                      description:
-                        The lifespan of the id token issued during
-                        authorization_code grant type.
+                      description: |-
+                        AuthorizationCodeGrantIdTokenLifespan is the id token lifespan
+                        issued on an authorization_code grant.
                       pattern: "[0-9]+(ns|us|ms|s|m|h)"
                       type: string
                     authorization_code_grant_refresh_token_lifespan:
-                      description:
-                        The lifespan of the refresh token issued during
-                        authorization_code grant type.
+                      description: |-
+                        AuthorizationCodeGrantRefreshTokenLifespan is the refresh token lifespan
+                        issued on an authorization_code grant.
                       pattern: "[0-9]+(ns|us|ms|s|m|h)"
                       type: string
                     client_credentials_grant_access_token_lifespan:
-                      description:
-                        The lifespan of the access token issued during
-                        client_credentials grant type.
+                      description: |-
+                        AuthorizationCodeGrantRefreshTokenLifespan is the access token lifespan
+                        issued on a client_credentials grant.
                       pattern: "[0-9]+(ns|us|ms|s|m|h)"
                       type: string
                     implicit_grant_access_token_lifespan:
-                      description:
-                        The lifespan of the access token issued during implicit
-                        grant type.
+                      description: |-
+                        ImplicitGrantAccessTokenLifespan is the access token lifespan
+                        issued on an implicit grant.
                       pattern: "[0-9]+(ns|us|ms|s|m|h)"
                       type: string
                     implicit_grant_id_token_lifespan:
-                      description:
-                        The lifespan of the id token issued during implicit
-                        grant type.
+                      description: |-
+                        ImplicitGrantIdTokenLifespan is the id token lifespan
+                        issued on an implicit grant.
                       pattern: "[0-9]+(ns|us|ms|s|m|h)"
                       type: string
                     jwt_bearer_grant_access_token_lifespan:
-                      description:
-                        The lifespan of the access token issued during
-                        jwt_bearer grant type.
+                      description: |-
+                        JwtBearerGrantAccessTokenLifespan is the access token lifespan
+                        issued on a jwt_bearer grant.
                       pattern: "[0-9]+(ns|us|ms|s|m|h)"
                       type: string
                     refresh_token_grant_access_token_lifespan:
-                      description:
-                        The lifespan of the access token issued during
-                        refresh_token grant type.
+                      description: |-
+                        RefreshTokenGrantAccessTokenLifespan is the access token lifespan
+                        issued on a refresh_token grant.
                       pattern: "[0-9]+(ns|us|ms|s|m|h)"
                       type: string
                     refresh_token_grant_id_token_lifespan:
-                      description:
-                        The lifespan of the id token issued during refresh_token
-                        grant type.
+                      description: |-
+                        RefreshTokenGrantIdTokenLifespan is the id token lifespan
+                        issued on a refresh_token grant.
                       pattern: "[0-9]+(ns|us|ms|s|m|h)"
                       type: string
                     refresh_token_grant_refresh_token_lifespan:
-                      description:
-                        The lifespan of the refresh token issued during
-                        refresh_token grant type.
+                      description: |-
+                        RefreshTokenGrantRefreshTokenLifespan is the refresh token lifespan
+                        issued on a refresh_token grant.
                       pattern: "[0-9]+(ns|us|ms|s|m|h)"
                       type: string
                   type: object
               required:
                 - grantTypes
-                - scope
                 - secretName
               type: object
             status:
