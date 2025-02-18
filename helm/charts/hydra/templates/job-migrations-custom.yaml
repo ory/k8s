@@ -4,7 +4,7 @@
 {{- $migrationExtraEnv := ternary $job.extraEnv $.Values.job.extraEnv (not (empty $job.extraEnv)) -}}
 {{- $resources := ternary $job.resources $.Values.job.resources (not (empty $job.resources)) -}}
 {{- $annotations := merge $.Values.job.annotations (default dict $job.annotations) -}}
-{{- $labels := merge $.Values.job.labels (default dict $job.labels) -}}
+{{- $labels := merge $.Values.job.labels (default dict $job.labels) }}
 
 ---
 apiVersion: batch/v1
@@ -72,10 +72,10 @@ spec:
         {{- with $migrationExtraEnv }}
           {{- toYaml . | nindent 10 }}
         {{- end }}
+        {{- if $.Values.job.lifecycle }}
         lifecycle:
-          {{- if $.Values.job.lifecycle }}
-            {{- tpl $.Values.job.lifecycle $ | nindent 10 }}
-          {{- end }}
+          {{- tpl $.Values.job.lifecycle $ | nindent 10 }}
+        {{- end }}
         {{- with $.Values.deployment.securityContext }}
         securityContext:
           {{- toYaml . | nindent 10 }}
@@ -90,8 +90,6 @@ spec:
             readOnly: true
           {{- if $job.extraVolumeMounts }}
             {{- toYaml $job.extraVolumeMounts | nindent 12 }}
-          {{- else if $.Values.deployment.extraVolumeMounts }}
-            {{- toYaml $.Values.deployment.extraVolumeMounts | nindent 12 }}
           {{- end }}
       {{- if $.Values.job.extraContainers }}
         {{- tpl $.Values.job.extraContainers $ | nindent 6 }}
