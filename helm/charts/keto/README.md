@@ -141,12 +141,13 @@ Access Control Policies as a Server
 | securityContext.runAsUser | int | `65534` |  |
 | securityContext.seLinuxOptions.level | string | `"s0:c123,c456"` |  |
 | securityContext.seccompProfile.type | string | `"RuntimeDefault"` |  |
-| service.metrics.annotations | object | `{}` |  |
+| service.metrics.annotations | object | `{}` | If you do want to specify annotations, uncomment the following lines, adjust them as necessary, and remove the curly braces after 'annotations:'. |
 | service.metrics.enabled | bool | `false` |  |
 | service.metrics.loadBalancerIP | string | `""` |  |
 | service.metrics.name | string | `"http-metrics"` |  |
 | service.metrics.port | int | `80` |  |
 | service.metrics.type | string | `"ClusterIP"` |  |
+| service.read.annotations | object | `{}` | If you do want to specify annotations, uncomment the following lines, adjust them as necessary, and remove the curly braces after 'annotations:'. |
 | service.read.appProtocol | string | `"grpc"` |  |
 | service.read.clusterIP | string | `""` |  |
 | service.read.enabled | bool | `true` |  |
@@ -155,6 +156,7 @@ Access Control Policies as a Server
 | service.read.name | string | `"grpc-read"` |  |
 | service.read.port | int | `80` |  |
 | service.read.type | string | `"ClusterIP"` |  |
+| service.write.annotations | object | `{}` | If you do want to specify annotations, uncomment the following lines, adjust them as necessary, and remove the curly braces after 'annotations:'. |
 | service.write.appProtocol | string | `"grpc"` |  |
 | service.write.clusterIP | string | `""` |  |
 | service.write.enabled | bool | `true` |  |
