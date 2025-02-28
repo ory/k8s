@@ -27,11 +27,20 @@ export PWD := $(shell pwd)
 export VERSION=$(shell echo ${RELEASE_VERSION} | sed s/v//g)
 export K3SIMAGE := docker.io/rancher/k3s:v1.32.1-k3s1
 
-.bin/yq: go.mod
-	go build -o .bin/yq github.com/mikefarah/yq/v3
-
 .bin/helm: Makefile
 	HELM_INSTALL_DIR=.bin bash <(curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3) -v v3.17.0 --no-sudo
+
+.bin/yq: .deps/yq.yaml .bin/ory
+ifeq ($(BREW),true)
+		@echo "yq Provided by brew!"
+		@echo "${BREW_FORMULA}" | grep yq 1>/dev/null || brew install yq
+else
+		@URL=$$(.bin/ory dev ci deps url -o ${OS} -a ${ARCH} -c .deps/yq.yaml); \
+		echo "Downloading 'yq' $${URL}...."; \
+		curl -Lo .bin/yq $${URL}; \
+		echo; \
+		chmod +x .bin/yq;
+endif
 
 .bin/ory: Makefile
 	# pin to version v0.3.4 due to a bug in validation

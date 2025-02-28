@@ -1,0 +1,2 @@
+version: v4.45.1
+url: https://github.com/mikefarah/yq/releases/download/{{.Version}}/yq_{{.Os}}_{{.Architecture}}
