@@ -26,7 +26,7 @@ image:
 sidecar:
   image:
     repository: oryd/oathkeeper-maester
-    tag: v0.1.2
+    tag: v0.1.11
   envs: {}
 
 # -- Pod priority
