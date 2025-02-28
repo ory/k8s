@@ -75,17 +75,8 @@ endif
 deps: .bin/ory .bin/helm .bin/yq .bin/helm-docs .bin/k3d .bin/kubectl
 
 .PHONY: release
-release: ory-repo
-	yq w -i helm/charts/example-idp/Chart.yaml version "${VERSION}"
-	yq w -i helm/charts/hydra-maester/Chart.yaml version "${VERSION}"; \
-	yq w -i helm/charts/hydra/Chart.yaml version "${VERSION}"; \
-	yq w -i helm/charts/hydra/Chart.yaml "dependencies.(name==hydra-maester).version" "${VERSION}"; \
-	yq w -i helm/charts/keto/Chart.yaml version "${VERSION}"; \
-	yq w -i helm/charts/kratos/Chart.yaml version "${VERSION}"; \
-	yq w -i helm/charts/kratos-selfservice-ui-node/Chart.yaml version "${VERSION}"; \
-	yq w -i helm/charts/oathkeeper-maester/Chart.yaml version "${VERSION}"; \
-	yq w -i helm/charts/oathkeeper/Chart.yaml version "${VERSION}"; \
-	yq w -i helm/charts/oathkeeper/Chart.yaml "dependencies.(name==oathkeeper-maester).version" "${VERSION}"; \
+release: ory-repo .bin/yq
+	./scripts/setVersions.sh "${VERSION}"
 	helm dep update ./helm/charts/oathkeeper/; \
 	helm package -d docs/helm/charts/ ./helm/charts/oathkeeper/ --version "${VERSION}"; \
 	helm package -d docs/helm/charts/ ./helm/charts/oathkeeper-maester/ --version "${VERSION}"; \
