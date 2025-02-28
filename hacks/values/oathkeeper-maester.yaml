@@ -2,6 +2,8 @@
 # singleNamespaceMode: true
 priorityClassName: "system-cluster-critical"
 deployment:
+  annotations:
+    ory.sh/deployment_annotation: oathkeeper_maester
   podMetadata:
     labels:
       ory.sh/pod_label: oathkeeper_maester
@@ -9,4 +11,4 @@ deployment:
       ory.sh/pod_annotation: oathkeeper_maester
   serviceAccount:
     annotations:
-      ory.sh/pod_annotation: hydra-maester
+      ory.sh/pod_annotation: oathkeeper_maester
