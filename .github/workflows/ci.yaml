@@ -15,7 +15,7 @@ concurrency:
 jobs:
   dependencies:
     name: Prepare Dependencies
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -27,7 +27,7 @@ jobs:
 
   detect-repo-changes:
     name: Detected Repo Changes
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     outputs:
       helms-changed: ${{ steps.changed_charts.outputs.matrix }}
       no-changes: ${{ steps.changed_charts.outputs.no_changes }}
@@ -103,7 +103,7 @@ jobs:
       ${{ needs.detect-repo-changes.outputs.no-changes != 'true' && github.ref
       != 'ref/heads/master' }}
     needs: [dependencies, detect-repo-changes]
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     env:
       HELM_PLUGINS: ${{ github.workspace }}/.bin/plugins
       HELM_CHART: ${{ matrix.chart }}
@@ -136,7 +136,7 @@ jobs:
       ${{ needs.detect-repo-changes.outputs.no-changes != 'true' && github.ref
       != 'ref/heads/master' }}
     needs: [check, detect-repo-changes, dependencies]
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     env:
       HELM_PLUGINS: ${{ github.workspace }}/.bin/plugins
       HELM_CHART: ${{ matrix.chart }}
@@ -156,7 +156,7 @@ jobs:
       ${{ needs.detect-repo-changes.outputs.no-changes != 'true' && github.ref
       != 'ref/heads/master' }}
     needs: [check, detect-repo-changes, dependencies]
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     env:
       HELM_PLUGINS: ${{ github.workspace }}/.bin/plugins
       HELM_CHART: ${{ matrix.chart }}
@@ -172,7 +172,7 @@ jobs:
 
   helm-docs:
     name: Generate documentation
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     if: ${{ always() && github.ref == 'refs/heads/master' }}
     env:
       HELM_DOCS_VERSION: "1.11.0"
@@ -200,7 +200,7 @@ jobs:
     name: Release
     if: ${{ github.ref_type == 'tag' }}
     needs: [test-install, test-upgrade]
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     steps:
       - name: Checkout
         uses: actions/checkout@v4
