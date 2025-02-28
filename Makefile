@@ -87,9 +87,9 @@ release: ory-repo .bin/yq
 	helm package -d docs/helm/charts/ ./helm/charts/kratos/ --version "${VERSION}"; \
 	helm package -d docs/helm/charts/ ./helm/charts/keto/ --version "${VERSION}"; \
 	helm package -d docs/helm/charts/ ./helm/charts/kratos-selfservice-ui-node/ --version "${VERSION}"; \
-# 	helm repo index docs/helm/charts/
-# 	make helm-docs
-# 	make format
+	helm repo index docs/helm/charts/
+	make helm-docs
+	make format
 
 .PHONY: k3d-up
 k3d-up:
