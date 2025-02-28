@@ -89,6 +89,9 @@ job:
       ory.sh/pod_annotation: keto_migrate
 
 service:
+  read:
+    annotations:
+      ory.sh/test-annotations: "true"
   metrics:
     enabled: true
 

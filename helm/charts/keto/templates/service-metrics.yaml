@@ -9,6 +9,10 @@ metadata:
   labels:
     app.kubernetes.io/component: metrics
     {{- include "keto.labels" . | nindent 4 }}
+  {{- with .Values.service.metrics.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
 spec:
   type: {{ .Values.service.metrics.type }}
   {{- if eq .Values.service.metrics.type "LoadBalancer" }}
