@@ -147,7 +147,7 @@ A Helm chart for deploying ORY Oathkeeper in Kubernetes
 | serviceMonitor.tlsConfig | object | `{}` | TLS configuration to use when scraping the endpoint |
 | sidecar.envs | object | `{}` |  |
 | sidecar.image.repository | string | `"oryd/oathkeeper-maester"` |  |
-| sidecar.image.tag | string | `"v0.1.2"` |  |
+| sidecar.image.tag | string | `"v0.1.11"` |  |
 | test.busybox | object | `{"repository":"busybox","tag":1}` | use a busybox image from another repository |
 | test.labels | object | `{}` | Provide additional labels to the test pod |
 

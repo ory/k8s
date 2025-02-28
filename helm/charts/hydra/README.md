@@ -132,7 +132,7 @@ A Helm chart for deploying ORY Hydra in Kubernetes
 | hydra.dev | bool | `false` | Enable dev mode, not secure in production environments |
 | image.pullPolicy | string | `"IfNotPresent"` | Image pull policy |
 | image.repository | string | `"oryd/hydra"` | ORY Hydra image |
-| image.tag | string | `"v2.2.0"` | ORY Hydra version |
+| image.tag | string | `"v2.3.0"` | ORY Hydra version |
 | imagePullSecrets | list | `[]` | Image pull secrets |
 | ingress.admin.annotations | object | `{}` |  |
 | ingress.admin.className | string | `""` |  |
