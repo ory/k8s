@@ -137,6 +137,7 @@ A Helm chart for deploying ORY Oathkeeper in Kubernetes
 | service.proxy.name | string | `"http"` | The service port name. Useful to set a custom service port name if it must follow a scheme (e.g. Istio) |
 | service.proxy.port | int | `4455` | The service port |
 | service.proxy.type | string | `"ClusterIP"` | The service type |
+| serviceMonitor.enabled | bool | `false` | switch to true to enable creating the ServiceMonitor |
 | serviceMonitor.labels | object | `{}` | Provide additional labels to the ServiceMonitor resource metadata |
 | serviceMonitor.metricRelabelings | list | `[]` | Provide additional metricRelabelings to apply to samples before ingestion. |
 | serviceMonitor.relabelings | list | `[]` | Provide additional relabelings to apply to samples before scraping |
