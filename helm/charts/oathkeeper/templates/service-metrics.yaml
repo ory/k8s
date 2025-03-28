@@ -32,7 +32,7 @@ spec:
   selector:
     app.kubernetes.io/name: {{ include "oathkeeper.name" . }}
     app.kubernetes.io/instance: {{ .Release.Name }}
-{{- if .Capabilities.APIVersions.Has "monitoring.coreos.com/v1" }}
+{{- if and (.Values.serviceMonitor.enabled) (.Capabilities.APIVersions.Has "monitoring.coreos.com/v1") }}
 ---
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor

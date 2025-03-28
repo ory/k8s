@@ -74,7 +74,7 @@ Access Control Policies as a Server
 | fullnameOverride | string | `""` |  |
 | image.pullPolicy | string | `"IfNotPresent"` | Default image pull policy |
 | image.repository | string | `"oryd/keto"` | Ory KETO image |
-| image.tag | string | `"v0.12.0"` | Ory KETO version |
+| image.tag | string | `"v0.14.0"` | Ory KETO version |
 | imagePullSecrets | list | `[]` |  |
 | ingress.read.annotations | object | `{}` |  |
 | ingress.read.className | string | `""` |  |

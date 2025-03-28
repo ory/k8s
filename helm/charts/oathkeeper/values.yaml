@@ -395,6 +395,7 @@ pdb:
 ## -- Parameters for the Prometheus ServiceMonitor objects.
 # Reference: https://docs.openshift.com/container-platform/4.6/rest_api/monitoring_apis/servicemonitor-monitoring-coreos-com-v1.html
 serviceMonitor:
+  enabled: false
   # -- HTTP scheme to use for scraping.
   scheme: http
   # -- Interval at which metrics should be scraped
