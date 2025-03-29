@@ -1,6 +1,14 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": ["config:recommended"],
-  "prHourlyLimit": 5,
-  "postUpdateOptions": ["gomodTidy", "helmUpdateSubChartArchives", "npmDedupe"]
+  "packageRules": [
+    {
+      "description": "Group GHA",
+      "enabled": true,
+      "groupName": "gha",
+      "matchFileNames": [".github/**"]
+    }
+  ],
+  "postUpdateOptions": ["gomodTidy", "helmUpdateSubChartArchives", "npmDedupe"],
+  "prHourlyLimit": 5
 }

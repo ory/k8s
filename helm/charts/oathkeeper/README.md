@@ -1,6 +1,6 @@
 # oathkeeper
 
-![Version: 0.52.0](https://img.shields.io/badge/Version-0.52.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.40.9](https://img.shields.io/badge/AppVersion-v0.40.9-informational?style=flat-square)
+![Version: 0.52.1](https://img.shields.io/badge/Version-0.52.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.40.9](https://img.shields.io/badge/AppVersion-v0.40.9-informational?style=flat-square)
 
 A Helm chart for deploying ORY Oathkeeper in Kubernetes
 
@@ -21,7 +21,7 @@ A Helm chart for deploying ORY Oathkeeper in Kubernetes
 
 | Repository | Name | Version |
 |------------|------|---------|
-| file://../oathkeeper-maester | oathkeeper-maester(oathkeeper-maester) | 0.52.0 |
+| file://../oathkeeper-maester | oathkeeper-maester(oathkeeper-maester) | 0.52.1 |
 
 ## Values
 
@@ -137,6 +137,7 @@ A Helm chart for deploying ORY Oathkeeper in Kubernetes
 | service.proxy.name | string | `"http"` | The service port name. Useful to set a custom service port name if it must follow a scheme (e.g. Istio) |
 | service.proxy.port | int | `4455` | The service port |
 | service.proxy.type | string | `"ClusterIP"` | The service type |
+| serviceMonitor.enabled | bool | `false` | switch to true to enable creating the ServiceMonitor |
 | serviceMonitor.labels | object | `{}` | Provide additional labels to the ServiceMonitor resource metadata |
 | serviceMonitor.metricRelabelings | list | `[]` | Provide additional metricRelabelings to apply to samples before ingestion. |
 | serviceMonitor.relabelings | list | `[]` | Provide additional relabelings to apply to samples before scraping |
