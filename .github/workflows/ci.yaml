@@ -62,6 +62,7 @@ jobs:
             oathkeeper-helm:
               - 'helm/charts/oathkeeper/**'
               - 'hacks/values/oathkeeper.yaml'
+              - 'hacks/values/oathkeeper-sideload.yaml'
             oathkeeper-maester-helm:
               - 'helm/charts/oathkeeper-maester/**'
               - 'hacks/values/oathkeeper-maester.yaml'

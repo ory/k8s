@@ -56,7 +56,7 @@ spec:
             {{- if .Values.demo }}
             name: {{ include "oathkeeper.fullname" . }}-config-demo
             {{- else }}
-            name: {{ include "oathkeeper.fullname" . }}-config
+            name: {{ include "oathkeeper.configmap.name" . }}
             {{- end }}
         - name: {{ include "oathkeeper.name" . }}-rules-volume
           emptyDir: {}

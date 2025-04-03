@@ -6,19 +6,22 @@ export TIMEOUT="180s"
 
 cd "$( dirname "${BASH_SOURCE[0]}" )/.."
 
-export release=$(echo "$1-$(date +%s)" | cut -c 1-31)
+CHART_NAME="${1}"
+CHART_VALUES="${2:-$CHART_NAME}"
 
-if [[ "$1" == "ory-commons" ]]; then
+export release=$(echo "${CHART_NAME}-$(date +%s)" | cut -c 1-31)
+
+if [[ "${CHART_NAME}" == "ory-commons" ]]; then
   echo "---> Library chart, exitting"
   exit 0
 fi
 
-helm dep update "./helm/charts/$1"
+helm dep update "./helm/charts/${CHART_NAME}"
 
-echo "---> Installing $1"
+echo "---> Installing ${CHART_NAME}"
 
 set +e
-helm install -f "hacks/values/$1.yaml" "${release}" "./helm/charts/$1" --wait --debug --atomic --timeout="${TIMEOUT}"
+helm install -f "hacks/values/${CHART_VALUES}.yaml" "${release}" "./helm/charts/${CHART_NAME}" --wait --debug --atomic --timeout="${TIMEOUT}"
 export INSTALLATION_STATUS=$?
 set -e
 
@@ -29,7 +32,7 @@ if [[ ${INSTALLATION_STATUS} -ne 0 ]]; then
   exit "${INSTALLATION_STATUS}"
 fi
 
-echo "---> Testing $1"
+echo "---> Testing ${CHART_NAME}"
 
 n=0
 until [[ $n -ge 15 ]]; do

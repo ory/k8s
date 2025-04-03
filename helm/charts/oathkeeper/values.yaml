@@ -185,6 +185,12 @@ oathkeeper:
   # -- Runs the `tpl` function on the config object.
   # Warrning! This may break configuration settings that use go templates, like https://github.com/ory/k8s/issues/707
   helmTemplatedConfigEnabled: false
+  # -- Enables frontloading oathkeeper config using an existing CM, or changing the name of the generated one
+  configFileOverride:
+    # -- Enable/Disable the creation of the config ConfigMap
+    enabled: true
+    # -- Change the name of the configmap or specify the name of an existing configmap to be used
+    nameOverride: ""
   # -- The ORY Oathkeeper configuration. For a full list of available settings, check:
   #   https://github.com/ory/oathkeeper/blob/master/docs/config.yaml
   config:
@@ -200,6 +206,12 @@ oathkeeper:
         port: 9000
   # -- If set, uses the given JSON Web Key Set as the signing key for the ID Token Mutator. Requires secret.enabled to be set `true`.
   mutatorIdTokenJWKs: ""
+
+  # -- Enables frontloading oathkeeper rules using an existing CM, or changing the name of the generated one
+  accessRulesOverride:
+    # -- Change the name of the configmap or specify the name of an existing configmap to be used
+    nameOverride: ""
+
   # -- If set, uses the given access rules.
   accessRules: ""
 

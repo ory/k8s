@@ -1,15 +1,14 @@
-{{ if not .Values.demo }}
+{{ if and (not .Values.demo) .Values.oathkeeper.configFileOverride.enabled }}
 ---
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ include "oathkeeper.fullname" . }}-config
+  name: {{ include "oathkeeper.configmap.name" . }}
   {{- if .Release.Namespace }}
   namespace: {{ .Release.Namespace }}
   {{- end }}
-  labels:
-{{ include "oathkeeper.labels" . | indent 4 }}
+  labels: {{- include "oathkeeper.labels" . | nindent 4 }}
 data:
   "config.yaml": |
     {{- include "oathkeeper.configmap" . | nindent 4 }}
-{{ end }}
+{{- end }}
