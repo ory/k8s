@@ -1,0 +1,40 @@
+---
+apiVersion: v1
+data:
+  config.yaml: |
+    access_rules:
+      matching_strategy: regexp
+      repositories:
+      - file:///etc/rules/access-rules.json
+    authenticators:
+      anonymous:
+        config:
+          subject: guest
+        enabled: true
+      noop:
+        enabled: true
+    authorizers:
+      allow:
+        enabled: true
+    log:
+      format: json
+      level: info
+    mutators:
+      noop:
+        enabled: true
+    serve:
+      api:
+        port: 4456
+        timeout:
+          idle: 15s
+          read: 15s
+          write: 15s
+      proxy:
+        port: 4455
+        timeout:
+          idle: 30s
+          read: 30s
+          write: 30s
+kind: ConfigMap
+metadata:
+  name: oathkeeper-custom-config

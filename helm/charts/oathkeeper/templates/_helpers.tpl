@@ -38,6 +38,17 @@ Generate the configmap data, redacting secrets
 {{- end -}}
 
 {{/*
+Create a name which can be overridden.
+*/}}
+{{- define "oathkeeper.configmap.name" -}}
+{{- if .Values.oathkeeper.configFileOverride.nameOverride -}}
+{{- .Values.oathkeeper.configFileOverride.nameOverride | trunc 63 | trimSuffix "-" -}}
+{{- else -}}
+{{ include "oathkeeper.fullname" . }}-config
+{{- end -}}
+{{- end -}}
+
+{{/*
 Create a config map name for rules.
 If maester is enabled, use the child chart named template to get the value.
 */}}
