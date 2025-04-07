@@ -3,6 +3,9 @@ demo: false
 maester:
   enabled: false
 
+secret:
+  enabled: true
+
 oathkeeper:
   configFileOverride:
     enabled: false
