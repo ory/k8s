@@ -22,10 +22,12 @@ do
   export release=$(echo "${CHART_NAME}-${val%%.*}-$(date +%s)" | cut -c 1-51)
   set +e
   helm install \
-    -f "hacks/values/${CHART_NAME}/${val}" \
-    "${release}" "./helm/charts/${CHART_NAME}" \
+    # -f "hacks/values/${CHART_NAME}/${val}" \
+    # TODO: replace after releasing the new values format
+    -f "https://raw.githubusercontent.com/ory/k8s/v${BASE_RELEASE}/hacks/values/$1.yaml" \
+    "${release}" "ory/${CHART_NAME}" \
     --wait --debug --atomic --timeout="${TIMEOUT}"
-  
+
   export INSTALLATION_STATUS=$?
   set -e
 
