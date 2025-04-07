@@ -1,12 +1,11 @@
 #!/bin/bash
 
 set -Eeuo pipefail
-
-export TIMEOUT="180s"
-
 cd "$( dirname "${BASH_SOURCE[0]}" )/.."
 
 CHART_NAME="${1}"
+export TIMEOUT="180s"
+export BASE_RELEASE=$(helm search repo "ory/${CHART_NAME}" | awk '{print $2}' | head -2 | tail -1)
 
 if [[ "${CHART_NAME}" == "ory-commons" ]]; then
   echo "---> Library chart, exitting"
@@ -46,7 +45,7 @@ do
   set +e
   helm upgrade \
     -f "hacks/values/${CHART_NAME}/${val}" \
-    "${release}" "./helm/charts/$1" \
+    "${release}" "./helm/charts/${CHART_NAME}" \
     --wait --debug --timeout="${TIMEOUT}"
   export UPGRADE_STATUS=$?
   set -e
