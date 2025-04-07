@@ -53,12 +53,16 @@ Create a config map name for rules.
 If maester is enabled, use the child chart named template to get the value.
 */}}
 {{- define "oathkeeper.rulesConfigMapName" -}}
-{{- if .Values.maester.enabled -}}
-{{- $childChart := (dict "Name" "oathkeeper-maester") -}}
-{{- include "oathkeeper-maester.getCM" (dict "Values" (index .Values "oathkeeper-maester") "Release" $.Release "Chart" $childChart) }}
-{{- else -}}
-{{ include "oathkeeper.fullname" . }}-rules
-{{- end -}}
+	{{- if .Values.maester.enabled -}}
+		{{- $childChart := (dict "Name" "oathkeeper-maester") -}}
+		{{- include "oathkeeper-maester.getCM" (dict "Values" (index .Values "oathkeeper-maester") "Release" $.Release "Chart" $childChart) }}
+	{{- else -}}
+		{{- if .Values.oathkeeper.accessRulesOverride.nameOverride -}}
+			{{- .Values.oathkeeper.accessRulesOverride.nameOverride | trunc 63 | trimSuffix "-" -}}
+		{{- else -}}
+			{{ include "oathkeeper.fullname" . }}-rules
+		{{- end -}}
+	{{- end -}}
 {{- end -}}
 
 
