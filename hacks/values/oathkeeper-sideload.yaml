@@ -7,8 +7,6 @@ oathkeeper:
   configFileOverride:
     enabled: false
     nameOverride: "oathkeeper-custom-config"
-  managedAccessRules: true
-  accessRules: ""
   managedAccessRules: false
   accessRulesOverride:
     nameOverride: "oathkeeper-custom-rules"
