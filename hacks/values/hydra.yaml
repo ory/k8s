@@ -1,8 +1,33 @@
+global:
+  dnsDomain: example.com
+
 ingress:
-  public:
-    enabled: true
   admin:
     enabled: true
+    annotations:
+      my.domain: "{{ .Values.global.dnsDomain }}"
+    tls:
+      - secretName: chart-example-tls
+        hosts:
+          - "chart-example.{{ $.Values.global.dnsDomain }}"
+    hosts:
+      - host: "admin.{{ $.Values.global.dnsDomain }}"
+        paths:
+          - path: /
+            pathType: Prefix
+  public:
+    enabled: true
+    annotations:
+      my.domain: "{{ .Values.global.dnsDomain }}"
+    tls:
+      - secretName: chart-example-tls
+        hosts:
+          - "public-chart-example.{{ $.Values.global.dnsDomain }}"
+    hosts:
+      - host: "public.{{ $.Values.global.dnsDomain }}"
+        paths:
+          - path: /
+            pathType: Prefix
 
 hydra:
   automigration:
