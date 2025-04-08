@@ -110,14 +110,14 @@ k3d-down:
 postgresql:
 	helm repo add bitnami https://charts.bitnami.com/bitnami
 	helm repo update
-	helm install postgresql bitnami/postgresql --atomic --debug -f hacks/values/postgres.yaml
+	helm install postgresql bitnami/postgresql --atomic --debug -f hacks/values/postgres/default.yaml
 
 .PHONY: prometheus
 prometheus:
 	helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
 	helm repo update
 	kubectl create ns prometheus --dry-run=client -o yaml | kubectl apply -f -
-	helm install prometheus prometheus-community/kube-prometheus-stack -f hacks/values/prometheus.yaml
+	helm install prometheus prometheus-community/kube-prometheus-stack -f hacks/values/prometheus/default.yaml
 
 .PHONY: ory-repo
 ory-repo:

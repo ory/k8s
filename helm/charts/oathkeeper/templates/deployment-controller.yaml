@@ -59,10 +59,10 @@ spec:
             {{- if .Values.demo }}
             name: {{ include "oathkeeper.fullname" . }}-config-demo
             {{- else }}
-            name: {{ include "oathkeeper.fullname" . }}-config
+            name: {{ include "oathkeeper.configmap.name" . }}
             {{- end }}
         - name: {{ include "oathkeeper.name" . }}-rules-volume
-          {{- if or .Values.oathkeeper.managedAccessRules .Values.maester.enabled }}
+          {{- if or .Values.oathkeeper.managedAccessRules .Values.maester.enabled .Values.oathkeeper.accessRulesOverride.nameOverride }}
           configMap:
             name: {{ include "oathkeeper.rulesConfigMapName" . }}
           {{- else }}
@@ -76,7 +76,7 @@ spec:
       serviceAccountName: {{ include "oathkeeper.serviceAccountName" . }}
       automountServiceAccountToken: {{ .Values.deployment.automountServiceAccountToken }}
       initContainers:
-      {{- if and (not .Values.oathkeeper.managedAccessRules) (not .Values.maester.enabled) }}
+      {{- if and (not .Values.oathkeeper.managedAccessRules) (not .Values.maester.enabled) (not .Values.oathkeeper.accessRulesOverride.nameOverride) }}
         - name: init
           image: "{{ .Values.image.initContainer.repository }}:{{ .Values.image.initContainer.tag }}"
           volumeMounts:
