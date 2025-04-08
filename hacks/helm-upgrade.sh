@@ -21,7 +21,7 @@ do
   export release=$(echo "${CHART_NAME}-${val%%.*}-$(date +%s)" | cut -c 1-51)
   set +e
   helm install \
-    -f "https://raw.githubusercontent.com/ory/k8s/v${BASE_RELEASE}/hacks/values/${CHART_NAME}/${val}.yaml" \
+    -f "https://raw.githubusercontent.com/ory/k8s/v${BASE_RELEASE}/hacks/values/${CHART_NAME}/${val}" \
     "${release}" "ory/${CHART_NAME}" \
     --wait --debug --atomic --timeout="${TIMEOUT}"
 
