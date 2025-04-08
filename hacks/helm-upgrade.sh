@@ -16,7 +16,7 @@ helm dep update "./helm/charts/${CHART_NAME}"
 
 for val in $(ls "hacks/values/${CHART_NAME}")
 do
-  echo "---> Installing ${CHART_NAME}/${val}"
+  echo "::group::Installing ${CHART_NAME}/${val}"
   set -x
   export release=$(echo "${CHART_NAME}-${val%%.*}-$(date +%s)" | cut -c 1-51)
   set +e
@@ -37,8 +37,8 @@ do
       -A -l "app.kubernetes.io/instance=${release}" || true
     exit "${INSTALLATION_STATUS}"
   fi
-
-  echo "---> Upgrading ${CHART_NAME}/${val}"
+  echo "::endgroup::"
+  echo "::group::Upgrading ${CHART_NAME}/${val}"
 
   set +e
   helm upgrade \
@@ -57,8 +57,8 @@ do
       -A -l "app.kubernetes.io/instance=${release}" || true
     exit "${UPGRADE_STATUS}"
   fi
-
-  echo "---> Testing ${CHART_NAME}/${val}"
+  echo "::endgroup::"
+  echo "::group::Testing ${CHART_NAME}/${val}"
 
   n=0
   until [[ $n -ge 15 ]]; do
@@ -75,4 +75,5 @@ do
     n=$(( n+1 ))
     sleep 10
   done
+  echo "::endgroup::"
 done
