@@ -16,10 +16,11 @@ fi
 
 for f in $(ls "hacks/values/${CHART_NAME}")
 do
-  echo "---> ${f}"
+  echo "::group::Validating ${CHART_NAME}/${f}"
   helm kubeconform "./helm/charts/${CHART_NAME}" --strict --schema-location "${schema_url}"\
     --schema-location ./hacks/servicemonitor_v1.json \
     -f "hacks/values/${CHART_NAME}/${f}" \
     --kubernetes-version "${k8s_version}" \
     --summary --verbose
+  echo "::endgroup::"
 done

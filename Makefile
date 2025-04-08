@@ -28,7 +28,7 @@ export VERSION=$(shell echo ${RELEASE_VERSION} | sed s/v//g)
 export K3SIMAGE := docker.io/rancher/k3s:v1.32.1-k3s1
 
 .bin/helm: Makefile
-	HELM_INSTALL_DIR=.bin bash <(curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3) -v v3.17.0 --no-sudo
+	HELM_INSTALL_DIR=.bin bash <(curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3) -v v3.17.2 --no-sudo
 
 .bin/yq: .deps/yq.yaml .bin/ory
 ifeq ($(BREW),true)
@@ -71,8 +71,20 @@ endif
 	curl -Lo .bin/kubectl $${URL}; \
 	chmod +x .bin/kubectl;
 
+.bin/actionlint: .deps/actionlint.yaml .bin/ory
+ifeq ($(BREW),true)
+		@echo "actionlint Provided by brew!"
+		@echo "${BREW_FORMULA}" | grep actionlint 1>/dev/null || brew install actionlint
+else
+		@URL=$$(.bin/ory dev ci deps url -o ${OS} -a ${ARCH} -c .deps/actionlint.yaml); \
+		echo "Downloading 'actionlint' $${URL}...."; \
+		curl -L $${URL} | tar -xmz -C .bin actionlint; \
+		echo; \
+		chmod +x .bin/actionlint;
+endif
+
 .PHONY: deps
-deps: .bin/ory .bin/helm .bin/yq .bin/helm-docs .bin/k3d .bin/kubectl
+deps: .bin/ory .bin/helm .bin/yq .bin/helm-docs .bin/k3d .bin/kubectl .bin/actionlint
 
 .PHONY: release
 release: ory-repo .bin/yq
@@ -93,31 +105,39 @@ release: ory-repo .bin/yq
 
 .PHONY: k3d-up
 k3d-up:
+	@echo "::group::Starting k3d cluster"
 	k3d cluster create --image $${K3SIMAGE} ory-k8s -p "8080:80@server:0" \
 		--k3s-arg=--kube-apiserver-arg="enable-admission-plugins=NodeRestriction,ServiceAccount@server:0" \
 		--k3s-arg=feature-gates="NamespaceDefaultLabelName=true@server:0";
 
 	kubectl apply -R -f hacks/manifests
+	@echo "::endgroup::"
 
 .PHONY: k3d-run
 k3d-run: k3d-up postgresql prometheus
 
 .PHONY: k3d-down
 k3d-down:
+	@echo "::group::Stopping k3d cluster"
 	k3d cluster delete ory-k8s || true
+	@echo "::endgroup::"
 
 .PHONY: postgresql
 postgresql:
+	@echo "::group::Install postgresSQL DB"
 	helm repo add bitnami https://charts.bitnami.com/bitnami
 	helm repo update
 	helm install postgresql bitnami/postgresql --atomic --debug -f hacks/values/postgres/default.yaml
+	@echo "::endgroup::"
 
 .PHONY: prometheus
 prometheus:
+	@echo "::group::Install Prometheus Stack"
 	helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
 	helm repo update
 	kubectl create ns prometheus --dry-run=client -o yaml | kubectl apply -f -
 	helm install prometheus prometheus-community/kube-prometheus-stack -f hacks/values/prometheus/default.yaml
+	@echo "::endgroup::"
 
 .PHONY: ory-repo
 ory-repo:
@@ -167,6 +187,11 @@ format: .bin/goimports .bin/ory node_modules
 	.bin/ory dev headers copyright --type=open-source
 	.bin/goimports -w .
 	npm exec -- prettier --write .
+
+.PHONY: gha-lint
+gha-lint:
+	actionlint -version
+	actionlint -color -verbose
 
 licenses: .bin/licenses node_modules  # checks open-source licenses
 	.bin/licenses
