@@ -20,9 +20,8 @@ do
   set -x
   export release=$(echo "${CHART_NAME}-${val%%.*}-$(date +%s)" | cut -c 1-51)
   set +e
-  # TODO: replace after releasing the new values format -f "hacks/values/${CHART_NAME}/${val}" \
   helm install \
-    -f "https://raw.githubusercontent.com/ory/k8s/v${BASE_RELEASE}/hacks/values/$1.yaml" \
+    -f "https://raw.githubusercontent.com/ory/k8s/v${BASE_RELEASE}/hacks/values/${CHART_NAME}/${val}.yaml" \
     "${release}" "ory/${CHART_NAME}" \
     --wait --debug --atomic --timeout="${TIMEOUT}"
 
