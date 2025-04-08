@@ -105,37 +105,39 @@ release: ory-repo .bin/yq
 
 .PHONY: k3d-up
 k3d-up:
-	echo "::group::Starting k3d cluster"
+	@echo "::group::Starting k3d cluster"
 	k3d cluster create --image $${K3SIMAGE} ory-k8s -p "8080:80@server:0" \
 		--k3s-arg=--kube-apiserver-arg="enable-admission-plugins=NodeRestriction,ServiceAccount@server:0" \
 		--k3s-arg=feature-gates="NamespaceDefaultLabelName=true@server:0";
 
 	kubectl apply -R -f hacks/manifests
-	echo "::endgroup::"
+	@echo "::endgroup::"
 
 .PHONY: k3d-run
 k3d-run: k3d-up postgresql prometheus
 
 .PHONY: k3d-down
 k3d-down:
+	@echo "::group::Stopping k3d cluster"
 	k3d cluster delete ory-k8s || true
+	@echo "::endgroup::"
 
 .PHONY: postgresql
 postgresql:
-	echo "::group::Install postgresSQL DB"
+	@echo "::group::Install postgresSQL DB"
 	helm repo add bitnami https://charts.bitnami.com/bitnami
 	helm repo update
 	helm install postgresql bitnami/postgresql --atomic --debug -f hacks/values/postgres/default.yaml
-	echo "::endgroup::"
+	@echo "::endgroup::"
 
 .PHONY: prometheus
 prometheus:
-	echo "::group::Install Prometheus Stack"
+	@echo "::group::Install Prometheus Stack"
 	helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
 	helm repo update
 	kubectl create ns prometheus --dry-run=client -o yaml | kubectl apply -f -
 	helm install prometheus prometheus-community/kube-prometheus-stack -f hacks/values/prometheus/default.yaml
-	echo "::endgroup::"
+	@echo "::endgroup::"
 
 .PHONY: ory-repo
 ory-repo:
