@@ -28,7 +28,7 @@ export VERSION=$(shell echo ${RELEASE_VERSION} | sed s/v//g)
 export K3SIMAGE := docker.io/rancher/k3s:v1.32.1-k3s1
 
 .bin/helm: Makefile
-	HELM_INSTALL_DIR=.bin bash <(curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3) -v v3.17.0 --no-sudo
+	HELM_INSTALL_DIR=.bin bash <(curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3) -v v3.17.2 --no-sudo
 
 .bin/yq: .deps/yq.yaml .bin/ory
 ifeq ($(BREW),true)
@@ -71,8 +71,20 @@ endif
 	curl -Lo .bin/kubectl $${URL}; \
 	chmod +x .bin/kubectl;
 
+.bin/actionlint: .deps/actionlint.yaml .bin/ory
+ifeq ($(BREW),true)
+		@echo "actionlint Provided by brew!"
+		@echo "${BREW_FORMULA}" | grep actionlint 1>/dev/null || brew install actionlint
+else
+		@URL=$$(.bin/ory dev ci deps url -o ${OS} -a ${ARCH} -c .deps/actionlint.yaml); \
+		echo "Downloading 'actionlint' $${URL}...."; \
+		curl -L $${URL} | tar -xmz -C .bin actionlint; \
+		echo; \
+		chmod +x .bin/actionlint;
+endif
+
 .PHONY: deps
-deps: .bin/ory .bin/helm .bin/yq .bin/helm-docs .bin/k3d .bin/kubectl
+deps: .bin/ory .bin/helm .bin/yq .bin/helm-docs .bin/k3d .bin/kubectl .bin/actionlint
 
 .PHONY: release
 release: ory-repo .bin/yq
@@ -167,6 +179,11 @@ format: .bin/goimports .bin/ory node_modules
 	.bin/ory dev headers copyright --type=open-source
 	.bin/goimports -w .
 	npm exec -- prettier --write .
+
+.PHONY: gha-lint
+gha-lint:
+	actionlint -version
+	actionlint -color -verbose
 
 licenses: .bin/licenses node_modules  # checks open-source licenses
 	.bin/licenses

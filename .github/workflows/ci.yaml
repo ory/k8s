@@ -80,8 +80,7 @@ jobs:
           FORCE_FULL_RUN:
             ${{ github.ref_type == 'tag' ||
             steps.filter.outputs['cicd-definitions'] == 'true' ||
-            steps.filter.outputs['cicd-scripts'] == 'true'
-          }}
+            steps.filter.outputs['cicd-scripts'] == 'true'}}
         shell: bash
         run: |
           updated_charts=$(echo "$FILTER_OUTPUT" | jq -r 'to_entries | map(select((.key | endswith("-helm")) and .value == "true")) | map(.key)')
