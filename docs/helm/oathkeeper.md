@@ -176,12 +176,12 @@ This chart includes a helper chart in the form of
 [Oathkeeper-maester](https://github.com/ory/k8s/blob/master/docs/helm/oathkeeper-maester.md),
 a k8s controller, which translates access rules object into a kubernetes native
 [CustomResource](https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/).
-This component is enabled by default, and installed together with Oathkeeper,
-however it can be disabled by setting the proper flag:
+This component is disabled by default, but can be enabled by setting the proper
+flag:
 
 ```bash
 $ helm install \
-    --set 'maester.enabled=false' \
+    --set 'maester.enabled=true' \
     ory/oathkeeper
 ```
 
