@@ -1,0 +1,7 @@
+apiVersion: v1
+automountServiceAccountToken: true
+kind: ServiceAccount
+metadata:
+  annotations:
+    iam.gke.io/gcp-service-account: hydra-deploy-1234@foo-bar-1234.iam.gserviceaccount.com
+  name: hydra-deploy-sa
