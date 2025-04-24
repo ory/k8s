@@ -177,6 +177,8 @@ Create the name of the service account for the Job to use
 {{- define "hydra.job.serviceAccountName" -}}
 {{- if .Values.job.serviceAccount.create }}
 {{- printf "%s-job" (default (include "hydra.fullname" .) .Values.job.serviceAccount.name) }}
+{{- else if .Values.job.serviceAccount.name }}
+{{- default "default" .Values.job.serviceAccount.name }}
 {{- else }}
 {{- include "hydra.serviceAccountName" . }}
 {{- end }}
