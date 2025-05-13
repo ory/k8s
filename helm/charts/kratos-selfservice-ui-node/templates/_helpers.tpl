@@ -54,3 +54,15 @@ Create a secret name which can be overridden.
 {{ include "kratos-selfservice-ui-node.fullname" . }}
 {{- end -}}
 {{- end -}}
+
+{{/*
+Generate the secrets.annotations value
+*/}}
+{{- define "kratos-selfservice-ui-node.secrets.annotations" -}}
+  {{- $annotations := .Values.secret.secretAnnotations -}}
+  {{- if .Values.secret.helmHooksEnabled }}
+    {{- $hooks := dict "helm.sh/hook-weight" "0" "helm.sh/hook" "pre-install, pre-upgrade" "helm.sh/hook-delete-policy" "before-hook-creation" "helm.sh/resource-policy" "keep" -}}
+    {{- $annotations := merge  $annotations $hooks -}}
+  {{- end -}}
+  {{- toYaml $annotations }}
+{{- end -}}

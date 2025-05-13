@@ -130,8 +130,9 @@ Access Control Policies as a Server
 | replicaCount | int | `1` | Number of replicas in deployment |
 | secret.enabled | bool | `true` | Switch to false to prevent creating the secret |
 | secret.hashSumEnabled | bool | `true` | switch to false to prevent checksum annotations being maintained and propogated to the pods |
+| secret.helmHooksEnabled | bool | `true` | helmHooksEnabled. Create the secret before installation, and only then. This saves the secret from regenerating during an upgrade pre-upgrade is needed to upgrade from 0.7.0 to newer. Can be deleted afterwards. |
 | secret.nameOverride | string | `""` | Provide custom name of existing secret, or custom name of secret to be created |
-| secret.secretAnnotations | object | `{"helm.sh/hook":"pre-install, pre-upgrade","helm.sh/hook-delete-policy":"before-hook-creation","helm.sh/hook-weight":"0","helm.sh/resource-policy":"keep"}` | Annotations to be added to secret. Annotations are added only when secret is being created. Existing secret will not be modified. |
+| secret.secretAnnotations | object | `{}` | Annotations to be added to secret. |
 | securityContext.allowPrivilegeEscalation | bool | `false` |  |
 | securityContext.capabilities.drop[0] | string | `"ALL"` |  |
 | securityContext.privileged | bool | `false` |  |
