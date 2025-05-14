@@ -54,6 +54,18 @@ dsn-loaded-from-env
 {{- end -}}
 
 {{/*
+Generate the secrets.annotations value
+*/}}
+{{- define "kratos.secrets.annotations" -}}
+  {{- $annotations := .Values.secret.secretAnnotations -}}
+  {{- if .Values.secret.helmHooksEnabled }}
+    {{- $hooks := dict "helm.sh/hook-weight" "0" "helm.sh/hook" "pre-install, pre-upgrade" "helm.sh/hook-delete-policy" "before-hook-creation" "helm.sh/resource-policy" "keep" -}}
+    {{- $annotations := merge  $annotations $hooks -}}
+  {{- end -}}
+  {{- toYaml $annotations }}
+{{- end -}}
+
+{{/*
 Generate the secrets.default value
 */}}
 {{- define "kratos.secrets.default" -}}

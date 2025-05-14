@@ -35,6 +35,18 @@ Create a secret name which can be overridden.
 {{- end -}}
 
 {{/*
+Generate the secrets.annotations value
+*/}}
+{{- define "keto.secrets.annotations" -}}
+  {{- $annotations := .Values.secret.secretAnnotations -}}
+  {{- if .Values.secret.helmHooksEnabled }}
+    {{- $hooks := dict "helm.sh/hook-weight" "0" "helm.sh/hook" "pre-install, pre-upgrade" "helm.sh/hook-delete-policy" "before-hook-creation" "helm.sh/resource-policy" "keep" -}}
+    {{- $annotations := merge  $annotations $hooks -}}
+  {{- end -}}
+  {{- toYaml $annotations }}
+{{- end -}}
+
+{{/*
 Create chart name and version as used by the chart label.
 */}}
 {{- define "keto.chart" -}}
