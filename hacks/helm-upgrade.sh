@@ -17,11 +17,18 @@ helm dep update "./helm/charts/${CHART_NAME}"
 for val in $(ls "hacks/values/${CHART_NAME}")
 do
   echo "::group::Installing ${CHART_NAME}/${val}"
-  set -x
   export release=$(echo "${CHART_NAME}-${val%%.*}-$(date +%s)" | cut -c 1-51)
+  export values_file="https://raw.githubusercontent.com/ory/k8s/v${BASE_RELEASE}/hacks/values/${CHART_NAME}/${val}"
+  export status_code=$(curl -o /dev/null -s -w "%{http_code}" "${values_file}")
+
+  if [ "$status_code" == "404" ]; then
+      echo "Values file ${CHART_NAME}/${val} not present in ${BASE_RELEASE}, skipping"
+      continue
+  fi
+
   set +e
   helm install \
-    -f "https://raw.githubusercontent.com/ory/k8s/v${BASE_RELEASE}/hacks/values/${CHART_NAME}/${val}" \
+    -f  "${values_file}" \
     "${release}" "ory/${CHART_NAME}" \
     --wait --debug --atomic --timeout="${TIMEOUT}"
 
