@@ -79,10 +79,10 @@ spec:
                 deletionPolicy:
                   description: |-
                     Indicates if a deleted OAuth2Client custom resource should delete the database row or not.
-                    Value 0 means deletion of the OAuth2 client, value 1 means keep an orphan oauth2 client.
+                    Values can be 'delete' to delete the OAuth2 client, value 'orphan' to keep an orphan oauth2 client.
                   enum:
-                    - 0
-                    - 1
+                    - delete
+                    - orphan
                   type: integer
                 frontChannelLogoutSessionRequired:
                   default: false
