@@ -83,6 +83,18 @@ Generate the name of the secret resource containing secrets
 {{- end -}}
 
 {{/*
+Generate the secrets.annotations value
+*/}}
+{{- define "hydra.secrets.annotations" -}}
+  {{- $annotations := dict -}}
+  {{- if .Values.secret.enableDefaultAnnotations }}
+    {{- $annotations = .Values.secret.secretAnnotations -}}
+  {{- end -}}
+  {{- $annotations = merge $annotations .Values.secret.extraAnnotations -}}
+  {{- toYaml $annotations }}
+{{- end -}}
+
+{{/*
 Generate the secrets.system value
 */}}
 {{- define "hydra.secrets.system" -}}

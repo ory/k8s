@@ -42,6 +42,18 @@ Create chart name and version as used by the chart label.
 {{- end }}
 
 {{/*
+Generate the secrets.annotations value
+*/}}
+{{- define "keto.secrets.annotations" -}}
+  {{- $annotations := dict -}}
+  {{- if .Values.secret.enableDefaultAnnotations }}
+    {{- $annotations = .Values.secret.secretAnnotations -}}
+  {{- end -}}
+  {{- $annotations = merge $annotations .Values.secret.extraAnnotations -}}
+  {{- toYaml $annotations }}
+{{- end -}}
+
+{{/*
 Generate the dsn value
 */}}
 {{- define "keto.dsn" -}}

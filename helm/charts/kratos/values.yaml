@@ -75,13 +75,15 @@ service:
     # -- Path to the metrics endpoint
     metricsPath: /metrics/prometheus
 
-## -- Secret management
+## -- Secret configuration
 secret:
   # -- switch to false to prevent creating the secret
   enabled: true
   # -- Provide custom name of existing secret, or custom name of secret to be created
   nameOverride: ""
   # nameOverride: "myCustomSecret"
+  # -- enableDefaultAnnotations set to `true` will add default annotations to the secret. As such the Secret will be managed by helm hooks.
+  enableDefaultAnnotations: true
   # -- Annotations to be added to secret. Annotations are added only when secret is being created. Existing secret will not be modified.
   secretAnnotations:
     # Create the secret before installation, and only then. This saves the secret from regenerating during an upgrade
@@ -90,6 +92,8 @@ secret:
     helm.sh/hook: "pre-install, pre-upgrade"
     helm.sh/hook-delete-policy: "before-hook-creation"
     helm.sh/resource-policy: "keep"
+  # -- extraAnnotations to be added to secret.
+  extraAnnotations: {}
   # -- switch to false to prevent checksum annotations being maintained and propogated to the pods
   hashSumEnabled: true
 

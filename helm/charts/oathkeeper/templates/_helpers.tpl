@@ -136,3 +136,15 @@ checksum/oathkeeper-rules: {{ include (print $.Template.BasePath "/configmap-rul
 checksum/oauthkeeper-secrets: {{ include (print $.Template.BasePath "/secrets.yaml") . | sha256sum }}
 {{- end }}
 {{- end }}
+
+{{/*
+Generate the secrets.annotations value
+*/}}
+{{- define "oathkeeper.secrets.annotations" -}}
+  {{- $annotations := dict -}}
+  {{- if .Values.secret.enableDefaultAnnotations }}
+    {{- $annotations = .Values.secret.secretAnnotations -}}
+  {{- end -}}
+  {{- $annotations = merge $annotations .Values.secret.extraAnnotations -}}
+  {{- toYaml $annotations }}
+{{- end -}}

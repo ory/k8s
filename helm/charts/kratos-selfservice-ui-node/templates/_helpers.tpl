@@ -54,3 +54,15 @@ Create a secret name which can be overridden.
 {{ include "kratos-selfservice-ui-node.fullname" . }}
 {{- end -}}
 {{- end -}}
+
+{{/*
+Generate the secrets.annotations value
+*/}}
+{{- define "kratos-selfservice-ui-node.secrets.annotations" -}}
+  {{- $annotations := dict -}}
+  {{- if .Values.secret.enableDefaultAnnotations }}
+    {{- $annotations = .Values.secret.secretAnnotations -}}
+  {{- end -}}
+  {{- $annotations = merge $annotations .Values.secret.extraAnnotations -}}
+  {{- toYaml $annotations }}
+{{- end -}}
