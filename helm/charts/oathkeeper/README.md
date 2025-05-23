@@ -103,7 +103,9 @@ A Helm chart for deploying ORY Oathkeeper in Kubernetes
 | priorityClassName | string | `""` | Pod priority https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/ |
 | replicaCount | int | `1` | Number of ORY Oathkeeper members |
 | revisionHistoryLimit | int | `5` | Number of revisions kept in history |
+| secret.enableDefaultAnnotations | bool | `true` | enableDefaultAnnotations set to `true` will add default annotations to the secret. As such the Secret will be managed by helm hooks. |
 | secret.enabled | bool | `false` | Switch to false to prevent using mutatorIdTokenJWKs secret |
+| secret.extraAnnotations | object | `{}` | extraAnnotations to be added to secret. |
 | secret.filename | string | `"mutator.id_token.jwks.json"` | default filename of JWKS (mounted as secret) |
 | secret.hashSumEnabled | bool | `true` | switch to false to prevent checksum annotations being maintained and propogated to the pods |
 | secret.mountPath | string | `"/etc/secrets"` | default mount path for the kubernetes secret |
