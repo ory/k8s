@@ -83,7 +83,7 @@ spec:
                   enum:
                     - delete
                     - orphan
-                  type: integer
+                  type: string
                 frontChannelLogoutSessionRequired:
                   default: false
                   description:
