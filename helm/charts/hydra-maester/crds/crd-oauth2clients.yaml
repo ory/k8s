@@ -83,7 +83,7 @@ spec:
                   enum:
                     - delete
                     - orphan
-                  type: integer
+                  type: string
                 frontChannelLogoutSessionRequired:
                   default: false
                   description:
@@ -150,7 +150,7 @@ spec:
                         URL is the URL for the hydra instance on
                         which to set up the client. This value will override the value
                         provided to `--hydra-url`
-                      maxLength: 64
+                      maxLength: 256
                       pattern: (^$|^https?://.*)
                       type: string
                   type: object
