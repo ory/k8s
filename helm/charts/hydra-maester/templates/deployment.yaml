@@ -59,7 +59,7 @@ spec:
           command:
             - /manager
           args:
-            - --metrics-addr=127.0.0.1:8080
+            - --metrics-addr={{ if .Values.service.metrics.enabled }}0.0.0.0{{ else }}127.0.0.1{{ end }}:{{ .Values.service.metrics.port }}
             - --hydra-url={{ required "scheme is required" .Values.adminService.scheme }}://{{ .Values.adminService.name | default ( include "hydra-maester.adminService" . ) }}
             - --hydra-port={{ required "port must be set and non-empty" .Values.adminService.port }}
             {{- with .Values.adminService.endpoint }}
@@ -96,6 +96,13 @@ spec:
           securityContext:
             {{- toYaml .Values.deployment.securityContext | nindent 12 }}
           {{- end }}
+          ports:
+            {{- if .Values.service.metrics.enabled }}
+            - name: {{ .Values.service.metrics.name }}
+              port: {{ .Values.service.metrics.port }}
+              targetPort: {{ .Values.service.metrics.targetPort }}
+              protocol: TCP
+            {{- end }}
       serviceAccountName: {{ include "hydra-maester.fullname" . }}-account
       automountServiceAccountToken: {{ .Values.deployment.automountServiceAccountToken }}
       {{- if .Values.priorityClassName }}

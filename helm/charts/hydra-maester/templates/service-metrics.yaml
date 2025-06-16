@@ -1,0 +1,29 @@
+{{- if .Values.service.metrics.enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "hydra-maester.fullname" . }}-metrics
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app.kubernetes.io/component: metrics
+    {{- include "hydra-maester.labels" . | nindent 4 }}
+  {{- with .Values.service.metrics.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  type: {{ .Values.service.metrics.type }}
+  {{- if eq .Values.service.metrics.type "LoadBalancer" }}
+  {{- with .Values.service.metrics.loadBalancerIP }}
+  loadBalancerIP: {{ . }}
+  {{- end }}
+  {{- end }}
+  ports:
+    - port: {{ .Values.service.metrics.port }}
+      targetPort: {{ .Values.service.metrics.targetPort }}
+      protocol: TCP
+      name: {{ .Values.service.metrics.name }}
+  selector:
+    app.kubernetes.io/name: {{ include "hydra-maester.fullname" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+{{ end }}
