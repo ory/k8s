@@ -19,3 +19,13 @@ deployment:
   extraVolumeMounts:
     - name: "test-volume"
       mountPath: /test-volume
+service:
+  metrics:
+    enabled: true
+    annotations:
+      ory.sh/test-annotations: "true"
+serviceMonitor:
+  labels:
+    release: "prometheus"
+  tlsConfig:
+    insecureSkipVerify: true

@@ -168,7 +168,6 @@ service:
     loadBalancerIP: ""
     name: http-metrics
     port: 8080
-    targetPort: 8080
     annotations: {}
 
 ## -- Parameters for the Prometheus ServiceMonitor objects.
@@ -180,7 +179,7 @@ serviceMonitor:
   scrapeInterval: 60s
   # -- Timeout after which the scrape is ended
   scrapeTimeout: 30s
-  # -- Provide additionnal labels to the ServiceMonitor ressource metadata
+  # -- Provide additional labels to the ServiceMonitor resource metadata
   labels: {}
   # -- TLS configuration to use when scraping the endpoint
   tlsConfig: {}

@@ -99,8 +99,7 @@ spec:
           ports:
             {{- if .Values.service.metrics.enabled }}
             - name: {{ .Values.service.metrics.name }}
-              port: {{ .Values.service.metrics.port }}
-              targetPort: {{ .Values.service.metrics.targetPort }}
+              containerPort: {{ .Values.service.metrics.port }}
               protocol: TCP
             {{- end }}
       serviceAccountName: {{ include "hydra-maester.fullname" . }}-account

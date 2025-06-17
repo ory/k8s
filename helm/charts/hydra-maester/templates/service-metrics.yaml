@@ -20,7 +20,7 @@ spec:
   {{- end }}
   ports:
     - port: {{ .Values.service.metrics.port }}
-      targetPort: {{ .Values.service.metrics.targetPort }}
+      targetPort: {{ .Values.service.metrics.name }}
       protocol: TCP
       name: {{ .Values.service.metrics.name }}
   selector:
