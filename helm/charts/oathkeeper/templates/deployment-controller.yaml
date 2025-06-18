@@ -77,7 +77,7 @@ spec:
       automountServiceAccountToken: {{ .Values.deployment.automountServiceAccountToken }}
       initContainers:
       {{- if and (not .Values.oathkeeper.managedAccessRules) (not .Values.maester.enabled) (not .Values.oathkeeper.accessRulesOverride.nameOverride) }}
-        - name: {{ include "oathkeeper.fullname" . }}-init
+        - name: {{ include "oathkeeper.name" . }}-init
           image: "{{ .Values.image.initContainer.repository }}:{{ .Values.image.initContainer.tag }}"
           volumeMounts:
             - name: {{ include "oathkeeper.name" . }}-rules-volume
@@ -99,7 +99,7 @@ spec:
       {{- end }}
       terminationGracePeriodSeconds: {{ .Values.deployment.terminationGracePeriodSeconds }}
       containers:
-        - name: {{ include "oathkeeper.fullname" . }}
+        - name: {{ include "oathkeeper.name" . }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           command: 

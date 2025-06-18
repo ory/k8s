@@ -51,7 +51,7 @@ spec:
               configMap:
                 name: {{ include "kratos.fullname" . }}-config
           containers:
-            - name: {{ include "kratos.fullname" . }}-cleanup
+            - name: {{ include "kratos.name" . }}-cleanup
               image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
               imagePullPolicy: {{ .Values.image.pullPolicy }}
               {{- with .Values.securityContext }}

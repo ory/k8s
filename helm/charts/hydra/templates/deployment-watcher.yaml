@@ -42,7 +42,7 @@ spec:
       serviceAccountName: {{ include "hydra.serviceAccountName" . }}-watcher
       terminationGracePeriodSeconds: {{ .Values.deployment.terminationGracePeriodSeconds }}
       containers:
-        - name: {{ include "hydra.fullname" . }}-watcher
+        - name: {{ include "hydra.name" . }}-watcher
           {{- with .Values.watcher.securityContext }}
           securityContext:
             {{- toYaml . | nindent 12 }}

@@ -8,7 +8,7 @@ spec:
   selector:
     matchLabels:
       control-plane: controller-manager
-      app.kubernetes.io/name: {{ include "oathkeeper-maester.fullname" . }}
+      app.kubernetes.io/name: {{ include "oathkeeper-maester.name" . }}
       app.kubernetes.io/instance: {{ .Release.Name }}
   {{- with .Values.pdb.spec.maxUnavailable }}
   maxUnavailable: {{ . }}
