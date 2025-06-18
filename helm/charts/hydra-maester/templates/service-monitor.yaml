@@ -27,7 +27,7 @@ spec:
       {{- end }}
   selector:
     matchLabels:
-      app.kubernetes.io/name: {{ include "hydra-maester.name" . }}
+      app.kubernetes.io/name: {{ include "hydra-maester.fullname" . }}
       app.kubernetes.io/instance: {{ .Release.Name }}
       app.kubernetes.io/component: metrics
 {{- end }}

@@ -21,13 +21,13 @@ spec:
   selector:
     matchLabels:
       control-plane: controller-manager
-      app.kubernetes.io/name: {{ include "hydra-maester.name" . }}
+      app.kubernetes.io/name: {{ include "hydra-maester.fullname" . }}
       app.kubernetes.io/instance: {{ .Release.Name }}
   template:
     metadata:
       labels:
         control-plane: controller-manager
-        app.kubernetes.io/name: {{ include "hydra-maester.name" . }}
+        app.kubernetes.io/name: {{ include "hydra-maester.fullname" . }}
         app.kubernetes.io/instance: {{ .Release.Name }}
         {{- with .Values.deployment.extraLabels }}
           {{- toYaml . | nindent 8 }}
