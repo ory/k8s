@@ -29,15 +29,15 @@ metadata:
 spec:
   selector:
     matchLabels:
-      app.kubernetes.io/name: {{ include "kratos.fullname" . }}-courier
+      app.kubernetes.io/name: {{ include "kratos.name" . }}-courier
       app.kubernetes.io/instance: {{ .Release.Name }}
-  serviceName: {{ include "kratos.fullname" . }}-courier
+  serviceName: {{ include "kratos.name" . }}-courier
   replicas: 1
   revisionHistoryLimit: {{ .Values.statefulSet.revisionHistoryLimit }}
   template:
     metadata:
       labels:
-        app.kubernetes.io/name: {{ include "kratos.fullname" . }}-courier
+        app.kubernetes.io/name: {{ include "kratos.name" . }}-courier
         app.kubernetes.io/instance: {{ .Release.Name }}
         app.kubernetes.io/component: courier
         {{- with $labels }}
