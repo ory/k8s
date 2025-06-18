@@ -56,7 +56,7 @@ spec:
               {{- toYaml .Values.cronjob.janitor.extraVolumes | nindent 12 }}
             {{- end }}
           containers:
-            - name: janitor
+            - name: {{ include "hydra.name" . }}-janitor
               image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
               imagePullPolicy: {{ .Values.image.pullPolicy }}
               {{- with .Values.cronjob.janitor.securityContext }}

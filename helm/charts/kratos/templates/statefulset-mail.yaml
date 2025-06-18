@@ -56,7 +56,7 @@ spec:
       {{- end }}
       terminationGracePeriodSeconds: {{ .Values.statefulSet.terminationGracePeriodSeconds }}
       containers:
-        - name: {{ include "kratos.fullname" . }}-courier
+        - name: {{ include "kratos.name" . }}-courier
           image: {{ include "kratos.image" . }}
           imagePullPolicy: {{ include "kratos.imagePullPolicy" . }}
           args:

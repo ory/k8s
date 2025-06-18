@@ -72,7 +72,7 @@ spec:
         {{- tpl $extraInitContainers . | nindent 8 }}
       {{- end }}
       {{- if and ( .Values.keto.automigration.enabled ) ( eq .Values.keto.automigration.type "initContainer" ) }}
-        - name: {{ .Chart.Name }}-automigrate
+        - name: {{ include "keto.fullname" . }}-automigrate
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           {{- if .Values.keto.automigration.customCommand }}
@@ -116,7 +116,7 @@ spec:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       terminationGracePeriodSeconds: {{ .Values.deployment.terminationGracePeriodSeconds }}
       containers:
-        - name: {{ .Chart.Name }}
+        - name: {{ include "keto.name" . }}
           {{- with .Values.securityContext }}
           securityContext:
             {{- toYaml . | nindent 12 }}

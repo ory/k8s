@@ -63,7 +63,7 @@ spec:
       automountServiceAccountToken: {{ .Values.deployment.automountServiceAccountToken }}
       terminationGracePeriodSeconds: {{ .Values.deployment.terminationGracePeriodSeconds }}
       containers:
-        - name: {{ .Chart.Name }}
+        - name: {{ include "hydra.name" . }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           command: {{- toYaml .Values.hydra.command | nindent 12 }}
@@ -165,7 +165,7 @@ spec:
         {{- tpl .Values.deployment.extraInitContainers . | nindent 8 }}
       {{- end }}
       {{- if and ( .Values.hydra.automigration.enabled ) ( eq .Values.hydra.automigration.type "initContainer" ) }}
-        - name: {{ .Chart.Name }}-automigrate
+        - name: {{ include "hydra.name" . }}-automigrate
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           {{- if .Values.hydra.automigration.customCommand }}

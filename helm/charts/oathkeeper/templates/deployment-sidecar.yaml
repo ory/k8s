@@ -66,7 +66,7 @@ spec:
             secretName: {{ include "oathkeeper.secretname" . }}
         {{- end }}
       initContainers:
-        - name: init
+        - name: {{ include "oathkeeper.name" . }}-init
           image: "{{ .Values.image.initContainer.repository }}:{{ .Values.image.initContainer.tag }}"
           volumeMounts:
             - name: {{ include "oathkeeper.name" . }}-rules-volume
@@ -87,7 +87,7 @@ spec:
       {{- end }}
       terminationGracePeriodSeconds: {{ .Values.deployment.terminationGracePeriodSeconds }}
       containers:
-        - name: {{ .Chart.Name }}
+        - name: {{ include "oathkeeper.name" . }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           command: [ "oathkeeper", "serve", "--config", "/etc/config/config.yaml" ]
@@ -158,7 +158,7 @@ spec:
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
           {{- end }}
-        - name: {{ .Chart.Name }}-maester
+        - name: {{ include "oathkeeper.name" . }}-maester
           image: "{{ .Values.sidecar.image.repository }}:{{ .Values.sidecar.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           command:

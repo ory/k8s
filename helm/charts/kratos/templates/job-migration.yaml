@@ -30,7 +30,7 @@ spec:
           {{- toYaml . | nindent 8 }}
         {{- end }}
       labels:
-        app.kubernetes.io/name: {{ include "kratos.fullname" . }}-automigrate
+        app.kubernetes.io/name: {{ include "kratos.name" . }}-automigrate
         app.kubernetes.io/instance: {{ .Release.Name }}
         {{- with .Values.deployment.labels }}
           {{- toYaml . | nindent 8 }}
@@ -46,7 +46,7 @@ spec:
       serviceAccountName: {{ include "kratos.job.serviceAccountName" . }}
       automountServiceAccountToken: {{ .Values.job.automountServiceAccountToken }}
       containers:
-      - name: {{ .Chart.Name }}-automigrate
+      - name: {{ include "kratos.name" . }}-automigrate
         image: {{ include "kratos.image" . }}
         imagePullPolicy: {{ include "kratos.imagePullPolicy" . }}
         {{- if .Values.kratos.automigration.customCommand }}
