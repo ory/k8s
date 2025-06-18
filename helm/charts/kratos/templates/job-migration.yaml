@@ -46,7 +46,7 @@ spec:
       serviceAccountName: {{ include "kratos.job.serviceAccountName" . }}
       automountServiceAccountToken: {{ .Values.job.automountServiceAccountToken }}
       containers:
-      - name: {{ .Chart.Name }}-automigrate
+      - name: {{ include "kratos.fullname" . }}-automigrate
         image: {{ include "kratos.image" . }}
         imagePullPolicy: {{ include "kratos.imagePullPolicy" . }}
         {{- if .Values.kratos.automigration.customCommand }}

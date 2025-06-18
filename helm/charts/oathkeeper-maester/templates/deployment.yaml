@@ -52,7 +52,7 @@ spec:
       {{- end }}
       terminationGracePeriodSeconds: {{ .Values.deployment.terminationGracePeriodSeconds }}
       containers:
-        - name: {{ .Chart.Name }}
+        - name: {{ include "oathkeeper-maester.fullname" . }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           command:

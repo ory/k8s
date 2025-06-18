@@ -61,6 +61,17 @@ A Helm chart for Kubernetes
 | priorityClassName | string | `""` | Pod priority # https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/ |
 | replicaCount | int | `1` | Number of replicas in deployment |
 | revisionHistoryLimit | int | `5` | Number of revisions kept in history |
+| service.metrics.annotations | object | `{}` |  |
+| service.metrics.enabled | bool | `false` |  |
+| service.metrics.loadBalancerIP | string | `""` |  |
+| service.metrics.name | string | `"http-metrics"` |  |
+| service.metrics.port | int | `8080` |  |
+| service.metrics.type | string | `"ClusterIP"` |  |
+| serviceMonitor.labels | object | `{}` | Provide additional labels to the ServiceMonitor resource metadata |
+| serviceMonitor.scheme | string | `"http"` | HTTP scheme to use for scraping. |
+| serviceMonitor.scrapeInterval | string | `"60s"` | Interval at which metrics should be scraped |
+| serviceMonitor.scrapeTimeout | string | `"30s"` | Timeout after which the scrape is ended |
+| serviceMonitor.tlsConfig | object | `{}` | TLS configuration to use when scraping the endpoint |
 | singleNamespaceMode | bool | `false` | Single namespace mode. If enabled the controller will watch for resources only from namespace it is deployed in, ignoring others |
 
 ----------------------------------------------

@@ -48,7 +48,7 @@ spec:
       serviceAccountName: {{ include "hydra.job.serviceAccountName" . }}
       automountServiceAccountToken: {{ .Values.job.automountServiceAccountToken }}
       containers:
-      - name: {{ .Chart.Name }}-automigrate
+      - name: {{ include "hydra.fullname" $ }}-automigrate
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         {{- if .Values.hydra.automigration.customCommand }}

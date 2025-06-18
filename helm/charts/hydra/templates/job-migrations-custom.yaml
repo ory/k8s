@@ -50,7 +50,7 @@ spec:
       serviceAccountName: {{ include "hydra.job.serviceAccountName" $ }}
       automountServiceAccountToken: {{ $.Values.job.automountServiceAccountToken }}
       containers:
-      - name: {{ $.Chart.Name }}-{{ $jobName }}
+      - name: {{ include "hydra.fullname" $ }}-{{ $jobName }}
         image: "{{ $.Values.image.repository }}:{{ $.Values.image.tag }}"
         imagePullPolicy: {{ $.Values.image.pullPolicy }}
       {{- if $job.customCommand }}
