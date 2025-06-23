@@ -1,4 +1,5 @@
 apiVersion: v2
+# # renovate: image=docker.io/oryd/kratos-selfservice-ui-node
 appVersion: "v0.13.0-4"
 description: A Helm chart for ORY Kratos's example ui for Kubernetes
 name: kratos-selfservice-ui-node

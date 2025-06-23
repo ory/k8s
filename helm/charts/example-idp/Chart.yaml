@@ -1,4 +1,5 @@
 apiVersion: v2
+# renovate: image=docker.io/oryd/hydra
 appVersion: "1.4.6"
 description:
   A Helm chart for deploying the reference implementation for the User Login and
