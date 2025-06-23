@@ -26,7 +26,7 @@ version: 0.55.0
 # incremented each time you make changes to the application. Versions are not expected to
 # follow Semantic Versioning. They should reflect the version the application is using.
 # renovate: image=docker.io/oryd/keto
-appVersion: "v0.12.0"
+appVersion: "v0.14.0"
 dependencies:
   - name: ory-commons
     version: 0.1.0
