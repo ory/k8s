@@ -1,5 +1,5 @@
 apiVersion: v2
-# renovate: image=docker.io/oryd/hydra
+# renovate: image=docker.io/oryd/hydra-login-consent-node
 appVersion: "2.3.0"
 description:
   A Helm chart for deploying the reference implementation for the User Login and
