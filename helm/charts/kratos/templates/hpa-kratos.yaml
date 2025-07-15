@@ -22,7 +22,7 @@ spec:
   - type: ContainerResource
     containerResource:
       name: memory
-      container: {{ include "kratos.name" . }}
+      container: {{ include "kratos.name" $ }}
       target:
         {{- toYaml . | nindent 8 }}
   {{- end }}
@@ -30,7 +30,7 @@ spec:
   - type: ContainerResource
     containerResource:
       name: cpu
-      container: {{ include "kratos.name" . }}
+      container: {{ include "kratos.name" $ }}
       target:
         {{- toYaml . | nindent 8 }}
   {{- end }}
