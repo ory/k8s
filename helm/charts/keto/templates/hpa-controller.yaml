@@ -27,7 +27,7 @@ spec:
   - type: ContainerResource
     containerResource:
       name: memory
-      container: {{ $.Chart.Name }}
+      container: {{ include "keto.name" . }}
       target:
         {{- toYaml . | nindent 8 }}
   {{- end }}
@@ -35,7 +35,7 @@ spec:
   - type: ContainerResource
     containerResource:
       name: cpu
-      container: {{ $.Chart.Name }}
+      container: {{ include "keto.name" . }}
       target:
         {{- toYaml . | nindent 8 }}
   {{- end }}
