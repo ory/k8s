@@ -7,6 +7,54 @@
       "enabled": true,
       "groupName": "gha",
       "matchFileNames": [".github/**"]
+    },
+    {
+      "description": "Group example-idp",
+      "enabled": true,
+      "groupName": "example-idp",
+      "matchFileNames": ["helm/charts/example-idp/**"]
+    },
+    {
+      "description": "Group hydra",
+      "enabled": true,
+      "groupName": "hydra",
+      "matchFileNames": ["helm/charts/hydra/**"]
+    },
+    {
+      "description": "Group hydra-maester",
+      "enabled": true,
+      "groupName": "hydra-maester",
+      "matchFileNames": ["helm/charts/hydra-maester/**"]
+    },
+    {
+      "description": "Group keto",
+      "enabled": true,
+      "groupName": "keto",
+      "matchFileNames": ["helm/charts/keto/**"]
+    },
+    {
+      "description": "Group kratos",
+      "enabled": true,
+      "groupName": "kratos",
+      "matchFileNames": ["helm/charts/kratos/**"]
+    },
+    {
+      "description": "Group kratos-selfservice-ui-node",
+      "enabled": true,
+      "groupName": "kratos-selfservice-ui-node",
+      "matchFileNames": ["helm/charts/kratos-selfservice-ui-node/**"]
+    },
+    {
+      "description": "Group oathkeeper",
+      "enabled": true,
+      "groupName": "oathkeeper",
+      "matchFileNames": ["helm/charts/oathkeeper/**"]
+    },
+    {
+      "description": "Group oathkeeper-maester",
+      "enabled": true,
+      "groupName": "oathkeeper-maester",
+      "matchFileNames": ["helm/charts/oathkeeper-maester/**"]
     }
   ],
   "postUpdateOptions": ["gomodTidy", "helmUpdateSubChartArchives", "npmDedupe"],
