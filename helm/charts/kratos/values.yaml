@@ -224,7 +224,7 @@ kratos:
             "-e",
             "--yes",
             "--config",
-            "/etc/config/kratos.yaml"
+            "/etc/config/kratos.yaml",
           ]
         nodeSelector: {}
         resources: {}

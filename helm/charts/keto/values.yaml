@@ -283,14 +283,7 @@ keto:
       #      -- Example of custom migration job
       example-job:
         enabled: false
-        customArgs:
-          [
-            "migrate",
-            "up",
-            "-y",
-            "--config",
-            "/etc/config/keto.yaml"
-          ]
+        customArgs: ["migrate", "up", "-y", "--config", "/etc/config/keto.yaml"]
         nodeSelector: {}
         resources: {}
         extraEnv: []
