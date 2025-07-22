@@ -1,0 +1,128 @@
+{{- range $jobName, $job := $.Values.kratos.customMigrations.jobs }}
+{{- if $job.enabled -}}
+{{- $nodeSelector := ternary $job.nodeSelector $.Values.job.nodeSelector (not (empty $job.nodeSelector)) -}}
+{{- $migrationExtraEnv := ternary $job.extraEnv $.Values.job.extraEnv (not (empty $job.extraEnv)) -}}
+{{- $resources := ternary $job.resources $.Values.job.resources (not (empty $job.resources)) -}}
+{{- $annotations := merge $.Values.job.annotations (default dict $job.annotations) -}}
+{{- $extraLabels := ternary $.Values.deployment.extraLabels $.Values.extraLabels (not (empty $.Values.deployment.extraLabels )) -}}
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ include "kratos.fullname" $ }}-{{ $jobName }}
+  {{- if $.Release.Namespace }}
+  namespace: {{ $.Release.Namespace }}
+  {{- end }}
+  labels:
+    {{- include "kratos.labels" $ | nindent 4 }}
+    {{- with $extraLabels }}
+      {{- toYaml . | nindent 4 }}
+    {{- end }}
+  annotations:
+    {{- with $annotations }}
+      {{- toYaml . | nindent 4 }}
+    {{- end }}
+spec:
+  template:
+    metadata:
+      annotations:
+        {{- with $annotations }}
+          {{- toYaml . | nindent 8 }}
+        {{- end }}
+        {{- with $.Values.job.podMetadata.annotations }}
+          {{- toYaml . | nindent 8 }}
+        {{- end }}
+      labels:
+        app.kubernetes.io/name: {{ include "kratos.fullname" $ }}-{{ $jobName }}-automigrate
+        app.kubernetes.io/instance: {{ $.Release.Name }}
+        {{- with $extraLabels }}
+          {{- toYaml . | nindent 8 }}
+        {{- end }}
+        {{- with $.Values.job.podMetadata.labels }}
+          {{- toYaml . | nindent 8 }}
+        {{- end }}
+    spec:
+    {{- with $.Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+      serviceAccountName: {{ include "kratos.job.serviceAccountName" $ }}
+      automountServiceAccountToken: {{ $.Values.job.automountServiceAccountToken }}
+      containers:
+      - name: {{ include "kratos.name" $ }}-{{ $jobName }}
+        image: {{ include "kratos.image" $ }}
+        imagePullPolicy: {{ include "kratos.imagePullPolicy" $ }}
+      {{- if $job.customCommand }}
+        command: {{- toYaml $job.customCommand | nindent 10 }}
+      {{- else }}
+        command: ["kratos"]
+      {{- end }}
+        args: {{- toYaml $job.customArgs | nindent 10 }}
+        env:
+        {{- if not (empty ( include "kratos.dsn" $ )) }}
+          {{- if not (include "ory.extraEnvContainsEnvName" (list $migrationExtraEnv "DSN")) }}
+          - name: DSN
+            valueFrom:
+              secretKeyRef:
+                name: {{ include "kratos.secretname" $ }}
+                key: dsn
+          {{- end }}
+        {{- end }}
+        {{- if $migrationExtraEnv }}
+          {{- tpl (toYaml $migrationExtraEnv) . | nindent 10 }}
+        {{- end }}
+        {{- if $.Values.deployment.environmentSecretsName }}
+        envFrom:
+          - secretRef:
+              name: {{ $.Values.deployment.environmentSecretsName }}
+        {{- end}}
+        {{- with $resources }}
+        resources:
+          {{- toYaml . | nindent 10 }}
+        {{- end }}
+        {{- if $.Values.job.lifecycle }}
+        lifecycle:
+          {{- tpl $.Values.job.lifecycle $ | nindent 10 }}
+        {{- end }}
+        {{- with $.Values.securityContext }}
+        securityContext:
+          {{- toYaml . | nindent 10 }}
+        {{- end }}
+        volumeMounts:
+          - name: {{ include "kratos.name" $ }}-config-volume
+            mountPath: /etc/config
+            readOnly: true
+          {{- if $job.extraVolumeMounts }}
+            {{- toYaml $job.extraVolumeMounts | nindent 12 }}
+          {{- end }}
+      {{- if $.Values.job.extraContainers }}
+        {{- tpl $.Values.job.extraContainers $ | nindent 6 }}
+      {{- end }}
+      {{- if $.Values.job.extraInitContainers }}
+      initContainers:
+        {{- tpl $.Values.job.extraInitContainers $ | nindent 8 }}
+      {{- end }}
+      restartPolicy: Never
+      {{- with $.Values.deployment.podSecurityContext }}
+      securityContext:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      shareProcessNamespace: {{ $.Values.job.shareProcessNamespace }}
+      volumes:
+        - name: {{ include "kratos.name" $ }}-config-volume
+          configMap:
+            name: {{ include "kratos.fullname" $ }}-migrate
+        {{- if $job.extraVolumes }}
+          {{- toYaml $job.extraVolumes | nindent 8 }}
+        {{- end }}
+      {{- with $nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with $.Values.job.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+  backoffLimit: {{ $.Values.job.spec.backoffLimit }}
+{{- end }}
+{{- end }}
