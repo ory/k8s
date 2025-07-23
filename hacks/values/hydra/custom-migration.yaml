@@ -18,18 +18,21 @@ deployment:
         - ALL
     readOnlyRootFilesystem: true
 hydra:
+  automigration:
+    customCommand:
+      - hydra
+    enabled: true
   config:
-    dsn: hydra-dsn-string
+    dsn: postgres://postgres:ory@postgresql.default.svc.cluster.local/ory_hydra?sslmode=disable&max_conn_lifetime=10s
   customMigrations:
     jobs:
       test-job:
         annotations:
           example.org/annotation: value
         customArgs:
-          - hydra-custom-arg-1
-          - hydra-custom-arg-2
+          - custom args test
         customCommand:
-          - hydra-custom-command
+          - echo
         enabled: true
         extraEnv:
           - name: TESTFOO
@@ -49,6 +52,7 @@ hydra:
           requests:
             cpu: 10m
             memory: 10Mi
+  dev: true
 image:
   imagePullPolicy: Always
 imagePullSecrets:

@@ -30,14 +30,14 @@ keto:
   automigration:
     enabled: true
   config:
-    dsn: "postgres://postgres:ory@postgresql.default.svc.cluster.local/ory_keto?sslmode=disable&max_conn_lifetime=10s"
+    dsn: postgres://postgres:ory@postgresql.default.svc.cluster.local/ory_keto?sslmode=disable&max_conn_lifetime=10s
   customMigrations:
     jobs:
       test-job:
         annotations:
           example.org/annotation: value
         customArgs:
-          - "custom args test"
+          - custom args test
         customCommand:
           - echo
         enabled: true

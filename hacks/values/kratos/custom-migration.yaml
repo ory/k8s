@@ -76,7 +76,7 @@ kratos:
         annotations:
           example.org/annotation: value
         customArgs:
-          - "custom args test"
+          - custom args test
         customCommand:
           - echo
         enabled: true
