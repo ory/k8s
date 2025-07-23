@@ -160,10 +160,6 @@ kratos:
         subject:
         body:
         plainBody:
-  customMigrations:
-    jobs:
-      example-job:
-        enabled: true
 ingress:
   admin:
     enabled: true

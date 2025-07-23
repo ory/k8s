@@ -62,7 +62,7 @@ keto:
           - emptyDir: {}
             name: file-storage
         nodeSelector:
-          example.org/label: value
+          beta.kubernetes.io/instance-type: k3s
         resources:
           limits:
             cpu: 20m
