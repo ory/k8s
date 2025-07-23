@@ -278,6 +278,16 @@ keto:
         name: sample
     dsn: memory
 
+  customMigrations:
+    jobs:
+      #      -- Example of custom migration job
+      example-job:
+        enabled: false
+        customArgs: ["migrate", "up", "-y", "--config", "/etc/config/keto.yaml"]
+        nodeSelector: {}
+        resources: {}
+        extraEnv: []
+
 ## -- Configure the probes for when the deployment is considered ready and ongoing health check
 deployment:
   ## -- Specify pod deployment strategy

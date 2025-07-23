@@ -8,6 +8,7 @@ keto:
     dsn: "postgres://postgres:ory@postgresql.default.svc.cluster.local/ory_keto?sslmode=disable&max_conn_lifetime=10s"
     log:
       redaction_text: "example template {{ .Release.Name }}"
+
 ingress:
   read:
     enabled: true

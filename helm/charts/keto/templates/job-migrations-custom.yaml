@@ -1,22 +1,21 @@
-{{- range $jobName, $job := $.Values.hydra.customMigrations.jobs }}
+{{- range $jobName, $job := $.Values.keto.customMigrations.jobs }}
 {{- if $job.enabled -}}
+{{- $extraLabels := ternary $job.extraLabels $.Values.extraLabels (not (empty $job.extraLabels )) -}}
 {{- $nodeSelector := ternary $job.nodeSelector $.Values.job.nodeSelector (not (empty $job.nodeSelector)) -}}
 {{- $migrationExtraEnv := ternary $job.extraEnv $.Values.job.extraEnv (not (empty $job.extraEnv)) -}}
 {{- $resources := ternary $job.resources $.Values.job.resources (not (empty $job.resources)) -}}
 {{- $annotations := merge $.Values.job.annotations (default dict $job.annotations) -}}
-{{- $labels := merge $.Values.job.labels (default dict $job.labels) }}
-
 ---
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: {{ include "hydra.fullname" $ }}-{{ $jobName }}
+  name: {{ include "keto.fullname" $ }}-{{ $jobName }}
   {{- if $.Release.Namespace }}
   namespace: {{ $.Release.Namespace }}
   {{- end }}
   labels:
-    {{- include "hydra.labels" $ | nindent 4 }}
-    {{- with $labels }}
+    {{- include "keto.labels" $ | nindent 4 }}
+    {{- with $extraLabels }}
       {{- toYaml . | nindent 4 }}
     {{- end }}
   annotations:
@@ -34,9 +33,9 @@ spec:
           {{- toYaml . | nindent 8 }}
         {{- end }}
       labels:
-        app.kubernetes.io/name: {{ include "hydra.fullname" $ }}-{{ $jobName }}-automigrate
+        app.kubernetes.io/name: {{ include "keto.fullname" $ }}-{{ $jobName }}-automigrate
         app.kubernetes.io/instance: {{ $.Release.Name }}
-        {{- with $labels }}
+        {{- with $extraLabels }}
           {{- toYaml . | nindent 8 }}
         {{- end }}
         {{- with $.Values.job.podMetadata.labels }}
@@ -47,80 +46,76 @@ spec:
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
     {{- end }}
-      serviceAccountName: {{ include "hydra.job.serviceAccountName" $ }}
+      serviceAccountName: {{ include "keto.job.serviceAccountName" $ }}
       automountServiceAccountToken: {{ $.Values.job.automountServiceAccountToken }}
+      securityContext:
+        {{- toYaml $.Values.podSecurityContext | nindent 8 }}
       containers:
-      - name: {{ include "hydra.name" $ }}-{{ $jobName }}
+      - name: {{ include "keto.name" $ }}-{{ $jobName }}
         image: "{{ $.Values.image.repository }}:{{ $.Values.image.tag }}"
         imagePullPolicy: {{ $.Values.image.pullPolicy }}
       {{- if $job.customCommand }}
         command: {{- toYaml $job.customCommand | nindent 10 }}
       {{- else }}
-        command: ["hydra"]
+        command: ["keto"]
       {{- end }}
         args: {{- toYaml $job.customArgs | nindent 10 }}
+        volumeMounts:
+          - name: {{ include "keto.name" $ }}-config-volume
+            mountPath: /etc/config
+            readOnly: true
+          {{- with $job.extraVolumeMounts }}
+            {{- toYaml . | nindent 10 }}
+          {{- end }}
         env:
-        {{- if not (empty ( include "hydra.dsn" $ )) }}
+        {{- if not (empty ( include "keto.dsn" $ )) }}
           {{- if not (include "ory.extraEnvContainsEnvName" (list $migrationExtraEnv "DSN")) }}
           - name: DSN
             valueFrom:
               secretKeyRef:
-                name: {{ include "hydra.secretname" $ }}
+                name: {{ include "keto.secretname" $ }}
                 key: dsn
           {{- end }}
         {{- end }}
         {{- with $migrationExtraEnv }}
           {{- toYaml . | nindent 10 }}
         {{- end }}
-        {{- if $.Values.job.lifecycle }}
-        lifecycle:
-          {{- tpl $.Values.job.lifecycle $ | trimSuffix "\n" | nindent 10 }}
+        {{- with $resources }}
+        resources:
+          {{- toYaml . | nindent 10 }}
         {{- end }}
         {{- with $.Values.deployment.securityContext }}
         securityContext:
           {{- toYaml . | nindent 10 }}
         {{- end }}
-        {{- with $resources }}
-        resources:
-          {{- toYaml . | nindent 10 }}
+        {{- if $.Values.job.lifecycle }}
+        lifecycle:
+          {{- tpl $.Values.job.lifecycle $ | trimSuffix "\n" | nindent 10 }}
         {{- end }}
-        volumeMounts:
-          - name: {{ include "hydra.name" $ }}-config-volume
-            mountPath: /etc/config
-            readOnly: true
-          {{- if $job.extraVolumeMounts }}
-            {{- toYaml $job.extraVolumeMounts | nindent 10 }}
-          {{- end }}
-      {{- if $.Values.job.extraContainers }}
-        {{- tpl $.Values.job.extraContainers $ | trimSuffix "\n" | nindent 6 }}
+      {{- if $job.extraContainers }}
+        {{- tpl $job.extraContainers $ | trimSuffix "\n" | nindent 6 }}
       {{- end }}
-      {{- if $.Values.job.extraInitContainers }}
+      {{- if $job.extraInitContainers }}
       initContainers:
-        {{- tpl $.Values.job.extraInitContainers $ | trimSuffix "\n" | nindent 8 }}
+        {{- tpl $job.extraInitContainers $ | trimSuffix "\n" | nindent 8 }}
       {{- end }}
       restartPolicy: Never
-      {{- with $.Values.deployment.podSecurityContext }}
-      securityContext:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      shareProcessNamespace: {{ $.Values.job.shareProcessNamespace }}
       volumes:
-        - name: {{ include "hydra.name" $ }}-config-volume
+        - name: {{ include "keto.name" $ }}-config-volume
           configMap:
-            name: {{ include "hydra.fullname" $ }}-migrate
-        {{- if $job.extraVolumes }}
-          {{- toYaml $job.extraVolumes | nindent 8 }}
-        {{- else if $.Values.deployment.extraVolumes }}
-          {{- toYaml $.Values.deployment.extraVolumes | nindent 8 }}
+            name: {{ include "keto.fullname" $ }}-migrate
+        {{- with $job.extraVolumes }}
+          {{- toYaml . | nindent 8 }}
         {{- end }}
       {{- with $nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      {{- with $.Values.job.tolerations }}
+      {{- with $job.tolerations }}
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+      shareProcessNamespace: {{ $.Values.job.shareProcessNamespace }}
   backoffLimit: {{ $.Values.job.spec.backoffLimit }}
 {{- end }}
 {{- end }}

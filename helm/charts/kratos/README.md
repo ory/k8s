@@ -126,6 +126,16 @@ A ORY Kratos Helm chart for Kubernetes
 | kratos.config.secrets | object | `{}` |  |
 | kratos.config.serve.admin.port | int | `4434` |  |
 | kratos.config.serve.public.port | int | `4433` |  |
+| kratos.customMigrations.jobs.example-job.customArgs[0] | string | `"migrate"` |  |
+| kratos.customMigrations.jobs.example-job.customArgs[1] | string | `"sql"` |  |
+| kratos.customMigrations.jobs.example-job.customArgs[2] | string | `"-e"` |  |
+| kratos.customMigrations.jobs.example-job.customArgs[3] | string | `"--yes"` |  |
+| kratos.customMigrations.jobs.example-job.customArgs[4] | string | `"--config"` |  |
+| kratos.customMigrations.jobs.example-job.customArgs[5] | string | `"/etc/config/kratos.yaml"` |  |
+| kratos.customMigrations.jobs.example-job.enabled | bool | `false` |  |
+| kratos.customMigrations.jobs.example-job.extraEnv | list | `[]` |  |
+| kratos.customMigrations.jobs.example-job.nodeSelector | object | `{}` |  |
+| kratos.customMigrations.jobs.example-job.resources | object | `{}` |  |
 | kratos.development | bool | `false` |  |
 | kratos.emailTemplates | object | `{}` | You can customize the emails Kratos is sending (also uncomment config.courier.template_override_path below) |
 | kratos.identitySchemas | object | `{}` | You can add multiple identity schemas here. You can pass JSON schema using `--set-file` Helm CLI argument. |

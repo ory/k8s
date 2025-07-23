@@ -116,6 +116,15 @@ Access Control Policies as a Server
 | keto.command | list | `["keto"]` | Ability to override the entrypoint of keto container (e.g. to source dynamic secrets or export environment dynamic variables) |
 | keto.config | object | `{"dsn":"memory","namespaces":[{"id":0,"name":"sample"}],"serve":{"metrics":{"port":4468},"read":{"port":4466},"write":{"port":4467}}}` | Direct keto config. Full documentation can be found in https://www.ory.sh/keto/docs/reference/configuration |
 | keto.customArgs | list | `[]` | Ability to override arguments of the entrypoint. Can be used in-depended of customCommand |
+| keto.customMigrations.jobs.example-job.customArgs[0] | string | `"migrate"` |  |
+| keto.customMigrations.jobs.example-job.customArgs[1] | string | `"up"` |  |
+| keto.customMigrations.jobs.example-job.customArgs[2] | string | `"-y"` |  |
+| keto.customMigrations.jobs.example-job.customArgs[3] | string | `"--config"` |  |
+| keto.customMigrations.jobs.example-job.customArgs[4] | string | `"/etc/config/keto.yaml"` |  |
+| keto.customMigrations.jobs.example-job.enabled | bool | `false` |  |
+| keto.customMigrations.jobs.example-job.extraEnv | list | `[]` |  |
+| keto.customMigrations.jobs.example-job.nodeSelector | object | `{}` |  |
+| keto.customMigrations.jobs.example-job.resources | object | `{}` |  |
 | nameOverride | string | `""` |  |
 | pdb.enabled | bool | `false` |  |
 | pdb.spec.maxUnavailable | string | `""` |  |

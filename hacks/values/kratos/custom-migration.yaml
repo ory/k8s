@@ -1,0 +1,213 @@
+---
+deployment:
+  environmentSecretsName: env-secrets
+  extraEnv:
+    - name: DSN
+      valueFrom:
+        secretKeyRef:
+          key: dsn
+          name: dsn-secret
+  podSecurityContext:
+    fsGroup: 65534
+    fsGroupChangePolicy: Always
+    runAsGroup: 65534
+    runAsNonRoot: true
+    runAsUser: 65534
+    seLinuxOptions:
+      level: s0:c123,c456
+    seccompProfile:
+      type: RuntimeDefault
+global:
+  dnsDomain: example.com
+imagePullSecrets:
+  - name: pull-secret-name
+job:
+  automountServiceAccountToken: true
+  lifecycle: |
+    preStop:
+      exec:
+        command:
+          - echo "test"
+  podMetadata:
+    annotations:
+      example.org/pod-metadata-annotation: value
+    labels:
+      example.org/pod-metadata-label: value
+  shareProcessNamespace: true
+  spec:
+    backoffLimit: 42
+kratos:
+  automigration:
+    enabled: true
+  config:
+    courier:
+      smtp:
+        connection_uri: smtps://test:test@mailslurper:1025/?skip_ssl_verify=true
+    hashers:
+      argon2:
+        iterations: 2
+        key_length: 16
+        memory: 128MB
+        parallelism: 1
+        salt_length: 16
+    identity:
+      default_schema_id: default
+      schemas:
+        - id: default
+          url: file:///etc/config/identity.default.schema.json
+    log:
+      level: debug
+    secrets:
+      default:
+        - PLEASE-CHANGE-ME-I-AM-VERY-INSECURE
+        - "OG5XbmxXa3dYeGplQXpQanYxeEFuRUFa"
+        - "foo bar 123 456 lorem"
+        - "foo bar 123 456 lorem 1"
+        - "foo bar 123 456 lorem 2"
+        - "foo bar 123 456 lorem 3"
+    selfservice:
+      default_browser_return_url: "http://{{ .Values.global.dnsDomain }}:4455/"
+      methods:
+        password:
+          enabled: true
+  customMigrations:
+    jobs:
+      test-job:
+        annotations:
+          example.org/annotation: value
+        customArgs:
+          - custom args test
+        customCommand:
+          - echo
+        enabled: true
+        extraContainers: |
+          - name: "sidecar"
+            image: "alpine:latest"
+            command: ["/bin/sh"]
+            args: ["-c", "sleep 10"]
+        extraEnv:
+          - name: TESTFOO
+            value: TESTBAR
+          - name: DSN
+            valueFrom:
+              secretKeyRef:
+                key: dsn
+                name: dsn-secret
+        extraInitContainers: |
+          - name: "hello-world"
+            image: "alpine:latest"
+            command: ["/bin/sh"]
+            args: ["-c", "echo hello, world!"]
+        extraLabels:
+          example.org/extra-label: value
+        extraVolumeMounts:
+          - mountPath: /file-storage
+            name: file-storage
+        extraVolumes:
+          - emptyDir: {}
+            name: file-storage
+        nodeSelector:
+          beta.kubernetes.io/instance-type: k3s
+        resources:
+          limits:
+            cpu: 20m
+            memory: 20Mi
+          requests:
+            cpu: 10m
+            memory: 10Mi
+        tolerations:
+          - effect: NoExecute
+            key: example.org/nodeRole
+            operator: Equal
+            value: role
+  emailTemplates:
+    recovery:
+      invalid:
+        body: |-
+          Hi, you (or someone else) entered this email address when trying to recover access to an account.
+          However, this email address is not on our database of registered users and therefore the attempt has failed. If this was you, check if you signed up using a different address. If this was not you, please ignore this email.
+        plainBody: |-
+          Hi, you (or someone else) entered this email address when trying to recover access to an account.
+        subject: Account access attempted
+      valid:
+        body: |-
+          Hi, please recover access to your account by clicking the following link:
+          <a href="{{ .RecoveryURL }}">{{ .RecoveryURL }}</a>
+        plainBody: |-
+          Hi, please recover access to your account by clicking the following link: {{ .RecoveryURL }}
+        subject: Recover access to your account
+    recovery_code:
+      invalid:
+        body: |-
+          Hi, you (or someone else) entered this email address when trying to recover access to an account.
+          However, this email address is not on our database of registered users and therefore the attempt has failed. If this was you, check if you signed up using a different address. If this was not you, please ignore this email.
+        plainBody: |-
+          Hi, you (or someone else) entered this email address when trying to recover access to an account.
+        subject: Account access attempted
+      valid:
+        body: |-
+          Hi, please recover access to your account using following code:
+          <h1>{{ .RecoveryCode }}</h1>
+        plainBody: |-
+          Hi, please recover access to your account using following code: {{ .RecoveryCode }}
+        subject: Recover access to your account
+    verification:
+      valid:
+        body: |-
+          Hi, please verify your account by clicking the following link:
+          <a href="{{ .VerificationURL }}">{{ .VerificationURL }}</a>
+        plainBody: |-
+          Hi, please verify your account by clicking the following link: {{ .VerificationURL }}
+        subject: Please verify your email address
+    verification_code:
+      valid:
+        body: |-
+          Hi, please verify your account by clicking the following link:
+          <a href="{{ .VerificationURL }}">{{ .VerificationURL }}</a>
+          or using the following code: {{ .VerificationCode }}
+        plainBody: |-
+          Hi, please verify your account by using the following code: {{ .VerificationCode }}
+        subject: Please verify your email address
+  identitySchemas:
+    "identity.default.schema.json": |
+      {
+         "$id": "https://schemas.ory.sh/presets/kratos/identity.email.schema.json",
+         "$schema": "http://json-schema.org/draft-07/schema#",
+         "title": "Person",
+         "type": "object",
+         "properties": {
+            "traits": {
+               "type": "object",
+               "properties": {
+                  "email": {
+                     "type": "string",
+                     "format": "email",
+                     "title": "E-Mail",
+                     "ory.sh/kratos": {
+                        "credentials": {
+                           "password": {
+                              "identifier": true
+                           }
+                        },
+                        "recovery": {
+                           "via": "email"
+                        },
+                        "verification": {
+                           "via": "email"
+                        }
+                     }
+                  }
+               },
+               "required": [
+                  "email"
+               ],
+               "additionalProperties": false
+            }
+         }
+      }
+securityContext:
+  allowPrivilegeEscalation: false
+  capabilities:
+    drop:
+      - ALL
+  readOnlyRootFilesystem: true

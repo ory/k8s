@@ -65,7 +65,8 @@ spec:
         args: [ "migrate", "up", "-y", "--config", "/etc/config/keto.yaml" ]
         {{- end }}
         {{- if .Values.job.lifecycle }}
-          {{- tpl .Values.job.lifecycle . | nindent 8 }}
+        lifecycle:
+          {{- tpl .Values.job.lifecycle . | nindent 10 }}
         {{- end }}
         volumeMounts:
           - name: {{ include "keto.name" . }}-config-volume

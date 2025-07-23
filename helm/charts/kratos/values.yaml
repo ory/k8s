@@ -212,6 +212,24 @@ kratos:
 
     secrets: {}
 
+  customMigrations:
+    jobs:
+      #      -- Example of custom migration job
+      example-job:
+        enabled: false
+        customArgs:
+          [
+            "migrate",
+            "sql",
+            "-e",
+            "--yes",
+            "--config",
+            "/etc/config/kratos.yaml",
+          ]
+        nodeSelector: {}
+        resources: {}
+        extraEnv: []
+
 ## -- Configuration options for the k8s deployment
 deployment:
   lifecycle: {}
