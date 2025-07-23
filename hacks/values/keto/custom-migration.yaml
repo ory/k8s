@@ -27,18 +27,19 @@ job:
   spec:
     backoffLimit: 42
 keto:
+  automigration:
+    enabled: true
   config:
-    dsn: keto-dsn-string
+    dsn: "postgres://postgres:ory@postgresql.default.svc.cluster.local/ory_keto?sslmode=disable&max_conn_lifetime=10s"
   customMigrations:
     jobs:
       test-job:
         annotations:
           example.org/annotation: value
         customArgs:
-          - keto-custom-arg-1
-          - keto-custom-arg-2
+          - "custom args test"
         customCommand:
-          - keto-custom-command
+          - echo
         enabled: true
         extraContainers: |
           - name: "sidecar"
