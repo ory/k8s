@@ -1,0 +1,85 @@
+---
+deployment:
+  environmentSecretsName: env-secrets
+  podSecurityContext:
+    fsGroup: 65534
+    fsGroupChangePolicy: Always
+    runAsGroup: 65534
+    runAsNonRoot: true
+    runAsUser: 65534
+    seLinuxOptions:
+      level: s0:c123,c456
+    seccompProfile:
+      type: RuntimeDefault
+  securityContext:
+    allowPrivilegeEscalation: false
+    capabilities:
+      drop:
+        - ALL
+    readOnlyRootFilesystem: true
+hydra:
+  config:
+    dsn: hydra-dsn-string
+  customMigrations:
+    jobs:
+      test-job:
+        annotations:
+          example.org/annotation: value
+        customArgs:
+          - hydra-custom-arg-1
+          - hydra-custom-arg-2
+        customCommand:
+          - hydra-custom-command
+        enabled: true
+        extraEnv:
+          - name: TESTFOO
+            value: TESTBAR
+        extraVolumeMounts:
+          - mountPath: /file-storage
+            name: file-storage
+        extraVolumes:
+          - emptyDir: {}
+            name: file-storage
+        nodeSelector:
+          example.org/label: value
+        resources:
+          limits:
+            cpu: 20m
+            memory: 20Mi
+          requests:
+            cpu: 10m
+            memory: 10Mi
+image:
+  imagePullPolicy: Always
+imagePullSecrets:
+  - name: pull-secret-name
+job:
+  automountServiceAccountToken: true
+  extraContainers: |
+    - name: "sidecar"
+      image: "alpine:latest"
+      command: ["/bin/sh"]
+      args: ["-c", "sleep 10"]
+  extraInitContainers: |
+    - name: "hello-world"
+      image: "alpine:latest"
+      command: ["/bin/sh"]
+      args: ["-c", "echo hello, world!"]
+  lifecycle: |
+    preStop:
+      exec:
+        command:
+          - echo "test"
+  podMetadata:
+    annotations:
+      example.org/pod-metadata-annotation: value
+    labels:
+      example.org/pod-metadata-label: value
+  shareProcessNamespace: true
+  spec:
+    backoffLimit: 42
+  tolerations:
+    - effect: NoExecute
+      key: example.org/nodeRole
+      operator: Equal
+      value: role

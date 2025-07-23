@@ -74,7 +74,7 @@ spec:
         {{- end }}
         {{- if $.Values.job.lifecycle }}
         lifecycle:
-          {{- tpl $.Values.job.lifecycle $ | nindent 10 }}
+          {{- tpl $.Values.job.lifecycle $ | trimSuffix "\n" | nindent 10 }}
         {{- end }}
         {{- with $.Values.deployment.securityContext }}
         securityContext:
@@ -89,14 +89,14 @@ spec:
             mountPath: /etc/config
             readOnly: true
           {{- if $job.extraVolumeMounts }}
-            {{- toYaml $job.extraVolumeMounts | nindent 12 }}
+            {{- toYaml $job.extraVolumeMounts | nindent 10 }}
           {{- end }}
       {{- if $.Values.job.extraContainers }}
-        {{- tpl $.Values.job.extraContainers $ | nindent 6 }}
+        {{- tpl $.Values.job.extraContainers $ | trimSuffix "\n" | nindent 6 }}
       {{- end }}
       {{- if $.Values.job.extraInitContainers }}
       initContainers:
-        {{- tpl $.Values.job.extraInitContainers $ | nindent 8 }}
+        {{- tpl $.Values.job.extraInitContainers $ | trimSuffix "\n" | nindent 8 }}
       {{- end }}
       restartPolicy: Never
       {{- with $.Values.deployment.podSecurityContext }}

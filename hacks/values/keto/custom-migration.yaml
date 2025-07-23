@@ -1,0 +1,87 @@
+---
+deployment:
+  environmentSecretsName: env-secrets
+  securityContext:
+    allowPrivilegeEscalation: false
+    capabilities:
+      drop:
+        - ALL
+    readOnlyRootFilesystem: true
+image:
+  imagePullPolicy: Always
+imagePullSecrets:
+  - name: pull-secret-name
+job:
+  automountServiceAccountToken: true
+  lifecycle: |
+    preStop:
+      exec:
+        command:
+          - echo "test"
+  podMetadata:
+    annotations:
+      example.org/pod-metadata-annotation: value
+    labels:
+      example.org/pod-metadata-label: value
+  shareProcessNamespace: true
+  spec:
+    backoffLimit: 42
+keto:
+  config:
+    dsn: keto-dsn-string
+  customMigrations:
+    jobs:
+      test-job:
+        annotations:
+          example.org/annotation: value
+        customArgs:
+          - keto-custom-arg-1
+          - keto-custom-arg-2
+        customCommand:
+          - keto-custom-command
+        enabled: true
+        extraContainers: |
+          - name: "sidecar"
+            image: "alpine:latest"
+            command: ["/bin/sh"]
+            args: ["-c", "sleep 10"]
+        extraEnv:
+          - name: TESTFOO
+            value: TESTBAR
+        extraInitContainers: |
+          - name: "hello-world"
+            image: "alpine:latest"
+            command: ["/bin/sh"]
+            args: ["-c", "echo hello, world!"]
+        extraLabels:
+          example.org/extra-label: value
+        extraVolumeMounts:
+          - mountPath: /file-storage
+            name: file-storage
+        extraVolumes:
+          - emptyDir: {}
+            name: file-storage
+        nodeSelector:
+          example.org/label: value
+        resources:
+          limits:
+            cpu: 20m
+            memory: 20Mi
+          requests:
+            cpu: 10m
+            memory: 10Mi
+        tolerations:
+          - effect: NoExecute
+            key: example.org/nodeRole
+            operator: Equal
+            value: role
+podSecurityContext:
+  fsGroup: 65534
+  fsGroupChangePolicy: Always
+  runAsGroup: 65534
+  runAsNonRoot: true
+  runAsUser: 65534
+  seLinuxOptions:
+    level: s0:c123,c456
+  seccompProfile:
+    type: RuntimeDefault

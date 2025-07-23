@@ -4,7 +4,7 @@
 {{- $migrationExtraEnv := ternary $job.extraEnv $.Values.job.extraEnv (not (empty $job.extraEnv)) -}}
 {{- $resources := ternary $job.resources $.Values.job.resources (not (empty $job.resources)) -}}
 {{- $annotations := merge $.Values.job.annotations (default dict $job.annotations) -}}
-{{- $extraLabels := ternary $.Values.deployment.extraLabels $.Values.extraLabels (not (empty $.Values.deployment.extraLabels )) -}}
+{{- $extraLabels := ternary $job.extraLabels $.Values.extraLabels (not (empty $job.extraLabels )) -}}
 ---
 apiVersion: batch/v1
 kind: Job
@@ -82,7 +82,7 @@ spec:
         {{- end }}
         {{- if $.Values.job.lifecycle }}
         lifecycle:
-          {{- tpl $.Values.job.lifecycle $ | nindent 10 }}
+          {{- tpl $.Values.job.lifecycle $ | trimSuffix "\n" | nindent 10 }}
         {{- end }}
         {{- with $.Values.securityContext }}
         securityContext:
@@ -93,14 +93,14 @@ spec:
             mountPath: /etc/config
             readOnly: true
           {{- if $job.extraVolumeMounts }}
-            {{- toYaml $job.extraVolumeMounts | nindent 12 }}
+            {{- toYaml $job.extraVolumeMounts | nindent 10 }}
           {{- end }}
-      {{- if $.Values.job.extraContainers }}
-        {{- tpl $.Values.job.extraContainers $ | nindent 6 }}
+      {{- if $job.extraContainers }}
+        {{- tpl $job.extraContainers $ | trimSuffix "\n" | nindent 6 }}
       {{- end }}
-      {{- if $.Values.job.extraInitContainers }}
+      {{- if $job.extraInitContainers }}
       initContainers:
-        {{- tpl $.Values.job.extraInitContainers $ | nindent 8 }}
+        {{- tpl $job.extraInitContainers $ | trimSuffix "\n" | nindent 8 }}
       {{- end }}
       restartPolicy: Never
       {{- with $.Values.deployment.podSecurityContext }}
@@ -119,7 +119,7 @@ spec:
       nodeSelector:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      {{- with $.Values.job.tolerations }}
+      {{- with $job.tolerations }}
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
