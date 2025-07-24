@@ -1,8 +1,10 @@
 {{- range $jobName, $job := $.Values.keto.customMigrations.jobs }}
 {{- if $job.enabled -}}
 {{- $extraLabels := ternary $job.extraLabels $.Values.extraLabels (not (empty $job.extraLabels )) -}}
+{{- $extraVolumeMounts := ternary $.Values.deployment.extraVolumeMounts $job.extraVolumeMounts (not (empty $.Values.deployment.extraVolumeMounts )) -}}
+{{- $extraVolumes := ternary $.Values.deployment.extraVolumes $job.extraVolumes (not (empty $.Values.deployment.extraVolumes )) -}}
 {{- $nodeSelector := ternary $job.nodeSelector $.Values.job.nodeSelector (not (empty $job.nodeSelector)) -}}
-{{- $migrationExtraEnv := ternary $job.extraEnv $.Values.job.extraEnv (not (empty $job.extraEnv)) -}}
+{{- $migrationExtraEnv := ternary $job.extraEnv $.Values.deployment.extraEnv (not (empty $job.extraEnv)) -}}
 {{- $resources := ternary $job.resources $.Values.job.resources (not (empty $job.resources)) -}}
 {{- $annotations := merge $.Values.job.annotations (default dict $job.annotations) -}}
 ---
@@ -64,7 +66,7 @@ spec:
           - name: {{ include "keto.name" $ }}-config-volume
             mountPath: /etc/config
             readOnly: true
-          {{- with $job.extraVolumeMounts }}
+          {{- with $extraVolumeMounts }}
             {{- toYaml . | nindent 10 }}
           {{- end }}
         env:
@@ -84,7 +86,7 @@ spec:
         resources:
           {{- toYaml . | nindent 10 }}
         {{- end }}
-        {{- with $.Values.deployment.securityContext }}
+        {{- with $.Values.securityContext }}
         securityContext:
           {{- toYaml . | nindent 10 }}
         {{- end }}
@@ -104,7 +106,7 @@ spec:
         - name: {{ include "keto.name" $ }}-config-volume
           configMap:
             name: {{ include "keto.fullname" $ }}-migrate
-        {{- with $job.extraVolumes }}
+        {{- with $extraVolumes }}
           {{- toYaml . | nindent 8 }}
         {{- end }}
       {{- with $nodeSelector }}
