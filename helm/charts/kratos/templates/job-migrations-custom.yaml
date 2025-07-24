@@ -1,7 +1,7 @@
 {{- range $jobName, $job := $.Values.kratos.customMigrations.jobs }}
 {{- if $job.enabled -}}
 {{- $nodeSelector := ternary $job.nodeSelector $.Values.job.nodeSelector (not (empty $job.nodeSelector)) -}}
-{{- $migrationExtraEnv := ternary $job.extraEnv $.Values.job.extraEnv (not (empty $job.extraEnv)) -}}
+{{- $migrationExtraEnv := ternary $job.extraEnv $.Values.deployment.extraEnv (not (empty $job.extraEnv)) -}}
 {{- $resources := ternary $job.resources $.Values.job.resources (not (empty $job.resources)) -}}
 {{- $annotations := merge $.Values.job.annotations (default dict $job.annotations) -}}
 {{- $extraLabels := ternary $job.extraLabels $.Values.extraLabels (not (empty $job.extraLabels )) -}}
@@ -95,6 +95,9 @@ spec:
           {{- if $job.extraVolumeMounts }}
             {{- toYaml $job.extraVolumeMounts | nindent 10 }}
           {{- end }}
+          {{- if $.Values.deployment.extraVolumeMounts }}
+              {{- toYaml $.Values.deployment.extraVolumeMounts | nindent 10 }}
+          {{- end }}
       {{- if $job.extraContainers }}
         {{- tpl $job.extraContainers $ | trimSuffix "\n" | nindent 6 }}
       {{- end }}
@@ -114,6 +117,9 @@ spec:
             name: {{ include "kratos.fullname" $ }}-migrate
         {{- if $job.extraVolumes }}
           {{- toYaml $job.extraVolumes | nindent 8 }}
+        {{- end }}
+        {{- if $.Values.deployment.extraVolumes }}
+          {{- toYaml $.Values.deployment.extraVolumes | nindent 8 }}
         {{- end }}
       {{- with $nodeSelector }}
       nodeSelector:
