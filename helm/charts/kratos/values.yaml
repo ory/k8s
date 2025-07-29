@@ -695,6 +695,33 @@ cronjob:
     # -- Set custom cron job level annotations
     annotations: {}
 
+    # -- If you want to add extra sidecar containers.
+    extraContainers: []
+    # extraContainers: |
+    #  - name: ...
+    #    image: ...
+
+    # -- Set automounting of the SA token
+    automountServiceAccountToken: true
+
+    # -- Set sharing process namespace
+    shareProcessNamespace: false
+
+    # -- Specify the serviceAccountName value.
+    # Sometime you need to provide specific permissions for the cleanup cronjob.
+    # For example installing Kratos on a cluster with a PosSecurityPolicy and Istio.
+    # Uncomment if you need to provide a ServiceAccount for the cleanup cronjob.
+    serviceAccount:
+      # -- Specifies whether a service account should be created
+      create: true
+      # -- Annotations to add to the service account
+      annotations:
+        helm.sh/hook-weight: "0"
+        helm.sh/hook: "pre-install, pre-upgrade"
+        helm.sh/hook-delete-policy: "before-hook-creation"
+      # -- The name of the service account to use. If not set and create is true, a name is generated using the fullname template
+      name: ""
+
     # -- Specify pod metadata, this metadata is added directly to the pod, and not higher objects
     podMetadata:
       # -- Extra pod level labels

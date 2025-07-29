@@ -348,6 +348,18 @@ cronjob:
           secretKeyRef:
             name: dsn-secret
             key: dsn
+    extraContainers: |
+      - name: "sidecar"
+        image: "alpine:latest"
+        command: ["/bin/sh"]
+        args: ["-c", "sleep infinity"]
+    automountServiceAccountToken: false
+    shareProcessNamespace: true
+    serviceAccount:
+      create: true
+      annotations:
+        example.com/sa: "cleanup-cronjob"
+      name: ""
 
 serviceMonitor:
   enabled: true

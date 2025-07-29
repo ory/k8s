@@ -238,3 +238,14 @@ Check if list contains object
     {{- end -}}
   {{- end -}}
 {{- end -}}
+
+{{/*
+Create the name of the service account for the Cleanup CronJob to use
+*/}}
+{{- define "kratos.cleanup.serviceAccountName" -}}
+{{- if .Values.cronjob.cleanup.serviceAccount.create -}}
+{{- printf "%s-cleanup" (default (include "kratos.fullname" .) .Values.cronjob.cleanup.serviceAccount.name) -}}
+{{- else -}}
+{{- include "kratos.serviceAccountName" . -}}
+{{- end -}}
+{{- end -}}

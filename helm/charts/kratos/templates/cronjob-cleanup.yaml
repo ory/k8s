@@ -87,6 +87,9 @@ spec:
                 - name: {{ include "kratos.name" . }}-config-volume
                   mountPath: /etc/config
                   readOnly: true
+            {{- if .Values.cronjob.cleanup.extraContainers }}
+              {{- tpl .Values.cronjob.cleanup.extraContainers . | nindent 12 }}
+            {{- end }}
           {{- with .Values.cronjob.cleanup.nodeSelector }}
           nodeSelector:
             {{- toYaml . | nindent 12 }}
@@ -103,4 +106,7 @@ spec:
           affinity:
             {{- toYaml . | nindent 12 }}
           {{- end }}
+          serviceAccountName: {{ include "kratos.cleanup.serviceAccountName" . }}
+          automountServiceAccountToken: {{ .Values.cronjob.cleanup.automountServiceAccountToken }}
+          shareProcessNamespace: {{ .Values.cronjob.cleanup.shareProcessNamespace }}
 {{- end }}
