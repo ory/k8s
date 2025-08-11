@@ -353,6 +353,11 @@ cronjob:
         image: "alpine:latest"
         command: ["/bin/sh"]
         args: ["-c", "sleep infinity"]
+    extraInitContainers: |
+      - name: "hello-world"
+        image: "alpine:latest"
+        command: ["/bin/sh"]
+        args: ["-c", "echo hello, world!"]
     automountServiceAccountToken: false
     shareProcessNamespace: true
     serviceAccount:

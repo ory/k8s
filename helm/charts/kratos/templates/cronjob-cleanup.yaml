@@ -50,6 +50,10 @@ spec:
             - name: {{ include "kratos.name" . }}-config-volume
               configMap:
                 name: {{ include "kratos.fullname" . }}-config
+          {{- if .Values.cronjob.cleanup.extraInitContainers }}
+          initContainers:
+            {{- tpl .Values.cronjob.cleanup.extraInitContainers . | nindent 12 }}
+          {{- end }}
           containers:
             - name: {{ include "kratos.name" . }}-cleanup
               image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"

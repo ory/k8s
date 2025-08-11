@@ -35,6 +35,7 @@ A ORY Kratos Helm chart for Kubernetes
 | cronjob.cleanup.customArgs | list | `[]` | Configure the arguments of the entrypoint, overriding the default value |
 | cronjob.cleanup.extraContainers | list | `[]` | If you want to add extra sidecar containers. |
 | cronjob.cleanup.extraEnv | list | `[]` | Array of extra envs to be passed to the cronjob. This takes precedence over deployment variables. Kubernetes format is expected. Value is processed with Helm `tpl` - name: FOO   value: BAR |
+| cronjob.cleanup.extraInitContainers | string | `""` | If you want to add extra init containers. |
 | cronjob.cleanup.labels | object | `{}` | Set custom cron job level labels |
 | cronjob.cleanup.nodeSelector | object | `{}` | Configure node labels for pod assignment |
 | cronjob.cleanup.podMetadata | object | `{"annotations":{},"labels":{}}` | Specify pod metadata, this metadata is added directly to the pod, and not higher objects |
