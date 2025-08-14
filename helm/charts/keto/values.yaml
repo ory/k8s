@@ -1,6 +1,12 @@
-# Default values for keto.
-# This is a YAML-formatted file.
-# Declare variables to be passed into your templates.
+# -- Global setting, passed down to all pods
+global:
+  # -- Specify pod metadata, this metadata is added directly to the pod, and not higher objects
+  podMetadata:
+    # -- Extra pod level labels
+    labels: {}
+    # -- Extra pod level annotations
+    annotations: {}
+
 # -- Number of replicas in deployment
 replicaCount: 1
 

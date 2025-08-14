@@ -1,9 +1,16 @@
-## -- Mode for oathkeeper controller: possible modes are: controller or sidecar
+# -- Global setting, passed down to all pods
 global:
+  ## -- Mode for oathkeeper controller: possible modes are: controller or sidecar
   ory:
     oathkeeper:
       maester:
         mode: controller
+  # -- Specify pod metadata, this metadata is added directly to the pod, and not higher objects
+  podMetadata:
+    # -- Extra pod level labels
+    labels: {}
+    # -- Extra pod level annotations
+    annotations: {}
 
 # -- Number of ORY Oathkeeper members
 replicaCount: 1
@@ -154,8 +161,7 @@ ingress:
     #          - proxy.oathkeeper.local
     #      - secretName: oathkeeper-proxy-example-tls
     # -- Configuration for custom default service. This service will be used to handle the response when the configured service in the Ingress rule does not have any active endpoints
-    defaultBackend:
-      {}
+    defaultBackend: {}
       # service:
       #   name: myservice
     #   port:

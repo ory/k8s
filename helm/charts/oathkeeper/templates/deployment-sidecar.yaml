@@ -28,18 +28,24 @@ spec:
     metadata:
       labels:
         {{- include "oathkeeper.labels" . | nindent 8 }}
-        {{- with .Values.deployment.labels }}
+        {{- with $.Values.deployment.labels }}
           {{- toYaml . | nindent 8 }}
         {{- end }}
-        {{- with .Values.deployment.podMetadata.labels }}
+        {{- with $.Values.deployment.podMetadata.labels }}
+          {{- toYaml . | nindent 8 }}
+        {{- end }}
+        {{- with $.Values.global.podMetadata.labels }}
           {{- toYaml . | nindent 8 }}
         {{- end }}
       annotations:
         {{- include "oathkeeper.annotations.checksum" . | indent 8 -}}
-        {{- with .Values.deployment.annotations }}
+        {{- with $.Values.deployment.annotations }}
           {{- toYaml . | nindent 8 }}
         {{- end }}
-        {{- with .Values.deployment.podMetadata.annotations }}
+        {{- with $.Values.deployment.podMetadata.annotations }}
+          {{- toYaml . | nindent 8 }}
+        {{- end }}
+        {{- with $.Values.global.podMetadata.annotations }}
           {{- toYaml . | nindent 8 }}
         {{- end }}
     spec:

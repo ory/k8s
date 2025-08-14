@@ -27,14 +27,20 @@ spec:
       labels:
         app.kubernetes.io/name: {{ include "hydra.name" . }}-watcher
         app.kubernetes.io/instance: {{ .Release.Name }}
-        {{- with .Values.deployment.labels }}
+        {{- with $.Values.deployment.labels }}
           {{- toYaml . | nindent 8 }}
         {{- end }}
-        {{- with .Values.watcher.podMetadata.labels }}
+        {{- with $.Values.watcher.podMetadata.labels }}
+          {{- toYaml . | nindent 8 }}
+        {{- end }}
+        {{- with $.Values.global.podMetadata.labels }}
           {{- toYaml . | nindent 8 }}
         {{- end }}
       annotations:
-        {{- with .Values.watcher.podMetadata.annotations }}
+        {{- with $.Values.watcher.podMetadata.annotations }}
+          {{- toYaml . | nindent 8 }}
+        {{- end }}
+        {{- with $.Values.global.podMetadata.annotations }}
           {{- toYaml . | nindent 8 }}
         {{- end }}
     spec:

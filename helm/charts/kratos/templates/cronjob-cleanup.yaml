@@ -26,10 +26,13 @@ spec:
         metadata:
           labels:
             {{- include "kratos.cleanup.labels" . | nindent 12 }}
-            {{- with .Values.cronjob.cleanup.labels }}
+            {{- with $.Values.cronjob.cleanup.labels }}
               {{- toYaml . | nindent 12 }}
             {{- end }}
-            {{- with .Values.cronjob.cleanup.podMetadata.labels }}
+            {{- with $.Values.cronjob.cleanup.podMetadata.labels }}
+              {{- toYaml . | nindent 12 }}
+            {{- end }}
+            {{- with $.Values.global.podMetadata.labels }}
               {{- toYaml . | nindent 12 }}
             {{- end }}
           annotations:
@@ -38,6 +41,9 @@ spec:
               {{- toYaml . | nindent 12 }}
             {{- end }}
             {{- with $.Values.cronjob.cleanup.podMetadata.annotations }}
+              {{- toYaml . | nindent 12 }}
+            {{- end }}
+            {{- with $.Values.global.podMetadata.annotations }}
               {{- toYaml . | nindent 12 }}
             {{- end }}
         spec:

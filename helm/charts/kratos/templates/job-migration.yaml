@@ -23,19 +23,25 @@ spec:
   template:
     metadata:
       annotations:
-        {{- with .Values.job.annotations }}
+        {{- with $.Values.job.annotations }}
           {{- toYaml . | nindent 8 }}
         {{- end }}
-        {{- with .Values.job.podMetadata.annotations }}
+        {{- with $.Values.job.podMetadata.annotations }}
+          {{- toYaml . | nindent 8 }}
+        {{- end }}
+        {{- with $.Values.global.podMetadata.annotations }}
           {{- toYaml . | nindent 8 }}
         {{- end }}
       labels:
         app.kubernetes.io/name: {{ include "kratos.name" . }}-automigrate
         app.kubernetes.io/instance: {{ .Release.Name }}
-        {{- with .Values.deployment.labels }}
+        {{- with $.Values.deployment.labels }}
           {{- toYaml . | nindent 8 }}
         {{- end }}
-        {{- with .Values.job.podMetadata.labels }}
+        {{- with $.Values.job.podMetadata.labels }}
+          {{- toYaml . | nindent 8 }}
+        {{- end }}
+        {{- with $.Values.global.podMetadata.labels }}
           {{- toYaml . | nindent 8 }}
         {{- end }}
     spec:

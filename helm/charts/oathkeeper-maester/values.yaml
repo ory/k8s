@@ -1,9 +1,16 @@
-## -- Mode for oathkeeper controller possible modes are: controller or sidecar
+# -- Global setting, passed down to all pods
 global:
+  ## -- Mode for oathkeeper controller possible modes are: controller or sidecar
   ory:
     oathkeeper:
       maester:
         mode: controller
+  # -- Specify pod metadata, this metadata is added directly to the pod, and not higher objects
+  podMetadata:
+    # -- Extra pod level labels
+    labels: {}
+    # -- Extra pod level annotations
+    annotations: {}
 
 # -- Number of controller replicas in deployment mode
 replicaCount: 1
@@ -61,8 +68,7 @@ podSecurityContext:
 
 ## -- Deployment specific configuration
 deployment:
-  resources:
-    {}
+  resources: {}
     #  We usually recommend not to specify default resources and to leave this as a conscious
     #  choice for the user. This also increases chances charts run on environments with little
     #  resources, such as Minikube. If you do want to specify resources, uncomment the following
