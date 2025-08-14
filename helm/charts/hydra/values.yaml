@@ -626,6 +626,9 @@ cronjob:
     # -- Set automounting of the SA token
     automountServiceAccountToken: true
 
+    # -- Set sharing process namespace
+    shareProcessNamespace: false
+
     # -- Specify the serviceAccountName value.
     # In some situations it is needed to provides specific permissions to Hydra deployments
     # Like for example installing Hydra on a cluster with a PosSecurityPolicy and Istio.

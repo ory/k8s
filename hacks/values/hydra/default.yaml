@@ -206,6 +206,13 @@ cronjob:
         image: "alpine:latest"
         command: ["/bin/sh"]
         args: ["-c", "sleep infinity"]
+    automountServiceAccountToken: false
+    shareProcessNamespace: true
+    serviceAccount:
+      create: true
+      annotations:
+        example.com/sa: "hydra-janitor"
+      name: ""
     extraVolumeMounts:
       - mountPath: /testdir
         name: test-volume

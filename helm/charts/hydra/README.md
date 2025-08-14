@@ -53,6 +53,7 @@ A Helm chart for deploying ORY Hydra in Kubernetes
 | cronjob.janitor.serviceAccount.annotations | object | `{"helm.sh/hook":"pre-install, pre-upgrade","helm.sh/hook-delete-policy":"before-hook-creation","helm.sh/hook-weight":"0"}` | Annotations to add to the service account |
 | cronjob.janitor.serviceAccount.create | bool | `true` | Specifies whether a service account should be created |
 | cronjob.janitor.serviceAccount.name | string | `""` | The name of the service account to use. If not set and create is true, a name is generated using the fullname template |
+| cronjob.janitor.shareProcessNamespace | bool | `false` | Set sharing process namespace |
 | cronjob.janitor.tolerations | list | `[]` | Configure node tolerations |
 | deployment.annotations | object | `{}` | Set custom deployment level annotations |
 | deployment.automigration | object | `{"extraEnv":[]}` | Parameters for the automigration initContainer |
