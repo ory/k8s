@@ -48,6 +48,7 @@ spec:
           {{- end }}
           serviceAccountName: {{ include "hydra.cronjob.janitor.serviceAccountName" . }}
           automountServiceAccountToken: {{ .Values.cronjob.janitor.automountServiceAccountToken }}
+          shareProcessNamespace: {{ .Values.cronjob.janitor.shareProcessNamespace }}
           volumes:
             - name: {{ include "hydra.name" . }}-config-volume
               configMap:

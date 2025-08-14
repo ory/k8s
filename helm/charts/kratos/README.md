@@ -31,8 +31,11 @@ A ORY Kratos Helm chart for Kubernetes
 | courier | object | `{"enabled":true}` | Configuration of the courier |
 | cronjob.cleanup.affinity | object | `{}` | Configure node affinity |
 | cronjob.cleanup.annotations | object | `{}` | Set custom cron job level annotations |
+| cronjob.cleanup.automountServiceAccountToken | bool | `true` | Set automounting of the SA token |
 | cronjob.cleanup.customArgs | list | `[]` | Configure the arguments of the entrypoint, overriding the default value |
+| cronjob.cleanup.extraContainers | list | `[]` | If you want to add extra sidecar containers. |
 | cronjob.cleanup.extraEnv | list | `[]` | Array of extra envs to be passed to the cronjob. This takes precedence over deployment variables. Kubernetes format is expected. Value is processed with Helm `tpl` - name: FOO   value: BAR |
+| cronjob.cleanup.extraInitContainers | string | `""` | If you want to add extra init containers. |
 | cronjob.cleanup.labels | object | `{}` | Set custom cron job level labels |
 | cronjob.cleanup.nodeSelector | object | `{}` | Configure node labels for pod assignment |
 | cronjob.cleanup.podMetadata | object | `{"annotations":{},"labels":{}}` | Specify pod metadata, this metadata is added directly to the pod, and not higher objects |
@@ -40,6 +43,11 @@ A ORY Kratos Helm chart for Kubernetes
 | cronjob.cleanup.podMetadata.labels | object | `{}` | Extra pod level labels |
 | cronjob.cleanup.resources | object | `{"limits":{},"requests":{}}` | We usually recommend not to specify default resources and to leave this as a conscious choice for the user.  This also increases chances charts run on environments with little  resources, such as Minikube. If you do want to specify resources, uncomment the following  lines, adjust them as necessary, and remove the curly braces after 'resources:'.  limits:    cpu: 100m    memory: 128Mi  requests:    cpu: 100m  memory: 128Mi |
 | cronjob.cleanup.schedule | string | `"0 */1 * * *"` | Configure how often the cron job is ran |
+| cronjob.cleanup.serviceAccount | object | `{"annotations":{"helm.sh/hook":"pre-install, pre-upgrade","helm.sh/hook-delete-policy":"before-hook-creation","helm.sh/hook-weight":"0"},"create":true,"name":""}` | Specify the serviceAccountName value. Sometime you need to provide specific permissions for the cleanup cronjob. For example installing Kratos on a cluster with a PosSecurityPolicy and Istio. Uncomment if you need to provide a ServiceAccount for the cleanup cronjob. |
+| cronjob.cleanup.serviceAccount.annotations | object | `{"helm.sh/hook":"pre-install, pre-upgrade","helm.sh/hook-delete-policy":"before-hook-creation","helm.sh/hook-weight":"0"}` | Annotations to add to the service account |
+| cronjob.cleanup.serviceAccount.create | bool | `true` | Specifies whether a service account should be created |
+| cronjob.cleanup.serviceAccount.name | string | `""` | The name of the service account to use. If not set and create is true, a name is generated using the fullname template |
+| cronjob.cleanup.shareProcessNamespace | bool | `false` | Set sharing process namespace |
 | cronjob.cleanup.tolerations | list | `[]` | Configure node tolerations |
 | deployment.affinity | object | `{}` | Configure node affinity |
 | deployment.annotations | object | `{}` |  |
