@@ -1,5 +1,13 @@
 global:
   dnsDomain: example.com
+  podMetadata:
+    labels:
+      ory.sh/global: "mylabel"
+    annotations:
+      ory.sh/global: |
+        {
+          "foo": "bar"
+        }
 
 ingress:
   admin:

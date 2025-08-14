@@ -81,6 +81,10 @@ A ORY Kratos Helm chart for Kubernetes
 | deployment.tolerations | list | `[]` | Configure node tolerations. |
 | deployment.topologySpreadConstraints | list | `[]` | Configure pod topologySpreadConstraints. |
 | fullnameOverride | string | `""` |  |
+| global | object | `{"podMetadata":{"annotations":{},"labels":{}}}` | Global setting, passed down to all pods |
+| global.podMetadata | object | `{"annotations":{},"labels":{}}` | Specify pod metadata, this metadata is added directly to the pod, and not higher objects |
+| global.podMetadata.annotations | object | `{}` | Extra pod level annotations |
+| global.podMetadata.labels | object | `{}` | Extra pod level labels |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"oryd/kratos"` | ORY KRATOS image |
 | image.tag | string | `"v1.3.1"` | ORY KRATOS VERSION Alternative format: image: oryd/kratos:v0.6.3-alpha.1 |

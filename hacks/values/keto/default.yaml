@@ -1,4 +1,13 @@
 ---
+global:
+  podMetadata:
+    labels:
+      ory.sh/global: "mylabel"
+    annotations:
+      ory.sh/global: |
+        {
+          "foo": "bar"
+        }
 keto:
   automigration:
     enabled: true

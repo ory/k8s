@@ -29,17 +29,23 @@ spec:
         control-plane: controller-manager
         app.kubernetes.io/name: {{ include "hydra-maester.fullname" . }}
         app.kubernetes.io/instance: {{ .Release.Name }}
-        {{- with .Values.deployment.extraLabels }}
+        {{- with $.Values.deployment.extraLabels }}
           {{- toYaml . | nindent 8 }}
         {{- end }}
-        {{- with .Values.deployment.podMetadata.labels }}
+        {{- with $.Values.deployment.podMetadata.labels }}
+          {{- toYaml . | nindent 8 }}
+        {{- end }}
+        {{- with $.Values.global.podMetadata.labels }}
           {{- toYaml . | nindent 8 }}
         {{- end }}
       annotations:
-        {{- with .Values.deployment.extraAnnotations }}
+        {{- with $.Values.deployment.extraAnnotations }}
           {{- toYaml . | nindent 8 }}
         {{- end }}
-        {{- with .Values.deployment.podMetadata.annotations }}
+        {{- with $.Values.deployment.podMetadata.annotations }}
+          {{- toYaml . | nindent 8 }}
+        {{- end }}
+        {{- with $.Values.global.podMetadata.annotations }}
           {{- toYaml . | nindent 8 }}
         {{- end }}
     spec:

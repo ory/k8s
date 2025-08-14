@@ -1,3 +1,12 @@
+# -- Global setting, passed down to all pods
+global:
+  # -- Specify pod metadata, this metadata is added directly to the pod, and not higher objects
+  podMetadata:
+    # -- Extra pod level labels
+    labels: {}
+    # -- Extra pod level annotations
+    annotations: {}
+
 # -- Number of ORY Hydra members
 replicaCount: 1
 

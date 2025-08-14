@@ -1,4 +1,14 @@
 ---
+global:
+  podMetadata:
+    labels:
+      ory.sh/global: "mylabel"
+    annotations:
+      ory.sh/global: |
+        {
+          "foo": "bar"
+        }
+
 demo: false
 maester:
   enabled: false

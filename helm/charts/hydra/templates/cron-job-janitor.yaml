@@ -26,18 +26,24 @@ spec:
         metadata:
           labels:
             {{- include "hydra.janitor.labels" . | nindent 12 }}
-            {{- with .Values.cronjob.janitor.labels }}
+            {{- with $.Values.cronjob.janitor.labels }}
               {{- toYaml . | nindent 12 }}
             {{- end }}
-            {{- with .Values.cronjob.janitor.podMetadata.labels }}
+            {{- with $.Values.cronjob.janitor.podMetadata.labels }}
+              {{- toYaml . | nindent 12 }}
+            {{- end }}
+            {{- with $.Values.global.podMetadata.labels }}
               {{- toYaml . | nindent 12 }}
             {{- end }}
           annotations:
             {{- include "hydra.annotations.checksum" . | nindent 12 -}}
-            {{- with .Values.cronjob.janitor.annotations }}
+            {{- with $.Values.cronjob.janitor.annotations }}
               {{- toYaml . | nindent 12 }}
             {{- end }}
             {{- with $.Values.cronjob.janitor.podMetadata.annotations }}
+              {{- toYaml . | nindent 12 }}
+            {{- end }}
+            {{- with $.Values.global.podMetadata.annotations }}
               {{- toYaml . | nindent 12 }}
             {{- end }}
         spec:

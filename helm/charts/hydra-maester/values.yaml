@@ -1,3 +1,12 @@
+# -- Global setting, passed down to all pods
+global:
+  # -- Specify pod metadata, this metadata is added directly to the pod, and not higher objects
+  podMetadata:
+    # -- Extra pod level labels
+    labels: {}
+    # -- Extra pod level annotations
+    annotations: {}
+
 # -- Number of replicas in deployment
 replicaCount: 1
 # -- Number of revisions kept in history
@@ -43,8 +52,7 @@ forwardedProto:
 
 ## -- Deployment specific config
 deployment:
-  resources:
-    {}
+  resources: {}
     #  We usually recommend not to specify default resources and to leave this as a conscious
     #  choice for the user. This also increases chances charts run on environments with little
     #  resources, such as Minikube. If you do want to specify resources, uncomment the following

@@ -72,6 +72,10 @@ Access Control Policies as a Server
 | deployment.topologySpreadConstraints | list | `[]` | Configure pod topologySpreadConstraints. |
 | extraServices | object | `{}` |  |
 | fullnameOverride | string | `""` |  |
+| global | object | `{"podMetadata":{"annotations":{},"labels":{}}}` | Global setting, passed down to all pods |
+| global.podMetadata | object | `{"annotations":{},"labels":{}}` | Specify pod metadata, this metadata is added directly to the pod, and not higher objects |
+| global.podMetadata.annotations | object | `{}` | Extra pod level annotations |
+| global.podMetadata.labels | object | `{}` | Extra pod level labels |
 | image.pullPolicy | string | `"IfNotPresent"` | Default image pull policy |
 | image.repository | string | `"oryd/keto"` | Ory KETO image |
 | image.tag | string | `"v0.14.0"` | Ory KETO version |

@@ -38,7 +38,10 @@ A Helm chart for deploying ORY Oathkeeper Rule Controller in Kubernetes
 | deployment.terminationGracePeriodSeconds | int | `60` |  |
 | deployment.tolerations | list | `[]` | Configure node tolerations. |
 | deployment.topologySpreadConstraints | list | `[]` | Configure pod topologySpreadConstraints. |
-| global.ory.oathkeeper.maester.mode | string | `"controller"` |  |
+| global | object | `{"ory":{"oathkeeper":{"maester":{"mode":"controller"}}},"podMetadata":{"annotations":{},"labels":{}}}` | Global setting, passed down to all pods |
+| global.podMetadata | object | `{"annotations":{},"labels":{}}` | Specify pod metadata, this metadata is added directly to the pod, and not higher objects |
+| global.podMetadata.annotations | object | `{}` | Extra pod level annotations |
+| global.podMetadata.labels | object | `{}` | Extra pod level labels |
 | image.pullPolicy | string | `"IfNotPresent"` | Image pull policy |
 | image.repository | string | `"oryd/oathkeeper-maester"` | ORY Oathkeeper Rule Controller image |
 | image.tag | string | `"v0.1.11"` | ORY Oathkeeper Rule Controller version |

@@ -32,6 +32,9 @@ spec:
         {{- with $.Values.job.podMetadata.annotations }}
           {{- toYaml . | nindent 8 }}
         {{- end }}
+        {{- with $.Values.global.podMetadata.annotations }}
+          {{- toYaml . | nindent 8 }}
+        {{- end }}
       labels:
         app.kubernetes.io/name: {{ include "kratos.fullname" $ }}-{{ $jobName }}-automigrate
         app.kubernetes.io/instance: {{ $.Release.Name }}
@@ -42,6 +45,9 @@ spec:
           {{- toYaml . | nindent 8 }}
         {{- end }}
         {{- with $.Values.job.podMetadata.labels }}
+          {{- toYaml . | nindent 8 }}
+        {{- end }}
+        {{- with $.Values.global.podMetadata.labels }}
           {{- toYaml . | nindent 8 }}
         {{- end }}
     spec:
