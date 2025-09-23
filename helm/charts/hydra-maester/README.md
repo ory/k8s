@@ -1,6 +1,6 @@
 # hydra-maester
 
-![Version: 0.58.0](https://img.shields.io/badge/Version-0.58.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.0.38](https://img.shields.io/badge/AppVersion-v0.0.38-informational?style=flat-square)
+![Version: 0.58.0](https://img.shields.io/badge/Version-0.58.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.0.39](https://img.shields.io/badge/AppVersion-v0.0.39-informational?style=flat-square)
 
 A Helm chart for Kubernetes
 
@@ -57,7 +57,7 @@ A Helm chart for Kubernetes
 | global.podMetadata.labels | object | `{}` | Extra pod level labels |
 | image.pullPolicy | string | `"IfNotPresent"` | Image pull policy |
 | image.repository | string | `"oryd/hydra-maester"` | Ory Hydra-maester image |
-| image.tag | string | `"v0.0.38"` | Ory Hydra-maester version |
+| image.tag | string | `"v0.0.39"` | Ory Hydra-maester version |
 | imagePullSecrets | list | `[]` | Image pull secrets |
 | pdb.enabled | bool | `false` |  |
 | pdb.spec.maxUnavailable | string | `""` |  |
