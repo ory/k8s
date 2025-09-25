@@ -82,11 +82,13 @@ spec:
                 - /etc/config/kratos.yaml
               env:
               {{- if not (empty ( include "kratos.dsn" . )) }}
+                {{- if not (include "ory.extraEnvContainsEnvName" (list $cleanupCronjobExtraEnv "DSN")) }}
                 - name: DSN
                   valueFrom:
                     secretKeyRef:
                       name: {{ include "kratos.secretname" . }}
                       key: dsn
+                {{- end }}
               {{- end }}
                 {{- if $cleanupCronjobExtraEnv }}
                   {{- tpl (toYaml $cleanupCronjobExtraEnv) . | nindent 16 }}
