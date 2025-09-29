@@ -142,6 +142,7 @@ spec:
                   key: dsn
               {{- end }}
             {{- end }}
+            {{- if .Values.secret.enabled }}
             - name: SECRETS_SYSTEM
               valueFrom:
                 secretKeyRef:
@@ -152,6 +153,7 @@ spec:
                 secretKeyRef:
                   name: {{ include "hydra.secretname" . }}
                   key: secretsCookie
+            {{- end }}
             {{- if .Values.deployment.extraEnv }}
               {{- tpl (toYaml .Values.deployment.extraEnv) . | nindent 12 }}
             {{- end }}
