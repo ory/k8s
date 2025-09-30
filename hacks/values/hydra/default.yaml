@@ -191,14 +191,14 @@ serviceMonitor:
     insecureSkipVerify: true
   relabelings:
     - source_labels: [__address__]
-      regex: '([^:]+):.*'
+      regex: "([^:]+):.*"
       target_label: instance
-      replacement: '$1'
+      replacement: "$1"
   metricRelabelings:
     - source_labels: [__address__]
-      regex: '([^:]+):.*'
+      regex: "([^:]+):.*"
       target_label: instance
-      replacement: '$1'
+      replacement: "$1"
 
 cronjob:
   janitor:
