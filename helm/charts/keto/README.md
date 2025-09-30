@@ -184,6 +184,8 @@ Access Control Policies as a Server
 | serviceAccount.create | bool | `true` | Specifies whether a service account should be created |
 | serviceAccount.name | string | `""` | The name of the service account to use. If not set and create is true, a name is generated using the fullname template |
 | serviceMonitor.labels | object | `{}` | Provide additionnal labels to the ServiceMonitor ressource metadata |
+| serviceMonitor.metricRelabelings | list | `[]` | Metric relabeling is applied to samples as the last step before ingestion. Reference: https://prometheus.io/docs/prometheus/latest/configuration/configuration/#metric_relabel_configs |
+| serviceMonitor.relabelings | list | `[]` | Relabeling is a powerful tool to dynamically rewrite the label set of a target before it gets scraped. Reference: https://prometheus.io/docs/prometheus/latest/configuration/configuration/#relabel_config |
 | serviceMonitor.scheme | string | `"http"` | HTTP scheme to use for scraping. |
 | serviceMonitor.scrapeInterval | string | `"60s"` | Interval at which metrics should be scraped |
 | serviceMonitor.scrapeTimeout | string | `"30s"` | Timeout after which the scrape is ended |
