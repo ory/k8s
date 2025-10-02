@@ -64,6 +64,12 @@ spec:
     scheme: {{ .Values.serviceMonitor.scheme }}
     interval: {{ .Values.serviceMonitor.scrapeInterval }}
     scrapeTimeout: {{ .Values.serviceMonitor.scrapeTimeout }}
+    {{- if .Values.serviceMonitor.metricRelabelings }}
+    metricRelabelings: {{- toYaml .Values.serviceMonitor.metricRelabelings | nindent 6 }}
+    {{- end }}
+    {{- if .Values.serviceMonitor.relabelings }}
+    relabelings: {{- toYaml .Values.serviceMonitor.relabelings | nindent 6 }}
+    {{- end }}
     {{- with .Values.serviceMonitor.tlsConfig }}
     tlsConfig:
       {{- toYaml . | nindent 6 }}

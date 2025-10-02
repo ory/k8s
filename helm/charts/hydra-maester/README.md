@@ -72,6 +72,8 @@ A Helm chart for Kubernetes
 | service.metrics.port | int | `8080` |  |
 | service.metrics.type | string | `"ClusterIP"` |  |
 | serviceMonitor.labels | object | `{}` | Provide additional labels to the ServiceMonitor resource metadata |
+| serviceMonitor.metricRelabelings | list | `[]` | Metric relabeling is applied to samples as the last step before ingestion. Reference: https://prometheus.io/docs/prometheus/latest/configuration/configuration/#metric_relabel_configs |
+| serviceMonitor.relabelings | list | `[]` | Relabeling is a powerful tool to dynamically rewrite the label set of a target before it gets scraped. Reference: https://prometheus.io/docs/prometheus/latest/configuration/configuration/#relabel_config |
 | serviceMonitor.scheme | string | `"http"` | HTTP scheme to use for scraping. |
 | serviceMonitor.scrapeInterval | string | `"60s"` | Interval at which metrics should be scraped |
 | serviceMonitor.scrapeTimeout | string | `"30s"` | Timeout after which the scrape is ended |

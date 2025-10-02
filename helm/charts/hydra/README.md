@@ -202,6 +202,8 @@ A Helm chart for deploying ORY Hydra in Kubernetes
 | service.public.type | string | `"ClusterIP"` | The service type |
 | serviceMonitor.enabled | bool | `false` | switch to true to enable creating the ServiceMonitor |
 | serviceMonitor.labels | object | `{}` | Provide additionnal labels to the ServiceMonitor ressource metadata |
+| serviceMonitor.metricRelabelings | list | `[]` | Metric relabeling is applied to samples as the last step before ingestion. Reference: https://prometheus.io/docs/prometheus/latest/configuration/configuration/#metric_relabel_configs |
+| serviceMonitor.relabelings | list | `[]` | Relabeling is a powerful tool to dynamically rewrite the label set of a target before it gets scraped. Reference: https://prometheus.io/docs/prometheus/latest/configuration/configuration/#relabel_config |
 | serviceMonitor.scheme | string | `"http"` | HTTP scheme to use for scraping. |
 | serviceMonitor.scrapeInterval | string | `"60s"` | Interval at which metrics should be scraped |
 | serviceMonitor.scrapeTimeout | string | `"30s"` | Timeout after which the scrape is ended |

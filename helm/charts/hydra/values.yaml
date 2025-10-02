@@ -690,6 +690,12 @@ serviceMonitor:
   scrapeInterval: 60s
   # -- Timeout after which the scrape is ended
   scrapeTimeout: 30s
+  # -- Relabeling is a powerful tool to dynamically rewrite the label set of a target before it gets scraped.
+  # Reference: https://prometheus.io/docs/prometheus/latest/configuration/configuration/#relabel_config
+  relabelings: []
+  # -- Metric relabeling is applied to samples as the last step before ingestion.
+  # Reference: https://prometheus.io/docs/prometheus/latest/configuration/configuration/#metric_relabel_configs
+  metricRelabelings: []
   # -- Provide additionnal labels to the ServiceMonitor ressource metadata
   labels: {}
   # -- TLS configuration to use when scraping the endpoint

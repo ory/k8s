@@ -38,3 +38,13 @@ serviceMonitor:
     release: "prometheus"
   tlsConfig:
     insecureSkipVerify: true
+  relabelings:
+    - source_labels: [__address__]
+      regex: "([^:]+):.*"
+      target_label: instance
+      replacement: "$1"
+  metricRelabelings:
+    - source_labels: [__address__]
+      regex: "([^:]+):.*"
+      target_label: instance
+      replacement: "$1"
