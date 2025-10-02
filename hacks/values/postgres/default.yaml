@@ -17,3 +17,5 @@ auth:
   username: "ory"
   password: "ory"
   postgresPassword: "ory"
+image:
+  repository: "bitnamilegacy/postgresql"
