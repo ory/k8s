@@ -5,7 +5,7 @@
 This repository contains helm charts for Kubernetes. All charts are in
 incubation phase and use is at your own risk.
 
-Please go to [k8s.ory.sh/helm](https://k8s.ory.sh/helm/) for a list of helm
+Please go to [k8s.ory.com/helm](https://k8s.ory.com/helm/) for a list of helm
 charts and their configuration options.
 
 **NOTE**
