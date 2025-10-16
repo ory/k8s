@@ -21,7 +21,7 @@ image:
   repository: oryd/kratos
   # -- ORY KRATOS VERSION
   # Alternative format: image: oryd/kratos:v0.6.3-alpha.1
-  tag: v1.3.1
+  tag: v25.4.0
   pullPolicy: IfNotPresent
   # imagePullPolicy: Always
 
