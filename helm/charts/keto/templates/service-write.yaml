@@ -52,8 +52,6 @@ metadata:
 spec:
   type: "ClusterIP"
   clusterIP: "None"
-  externalTrafficPolicy: {{ .Values.service.write.externalTrafficPolicy }}
-  internalTrafficPolicy: {{ .Values.service.write.internalTrafficPolicy }}
   ports:
     - port: {{ .Values.keto.config.serve.write.port }}
       targetPort: {{ .Values.service.write.name }}
