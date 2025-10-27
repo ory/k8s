@@ -40,6 +40,10 @@ service:
   annotations: {}
   # kubernetes.io/ingress.class: nginx
   # kubernetes.io/tls-acme: "true"
+  # -- https://kubernetes.io/docs/reference/networking/virtual-ips/#traffic-policies
+  externalTrafficPolicy: ""
+  # -- https://kubernetes.io/docs/reference/networking/virtual-ips/#traffic-policies
+  internalTrafficPolicy: ""
 
 ## -- Secret configuration
 secret:

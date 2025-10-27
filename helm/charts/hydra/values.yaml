@@ -51,6 +51,10 @@ service:
     #      If you do want to specify additional labels, uncomment the following
     #      lines, adjust them as necessary, and remove the curly braces after 'labels:'.
     #      e.g.  app: hydra
+    # -- https://kubernetes.io/docs/reference/networking/virtual-ips/#traffic-policies
+    externalTrafficPolicy: ""
+    # -- https://kubernetes.io/docs/reference/networking/virtual-ips/#traffic-policies
+    internalTrafficPolicy: ""
   # -- Configures the Kubernetes service for the api port.
   admin:
     # -- En-/disable the service
@@ -73,6 +77,10 @@ service:
     #      e.g.  app: hydra
     # -- Path to the metrics endpoint
     metricsPath: /admin/metrics/prometheus
+    # -- https://kubernetes.io/docs/reference/networking/virtual-ips/#traffic-policies
+    externalTrafficPolicy: ""
+    # -- https://kubernetes.io/docs/reference/networking/virtual-ips/#traffic-policies
+    internalTrafficPolicy: ""
 
 ## -- Secret configuration
 secret:

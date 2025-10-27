@@ -173,6 +173,8 @@ A ORY Kratos Helm chart for Kubernetes
 | securityContext.seccompProfile.type | string | `"RuntimeDefault"` |  |
 | service.admin.annotations | object | `{}` | If you do want to specify annotations, uncomment the following lines, adjust them as necessary, and remove the curly braces after 'annotations:'. |
 | service.admin.enabled | bool | `true` |  |
+| service.admin.externalTrafficPolicy | string | `""` | https://kubernetes.io/docs/reference/networking/virtual-ips/#traffic-policies |
+| service.admin.internalTrafficPolicy | string | `""` | https://kubernetes.io/docs/reference/networking/virtual-ips/#traffic-policies |
 | service.admin.labels | object | `{}` | Provide custom labels. Use the same syntax as for annotations. |
 | service.admin.loadBalancerIP | string | `""` | Load balancer IP |
 | service.admin.metricsPath | string | `"/admin/metrics/prometheus"` | Path to the metrics endpoint |
@@ -190,6 +192,8 @@ A ORY Kratos Helm chart for Kubernetes
 | service.courier.type | string | `"ClusterIP"` |  |
 | service.public.annotations | object | `{}` | If you do want to specify annotations, uncomment the following lines, adjust them as necessary, and remove the curly braces after 'annotations:'. |
 | service.public.enabled | bool | `true` |  |
+| service.public.externalTrafficPolicy | string | `""` | https://kubernetes.io/docs/reference/networking/virtual-ips/#traffic-policies |
+| service.public.internalTrafficPolicy | string | `""` | https://kubernetes.io/docs/reference/networking/virtual-ips/#traffic-policies |
 | service.public.labels | object | `{}` | Provide custom labels. Use the same syntax as for annotations. |
 | service.public.loadBalancerIP | string | `""` | Load balancer IP |
 | service.public.name | string | `"http"` | The service port name. Useful to set a custom service port name if it must follow a scheme (e.g. Istio) |

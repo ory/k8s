@@ -194,6 +194,10 @@ service:
     ## -- Enable extra headless service
     headless:
       enabled: true
+    # -- https://kubernetes.io/docs/reference/networking/virtual-ips/#traffic-policies
+    externalTrafficPolicy: ""
+    # -- https://kubernetes.io/docs/reference/networking/virtual-ips/#traffic-policies
+    internalTrafficPolicy: ""
   ## -- Write service
   write:
     enabled: true
@@ -209,6 +213,10 @@ service:
     ## -- Enable extra headless service
     headless:
       enabled: true
+    # -- https://kubernetes.io/docs/reference/networking/virtual-ips/#traffic-policies
+    externalTrafficPolicy: ""
+    # -- https://kubernetes.io/docs/reference/networking/virtual-ips/#traffic-policies
+    internalTrafficPolicy: ""
   ## -- Metrics service
   metrics:
     enabled: false

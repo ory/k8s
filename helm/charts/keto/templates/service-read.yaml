@@ -26,6 +26,12 @@ spec:
   clusterIP: {{ . }}
   {{- end }}
   {{- end }}
+  {{- if .Values.service.read.externalTrafficPolicy }}
+  externalTrafficPolicy: {{ .Values.service.read.externalTrafficPolicy }}
+  {{- end }}
+  {{- if .Values.service.read.internalTrafficPolicy }}
+  internalTrafficPolicy: {{ .Values.service.read.internalTrafficPolicy }}
+  {{- end }}
   ports:
     - port: {{ .Values.service.read.port }}
       targetPort: {{ .Values.service.read.name }}

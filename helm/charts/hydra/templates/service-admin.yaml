@@ -24,6 +24,12 @@ spec:
   loadBalancerIP: {{ . }}
   {{- end }}
   {{- end }}
+  {{- if .Values.service.admin.externalTrafficPolicy }}
+  externalTrafficPolicy: {{ .Values.service.admin.externalTrafficPolicy }}
+  {{- end }}
+  {{- if .Values.service.admin.internalTrafficPolicy }}
+  internalTrafficPolicy: {{ .Values.service.admin.internalTrafficPolicy }}
+  {{- end }}
   ports:
     - port: {{ .Values.service.admin.port }}
       targetPort: http-admin
