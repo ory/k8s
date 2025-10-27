@@ -67,8 +67,6 @@ A Helm chart for Kubernetes
 | revisionHistoryLimit | int | `5` | Number of revisions kept in history |
 | service.metrics.annotations | object | `{}` |  |
 | service.metrics.enabled | bool | `false` |  |
-| service.metrics.externalTrafficPolicy | string | `"Cluster"` | https://kubernetes.io/docs/reference/networking/virtual-ips/#traffic-policies |
-| service.metrics.internalTrafficPolicy | string | `"Cluster"` | https://kubernetes.io/docs/reference/networking/virtual-ips/#traffic-policies |
 | service.metrics.loadBalancerIP | string | `""` |  |
 | service.metrics.name | string | `"http-metrics"` |  |
 | service.metrics.port | int | `8080` |  |

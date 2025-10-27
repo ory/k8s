@@ -177,10 +177,6 @@ service:
     name: http-metrics
     port: 8080
     annotations: {}
-    # -- https://kubernetes.io/docs/reference/networking/virtual-ips/#traffic-policies
-    externalTrafficPolicy: Cluster
-    # -- https://kubernetes.io/docs/reference/networking/virtual-ips/#traffic-policies
-    internalTrafficPolicy: Cluster
 
 ## -- Parameters for the Prometheus ServiceMonitor objects.
 # Reference: https://docs.openshift.com/container-platform/4.6/rest_api/monitoring_apis/servicemonitor-monitoring-coreos-com-v1.html
