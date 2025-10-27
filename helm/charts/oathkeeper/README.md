@@ -123,31 +123,29 @@ A Helm chart for deploying ORY Oathkeeper in Kubernetes
 | securityContext.runAsUser | int | `65534` |  |
 | securityContext.seLinuxOptions.level | string | `"s0:c123,c456"` |  |
 | securityContext.seccompProfile.type | string | `"RuntimeDefault"` |  |
-| service.api | object | `{"annotations":{},"enabled":true,"externalTrafficPolicy":"Cluster","internalTrafficPolicy":"Cluster","labels":{},"loadBalancerIP":"","name":"http","port":4456,"type":"ClusterIP"}` | Configures the Kubernetes service for the api port. |
+| service.api | object | `{"annotations":{},"enabled":true,"externalTrafficPolicy":"","internalTrafficPolicy":"","labels":{},"loadBalancerIP":"","name":"http","port":4456,"type":"ClusterIP"}` | Configures the Kubernetes service for the api port. |
 | service.api.annotations | object | `{}` | If you do want to specify annotations, uncomment the following lines, adjust them as necessary, and remove the curly braces after 'annotations:'. kubernetes.io/ingress.class: nginx kubernetes.io/tls-acme: "true" |
 | service.api.enabled | bool | `true` | En-/disable the service |
-| service.api.externalTrafficPolicy | string | `"Cluster"` | https://kubernetes.io/docs/reference/networking/virtual-ips/#traffic-policies |
-| service.api.internalTrafficPolicy | string | `"Cluster"` | https://kubernetes.io/docs/reference/networking/virtual-ips/#traffic-policies |
+| service.api.externalTrafficPolicy | string | `""` | https://kubernetes.io/docs/reference/networking/virtual-ips/#traffic-policies |
+| service.api.internalTrafficPolicy | string | `""` | https://kubernetes.io/docs/reference/networking/virtual-ips/#traffic-policies |
 | service.api.labels | object | `{}` | If you do want to specify additional labels, uncomment the following lines, adjust them as necessary, and remove the curly braces after 'labels:'. e.g.  app: oathkeeper |
 | service.api.loadBalancerIP | string | `""` | The load balancer IP |
 | service.api.name | string | `"http"` | The service port name. Useful to set a custom service port name if it must follow a scheme (e.g. Istio) |
 | service.api.port | int | `4456` | The service port |
 | service.api.type | string | `"ClusterIP"` | The service type |
-| service.metrics | object | `{"annotations":{},"enabled":true,"externalTrafficPolicy":"Cluster","internalTrafficPolicy":"Cluster","labels":{},"loadBalancerIP":"","name":"http","port":80,"type":"ClusterIP"}` | Configures the Kubernetes service for the metrics port. |
+| service.metrics | object | `{"annotations":{},"enabled":true,"labels":{},"loadBalancerIP":"","name":"http","port":80,"type":"ClusterIP"}` | Configures the Kubernetes service for the metrics port. |
 | service.metrics.annotations | object | `{}` | If you do want to specify annotations, uncomment the following lines, adjust them as necessary, and remove the curly braces after 'annotations:'. kubernetes.io/ingress.class: nginx kubernetes.io/tls-acme: "true" |
 | service.metrics.enabled | bool | `true` | En-/disable the service |
-| service.metrics.externalTrafficPolicy | string | `"Cluster"` | https://kubernetes.io/docs/reference/networking/virtual-ips/#traffic-policies |
-| service.metrics.internalTrafficPolicy | string | `"Cluster"` | https://kubernetes.io/docs/reference/networking/virtual-ips/#traffic-policies |
 | service.metrics.labels | object | `{}` | If you do want to specify additional labels, uncomment the following lines, adjust them as necessary, and remove the curly braces after 'labels:'. e.g.  app: oathkeeper |
 | service.metrics.loadBalancerIP | string | `""` | Load balancer IP |
 | service.metrics.name | string | `"http"` | The service port name. Useful to set a custom service port name if it must follow a scheme (e.g. Istio) |
 | service.metrics.port | int | `80` | The service port |
 | service.metrics.type | string | `"ClusterIP"` | The service type |
-| service.proxy | object | `{"annotations":{},"enabled":true,"externalTrafficPolicy":"Cluster","internalTrafficPolicy":"Cluster","labels":{},"loadBalancerIP":"","name":"http","port":4455,"type":"ClusterIP"}` | Configures the Kubernetes service for the proxy port. |
+| service.proxy | object | `{"annotations":{},"enabled":true,"externalTrafficPolicy":"","internalTrafficPolicy":"","labels":{},"loadBalancerIP":"","name":"http","port":4455,"type":"ClusterIP"}` | Configures the Kubernetes service for the proxy port. |
 | service.proxy.annotations | object | `{}` | If you do want to specify annotations, uncomment the following lines, adjust them as necessary, and remove the curly braces after 'annotations:'. kubernetes.io/ingress.class: nginx kubernetes.io/tls-acme: "true" |
 | service.proxy.enabled | bool | `true` | En-/disable the service |
-| service.proxy.externalTrafficPolicy | string | `"Cluster"` | https://kubernetes.io/docs/reference/networking/virtual-ips/#traffic-policies |
-| service.proxy.internalTrafficPolicy | string | `"Cluster"` | https://kubernetes.io/docs/reference/networking/virtual-ips/#traffic-policies |
+| service.proxy.externalTrafficPolicy | string | `""` | https://kubernetes.io/docs/reference/networking/virtual-ips/#traffic-policies |
+| service.proxy.internalTrafficPolicy | string | `""` | https://kubernetes.io/docs/reference/networking/virtual-ips/#traffic-policies |
 | service.proxy.labels | object | `{}` | If you do want to specify additional labels, uncomment the following lines, adjust them as necessary, and remove the curly braces after 'labels:'. e.g.  app: oathkeeper |
 | service.proxy.loadBalancerIP | string | `""` | The load balancer IP |
 | service.proxy.name | string | `"http"` | The service port name. Useful to set a custom service port name if it must follow a scheme (e.g. Istio) |

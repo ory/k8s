@@ -67,8 +67,8 @@ A Helm chart for ORY Kratos's example ui for Kubernetes
 | securityContext.seccompProfile.type | string | `"RuntimeDefault"` |  |
 | service.annotations | object | `{}` | If you do want to specify annotations, uncomment the following lines, adjust them as necessary, and remove the curly braces after 'annotations:'. |
 | service.enabled | bool | `true` |  |
-| service.externalTrafficPolicy | string | `"Cluster"` | https://kubernetes.io/docs/reference/networking/virtual-ips/#traffic-policies |
-| service.internalTrafficPolicy | string | `"Cluster"` | https://kubernetes.io/docs/reference/networking/virtual-ips/#traffic-policies |
+| service.externalTrafficPolicy | string | `""` | https://kubernetes.io/docs/reference/networking/virtual-ips/#traffic-policies |
+| service.internalTrafficPolicy | string | `""` | https://kubernetes.io/docs/reference/networking/virtual-ips/#traffic-policies |
 | service.labels | object | `{}` | Provide custom labels. Use the same syntax as for annotations. |
 | service.loadBalancerIP | string | `""` | The load balancer IP |
 | service.name | string | `"http"` | The service port name. Useful to set a custom service port name if it must follow a scheme (e.g. Istio) |

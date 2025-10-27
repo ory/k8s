@@ -50,9 +50,9 @@ service:
     # -- Path to the metrics endpoint
     metricsPath: /admin/metrics/prometheus
     # -- https://kubernetes.io/docs/reference/networking/virtual-ips/#traffic-policies
-    externalTrafficPolicy: Cluster
+    externalTrafficPolicy: ""
     # -- https://kubernetes.io/docs/reference/networking/virtual-ips/#traffic-policies
-    internalTrafficPolicy: Cluster
+    internalTrafficPolicy: ""
   public:
     enabled: true
     type: ClusterIP
@@ -70,9 +70,9 @@ service:
     # kubernetes.io/ingress.class: nginx
     # kubernetes.io/tls-acme: "true"
     # -- https://kubernetes.io/docs/reference/networking/virtual-ips/#traffic-policies
-    externalTrafficPolicy: Cluster
+    externalTrafficPolicy: ""
     # -- https://kubernetes.io/docs/reference/networking/virtual-ips/#traffic-policies
-    internalTrafficPolicy: Cluster
+    internalTrafficPolicy: ""
   courier:
     enabled: true
     type: ClusterIP

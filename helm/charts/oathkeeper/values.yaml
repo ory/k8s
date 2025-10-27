@@ -99,9 +99,9 @@ service:
     # e.g.  app: oathkeeper
     labels: {}
     # -- https://kubernetes.io/docs/reference/networking/virtual-ips/#traffic-policies
-    externalTrafficPolicy: Cluster
+    externalTrafficPolicy: ""
     # -- https://kubernetes.io/docs/reference/networking/virtual-ips/#traffic-policies
-    internalTrafficPolicy: Cluster
+    internalTrafficPolicy: ""
 
   # -- Configures the Kubernetes service for the api port.
   api:
@@ -124,9 +124,9 @@ service:
     # e.g.  app: oathkeeper
     labels: {}
     # -- https://kubernetes.io/docs/reference/networking/virtual-ips/#traffic-policies
-    externalTrafficPolicy: Cluster
+    externalTrafficPolicy: ""
     # -- https://kubernetes.io/docs/reference/networking/virtual-ips/#traffic-policies
-    internalTrafficPolicy: Cluster
+    internalTrafficPolicy: ""
 
   # -- Configures the Kubernetes service for the metrics port.
   metrics:
@@ -148,10 +148,6 @@ service:
     # -- If you do want to specify additional labels, uncomment the following lines, adjust them as necessary, and remove the curly braces after 'labels:'.
     # e.g.  app: oathkeeper
     labels: {}
-    # -- https://kubernetes.io/docs/reference/networking/virtual-ips/#traffic-policies
-    externalTrafficPolicy: Cluster
-    # -- https://kubernetes.io/docs/reference/networking/virtual-ips/#traffic-policies
-    internalTrafficPolicy: Cluster
 
 ## -- Configure ingress
 ingress:
