@@ -88,10 +88,6 @@ service:
     annotations: {}
     # -- Path to the metrics endpoint
     metricsPath: /metrics/prometheus
-    # -- https://kubernetes.io/docs/reference/networking/virtual-ips/#traffic-policies
-    externalTrafficPolicy: Cluster
-    # -- https://kubernetes.io/docs/reference/networking/virtual-ips/#traffic-policies
-    internalTrafficPolicy: Cluster
 
 ## -- Secret configuration
 secret:

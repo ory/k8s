@@ -185,8 +185,6 @@ A ORY Kratos Helm chart for Kubernetes
 | service.courier.annotations | object | `{}` | Provide custom annotations. |
 | service.courier.containerPort | int | `4434` | Container Port |
 | service.courier.enabled | bool | `true` |  |
-| service.courier.externalTrafficPolicy | string | `"Cluster"` | https://kubernetes.io/docs/reference/networking/virtual-ips/#traffic-policies |
-| service.courier.internalTrafficPolicy | string | `"Cluster"` | https://kubernetes.io/docs/reference/networking/virtual-ips/#traffic-policies |
 | service.courier.labels | object | `{}` | Provide custom labels. Use the same syntax as for annotations. |
 | service.courier.metricsPath | string | `"/metrics/prometheus"` | Path to the metrics endpoint |
 | service.courier.name | string | `"http-metrics"` | The service port name. Useful to set a custom service port name if it must follow a scheme (e.g. Istio) |
