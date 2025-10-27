@@ -25,8 +25,12 @@ spec:
   clusterIP: {{ . }}
   {{- end }}
   {{- end }}
+  {{- if .Values.service.write.externalTrafficPolicy }}
   externalTrafficPolicy: {{ .Values.service.write.externalTrafficPolicy }}
+  {{- end }}
+  {{- if .Values.service.write.internalTrafficPolicy }}
   internalTrafficPolicy: {{ .Values.service.write.internalTrafficPolicy }}
+  {{- end }}
   ports:
     - port: {{ .Values.service.write.port }}
       targetPort: {{ .Values.service.write.name }}
