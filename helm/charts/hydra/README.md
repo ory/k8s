@@ -185,17 +185,21 @@ A Helm chart for deploying ORY Hydra in Kubernetes
 | secret.hashSumEnabled | bool | `true` | switch to false to prevent checksum annotations being maintained and propogated to the pods |
 | secret.nameOverride | string | `""` | Provide custom name of existing secret, or custom name of secret to be created |
 | secret.secretAnnotations | object | `{"helm.sh/hook":"pre-install, pre-upgrade","helm.sh/hook-delete-policy":"before-hook-creation","helm.sh/hook-weight":"0","helm.sh/resource-policy":"keep"}` | Annotations to be added to secret. Annotations are added only when secret is being created. Existing secret will not be modified. |
-| service.admin | object | `{"annotations":{},"enabled":true,"labels":{},"loadBalancerIP":"","metricsPath":"/admin/metrics/prometheus","name":"http","port":4445,"type":"ClusterIP"}` | Configures the Kubernetes service for the api port. |
+| service.admin | object | `{"annotations":{},"enabled":true,"externalTrafficPolicy":"Cluster","internalTrafficPolicy":"Cluster","labels":{},"loadBalancerIP":"","metricsPath":"/admin/metrics/prometheus","name":"http","port":4445,"type":"ClusterIP"}` | Configures the Kubernetes service for the api port. |
 | service.admin.annotations | object | `{}` | If you do want to specify annotations, uncomment the following lines, adjust them as necessary, and remove the curly braces after 'annotations:'. |
 | service.admin.enabled | bool | `true` | En-/disable the service |
+| service.admin.externalTrafficPolicy | string | `"Cluster"` | https://kubernetes.io/docs/reference/networking/virtual-ips/#traffic-policies |
+| service.admin.internalTrafficPolicy | string | `"Cluster"` | https://kubernetes.io/docs/reference/networking/virtual-ips/#traffic-policies |
 | service.admin.loadBalancerIP | string | `""` | The load balancer IP |
 | service.admin.metricsPath | string | `"/admin/metrics/prometheus"` | Path to the metrics endpoint |
 | service.admin.name | string | `"http"` | The service port name. Useful to set a custom service port name if it must follow a scheme (e.g. Istio) |
 | service.admin.port | int | `4445` | The service port |
 | service.admin.type | string | `"ClusterIP"` | The service type |
-| service.public | object | `{"annotations":{},"enabled":true,"labels":{},"loadBalancerIP":"","name":"http","port":4444,"type":"ClusterIP"}` | Configures the Kubernetes service for the proxy port. |
+| service.public | object | `{"annotations":{},"enabled":true,"externalTrafficPolicy":"Cluster","internalTrafficPolicy":"Cluster","labels":{},"loadBalancerIP":"","name":"http","port":4444,"type":"ClusterIP"}` | Configures the Kubernetes service for the proxy port. |
 | service.public.annotations | object | `{}` | If you do want to specify annotations, uncomment the following lines, adjust them as necessary, and remove the curly braces after 'annotations:'. |
 | service.public.enabled | bool | `true` | En-/disable the service |
+| service.public.externalTrafficPolicy | string | `"Cluster"` | https://kubernetes.io/docs/reference/networking/virtual-ips/#traffic-policies |
+| service.public.internalTrafficPolicy | string | `"Cluster"` | https://kubernetes.io/docs/reference/networking/virtual-ips/#traffic-policies |
 | service.public.loadBalancerIP | string | `""` | The load balancer IP |
 | service.public.name | string | `"http"` | The service port name. Useful to set a custom service port name if it must follow a scheme (e.g. Istio) |
 | service.public.port | int | `4444` | The service port |

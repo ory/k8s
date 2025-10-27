@@ -1,6 +1,6 @@
 # hydra-maester
 
-![Version: 0.58.0](https://img.shields.io/badge/Version-0.58.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.0.39](https://img.shields.io/badge/AppVersion-v0.0.39-informational?style=flat-square)
+![Version: 0.58.0](https://img.shields.io/badge/Version-0.58.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.0.40](https://img.shields.io/badge/AppVersion-v0.0.40-informational?style=flat-square)
 
 A Helm chart for Kubernetes
 
@@ -57,7 +57,7 @@ A Helm chart for Kubernetes
 | global.podMetadata.labels | object | `{}` | Extra pod level labels |
 | image.pullPolicy | string | `"IfNotPresent"` | Image pull policy |
 | image.repository | string | `"oryd/hydra-maester"` | Ory Hydra-maester image |
-| image.tag | string | `"v0.0.39"` | Ory Hydra-maester version |
+| image.tag | string | `"v0.0.40"` | Ory Hydra-maester version |
 | imagePullSecrets | list | `[]` | Image pull secrets |
 | pdb.enabled | bool | `false` |  |
 | pdb.spec.maxUnavailable | string | `""` |  |
@@ -67,6 +67,8 @@ A Helm chart for Kubernetes
 | revisionHistoryLimit | int | `5` | Number of revisions kept in history |
 | service.metrics.annotations | object | `{}` |  |
 | service.metrics.enabled | bool | `false` |  |
+| service.metrics.externalTrafficPolicy | string | `"Cluster"` | https://kubernetes.io/docs/reference/networking/virtual-ips/#traffic-policies |
+| service.metrics.internalTrafficPolicy | string | `"Cluster"` | https://kubernetes.io/docs/reference/networking/virtual-ips/#traffic-policies |
 | service.metrics.loadBalancerIP | string | `""` |  |
 | service.metrics.name | string | `"http-metrics"` |  |
 | service.metrics.port | int | `8080` |  |

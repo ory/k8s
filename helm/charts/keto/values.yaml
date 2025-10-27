@@ -194,6 +194,10 @@ service:
     ## -- Enable extra headless service
     headless:
       enabled: true
+    # -- https://kubernetes.io/docs/reference/networking/virtual-ips/#traffic-policies
+    externalTrafficPolicy: Cluster
+    # -- https://kubernetes.io/docs/reference/networking/virtual-ips/#traffic-policies
+    internalTrafficPolicy: Cluster
   ## -- Write service
   write:
     enabled: true
@@ -209,6 +213,10 @@ service:
     ## -- Enable extra headless service
     headless:
       enabled: true
+    # -- https://kubernetes.io/docs/reference/networking/virtual-ips/#traffic-policies
+    externalTrafficPolicy: Cluster
+    # -- https://kubernetes.io/docs/reference/networking/virtual-ips/#traffic-policies
+    internalTrafficPolicy: Cluster
   ## -- Metrics service
   metrics:
     enabled: false
@@ -219,6 +227,10 @@ service:
     port: 80
     # -- If you do want to specify annotations, uncomment the following lines, adjust them as necessary, and remove the curly braces after 'annotations:'.
     annotations: {}
+    # -- https://kubernetes.io/docs/reference/networking/virtual-ips/#traffic-policies
+    externalTrafficPolicy: Cluster
+    # -- https://kubernetes.io/docs/reference/networking/virtual-ips/#traffic-policies
+    internalTrafficPolicy: Cluster
 
 ## -- Extra services to be deployed
 extraServices: {}

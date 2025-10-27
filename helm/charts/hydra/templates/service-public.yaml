@@ -22,6 +22,8 @@ spec:
   loadBalancerIP: {{ . }}
   {{- end }}
   {{- end }}
+  externalTrafficPolicy: {{ .Values.service.public.externalTrafficPolicy }}
+  internalTrafficPolicy: {{ .Values.service.public.internalTrafficPolicy }}
   ports:
     - port: {{ .Values.service.public.port }}
       targetPort: http-public

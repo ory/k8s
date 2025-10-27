@@ -27,6 +27,8 @@ metadata:
 spec:
   type: {{ .Values.service.courier.type }}
   clusterIP: None
+  externalTrafficPolicy: {{ .Values.service.courier.externalTrafficPolicy }}
+  internalTrafficPolicy: {{ .Values.service.courier.internalTrafficPolicy }}
   ports:
     - port: {{ .Values.service.courier.port }}
       targetPort: http-metrics

@@ -23,6 +23,8 @@ spec:
   loadBalancerIP: {{ . }}
   {{- end }}
   {{- end }}
+  externalTrafficPolicy: {{ .Values.service.proxy.externalTrafficPolicy }}
+  internalTrafficPolicy: {{ .Values.service.proxy.internalTrafficPolicy }}
   ports:
     - port: {{ .Values.service.proxy.port }}
       targetPort: http-proxy

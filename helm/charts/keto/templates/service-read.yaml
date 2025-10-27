@@ -26,6 +26,8 @@ spec:
   clusterIP: {{ . }}
   {{- end }}
   {{- end }}
+  externalTrafficPolicy: {{ .Values.service.read.externalTrafficPolicy }}
+  internalTrafficPolicy: {{ .Values.service.read.internalTrafficPolicy }}
   ports:
     - port: {{ .Values.service.read.port }}
       targetPort: {{ .Values.service.read.name }}
@@ -51,6 +53,8 @@ metadata:
 spec:
   type: "ClusterIP"
   clusterIP: "None"
+  externalTrafficPolicy: {{ .Values.service.read.externalTrafficPolicy }}
+  internalTrafficPolicy: {{ .Values.service.read.internalTrafficPolicy }}
   ports:
     - port: {{ .Values.keto.config.serve.read.port }}
       targetPort: {{ .Values.service.read.name }}
