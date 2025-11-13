@@ -6,7 +6,7 @@
 revisionHistoryLimit: 5
 image:
   repository: oryd/hydra-login-consent-node
-  tag: v2.3.0
+  tag: v25.4.0
   pullPolicy: IfNotPresent
 
 imagePullSecrets: []
