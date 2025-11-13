@@ -14,7 +14,7 @@ image:
   # -- ORY Hydra image
   repository: oryd/hydra
   # -- ORY Hydra version
-  tag: v2.3.0
+  tag: v25.4.0
   # -- Image pull policy
   pullPolicy: IfNotPresent
 
