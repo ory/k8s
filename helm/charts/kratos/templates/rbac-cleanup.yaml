@@ -13,5 +13,5 @@ metadata:
   annotations:
     {{- toYaml . | nindent 4 }}
   {{- end }}
-automountServiceAccountToken: {{ .Values.cronjob.cleanup.automountServiceAccountToken }}
+automountServiceAccountToken: {{ .Values.cronjob.cleanup.serviceAccount.automountServiceAccountToken }}
 {{- end -}}
