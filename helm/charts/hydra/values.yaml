@@ -631,7 +631,7 @@ cronjob:
     # -- Configure node affinity
     affinity: {}
 
-    # -- Set automounting of the SA token
+    # -- Set automounting of the SA token in job's pod
     automountServiceAccountToken: true
 
     # -- Set sharing process namespace
