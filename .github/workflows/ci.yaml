@@ -178,13 +178,11 @@ jobs:
     name: Generate documentation
     runs-on: ubuntu-24.04
     if: ${{ always() && github.ref == 'refs/heads/master' }}
-    permissions:
-      contents: write
     env:
       HELM_DOCS_VERSION: "1.11.0"
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v5
         with:
           token: ${{ secrets.ORY_BOT_PAT }}
       - name: Checkout dependencies
