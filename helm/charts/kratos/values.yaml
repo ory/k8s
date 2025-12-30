@@ -721,7 +721,7 @@ cronjob:
     #  - name: ...
     #    image: ...
 
-    # -- Set automounting of the SA token
+    # -- Set automounting of the SA token in job's pod
     automountServiceAccountToken: true
 
     # -- Set sharing process namespace
@@ -741,6 +741,8 @@ cronjob:
         helm.sh/hook-delete-policy: "before-hook-creation"
       # -- The name of the service account to use. If not set and create is true, a name is generated using the fullname template
       name: ""
+      # -- Set automounting of the SA token
+      automountServiceAccountToken: true
 
     # -- Specify pod metadata, this metadata is added directly to the pod, and not higher objects
     podMetadata:
