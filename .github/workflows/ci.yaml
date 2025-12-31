@@ -182,7 +182,7 @@ jobs:
       HELM_DOCS_VERSION: "1.11.0"
     steps:
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           token: ${{ secrets.ORY_BOT_PAT }}
       - name: Checkout dependencies
