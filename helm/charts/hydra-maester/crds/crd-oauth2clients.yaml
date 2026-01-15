@@ -40,6 +40,13 @@ spec:
               description:
                 OAuth2ClientSpec defines the desired state of OAuth2Client
               properties:
+                accessTokenStrategy:
+                  description:
+                    AccessTokenStrategy is the OAuth 2.0 Access Token Strategy
+                  enum:
+                    - jwt
+                    - opaque
+                  type: string
                 allowedCorsOrigins:
                   description:
                     AllowedCorsOrigins is an array of allowed CORS origins
@@ -76,6 +83,26 @@ spec:
                     ClientName is the human-readable string name of the client
                     to be presented to the end-user during authorization.
                   type: string
+                clientSecretExpiresAt:
+                  description:
+                    ClientSecretExpiresAt is the timestamp when the client
+                    secret expires (currently always 0)
+                  format: int64
+                  minimum: 0
+                  type: integer
+                clientUri:
+                  description:
+                    ClientUri is a URL string of a web page providing
+                    information about the client
+                  pattern: (^$|^https?://.*)
+                  type: string
+                contacts:
+                  description:
+                    Contacts is an array of strings representing ways to contact
+                    people responsible for this client
+                  items:
+                    type: string
+                  type: array
                 deletionPolicy:
                   description: |-
                     Indicates if a deleted OAuth2Client custom resource should delete the database row or not.
@@ -161,11 +188,24 @@ spec:
                     authentication method.
                   pattern: (^$|^https?://.*)
                   type: string
+                logoUri:
+                  description: |-
+                    LogoUri is the URI to the logo of the client.
+                    This is used to display the logo in the consent screen.
+                    It should be a valid URL pointing to an image.
+                  pattern: (^$|^https?://.*)
+                  type: string
                 metadata:
                   description: Metadata is arbitrary data
                   nullable: true
                   type: object
                   x-kubernetes-preserve-unknown-fields: true
+                policyUri:
+                  description:
+                    PolicyUri is a URL string that points to a human-readable
+                    privacy policy document
+                  pattern: (^$|^https?://.*)
+                  type: string
                 postLogoutRedirectUris:
                   description:
                     PostLogoutRedirectURIs is an array of the post logout
@@ -180,6 +220,21 @@ spec:
                   description:
                     RedirectURIs is an array of the redirect URIs allowed for
                     the application
+                  items:
+                    description:
+                      RedirectURI represents a redirect URI for the client
+                    pattern: \w+:/?/?[^\s]+
+                    type: string
+                  type: array
+                requestObjectSigningAlg:
+                  description:
+                    RequestObjectSigningAlg is the algorithm that must be used
+                    for signing request objects
+                  type: string
+                requestUris:
+                  description:
+                    RequestURIs is an array of request URIs that can be used in
+                    authorization requests
                   items:
                     description:
                       RedirectURI represents a redirect URI for the client
@@ -228,11 +283,29 @@ spec:
                   minLength: 1
                   pattern: '[a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*'
                   type: string
+                sectorIdentifierUri:
+                  description:
+                    SectorIdentifierUri is a URL using the https scheme to be
+                    used in calculating Pseudonymous Identifiers
+                  pattern: (^$|^https?://.*)
+                  type: string
                 skipConsent:
                   default: false
                   description:
                     SkipConsent skips the consent screen for this client.
                   type: boolean
+                skipLogoutConsent:
+                  default: false
+                  description:
+                    SkipLogoutConsent skips asking the user to confirm the
+                    logout request
+                  type: boolean
+                subjectType:
+                  description: SubjectType is the requested subject type
+                  enum:
+                    - public
+                    - pairwise
+                  type: string
                 tokenEndpointAuthMethod:
                   allOf:
                     - enum:
@@ -248,6 +321,11 @@ spec:
                   description:
                     Indication which authentication method should be used for
                     the token endpoint
+                  type: string
+                tokenEndpointAuthSigningAlg:
+                  description:
+                    TokenEndpointAuthSigningAlg is the algorithm used to sign
+                    JWT tokens for client authentication
                   type: string
                 tokenLifespans:
                   description: |-
@@ -315,10 +393,17 @@ spec:
                       pattern: "[0-9]+(ns|us|ms|s|m|h)"
                       type: string
                   type: object
-                logoUri:
-                  type: string
-                  description: LogoURI is the URL for the client's logo
+                tosUri:
+                  description:
+                    TosUri is a URL string that points to a human-readable terms
+                    of service document
                   pattern: (^$|^https?://.*)
+                  type: string
+                userinfoSignedResponseAlg:
+                  description:
+                    UserinfoSignedResponseAlg is the algorithm used to sign
+                    UserInfo responses
+                  type: string
               required:
                 - grantTypes
                 - secretName
