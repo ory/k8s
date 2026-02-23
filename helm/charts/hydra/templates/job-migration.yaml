@@ -65,7 +65,14 @@ spec:
         {{- if .Values.hydra.automigration.customArgs }}
         args: {{- toYaml .Values.hydra.automigration.customArgs | nindent 10 }}
         {{- else }}
-        args: ["migrate", "sql", "-e", "--yes", "--config", "/etc/config/hydra.yaml"]
+        args:
+          - "migrate"
+          - "sql"
+          - "up"
+          - "-e"
+          - "--yes"
+          - "--config"
+          - "/etc/config/hydra.yaml"
         {{- end }}
         env:
         {{- if not (empty ( include "hydra.dsn" . )) }}
