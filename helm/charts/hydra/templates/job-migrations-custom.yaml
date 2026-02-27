@@ -57,7 +57,7 @@ spec:
       automountServiceAccountToken: {{ $.Values.job.automountServiceAccountToken }}
       containers:
       - name: {{ include "hydra.name" $ }}-{{ $jobName }}
-        image: "{{ $.Values.image.repository }}:{{ $.Values.image.tag }}"
+        image: "{{ $.Values.global.imageRegistry | default $.Values.image.registry }}/{{ $.Values.image.repository }}:{{ $.Values.image.tag }}"
         imagePullPolicy: {{ $.Values.image.pullPolicy }}
       {{- if $job.customCommand }}
         command: {{- toYaml $job.customCommand | nindent 10 }}

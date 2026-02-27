@@ -72,11 +72,13 @@ Access Control Policies as a Server
 | deployment.topologySpreadConstraints | list | `[]` | Configure pod topologySpreadConstraints. |
 | extraServices | object | `{}` |  |
 | fullnameOverride | string | `""` |  |
-| global | object | `{"podMetadata":{"annotations":{},"labels":{}}}` | Global setting, passed down to all pods |
+| global | object | `{"imageRegistry":null,"podMetadata":{"annotations":{},"labels":{}}}` | Global setting, passed down to all pods |
+| global.imageRegistry | string | `nil` | Overrides the Docker registry globally for all images |
 | global.podMetadata | object | `{"annotations":{},"labels":{}}` | Specify pod metadata, this metadata is added directly to the pod, and not higher objects |
 | global.podMetadata.annotations | object | `{}` | Extra pod level annotations |
 | global.podMetadata.labels | object | `{}` | Extra pod level labels |
 | image.pullPolicy | string | `"IfNotPresent"` | Default image pull policy |
+| image.registry | string | `"docker.io"` | Ory KETO image registry |
 | image.repository | string | `"oryd/keto"` | Ory KETO image |
 | image.tag | string | `"v25.4.0"` | Ory KETO version |
 | imagePullSecrets | list | `[]` |  |
@@ -198,7 +200,7 @@ Access Control Policies as a Server
 | test.labels | object | `{}` | Provide additional labels to the test pod |
 | watcher.automountServiceAccountToken | bool | `true` |  |
 | watcher.enabled | bool | `false` |  |
-| watcher.image | string | `"oryd/k8s-toolbox:v0.0.7"` |  |
+| watcher.image | string | `"oryd/k8s-toolbox:v0.0.10"` |  |
 | watcher.mountFile | string | `""` | Path to mounted file, which wil be monitored for changes. eg: /etc/secrets/my-secret/foo |
 | watcher.podMetadata | object | `{"annotations":{},"labels":{}}` | Specify pod metadata, this metadata is added directly to the pod, and not higher objects |
 | watcher.podMetadata.annotations | object | `{}` | Extra pod level annotations |

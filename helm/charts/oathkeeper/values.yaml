@@ -1,5 +1,7 @@
 # -- Global setting, passed down to all pods
 global:
+  # -- Overrides the Docker registry globally for all images
+  imageRegistry: null
   ## -- Mode for oathkeeper controller: possible modes are: controller or sidecar
   ory:
     oathkeeper:
@@ -18,6 +20,8 @@ replicaCount: 1
 revisionHistoryLimit: 5
 ## -- Image configuration
 image:
+  # -- ORY Oathkeeper image registry
+  registry: "docker.io"
   # -- ORY Oathkeeper image
   repository: oryd/oathkeeper
   # -- ORY Oathkeeper version

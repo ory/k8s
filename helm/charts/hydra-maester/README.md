@@ -1,6 +1,6 @@
 # hydra-maester
 
-![Version: 0.60.1](https://img.shields.io/badge/Version-0.60.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.0.40](https://img.shields.io/badge/AppVersion-v0.0.40-informational?style=flat-square)
+![Version: 0.60.1](https://img.shields.io/badge/Version-0.60.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.0.41](https://img.shields.io/badge/AppVersion-v0.0.41-informational?style=flat-square)
 
 A Helm chart for Kubernetes
 
@@ -51,13 +51,15 @@ A Helm chart for Kubernetes
 | deployment.topologySpreadConstraints | list | `[]` | Configure pod topologySpreadConstraints. |
 | enabledNamespaces | list | `[]` | The Controller have CREATE and READ access to all Secrets in the namespaces listed below. |
 | forwardedProto | string | `nil` |  |
-| global | object | `{"podMetadata":{"annotations":{},"labels":{}}}` | Global setting, passed down to all pods |
+| global | object | `{"imageRegistry":null,"podMetadata":{"annotations":{},"labels":{}}}` | Global setting, passed down to all pods |
+| global.imageRegistry | string | `nil` | Overrides the Docker registry globally for all images |
 | global.podMetadata | object | `{"annotations":{},"labels":{}}` | Specify pod metadata, this metadata is added directly to the pod, and not higher objects |
 | global.podMetadata.annotations | object | `{}` | Extra pod level annotations |
 | global.podMetadata.labels | object | `{}` | Extra pod level labels |
 | image.pullPolicy | string | `"IfNotPresent"` | Image pull policy |
+| image.registry | string | `"docker.io"` | Ory Hydra-maester image registry |
 | image.repository | string | `"oryd/hydra-maester"` | Ory Hydra-maester image |
-| image.tag | string | `"v0.0.40"` | Ory Hydra-maester version |
+| image.tag | string | `"v0.0.41"` | Ory Hydra-maester version |
 | imagePullSecrets | list | `[]` | Image pull secrets |
 | pdb.enabled | bool | `false` |  |
 | pdb.spec.maxUnavailable | string | `""` |  |

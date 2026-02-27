@@ -1,5 +1,7 @@
 # -- Global setting, passed down to all pods
 global:
+  # -- Overrides the Docker registry globally for all images
+  imageRegistry: null
   # -- Specify pod metadata, this metadata is added directly to the pod, and not higher objects
   podMetadata:
     # -- Extra pod level labels
@@ -18,6 +20,8 @@ enabledNamespaces: []
 singleNamespaceMode: false
 
 image:
+  # -- Ory Hydra-maester image registry
+  registry: "docker.io"
   # -- Ory Hydra-maester image
   repository: oryd/hydra-maester
   # -- Ory Hydra-maester version

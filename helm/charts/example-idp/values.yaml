@@ -2,9 +2,17 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
+global:
+  # -- Overrides the Docker registry globally for all images
+  imageRegistry: null
+
 # -- Number of revisions kept in history
 revisionHistoryLimit: 5
+
 image:
+  # -- ORY Hydra Login Consent Node image registry
+  registry: "docker.io"
+  # -- ORY Hydra Login Consent Node image
   repository: oryd/hydra-login-consent-node
   tag: v25.4.0
   pullPolicy: IfNotPresent

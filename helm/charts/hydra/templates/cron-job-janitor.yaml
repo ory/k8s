@@ -64,7 +64,7 @@ spec:
             {{- end }}
           containers:
             - name: {{ include "hydra.name" . }}-janitor
-              image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+              image: "{{ .Values.global.imageRegistry | default .Values.image.registry }}/{{ .Values.image.repository }}:{{ .Values.image.tag }}"
               imagePullPolicy: {{ .Values.image.pullPolicy }}
               {{- with .Values.cronjob.janitor.securityContext }}
               securityContext:

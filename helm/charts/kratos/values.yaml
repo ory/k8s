@@ -1,5 +1,7 @@
 # -- Global setting, passed down to all pods
 global:
+  # -- Overrides the Docker registry globally for all images
+  imageRegistry: null
   # -- Specify pod metadata, this metadata is added directly to the pod, and not higher objects
   podMetadata:
     # -- Extra pod level labels
@@ -17,6 +19,8 @@ strategy:
     maxUnavailable: "25%"
 
 image:
+  # -- ORY KRATOS image registry
+  registry: "docker.io"
   # -- ORY KRATOS image
   repository: oryd/kratos
   # -- ORY KRATOS VERSION

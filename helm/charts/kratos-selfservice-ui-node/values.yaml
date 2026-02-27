@@ -2,12 +2,19 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
+# -- Global setting, passed down to all pods
+global:
+  # -- Overrides the Docker registry globally for all images
+  imageRegistry: null
+
 # -- Number of replicas in deployment
 replicaCount: 1
 # -- Number of revisions kept in history
 revisionHistoryLimit: 5
 ## -- Deployment image settings
 image:
+  # -- ORY KRATOS SELFSERVICE UI NODE image registry
+  registry: "docker.io"
   # SELFSERVICE image
   repository: oryd/kratos-selfservice-ui-node
   # -- ORY KRATOS VERSION

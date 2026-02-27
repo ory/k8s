@@ -1,5 +1,7 @@
 # -- Global setting, passed down to all pods
 global:
+  # -- Overrides the Docker registry globally for all images
+  imageRegistry: null
   ## -- Mode for oathkeeper controller possible modes are: controller or sidecar
   ory:
     oathkeeper:
@@ -30,6 +32,8 @@ rulesFileName: ""
 
 ## -- Image configuration
 image:
+  # -- ORY Oathkeeper Rule Controller image registry
+  registry: "docker.io"
   # -- ORY Oathkeeper Rule Controller image
   repository: oryd/oathkeeper-maester
   # -- ORY Oathkeeper Rule Controller version
