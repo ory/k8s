@@ -14,7 +14,7 @@ metadata:
 spec:
   containers:
     - name: healthcheck-ready
-      image: "{{ .Values.test.busybox.repository }}:{{ .Values.test.busybox.tag }}"
+      image: "{{ .Values.global.imageRegistry | default .Values.image.registry }}/{{ .Values.test.busybox.repository }}:{{ .Values.test.busybox.tag }}"
       command: ['wget']
       args:  ['{{ include "hydra.fullname" . }}-admin:{{ .Values.service.admin.port }}/health/ready']
   restartPolicy: Never
