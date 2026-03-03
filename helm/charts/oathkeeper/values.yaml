@@ -454,3 +454,10 @@ test:
   busybox:
     repository: busybox
     tag: 1
+
+# Extra kubernetes manifests to deploy
+extraObjects: []
+# extraObjects:
+#   - apiVersion: v1
+#     kind: ConfigMap
+#     metadata: ...
