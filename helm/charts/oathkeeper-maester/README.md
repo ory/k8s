@@ -1,6 +1,6 @@
 # oathkeeper-maester
 
-![Version: 0.60.1](https://img.shields.io/badge/Version-0.60.1-informational?style=flat-square) ![AppVersion: v0.1.12](https://img.shields.io/badge/AppVersion-v0.1.12-informational?style=flat-square)
+![Version: 0.60.1](https://img.shields.io/badge/Version-0.60.1-informational?style=flat-square) ![AppVersion: v0.1.13](https://img.shields.io/badge/AppVersion-v0.1.13-informational?style=flat-square)
 
 A Helm chart for deploying ORY Oathkeeper Rule Controller in Kubernetes
 
@@ -38,13 +38,15 @@ A Helm chart for deploying ORY Oathkeeper Rule Controller in Kubernetes
 | deployment.terminationGracePeriodSeconds | int | `60` |  |
 | deployment.tolerations | list | `[]` | Configure node tolerations. |
 | deployment.topologySpreadConstraints | list | `[]` | Configure pod topologySpreadConstraints. |
-| global | object | `{"ory":{"oathkeeper":{"maester":{"mode":"controller"}}},"podMetadata":{"annotations":{},"labels":{}}}` | Global setting, passed down to all pods |
+| global | object | `{"imageRegistry":null,"ory":{"oathkeeper":{"maester":{"mode":"controller"}}},"podMetadata":{"annotations":{},"labels":{}}}` | Global setting, passed down to all pods |
+| global.imageRegistry | string | `nil` | Overrides the Docker registry globally for all images |
 | global.podMetadata | object | `{"annotations":{},"labels":{}}` | Specify pod metadata, this metadata is added directly to the pod, and not higher objects |
 | global.podMetadata.annotations | object | `{}` | Extra pod level annotations |
 | global.podMetadata.labels | object | `{}` | Extra pod level labels |
 | image.pullPolicy | string | `"IfNotPresent"` | Image pull policy |
+| image.registry | string | `"docker.io"` | ORY Oathkeeper Rule Controller image registry |
 | image.repository | string | `"oryd/oathkeeper-maester"` | ORY Oathkeeper Rule Controller image |
-| image.tag | string | `"v0.1.12"` | ORY Oathkeeper Rule Controller version |
+| image.tag | string | `"v0.1.13"` | ORY Oathkeeper Rule Controller version |
 | imagePullSecrets | list | `[]` | Image pull secrets |
 | pdb.enabled | bool | `false` |  |
 | pdb.spec.maxUnavailable | string | `""` |  |

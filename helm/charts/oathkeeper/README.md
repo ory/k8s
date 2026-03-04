@@ -64,12 +64,14 @@ A Helm chart for deploying ORY Oathkeeper in Kubernetes
 | deployment.tolerations | list | `[]` | Configure node tolerations. |
 | deployment.topologySpreadConstraints | list | `[]` | Configure pod topologySpreadConstraints. |
 | fullnameOverride | string | `""` | Full chart name override |
-| global | object | `{"ory":{"oathkeeper":{"maester":{"mode":"controller"}}},"podMetadata":{"annotations":{},"labels":{}}}` | Global setting, passed down to all pods |
+| global | object | `{"imageRegistry":null,"ory":{"oathkeeper":{"maester":{"mode":"controller"}}},"podMetadata":{"annotations":{},"labels":{}}}` | Global setting, passed down to all pods |
+| global.imageRegistry | string | `nil` | Overrides the Docker registry globally for all images |
 | global.podMetadata | object | `{"annotations":{},"labels":{}}` | Specify pod metadata, this metadata is added directly to the pod, and not higher objects |
 | global.podMetadata.annotations | object | `{}` | Extra pod level annotations |
 | global.podMetadata.labels | object | `{}` | Extra pod level labels |
 | image.initContainer | object | `{"repository":"busybox","tag":1}` | use a busybox image from another repository |
 | image.pullPolicy | string | `"IfNotPresent"` | Image pull policy |
+| image.registry | string | `"docker.io"` | ORY Oathkeeper image registry |
 | image.repository | string | `"oryd/oathkeeper"` | ORY Oathkeeper image |
 | image.tag | string | `"v25.4.0"` | ORY Oathkeeper version |
 | imagePullSecrets | list | `[]` | Image pull secrets |
@@ -162,7 +164,7 @@ A Helm chart for deploying ORY Oathkeeper in Kubernetes
 | serviceMonitor.tlsConfig | object | `{}` | TLS configuration to use when scraping the endpoint |
 | sidecar.envs | object | `{}` |  |
 | sidecar.image.repository | string | `"oryd/oathkeeper-maester"` |  |
-| sidecar.image.tag | string | `"v0.1.12"` |  |
+| sidecar.image.tag | string | `"v0.1.13"` |  |
 | test.busybox | object | `{"repository":"busybox","tag":1}` | use a busybox image from another repository |
 | test.labels | object | `{}` | Provide additional labels to the test pod |
 

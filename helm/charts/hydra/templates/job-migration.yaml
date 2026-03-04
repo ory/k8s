@@ -55,7 +55,7 @@ spec:
       automountServiceAccountToken: {{ .Values.job.automountServiceAccountToken }}
       containers:
       - name: {{ include "hydra.name" $ }}-automigrate
-        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        image: "{{ .Values.global.imageRegistry | default .Values.image.registry }}/{{ .Values.image.repository }}:{{ .Values.image.tag }}"
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         {{- if .Values.hydra.automigration.customCommand }}
         command: {{- toYaml .Values.hydra.automigration.customCommand | nindent 10 }}

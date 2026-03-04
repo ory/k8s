@@ -53,7 +53,7 @@ spec:
           securityContext:
             {{- toYaml . | nindent 12 }}
           {{- end }}
-          image: {{ .Values.watcher.image }}
+          image: {{ .Values.global.imageRegistry | default .Values.image.registry }}/{{ .Values.watcher.image }}
           command:
             - /bin/bash
             - -c

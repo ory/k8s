@@ -25,7 +25,10 @@ A Helm chart for ORY Kratos's example ui for Kubernetes
 | deployment.tolerations | list | `[]` | Configure node tolerations. |
 | deployment.topologySpreadConstraints | list | `[]` | Configure pod topologySpreadConstraints. |
 | fullnameOverride | string | `""` |  |
+| global | object | `{"imageRegistry":null}` | Global setting, passed down to all pods |
+| global.imageRegistry | string | `nil` | Overrides the Docker registry globally for all images |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
+| image.registry | string | `"docker.io"` | ORY KRATOS SELFSERVICE UI NODE image registry |
 | image.repository | string | `"oryd/kratos-selfservice-ui-node"` |  |
 | image.tag | string | `"v25.4.0"` | ORY KRATOS VERSION |
 | imagePullSecrets | list | `[]` |  |

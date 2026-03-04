@@ -151,7 +151,7 @@ Generate image
 {{- if eq "string" ( typeOf .Values.image ) }}
 {{- printf "%s" .Values.image -}}
 {{- else -}}
-{{- printf "%s:%s" .Values.image.repository (.Values.image.tag | default .Chart.AppVersion) -}}
+{{- printf "%s/%s:%s" (.Values.global.imageRegistry | default .Values.image.registry) .Values.image.repository (.Values.image.tag | default .Chart.AppVersion) -}}
 {{- end -}}
 {{- end -}}
 

@@ -13,8 +13,10 @@ A Helm chart for deploying the reference implementation for the User Login and C
 | deployment.extraEnv | list | `[]` | Array of extra Envs to be added to the deployment. K8s format expected - name: FOO   value: BAR |
 | dnsConfig | object | `{}` | Configure pod dnsConfig. |
 | fullnameOverride | string | `""` |  |
+| global.imageRegistry | string | `nil` | Overrides the Docker registry globally for all images |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
-| image.repository | string | `"oryd/hydra-login-consent-node"` |  |
+| image.registry | string | `"docker.io"` | ORY Hydra Login Consent Node image registry |
+| image.repository | string | `"oryd/hydra-login-consent-node"` | ORY Hydra Login Consent Node image |
 | image.tag | string | `"v25.4.0"` |  |
 | imagePullSecrets | list | `[]` |  |
 | ingress.annotations | object | `{}` |  |

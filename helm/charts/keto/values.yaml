@@ -1,5 +1,7 @@
 # -- Global setting, passed down to all pods
 global:
+  # -- Overrides the Docker registry globally for all images
+  imageRegistry: null
   # -- Specify pod metadata, this metadata is added directly to the pod, and not higher objects
   podMetadata:
     # -- Extra pod level labels
@@ -12,6 +14,8 @@ replicaCount: 1
 
 ## -- Image configuration
 image:
+  # -- Ory KETO image registry
+  registry: "docker.io"
   # -- Ory KETO image
   repository: oryd/keto
   # -- Default image pull policy
