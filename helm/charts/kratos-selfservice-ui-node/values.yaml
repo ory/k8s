@@ -18,7 +18,7 @@ image:
   # SELFSERVICE image
   repository: oryd/kratos-selfservice-ui-node
   # -- ORY KRATOS VERSION
-  tag: "v25.4.0"
+  tag: "v26.2.0"
   pullPolicy: IfNotPresent
 
 imagePullSecrets: []
