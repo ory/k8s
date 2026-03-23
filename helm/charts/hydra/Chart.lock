@@ -4,6 +4,6 @@ dependencies:
   version: 0.1.0
 - name: hydra-maester
   repository: file://../hydra-maester
-  version: 0.60.1
-digest: sha256:1338502306477e572c296ff72dba5a3d743dec05253e3c00ff6b694a9407f188
-generated: "2026-01-02T10:22:43.560000943Z"
+  version: 0.61.0
+digest: sha256:9105e29775262f9bb19fc9e54ad1d8d1053cb5daa69ded60b7c88393f1c9f10a
+generated: "2026-03-23T09:23:41.851388981Z"

@@ -1,6 +1,6 @@
 # example-idp
 
-![Version: 0.60.1](https://img.shields.io/badge/Version-0.60.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 25.4.0](https://img.shields.io/badge/AppVersion-25.4.0-informational?style=flat-square)
+![Version: 0.61.0](https://img.shields.io/badge/Version-0.61.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 26.2.0](https://img.shields.io/badge/AppVersion-26.2.0-informational?style=flat-square)
 
 A Helm chart for deploying the reference implementation for the User Login and Consent Flow in Kubernetes
 
@@ -17,7 +17,7 @@ A Helm chart for deploying the reference implementation for the User Login and C
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.registry | string | `"docker.io"` | ORY Hydra Login Consent Node image registry |
 | image.repository | string | `"oryd/hydra-login-consent-node"` | ORY Hydra Login Consent Node image |
-| image.tag | string | `"v25.4.0"` |  |
+| image.tag | string | `"v26.2.0"` |  |
 | imagePullSecrets | list | `[]` |  |
 | ingress.annotations | object | `{}` |  |
 | ingress.className | string | `""` |  |
