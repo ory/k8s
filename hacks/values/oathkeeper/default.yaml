@@ -22,8 +22,8 @@ maester:
 
 image:
   initContainer:
-    repository: docker.io/library/busybox
-    tag: 1.36
+    repository: busybox
+    tag: stable
 
 ingress:
   proxy:
@@ -189,5 +189,5 @@ test:
     test-product: oathkeeper
     test-service: authorizer
   busybox:
-    repository: docker.io/library/busybox
-    tag: 1.36
+    repository: busybox
+    tag: stable

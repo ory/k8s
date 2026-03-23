@@ -190,14 +190,14 @@ serviceMonitor:
   tlsConfig:
     insecureSkipVerify: true
   relabelings:
-    - source_labels: [__address__]
+    - sourceLabels: [__address__]
       regex: "([^:]+):.*"
-      target_label: instance
+      targetLabel: instance
       replacement: "$1"
   metricRelabelings:
-    - source_labels: [__address__]
+    - sourceLabels: [__address__]
       regex: "([^:]+):.*"
-      target_label: instance
+      targetLabel: instance
       replacement: "$1"
 
 cronjob:
@@ -244,5 +244,5 @@ test:
     test-product: hydra
     test-service: authentication
   busybox:
-    repository: docker.io/library/busybox
-    tag: 1.36
+    repository: busybox
+    tag: stable

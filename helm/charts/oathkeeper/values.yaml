@@ -31,7 +31,7 @@ image:
   # -- use a busybox image from another repository
   initContainer:
     repository: busybox
-    tag: 1
+    tag: stable
 
 ## -- Options for the sidecar
 sidecar:
@@ -457,4 +457,4 @@ test:
   # -- use a busybox image from another repository
   busybox:
     repository: busybox
-    tag: 1
+    tag: stable
