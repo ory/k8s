@@ -22,7 +22,7 @@ image:
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
   # -- Ory KETO version
-  tag: "v25.4.0"
+  tag: "v26.2.0"
 
 imagePullSecrets: []
 nameOverride: ""
