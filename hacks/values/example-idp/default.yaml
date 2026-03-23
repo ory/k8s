@@ -3,5 +3,5 @@ ingress:
 
 test:
   busybox:
-    repository: docker.io/library/busybox
-    tag: 1.36
+    repository: busybox
+    tag: stable

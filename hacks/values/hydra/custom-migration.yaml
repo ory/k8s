@@ -87,3 +87,6 @@ job:
       key: example.org/nodeRole
       operator: Equal
       value: role
+
+watcher:
+  enabled: false

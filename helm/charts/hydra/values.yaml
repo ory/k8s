@@ -725,4 +725,4 @@ test:
   # -- use a busybox image from another repository
   busybox:
     repository: busybox
-    tag: 1
+    tag: stable

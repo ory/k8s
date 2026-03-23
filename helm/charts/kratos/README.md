@@ -241,7 +241,7 @@ A ORY Kratos Helm chart for Kubernetes
 | strategy.rollingUpdate.maxSurge | string | `"25%"` |  |
 | strategy.rollingUpdate.maxUnavailable | string | `"25%"` |  |
 | strategy.type | string | `"RollingUpdate"` |  |
-| test.busybox | object | `{"repository":"busybox","tag":1}` | use a busybox image from another repository |
+| test.busybox | object | `{"repository":"busybox","tag":"stable"}` | use a busybox image from another repository |
 | watcher.automountServiceAccountToken | bool | `true` |  |
 | watcher.enabled | bool | `false` |  |
 | watcher.image | string | `"oryd/k8s-toolbox:v0.0.10"` |  |

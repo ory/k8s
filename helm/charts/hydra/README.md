@@ -1,6 +1,6 @@
 # hydra
 
-![Version: 0.60.1](https://img.shields.io/badge/Version-0.60.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v25.4.0](https://img.shields.io/badge/AppVersion-v25.4.0-informational?style=flat-square)
+![Version: 0.60.1](https://img.shields.io/badge/Version-0.60.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v26.2.0](https://img.shields.io/badge/AppVersion-v26.2.0-informational?style=flat-square)
 
 A Helm chart for deploying ORY Hydra in Kubernetes
 
@@ -140,7 +140,7 @@ A Helm chart for deploying ORY Hydra in Kubernetes
 | image.pullPolicy | string | `"IfNotPresent"` | Image pull policy |
 | image.registry | string | `"docker.io"` | ORY Hydra image registry |
 | image.repository | string | `"oryd/hydra"` | ORY Hydra image |
-| image.tag | string | `"v25.4.0"` | ORY Hydra version |
+| image.tag | string | `"v26.2.0"` | ORY Hydra version |
 | imagePullSecrets | list | `[]` | Image pull secrets |
 | ingress.admin.annotations | object | `{}` |  |
 | ingress.admin.className | string | `""` |  |
@@ -215,7 +215,7 @@ A Helm chart for deploying ORY Hydra in Kubernetes
 | serviceMonitor.scrapeInterval | string | `"60s"` | Interval at which metrics should be scraped |
 | serviceMonitor.scrapeTimeout | string | `"30s"` | Timeout after which the scrape is ended |
 | serviceMonitor.tlsConfig | object | `{}` | TLS configuration to use when scraping the endpoint |
-| test.busybox | object | `{"repository":"busybox","tag":1}` | use a busybox image from another repository |
+| test.busybox | object | `{"repository":"busybox","tag":"stable"}` | use a busybox image from another repository |
 | test.labels | object | `{}` | Provide additional labels to the test pod |
 | watcher.automountServiceAccountToken | bool | `true` |  |
 | watcher.enabled | bool | `false` |  |
