@@ -14,7 +14,7 @@ image:
   registry: "docker.io"
   # -- ORY Hydra Login Consent Node image
   repository: oryd/hydra-login-consent-node
-  tag: v25.4.0
+  tag: v26.2.0
   pullPolicy: IfNotPresent
 
 imagePullSecrets: []
