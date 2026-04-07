@@ -7,7 +7,7 @@ The ORY Hydra Helm Chart helps you deploy ORY Hydra on Kubernetes using Helm.
 Add the helm repository
 
 ```bash
-$ helm repo add ory https://k8s.ory.sh/helm/charts
+$ helm repo add ory https://k8s.ory.com/helm/charts
 $ helm repo update
 ```
 
