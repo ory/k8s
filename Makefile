@@ -141,7 +141,7 @@ prometheus:
 
 .PHONY: ory-repo
 ory-repo:
-	helm repo add ory https://k8s.ory.sh/helm/charts
+	helm repo add ory https://k8s.ory.com/helm/charts
 	helm repo update
 
 .PHONY: helm-test
