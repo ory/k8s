@@ -12,7 +12,7 @@ metadata:
 spec:
   containers:
     - name: wget
-      image: "{{ .Values.global.imageRegistry | default .Values.image.registry }}/{{ .Values.test.busybox.repository }}:{{ .Values.test.busybox.tag }}"
+      image: "{{ .Values.global.imageRegistry | default .Values.test.busybox.registry }}/{{ .Values.test.busybox.repository }}:{{ .Values.test.busybox.tag }}"
       command: ['wget']
       args:  ['{{ include "kratos-selfservice-ui-node.fullname" . }}:{{ .Values.service.port }}{{ .Values.basePath }}/health/ready']
   restartPolicy: Never

@@ -14,7 +14,7 @@ metadata:
 spec:
   containers:
     - name: wget
-      image: "{{ .Values.global.imageRegistry | default .Values.image.registry }}/{{ .Values.test.busybox.repository }}:{{ .Values.test.busybox.tag }}"
+      image: "{{ .Values.global.imageRegistry | default .Values.test.busybox.registry }}/{{ .Values.test.busybox.repository }}:{{ .Values.test.busybox.tag }}"
       command: ['wget']
       args: ['{{ include "keto.fullname" . }}-write:{{ .Values.service.write.port }}/health/ready']
   restartPolicy: Never
