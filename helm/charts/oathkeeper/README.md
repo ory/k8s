@@ -1,6 +1,6 @@
 # oathkeeper
 
-![Version: 0.61.0](https://img.shields.io/badge/Version-0.61.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v26.2.0](https://img.shields.io/badge/AppVersion-v26.2.0-informational?style=flat-square)
+![Version: 0.61.1](https://img.shields.io/badge/Version-0.61.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v26.2.0](https://img.shields.io/badge/AppVersion-v26.2.0-informational?style=flat-square)
 
 A Helm chart for deploying ORY Oathkeeper in Kubernetes
 
@@ -21,7 +21,7 @@ A Helm chart for deploying ORY Oathkeeper in Kubernetes
 
 | Repository | Name | Version |
 |------------|------|---------|
-| file://../oathkeeper-maester | oathkeeper-maester(oathkeeper-maester) | 0.61.0 |
+| file://../oathkeeper-maester | oathkeeper-maester(oathkeeper-maester) | 0.61.1 |
 
 ## Values
 
@@ -165,7 +165,7 @@ A Helm chart for deploying ORY Oathkeeper in Kubernetes
 | sidecar.envs | object | `{}` |  |
 | sidecar.image.repository | string | `"oryd/oathkeeper-maester"` |  |
 | sidecar.image.tag | string | `"v0.1.13"` |  |
-| test.busybox | object | `{"repository":"busybox","tag":"stable"}` | use a busybox image from another repository |
+| test.busybox | object | `{"registry":"docker.io","repository":"busybox","tag":"stable"}` | use a busybox image from another repository |
 | test.labels | object | `{}` | Provide additional labels to the test pod |
 
 ----------------------------------------------

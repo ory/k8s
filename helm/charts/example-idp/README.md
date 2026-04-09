@@ -1,6 +1,6 @@
 # example-idp
 
-![Version: 0.61.0](https://img.shields.io/badge/Version-0.61.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 26.2.0](https://img.shields.io/badge/AppVersion-26.2.0-informational?style=flat-square)
+![Version: 0.61.1](https://img.shields.io/badge/Version-0.61.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 26.2.0](https://img.shields.io/badge/AppVersion-26.2.0-informational?style=flat-square)
 
 A Helm chart for deploying the reference implementation for the User Login and Consent Flow in Kubernetes
 
@@ -33,7 +33,7 @@ A Helm chart for deploying the reference implementation for the User Login and C
 | service.annotations | object | `{}` | If you do want to specify annotations, uncomment the following lines, adjust them as necessary, and remove the curly braces after 'annotations:'. |
 | service.port | int | `3000` |  |
 | service.type | string | `"ClusterIP"` |  |
-| test.busybox | object | `{"repository":"busybox","tag":"stable"}` | use a busybox image from another repository |
+| test.busybox | object | `{"registry":"docker.io","repository":"busybox","tag":"stable"}` | use a busybox image from another repository |
 | tolerations | list | `[]` |  |
 | topologySpreadConstraints | list | `[]` | Configure pod topologySpreadConstraints. |
 

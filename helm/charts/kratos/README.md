@@ -1,6 +1,6 @@
 # kratos
 
-![Version: 0.61.0](https://img.shields.io/badge/Version-0.61.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v26.2.0](https://img.shields.io/badge/AppVersion-v26.2.0-informational?style=flat-square)
+![Version: 0.61.1](https://img.shields.io/badge/Version-0.61.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v26.2.0](https://img.shields.io/badge/AppVersion-v26.2.0-informational?style=flat-square)
 
 A ORY Kratos Helm chart for Kubernetes
 
@@ -241,7 +241,7 @@ A ORY Kratos Helm chart for Kubernetes
 | strategy.rollingUpdate.maxSurge | string | `"25%"` |  |
 | strategy.rollingUpdate.maxUnavailable | string | `"25%"` |  |
 | strategy.type | string | `"RollingUpdate"` |  |
-| test.busybox | object | `{"repository":"busybox","tag":"stable"}` | use a busybox image from another repository |
+| test.busybox | object | `{"registry":"docker.io","repository":"busybox","tag":"stable"}` | use a busybox image from another repository |
 | watcher.automountServiceAccountToken | bool | `true` |  |
 | watcher.enabled | bool | `false` |  |
 | watcher.image | string | `"oryd/k8s-toolbox:v0.0.10"` |  |
