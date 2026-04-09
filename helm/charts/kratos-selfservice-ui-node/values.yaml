@@ -208,5 +208,6 @@ projectName: "SecureApp"
 test:
   # -- use a busybox image from another repository
   busybox:
+    registry: "docker.io"
     repository: busybox
     tag: stable
