@@ -186,6 +186,30 @@ deployment:
   automountServiceAccountToken: false
   terminationGracePeriodSeconds: 60
 
+  # -- Provide a full override of the liveness probe. Useful when the UI is
+  # serving HTTPS (e.g. via TLS_CERT_PATH / TLS_KEY_PATH) and the default
+  # HTTP probe needs to be replaced with an HTTPS one, or when a custom
+  # tcpSocket/exec probe is required.
+  customLivenessProbe: {}
+  # customLivenessProbe:
+  #   httpGet:
+  #     path: /health/alive
+  #     port: http
+  #     scheme: HTTPS
+  #   initialDelaySeconds: 5
+  #   periodSeconds: 10
+
+  # -- Provide a full override of the readiness probe. See customLivenessProbe
+  # for when to use this.
+  customReadinessProbe: {}
+  # customReadinessProbe:
+  #   httpGet:
+  #     path: /health/ready
+  #     port: http
+  #     scheme: HTTPS
+  #   initialDelaySeconds: 3
+  #   periodSeconds: 5
+
 affinity: {}
 
 # -- Set this to ORY Kratos's Admin URL
