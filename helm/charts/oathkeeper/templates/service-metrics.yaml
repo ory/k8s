@@ -77,7 +77,7 @@ spec:
       app.kubernetes.io/component: metrics
   {{- with .Values.serviceMonitor.targetLabels }}
   targetLabels:
-    {{- toYaml . | nindent 2 }}
+    {{- toYaml . | nindent 4 }}
   {{- end }}
 {{- end -}}
 {{- end -}}

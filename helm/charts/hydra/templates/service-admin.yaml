@@ -81,7 +81,7 @@ spec:
       app.kubernetes.io/component: admin
   {{- with .Values.serviceMonitor.targetLabels }}
   targetLabels:
-    {{- toYaml . | nindent 2 }}
+    {{- toYaml . | nindent 4 }}
   {{- end }}
 {{- end -}}
 {{- end }}
