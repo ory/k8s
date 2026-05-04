@@ -84,5 +84,9 @@ spec:
       app.kubernetes.io/name: {{ include "kratos.name" . }}
       app.kubernetes.io/instance: {{ .Release.Name }}
       app.kubernetes.io/component: admin
+  {{- with .Values.serviceMonitor.targetLabels }}
+  targetLabels:
+    {{- toYaml . | nindent 2 }}
+  {{- end }}
 {{- end -}}
 {{- end }}

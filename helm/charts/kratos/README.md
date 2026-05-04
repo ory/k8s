@@ -210,6 +210,7 @@ A ORY Kratos Helm chart for Kubernetes
 | serviceMonitor.scheme | string | `"http"` | HTTP scheme to use for scraping. |
 | serviceMonitor.scrapeInterval | string | `"60s"` | Interval at which metrics should be scraped |
 | serviceMonitor.scrapeTimeout | string | `"30s"` | Timeout after which the scrape is ended |
+| serviceMonitor.targetLabels | list | `[]` | Additional metric labels |
 | serviceMonitor.tlsConfig | object | `{}` | TLS configuration to use when scraping the endpoint |
 | statefulSet.affinity | object | `{}` | Configure node affinity |
 | statefulSet.annotations | object | `{}` |  |
