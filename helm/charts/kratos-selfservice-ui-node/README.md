@@ -14,6 +14,8 @@ A Helm chart for ORY Kratos's example ui for Kubernetes
 | config.secrets | object | `{}` |  |
 | deployment.annotations | object | `{}` |  |
 | deployment.automountServiceAccountToken | bool | `false` |  |
+| deployment.customLivenessProbe | object | `{}` | Provide a full override of the liveness probe. Useful when the UI is serving HTTPS (e.g. via TLS_CERT_PATH / TLS_KEY_PATH) and the default HTTP probe needs to be replaced with an HTTPS one, or when a custom tcpSocket/exec probe is required. |
+| deployment.customReadinessProbe | object | `{}` | Provide a full override of the readiness probe. See customLivenessProbe for when to use this. |
 | deployment.dnsConfig | object | `{}` | Configure pod dnsConfig. |
 | deployment.extraEnv | list | `[]` | Array of extra envs to be passed to the deployment. Kubernetes format is expected - name: FOO   value: BAR |
 | deployment.extraVolumeMounts | list | `[]` |  |

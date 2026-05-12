@@ -85,14 +85,24 @@ spec:
             - name: http
               containerPort: 3000
               protocol: TCP
+          {{- if .Values.deployment.customLivenessProbe }}
+          livenessProbe:
+            {{- toYaml .Values.deployment.customLivenessProbe | nindent 12 }}
+          {{- else }}
           livenessProbe:
             httpGet:
               path: {{ .Values.basePath }}/health/alive
               port: http
+          {{- end }}
+          {{- if .Values.deployment.customReadinessProbe }}
+          readinessProbe:
+            {{- toYaml .Values.deployment.customReadinessProbe | nindent 12 }}
+          {{- else }}
           readinessProbe:
             httpGet:
               path: {{ .Values.basePath }}/health/ready
               port: http
+          {{- end }}
           resources:
             {{- toYaml .Values.deployment.resources | nindent 12 }}
           {{- if .Values.securityContext }}
