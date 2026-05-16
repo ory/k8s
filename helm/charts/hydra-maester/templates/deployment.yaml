@@ -6,6 +6,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ include "hydra-maester.fullname" . }}
+  namespace:  {{ .Release.Namespace }}
   labels:
     {{- include "hydra-maester.labels" . | nindent 4 }}
     {{- with .Values.deployment.extraLabels }}
