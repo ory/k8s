@@ -1,6 +1,6 @@
 # oathkeeper-maester
 
-![Version: 0.61.2](https://img.shields.io/badge/Version-0.61.2-informational?style=flat-square) ![AppVersion: v0.1.13](https://img.shields.io/badge/AppVersion-v0.1.13-informational?style=flat-square)
+![Version: 0.61.2](https://img.shields.io/badge/Version-0.61.2-informational?style=flat-square) ![AppVersion: v0.1.14](https://img.shields.io/badge/AppVersion-v0.1.14-informational?style=flat-square)
 
 A Helm chart for deploying ORY Oathkeeper Rule Controller in Kubernetes
 
@@ -46,7 +46,7 @@ A Helm chart for deploying ORY Oathkeeper Rule Controller in Kubernetes
 | image.pullPolicy | string | `"IfNotPresent"` | Image pull policy |
 | image.registry | string | `"docker.io"` | ORY Oathkeeper Rule Controller image registry |
 | image.repository | string | `"oryd/oathkeeper-maester"` | ORY Oathkeeper Rule Controller image |
-| image.tag | string | `"v0.1.13"` | ORY Oathkeeper Rule Controller version |
+| image.tag | string | `"v0.1.14"` | ORY Oathkeeper Rule Controller version |
 | imagePullSecrets | list | `[]` | Image pull secrets |
 | pdb.enabled | bool | `false` |  |
 | pdb.spec.maxUnavailable | string | `""` |  |
