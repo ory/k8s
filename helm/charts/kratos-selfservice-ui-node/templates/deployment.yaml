@@ -60,6 +60,10 @@ spec:
             value: {{ .Values.jwksUrl | quote }}
           - name: KRATOS_ADMIN_URL
             value: {{ .Values.kratosAdminUrl | quote }}
+          {{- if .Values.hydraAdminUrl }}
+          - name: HYDRA_ADMIN_URL
+            value: {{ .Values.hydraAdminUrl | quote }}
+          {{- end }}
           - name: SECURITY_MODE
             value: {{ .Values.securityMode | quote }}
           - name: COOKIE_SECRET
