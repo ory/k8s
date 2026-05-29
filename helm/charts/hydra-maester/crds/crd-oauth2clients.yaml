@@ -3,7 +3,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.20.1
+    controller-gen.kubebuilder.io/version: v0.21.0
   name: oauth2clients.hydra.ory.sh
 spec:
   group: hydra.ory.sh
@@ -307,20 +307,14 @@ spec:
                     - pairwise
                   type: string
                 tokenEndpointAuthMethod:
-                  allOf:
-                    - enum:
-                        - client_secret_basic
-                        - client_secret_post
-                        - private_key_jwt
-                        - none
-                    - enum:
-                        - client_secret_basic
-                        - client_secret_post
-                        - private_key_jwt
-                        - none
                   description:
                     Indication which authentication method should be used for
                     the token endpoint
+                  enum:
+                    - client_secret_basic
+                    - client_secret_post
+                    - private_key_jwt
+                    - none
                   type: string
                 tokenEndpointAuthSigningAlg:
                   description:
