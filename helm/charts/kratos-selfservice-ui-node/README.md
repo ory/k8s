@@ -1,6 +1,6 @@
 # kratos-selfservice-ui-node
 
-![Version: 0.62.0](https://img.shields.io/badge/Version-0.62.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.13.0-4](https://img.shields.io/badge/AppVersion-v0.13.0--4-informational?style=flat-square)
+![Version: 0.62.1](https://img.shields.io/badge/Version-0.62.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.13.0-4](https://img.shields.io/badge/AppVersion-v0.13.0--4-informational?style=flat-square)
 
 A Helm chart for ORY Kratos's example ui for Kubernetes
 
@@ -29,6 +29,7 @@ A Helm chart for ORY Kratos's example ui for Kubernetes
 | fullnameOverride | string | `""` |  |
 | global | object | `{"imageRegistry":null}` | Global setting, passed down to all pods |
 | global.imageRegistry | string | `nil` | Overrides the Docker registry globally for all images |
+| hydraAdminUrl | string | `""` | Set this to ORY Hydra's Admin URL |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.registry | string | `"docker.io"` | ORY KRATOS SELFSERVICE UI NODE image registry |
 | image.repository | string | `"oryd/kratos-selfservice-ui-node"` |  |
