@@ -161,6 +161,8 @@ A Helm chart for deploying ORY Hydra in Kubernetes
 | job.extraContainers | string | `""` | If you want to add extra sidecar containers. |
 | job.extraEnv | list | `[]` | Array of extra envs to be passed to the job. This takes precedence over deployment variables. Kubernetes format is expected. Value is processed with Helm `tpl` - name: FOO   value: BAR |
 | job.extraInitContainers | string | `""` | If you want to add extra init containers. extraInitContainers: |  - name: ...    image: ... |
+| job.extraVolumeMounts | list | `[]` | Array of extra volume mounts to be mounted on the job. This takes precedence over `deployment.extraVolumeMounts` when set, otherwise the deployment's volume mounts are used. |
+| job.extraVolumes | list | `[]` | Array of extra volumes to be mounted on the job. This takes precedence over `deployment.extraVolumes` when set, otherwise the deployment's volumes are used. |
 | job.labels | object | `{}` | Set custom deployment level labels |
 | job.lifecycle | string | `""` | If you want to add lifecycle hooks. |
 | job.nodeSelector | object | `{}` | Node labels for pod assignment. |

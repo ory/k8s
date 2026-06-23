@@ -2,6 +2,8 @@
 {{- if and  ( .Values.hydra.automigration.enabled ) ( eq .Values.hydra.automigration.type "job" ) }}
 {{- $nodeSelector := ternary .Values.job.nodeSelector .Values.deployment.nodeSelector (not (empty .Values.job.nodeSelector )) -}}
 {{- $migrationExtraEnv := ternary .Values.job.extraEnv .Values.deployment.extraEnv (not (empty .Values.job.extraEnv )) -}}
+{{- $migrationExtraVolumes := ternary .Values.job.extraVolumes .Values.deployment.extraVolumes (not (empty .Values.job.extraVolumes )) -}}
+{{- $migrationExtraVolumeMounts := ternary .Values.job.extraVolumeMounts .Values.deployment.extraVolumeMounts (not (empty .Values.job.extraVolumeMounts )) -}}
 {{- $resources := ternary .Values.job.resources .Values.hydra.automigration.resources (not (empty .Values.job.resources)) -}}
 
 ---
@@ -96,9 +98,9 @@ spec:
           - name: {{ include "hydra.name" . }}-config-volume
             mountPath: /etc/config
             readOnly: true
-          {{- if .Values.deployment.extraVolumeMounts }}
-            {{- toYaml .Values.deployment.extraVolumeMounts | nindent 10 }}
-         {{- end }}
+          {{- with $migrationExtraVolumeMounts }}
+            {{- toYaml . | nindent 10 }}
+          {{- end }}
       {{- if .Values.job.extraContainers }}
         {{- tpl .Values.job.extraContainers . | nindent 6 }}
       {{- end }}
@@ -116,8 +118,8 @@ spec:
         - name: {{ include "hydra.name" . }}-config-volume
           configMap:
             name: {{ include "hydra.fullname" . }}-migrate
-        {{- if .Values.deployment.extraVolumes }}
-          {{- toYaml .Values.deployment.extraVolumes | nindent 8 }}
+        {{- with $migrationExtraVolumes }}
+          {{- toYaml . | nindent 8 }}
         {{- end }}
       {{- with $nodeSelector }}
       nodeSelector:

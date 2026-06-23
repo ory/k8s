@@ -154,6 +154,12 @@ job:
       image: "alpine:latest"
       command: ["/bin/sh"]
       args: ["-c", "sleep 10"]
+  extraVolumes:
+    - name: job-extra
+      emptyDir: {}
+  extraVolumeMounts:
+    - name: job-extra
+      mountPath: /job-extra
   shareProcessNamespace: true
   podMetadata:
     labels:
