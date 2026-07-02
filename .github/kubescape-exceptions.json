@@ -135,6 +135,25 @@
   },
   {
     "actions": ["alertOnly"],
+    "name": "token-mount-in-controllers",
+    "policyType": "postureExceptionPolicy",
+    "posturePolicies": [
+      {
+        "controlID": "C-0261"
+      }
+    ],
+    "resources": [
+      {
+        "attributes": {
+          "kind": "Deployment",
+          "name": ".*-maester"
+        },
+        "designatorType": "Attributes"
+      }
+    ]
+  },
+  {
+    "actions": ["alertOnly"],
     "name": "kratos-node-rw-fs",
     "policyType": "postureExceptionPolicy",
     "posturePolicies": [
