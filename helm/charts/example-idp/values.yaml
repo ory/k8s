@@ -101,7 +101,7 @@ podSecurityContext:
   seccompProfile:
     type: RuntimeDefault
 
-## -- container securityContext
+# -- Container securityContext
 securityContext:
   capabilities:
     drop:

@@ -73,8 +73,8 @@ spec:
     {{- end }}
     {{- with .Values.podSecurityContext }}
       securityContext:
-    {{- toYaml . | nindent 8 }}
-      {{- end }}
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
     {{- with .Values.dnsConfig }}
       dnsConfig:
         {{- toYaml . | nindent 8 }}
