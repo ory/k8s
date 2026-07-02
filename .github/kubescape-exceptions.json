@@ -113,5 +113,24 @@
         "designatorType": "Attributes"
       }
     ]
+  },
+  {
+    "actions": ["alertOnly"],
+    "name": "securitycontext-in-test-pods",
+    "policyType": "postureExceptionPolicy",
+    "posturePolicies": [
+      {
+        "controlID": "C-0211"
+      }
+    ],
+    "resources": [
+      {
+        "attributes": {
+          "kind": "Pod",
+          "name": ".*-test-connection"
+        },
+        "designatorType": "Attributes"
+      }
+    ]
   }
 ]
