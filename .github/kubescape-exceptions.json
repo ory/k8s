@@ -151,5 +151,24 @@
         "designatorType": "Attributes"
       }
     ]
+  },
+  {
+    "actions": ["alertOnly"],
+    "name": "kratos-node-rw-fs",
+    "policyType": "postureExceptionPolicy",
+    "posturePolicies": [
+      {
+        "controlID": "C-0211"
+      }
+    ],
+    "resources": [
+      {
+        "attributes": {
+          "kind": "Deployment",
+          "name": ".*-kratos-selfservice-ui-node"
+        },
+        "designatorType": "Attributes"
+      }
+    ]
   }
 ]
