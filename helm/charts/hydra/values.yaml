@@ -107,6 +107,32 @@ secret:
   extraAnnotations: {}
   # -- switch to false to prevent checksum annotations being maintained and propogated to the pods
   hashSumEnabled: true
+## -- Configure HTTPRoute
+httproute:
+  public:
+    # -- En-/Disable the proxy HTTPRoute.
+    enabled: false
+    annotations: {}
+    parentRefs: []
+    hostnames:
+      - public.hydra.localhost
+    rules:
+      - matches:
+          - path:
+              type: PathPrefix
+              value: /
+  admin:
+    # -- En-/Disable the api HTTPRoute.
+    enabled: false
+    annotations: {}
+    parentRefs: []
+    hostnames:
+      - admin.hydra.localhost
+    rules:
+      - matches:
+          - path:
+              type: PathPrefix
+              value: /
 
 ## -- Configure ingress
 ingress:
