@@ -121,10 +121,10 @@ httproute:
           - path:
               type: PathPrefix
               value: /
-#        filters: []
-#        timeouts:
-#          request: 1s
-#          backendRequest: 1s
+  #        filters: []
+  #        timeouts:
+  #          request: 1s
+  #          backendRequest: 1s
   admin:
     # -- En-/Disable the api HTTPRoute.
     enabled: false
