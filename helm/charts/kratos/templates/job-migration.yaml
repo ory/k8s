@@ -63,7 +63,14 @@ spec:
         {{- if .Values.kratos.automigration.customArgs }}
         args: {{- toYaml .Values.kratos.automigration.customArgs | nindent 10 }}
         {{- else }}
-        args: ["migrate", "sql", "-e", "--yes", "--config", "/etc/config/kratos.yaml"]
+        args: 
+          - "migrate"
+          - "sql"
+          - "up"
+          - "-e"
+          - "--yes"
+          - "--config"
+          - "/etc/config/kratos.yaml"
         {{- end }}
         env:
           {{- if not (empty ( include "kratos.dsn" . )) }}
