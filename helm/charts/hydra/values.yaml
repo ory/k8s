@@ -162,11 +162,6 @@ hydra:
         port: 4444
       admin:
         port: 4445
-      tls:
-        allow_termination_from:
-          - 10.0.0.0/8
-          - 172.16.0.0/12
-          - 192.168.0.0/16
     # -- The secrets have to be provided as a string slice, example:
     # system:
     #   - "OG5XbmxXa3dYeGplQXpQanYxeEFuRUFa"

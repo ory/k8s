@@ -2,7 +2,7 @@
 
 ![Version: 0.63.0](https://img.shields.io/badge/Version-0.63.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v26.2.0](https://img.shields.io/badge/AppVersion-v26.2.0-informational?style=flat-square)
 
-A Helm chart for deploying ORY Hydra in Kubernetes
+A Helm chart for deploying Ory Hydra in Kubernetes
 
 **Homepage:** <https://www.ory.sh/>
 
@@ -10,7 +10,7 @@ A Helm chart for deploying ORY Hydra in Kubernetes
 
 | Name | Email | Url |
 | ---- | ------ | --- |
-| ORY Team | <hi@ory.sh> | <https://www.ory.sh/> |
+| Ory Team | <hi@ory.sh> | <https://www.ory.sh/> |
 
 ## Source Code
 
@@ -121,7 +121,7 @@ A Helm chart for deploying ORY Hydra in Kubernetes
 | hydra.automigration.resources | object | `{}` | resource requests and limits for the automigration initcontainer |
 | hydra.automigration.type | string | `"job"` | Configure the way to execute database migration. Possible values: job, initContainer When set to job, the migration will be executed as a job on release or upgrade. When set to initContainer, the migration will be executed when kratos pod is created Defaults to job |
 | hydra.command | list | `["hydra"]` | Ability to override the entrypoint of hydra container (e.g. to source dynamic secrets or export environment dynamic variables) |
-| hydra.config | object | `{"secrets":{},"serve":{"admin":{"port":4445},"public":{"port":4444},"tls":{"allow_termination_from":["10.0.0.0/8","172.16.0.0/12","192.168.0.0/16"]}},"urls":{"self":{}}}` | The ORY Hydra configuration. For a full list of available settings, check:  https://www.ory.sh/docs/hydra/reference/configuration |
+| hydra.config | object | `{"secrets":{},"serve":{"admin":{"port":4445},"public":{"port":4444}},"urls":{"self":{}}}` | The Ory Hydra configuration. For a full list of available settings, check:  https://www.ory.sh/docs/hydra/reference/configuration |
 | hydra.config.secrets | object | `{}` | The secrets have to be provided as a string slice, example: system:   - "OG5XbmxXa3dYeGplQXpQanYxeEFuRUFa"   - "foo bar 123 456 lorem"   - "foo bar 123 456 lorem 1"   - "foo bar 123 456 lorem 2"   - "foo bar 123 456 lorem 3" |
 | hydra.config.urls | object | `{"self":{}}` | Configure the urls used by hydra itself, such as the issuer. Note: some values are required for hydra to start, please refer to https://www.ory.sh/docs/hydra/self-hosted/kubernetes-helm-chart self:   issuer: "https://public.hydra.localhost:4444/" |
 | hydra.customArgs | list | `[]` | Ability to override arguments of the entrypoint. Can be used in-depended of customCommand |
@@ -138,9 +138,9 @@ A Helm chart for deploying ORY Hydra in Kubernetes
 | hydra.customMigrations.jobs.oel-postgresql-ttl.resources | object | `{}` |  |
 | hydra.dev | bool | `false` | Enable dev mode, not secure in production environments |
 | image.pullPolicy | string | `"IfNotPresent"` | Image pull policy |
-| image.registry | string | `"docker.io"` | ORY Hydra image registry |
-| image.repository | string | `"oryd/hydra"` | ORY Hydra image |
-| image.tag | string | `"v26.2.0"` | ORY Hydra version |
+| image.registry | string | `"docker.io"` | Ory Hydra image registry |
+| image.repository | string | `"oryd/hydra"` | Ory Hydra image |
+| image.tag | string | `"v26.2.0"` | Ory Hydra version |
 | imagePullSecrets | list | `[]` | Image pull secrets |
 | ingress.admin.annotations | object | `{}` |  |
 | ingress.admin.className | string | `""` |  |
@@ -183,7 +183,7 @@ A Helm chart for deploying ORY Hydra in Kubernetes
 | pdb.spec.maxUnavailable | string | `""` |  |
 | pdb.spec.minAvailable | string | `""` |  |
 | priorityClassName | string | `""` | Pod priority https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/ |
-| replicaCount | int | `1` | Number of ORY Hydra members |
+| replicaCount | int | `1` | Number of Ory Hydra members |
 | secret.enableDefaultAnnotations | bool | `true` | enableDefaultAnnotations set to `true` will add default annotations to the secret. As such the Secret will be managed by helm hooks. |
 | secret.enabled | bool | `true` | switch to false to prevent creating the secret |
 | secret.extraAnnotations | object | `{}` | extraAnnotations to be added to secret. |
