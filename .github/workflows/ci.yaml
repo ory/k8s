@@ -69,6 +69,7 @@ jobs:
             cicd-definitions:
               - '.github/workflows/**'
               - '.github/actions/**'
+              - '.github/kubescape-*.json'
             cicd-scripts:
               - 'hacks/*.sh'
       # This step will take output from paths-filter and then process it in order to get what helm charts have been updated
