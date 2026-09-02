@@ -1,6 +1,6 @@
 [
   {
-    "actions": ["alertOnly"],
+    "actions": ["disable"],
     "name": "services-in-default",
     "policyType": "postureExceptionPolicy",
     "posturePolicies": [
@@ -26,7 +26,7 @@
     ]
   },
   {
-    "actions": ["alertOnly"],
+    "actions": ["disable"],
     "name": "resource-limits",
     "policyType": "postureExceptionPolicy",
     "posturePolicies": [
@@ -57,7 +57,7 @@
     ]
   },
   {
-    "actions": ["alertOnly"],
+    "actions": ["disable"],
     "name": "signed-images",
     "policyType": "postureExceptionPolicy",
     "posturePolicies": [
@@ -75,7 +75,7 @@
     ]
   },
   {
-    "actions": ["alertOnly"],
+    "actions": ["disable"],
     "name": "probes-for-jobs",
     "policyType": "postureExceptionPolicy",
     "posturePolicies": [
@@ -96,7 +96,7 @@
     ]
   },
   {
-    "actions": ["alertOnly"],
+    "actions": ["disable"],
     "name": "hydra-maester-secrets",
     "policyType": "postureExceptionPolicy",
     "posturePolicies": [
@@ -115,7 +115,7 @@
     ]
   },
   {
-    "actions": ["alertOnly"],
+    "actions": ["disable"],
     "name": "securitycontext-in-test-pods",
     "policyType": "postureExceptionPolicy",
     "posturePolicies": [
@@ -134,7 +134,7 @@
     ]
   },
   {
-    "actions": ["alertOnly"],
+    "actions": ["disable"],
     "name": "token-mount-in-controllers",
     "policyType": "postureExceptionPolicy",
     "posturePolicies": [
@@ -153,7 +153,7 @@
     ]
   },
   {
-    "actions": ["alertOnly"],
+    "actions": ["disable"],
     "name": "kratos-node-rw-fs",
     "policyType": "postureExceptionPolicy",
     "posturePolicies": [
