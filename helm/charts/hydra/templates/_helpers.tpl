@@ -149,6 +149,9 @@ Generate the urls.issuer value
 {{- else if .Values.ingress.public.enabled -}}
 {{- $host := index .Values.ingress.public.hosts 0 -}}
 http{{ if $.Values.ingress.public.tls }}s{{ end }}://{{ tpl $host.host $ }}
+{{- else if .Values.httproute.public.enabled -}}
+{{- $host := index .Values.httproute.public.hostnames 0 -}}
+http://{{ tpl $host $ }}
 {{- else if contains "ClusterIP" .Values.service.public.type -}}
 http://127.0.0.1:{{ .Values.service.public.port }}/
 {{- end -}}
