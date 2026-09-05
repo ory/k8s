@@ -215,6 +215,9 @@ httproute:
     # -- Weight for the default backend rule
     weight: null
 
+# -- Array of extra resources to deploy with the chart
+extraDeploy: []
+
 ## -- Application specific config
 kratos:
   development: false

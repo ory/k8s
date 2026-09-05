@@ -265,6 +265,9 @@ httproute:
     # -- Weight for the default backend rule
     weight: null
 
+# -- Array of extra resources to deploy with the chart
+extraDeploy: []
+
 ## -- Configure ORY Oathkeeper itself
 oathkeeper:
   # -- Runs the `tpl` function on the config object.

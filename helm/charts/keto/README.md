@@ -70,6 +70,7 @@ Access Control Policies as a Server
 | deployment.terminationGracePeriodSeconds | int | `60` |  |
 | deployment.tolerations | list | `[]` |  |
 | deployment.topologySpreadConstraints | list | `[]` | Configure pod topologySpreadConstraints. |
+| extraDeploy | list | `[]` | Array of extra resources to deploy with the chart |
 | extraServices | object | `{}` |  |
 | fullnameOverride | string | `""` |  |
 | global | object | `{"imageRegistry":null,"podMetadata":{"annotations":{},"labels":{}}}` | Global setting, passed down to all pods |

@@ -63,6 +63,7 @@ A Helm chart for deploying ORY Oathkeeper in Kubernetes
 | deployment.terminationGracePeriodSeconds | int | `60` |  |
 | deployment.tolerations | list | `[]` | Configure node tolerations. |
 | deployment.topologySpreadConstraints | list | `[]` | Configure pod topologySpreadConstraints. |
+| extraDeploy | list | `[]` | Array of extra resources to deploy with the chart |
 | fullnameOverride | string | `""` | Full chart name override |
 | global | object | `{"imageRegistry":null,"ory":{"oathkeeper":{"maester":{"mode":"controller"}}},"podMetadata":{"annotations":{},"labels":{}}}` | Global setting, passed down to all pods |
 | global.imageRegistry | string | `nil` | Overrides the Docker registry globally for all images |

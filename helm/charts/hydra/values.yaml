@@ -214,6 +214,9 @@ httproute:
     # -- Weight for the default backend rule
     weight: null
 
+# -- Array of extra resources to deploy with the chart
+extraDeploy: []
+
 ## -- Configure ORY Hydra itself
 hydra:
   # -- Ability to override the entrypoint of hydra container
