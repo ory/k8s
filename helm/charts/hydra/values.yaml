@@ -150,7 +150,7 @@ ingress:
 ## -- HTTPRoute definition (Kubernetes Gateway API)
 httproute:
   admin:
-    # -- En/disable the HTTPRoute resource for admin service
+    # -- Enable/disable the HTTPRoute resource for admin service
     enabled: false
     # -- Override the HTTPRoute API version (defaults to gateway.networking.k8s.io/v1)
     apiVersion: ""
@@ -182,7 +182,7 @@ httproute:
     # -- Weight for the default backend rule
     weight: null
   public:
-    # -- En/disable the HTTPRoute resource for public service
+    # -- Enable/disable the HTTPRoute resource for public service
     enabled: false
     # -- Override the HTTPRoute API version (defaults to gateway.networking.k8s.io/v1)
     apiVersion: ""

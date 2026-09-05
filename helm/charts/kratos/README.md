@@ -98,7 +98,7 @@ A ORY Kratos Helm chart for Kubernetes
 | global.podMetadata.labels | object | `{}` | Extra pod level labels |
 | httproute.admin.annotations | object | `{}` | Provide custom annotations for the HTTPRoute |
 | httproute.admin.apiVersion | string | `""` | Override the HTTPRoute API version (defaults to gateway.networking.k8s.io/v1) |
-| httproute.admin.enabled | bool | `false` | En/disable the HTTPRoute resource for admin service |
+| httproute.admin.enabled | bool | `false` | Enable/disable the HTTPRoute resource for admin service |
 | httproute.admin.filters | list | `[]` | Filters for the default rule if rules is empty |
 | httproute.admin.hostnames | list | `[]` | Hostnames matching the rule |
 | httproute.admin.labels | object | `{}` | Provide custom labels for the HTTPRoute |
@@ -110,7 +110,7 @@ A ORY Kratos Helm chart for Kubernetes
 | httproute.admin.weight | string | `nil` | Weight for the default backend rule |
 | httproute.public.annotations | object | `{}` | Provide custom annotations for the HTTPRoute |
 | httproute.public.apiVersion | string | `""` | Override the HTTPRoute API version (defaults to gateway.networking.k8s.io/v1) |
-| httproute.public.enabled | bool | `false` | En/disable the HTTPRoute resource for public service |
+| httproute.public.enabled | bool | `false` | Enable/disable the HTTPRoute resource for public service |
 | httproute.public.filters | list | `[]` | Filters for the default rule if rules is empty |
 | httproute.public.hostnames | list | `[]` | Hostnames matching the rule |
 | httproute.public.labels | object | `{}` | Provide custom labels for the HTTPRoute |

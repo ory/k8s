@@ -72,7 +72,7 @@ A Helm chart for deploying ORY Oathkeeper in Kubernetes
 | global.podMetadata.labels | object | `{}` | Extra pod level labels |
 | httproute.api.annotations | object | `{}` | Provide custom annotations for the HTTPRoute |
 | httproute.api.apiVersion | string | `""` | Override the HTTPRoute API version (defaults to gateway.networking.k8s.io/v1) |
-| httproute.api.enabled | bool | `false` | En/disable the HTTPRoute resource for api service |
+| httproute.api.enabled | bool | `false` | Enable/disable the HTTPRoute resource for api service |
 | httproute.api.filters | list | `[]` | Filters for the default rule if rules is empty |
 | httproute.api.hostnames | list | `[]` | Hostnames matching the rule |
 | httproute.api.labels | object | `{}` | Provide custom labels for the HTTPRoute |
@@ -84,7 +84,7 @@ A Helm chart for deploying ORY Oathkeeper in Kubernetes
 | httproute.api.weight | string | `nil` | Weight for the default backend rule |
 | httproute.proxy.annotations | object | `{}` | Provide custom annotations for the HTTPRoute |
 | httproute.proxy.apiVersion | string | `""` | Override the HTTPRoute API version (defaults to gateway.networking.k8s.io/v1) |
-| httproute.proxy.enabled | bool | `false` | En/disable the HTTPRoute resource for proxy service |
+| httproute.proxy.enabled | bool | `false` | Enable/disable the HTTPRoute resource for proxy service |
 | httproute.proxy.filters | list | `[]` | Filters for the default rule if rules is empty |
 | httproute.proxy.hostnames | list | `[]` | Hostnames matching the rule |
 | httproute.proxy.labels | object | `{}` | Provide custom labels for the HTTPRoute |

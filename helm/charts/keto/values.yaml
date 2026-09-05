@@ -184,7 +184,7 @@ ingress:
 ## -- HTTPRoute definition (Kubernetes Gateway API)
 httproute:
   read:
-    # -- En/disable the HTTPRoute resource for read service
+    # -- Enable/disable the HTTPRoute resource for read service
     enabled: false
     # -- Override the HTTPRoute API version (defaults to gateway.networking.k8s.io/v1)
     apiVersion: ""
@@ -216,7 +216,7 @@ httproute:
     # -- Weight for the default backend rule
     weight: null
   write:
-    # -- En/disable the HTTPRoute resource for write service
+    # -- Enable/disable the HTTPRoute resource for write service
     enabled: false
     # -- Override the HTTPRoute API version (defaults to gateway.networking.k8s.io/v1)
     apiVersion: ""

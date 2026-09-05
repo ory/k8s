@@ -201,7 +201,7 @@ ingress:
 ## -- HTTPRoute definition (Kubernetes Gateway API)
 httproute:
   api:
-    # -- En/disable the HTTPRoute resource for api service
+    # -- Enable/disable the HTTPRoute resource for api service
     enabled: false
     # -- Override the HTTPRoute API version (defaults to gateway.networking.k8s.io/v1)
     apiVersion: ""
@@ -233,7 +233,7 @@ httproute:
     # -- Weight for the default backend rule
     weight: null
   proxy:
-    # -- En/disable the HTTPRoute resource for proxy service
+    # -- Enable/disable the HTTPRoute resource for proxy service
     enabled: false
     # -- Override the HTTPRoute API version (defaults to gateway.networking.k8s.io/v1)
     apiVersion: ""

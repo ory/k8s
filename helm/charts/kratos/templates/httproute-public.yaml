@@ -34,7 +34,7 @@ spec:
     - backendRefs:
         - name: {{ $fullName }}-public
           port: {{ default $.Values.service.public.port .Values.httproute.public.servicePort }}
-          {{- if .Values.httproute.public.weight }}
+          {{- if not (kindIs "invalid" .Values.httproute.public.weight) }}
           weight: {{ .Values.httproute.public.weight }}
           {{- end }}
       {{- if .Values.httproute.public.matches }}

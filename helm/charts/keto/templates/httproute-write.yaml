@@ -34,7 +34,7 @@ spec:
     - backendRefs:
         - name: {{ $fullName }}-write
           port: {{ default $.Values.service.write.port .Values.httproute.write.servicePort }}
-          {{- if .Values.httproute.write.weight }}
+          {{- if not (kindIs "invalid" .Values.httproute.write.weight) }}
           weight: {{ .Values.httproute.write.weight }}
           {{- end }}
       {{- if .Values.httproute.write.matches }}

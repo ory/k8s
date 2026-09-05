@@ -80,7 +80,7 @@ Access Control Policies as a Server
 | global.podMetadata.labels | object | `{}` | Extra pod level labels |
 | httproute.read.annotations | object | `{}` | Provide custom annotations for the HTTPRoute |
 | httproute.read.apiVersion | string | `""` | Override the HTTPRoute API version (defaults to gateway.networking.k8s.io/v1) |
-| httproute.read.enabled | bool | `false` | En/disable the HTTPRoute resource for read service |
+| httproute.read.enabled | bool | `false` | Enable/disable the HTTPRoute resource for read service |
 | httproute.read.filters | list | `[]` | Filters for the default rule if rules is empty |
 | httproute.read.hostnames | list | `[]` | Hostnames matching the rule |
 | httproute.read.labels | object | `{}` | Provide custom labels for the HTTPRoute |
@@ -92,7 +92,7 @@ Access Control Policies as a Server
 | httproute.read.weight | string | `nil` | Weight for the default backend rule |
 | httproute.write.annotations | object | `{}` | Provide custom annotations for the HTTPRoute |
 | httproute.write.apiVersion | string | `""` | Override the HTTPRoute API version (defaults to gateway.networking.k8s.io/v1) |
-| httproute.write.enabled | bool | `false` | En/disable the HTTPRoute resource for write service |
+| httproute.write.enabled | bool | `false` | Enable/disable the HTTPRoute resource for write service |
 | httproute.write.filters | list | `[]` | Filters for the default rule if rules is empty |
 | httproute.write.hostnames | list | `[]` | Hostnames matching the rule |
 | httproute.write.labels | object | `{}` | Provide custom labels for the HTTPRoute |

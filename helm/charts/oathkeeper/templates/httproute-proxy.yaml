@@ -34,7 +34,7 @@ spec:
     - backendRefs:
         - name: {{ $fullName }}-proxy
           port: {{ default $.Values.service.proxy.port .Values.httproute.proxy.servicePort }}
-          {{- if .Values.httproute.proxy.weight }}
+          {{- if not (kindIs "invalid" .Values.httproute.proxy.weight) }}
           weight: {{ .Values.httproute.proxy.weight }}
           {{- end }}
       {{- if .Values.httproute.proxy.matches }}
