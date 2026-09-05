@@ -77,6 +77,30 @@ Access Control Policies as a Server
 | global.podMetadata | object | `{"annotations":{},"labels":{}}` | Specify pod metadata, this metadata is added directly to the pod, and not higher objects |
 | global.podMetadata.annotations | object | `{}` | Extra pod level annotations |
 | global.podMetadata.labels | object | `{}` | Extra pod level labels |
+| httproute.read.annotations | object | `{}` | Provide custom annotations for the HTTPRoute |
+| httproute.read.apiVersion | string | `""` | Override the HTTPRoute API version (defaults to gateway.networking.k8s.io/v1) |
+| httproute.read.enabled | bool | `false` | En/disable the HTTPRoute resource for read service |
+| httproute.read.filters | list | `[]` | Filters for the default rule if rules is empty |
+| httproute.read.hostnames | list | `[]` | Hostnames matching the rule |
+| httproute.read.labels | object | `{}` | Provide custom labels for the HTTPRoute |
+| httproute.read.matches | list | `[{"path":{"type":"PathPrefix","value":"/"}}]` | Path matches for the default rule if rules is empty |
+| httproute.read.nameOverride | string | `""` | Override the HTTPRoute metadata name |
+| httproute.read.parentRefs | list | `[]` | References to parent Gateway resources |
+| httproute.read.rules | list | `[]` | Custom routing rules. If not provided, a default rule routing to the read service will be used |
+| httproute.read.servicePort | string | `nil` | Override the service port in the default backend rule |
+| httproute.read.weight | string | `nil` | Weight for the default backend rule |
+| httproute.write.annotations | object | `{}` | Provide custom annotations for the HTTPRoute |
+| httproute.write.apiVersion | string | `""` | Override the HTTPRoute API version (defaults to gateway.networking.k8s.io/v1) |
+| httproute.write.enabled | bool | `false` | En/disable the HTTPRoute resource for write service |
+| httproute.write.filters | list | `[]` | Filters for the default rule if rules is empty |
+| httproute.write.hostnames | list | `[]` | Hostnames matching the rule |
+| httproute.write.labels | object | `{}` | Provide custom labels for the HTTPRoute |
+| httproute.write.matches | list | `[{"path":{"type":"PathPrefix","value":"/"}}]` | Path matches for the default rule if rules is empty |
+| httproute.write.nameOverride | string | `""` | Override the HTTPRoute metadata name |
+| httproute.write.parentRefs | list | `[]` | References to parent Gateway resources |
+| httproute.write.rules | list | `[]` | Custom routing rules. If not provided, a default rule routing to the write service will be used |
+| httproute.write.servicePort | string | `nil` | Override the service port in the default backend rule |
+| httproute.write.weight | string | `nil` | Weight for the default backend rule |
 | image.pullPolicy | string | `"IfNotPresent"` | Default image pull policy |
 | image.registry | string | `"docker.io"` | Ory KETO image registry |
 | image.repository | string | `"oryd/keto"` | Ory KETO image |

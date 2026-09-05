@@ -181,6 +181,73 @@ ingress:
     #    hosts:
     #      - chart-example.local
 
+## -- HTTPRoute definition (Kubernetes Gateway API)
+httproute:
+  read:
+    # -- En/disable the HTTPRoute resource for read service
+    enabled: false
+    # -- Override the HTTPRoute API version (defaults to gateway.networking.k8s.io/v1)
+    apiVersion: ""
+    # -- Override the HTTPRoute metadata name
+    nameOverride: ""
+    # -- Provide custom annotations for the HTTPRoute
+    annotations: {}
+    # -- Provide custom labels for the HTTPRoute
+    labels: {}
+    # -- References to parent Gateway resources
+    parentRefs: []
+    #  - name: my-gateway
+    #    namespace: default
+    #    sectionName: https
+    # -- Hostnames matching the rule
+    hostnames: []
+    #  - keto.read.local.com
+    # -- Custom routing rules. If not provided, a default rule routing to the read service will be used
+    rules: []
+    # -- Path matches for the default rule if rules is empty
+    matches:
+      - path:
+          type: PathPrefix
+          value: /
+    # -- Filters for the default rule if rules is empty
+    filters: []
+    # -- Override the service port in the default backend rule
+    servicePort: null
+    # -- Weight for the default backend rule
+    weight: null
+  write:
+    # -- En/disable the HTTPRoute resource for write service
+    enabled: false
+    # -- Override the HTTPRoute API version (defaults to gateway.networking.k8s.io/v1)
+    apiVersion: ""
+    # -- Override the HTTPRoute metadata name
+    nameOverride: ""
+    # -- Provide custom annotations for the HTTPRoute
+    annotations: {}
+    # -- Provide custom labels for the HTTPRoute
+    labels: {}
+    # -- References to parent Gateway resources
+    parentRefs: []
+    #  - name: my-gateway
+    #    namespace: default
+    #    sectionName: https
+    # -- Hostnames matching the rule
+    hostnames: []
+    #  - keto.write.local.com
+    # -- Custom routing rules. If not provided, a default rule routing to the write service will be used
+    rules: []
+    # -- Path matches for the default rule if rules is empty
+    matches:
+      - path:
+          type: PathPrefix
+          value: /
+    # -- Filters for the default rule if rules is empty
+    filters: []
+    # -- Override the service port in the default backend rule
+    servicePort: null
+    # -- Weight for the default backend rule
+    weight: null
+
 ## -- Service configurations
 service:
   ## -- Read service
