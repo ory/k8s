@@ -1,0 +1,54 @@
+{{- if .Values.httproute.read.enabled -}}
+{{- $fullName := include "keto.fullname" . -}}
+apiVersion: {{ default "gateway.networking.k8s.io/v1" .Values.httproute.read.apiVersion }}
+kind: HTTPRoute
+metadata:
+  name: {{ default (printf "%s-read" $fullName) .Values.httproute.read.nameOverride }}
+  {{- if .Release.Namespace }}
+  namespace: {{ .Release.Namespace }}
+  {{- end }}
+  labels:
+    {{- include "keto.labels" . | nindent 4 }}
+    {{- with .Values.httproute.read.labels }}
+      {{- toYaml . | nindent 4 }}
+    {{- end }}
+  {{- with .Values.httproute.read.annotations }}
+  annotations:
+    {{- tpl (toYaml .) $ | nindent 4 }}
+  {{- end }}
+spec:
+  {{- with .Values.httproute.read.parentRefs }}
+  parentRefs:
+    {{- tpl (toYaml .) $ | nindent 4 }}
+  {{- end }}
+  {{- with .Values.httproute.read.hostnames }}
+  hostnames:
+    {{- range . }}
+    - {{ tpl . $ | quote }}
+    {{- end }}
+  {{- end }}
+  rules:
+  {{- if .Values.httproute.read.rules }}
+    {{- tpl (toYaml .Values.httproute.read.rules) $ | nindent 4 }}
+  {{- else }}
+    - backendRefs:
+        - name: {{ $fullName }}-read
+          port: {{ default $.Values.service.read.port .Values.httproute.read.servicePort }}
+          {{- if not (kindIs "invalid" .Values.httproute.read.weight) }}
+          weight: {{ .Values.httproute.read.weight }}
+          {{- end }}
+      {{- if .Values.httproute.read.matches }}
+      matches:
+        {{- tpl (toYaml .Values.httproute.read.matches) $ | nindent 8 }}
+      {{- else }}
+      matches:
+        - path:
+            type: PathPrefix
+            value: /
+      {{- end }}
+      {{- with .Values.httproute.read.filters }}
+      filters:
+        {{- tpl (toYaml .) $ | nindent 8 }}
+      {{- end }}
+  {{- end }}
+{{- end }}

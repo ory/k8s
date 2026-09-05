@@ -1,0 +1,54 @@
+{{- if .Values.httproute.api.enabled -}}
+{{- $fullName := include "oathkeeper.fullname" . -}}
+apiVersion: {{ default "gateway.networking.k8s.io/v1" .Values.httproute.api.apiVersion }}
+kind: HTTPRoute
+metadata:
+  name: {{ default (printf "%s-api" $fullName) .Values.httproute.api.nameOverride }}
+  {{- if .Release.Namespace }}
+  namespace: {{ .Release.Namespace }}
+  {{- end }}
+  labels:
+    {{- include "oathkeeper.labels" . | nindent 4 }}
+    {{- with .Values.httproute.api.labels }}
+      {{- toYaml . | nindent 4 }}
+    {{- end }}
+  {{- with .Values.httproute.api.annotations }}
+  annotations:
+    {{- tpl (toYaml .) $ | nindent 4 }}
+  {{- end }}
+spec:
+  {{- with .Values.httproute.api.parentRefs }}
+  parentRefs:
+    {{- tpl (toYaml .) $ | nindent 4 }}
+  {{- end }}
+  {{- with .Values.httproute.api.hostnames }}
+  hostnames:
+    {{- range . }}
+    - {{ tpl . $ | quote }}
+    {{- end }}
+  {{- end }}
+  rules:
+  {{- if .Values.httproute.api.rules }}
+    {{- tpl (toYaml .Values.httproute.api.rules) $ | nindent 4 }}
+  {{- else }}
+    - backendRefs:
+        - name: {{ $fullName }}-api
+          port: {{ default $.Values.service.api.port .Values.httproute.api.servicePort }}
+          {{- if not (kindIs "invalid" .Values.httproute.api.weight) }}
+          weight: {{ .Values.httproute.api.weight }}
+          {{- end }}
+      {{- if .Values.httproute.api.matches }}
+      matches:
+        {{- tpl (toYaml .Values.httproute.api.matches) $ | nindent 8 }}
+      {{- else }}
+      matches:
+        - path:
+            type: PathPrefix
+            value: /
+      {{- end }}
+      {{- with .Values.httproute.api.filters }}
+      filters:
+        {{- tpl (toYaml .) $ | nindent 8 }}
+      {{- end }}
+  {{- end }}
+{{- end }}

@@ -1,0 +1,54 @@
+{{- if .Values.httproute.public.enabled -}}
+{{- $fullName := include "hydra.fullname" . -}}
+apiVersion: {{ default "gateway.networking.k8s.io/v1" .Values.httproute.public.apiVersion }}
+kind: HTTPRoute
+metadata:
+  name: {{ default (printf "%s-public" $fullName) .Values.httproute.public.nameOverride }}
+  {{- if .Release.Namespace }}
+  namespace: {{ .Release.Namespace }}
+  {{- end }}
+  labels:
+    {{- include "hydra.labels" . | nindent 4 }}
+    {{- with .Values.httproute.public.labels }}
+      {{- toYaml . | nindent 4 }}
+    {{- end }}
+  {{- with .Values.httproute.public.annotations }}
+  annotations:
+    {{- tpl (toYaml .) $ | nindent 4 }}
+  {{- end }}
+spec:
+  {{- with .Values.httproute.public.parentRefs }}
+  parentRefs:
+    {{- tpl (toYaml .) $ | nindent 4 }}
+  {{- end }}
+  {{- with .Values.httproute.public.hostnames }}
+  hostnames:
+    {{- range . }}
+    - {{ tpl . $ | quote }}
+    {{- end }}
+  {{- end }}
+  rules:
+  {{- if .Values.httproute.public.rules }}
+    {{- tpl (toYaml .Values.httproute.public.rules) $ | nindent 4 }}
+  {{- else }}
+    - backendRefs:
+        - name: {{ $fullName }}-public
+          port: {{ default $.Values.service.public.port .Values.httproute.public.servicePort }}
+          {{- if not (kindIs "invalid" .Values.httproute.public.weight) }}
+          weight: {{ .Values.httproute.public.weight }}
+          {{- end }}
+      {{- if .Values.httproute.public.matches }}
+      matches:
+        {{- tpl (toYaml .Values.httproute.public.matches) $ | nindent 8 }}
+      {{- else }}
+      matches:
+        - path:
+            type: PathPrefix
+            value: /
+      {{- end }}
+      {{- with .Values.httproute.public.filters }}
+      filters:
+        {{- tpl (toYaml .) $ | nindent 8 }}
+      {{- end }}
+  {{- end }}
+{{- end }}
