@@ -1,0 +1,137 @@
+{{- if .Values.janitor.enabled -}}
+{{- $janitorExtraEnv := ternary .Values.cronjob.janitor.extraEnv .Values.deployment.extraEnv (not (empty .Values.cronjob.janitor.extraEnv )) -}}
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: {{ include "hydra.fullname" . }}-janitor
+  {{- if .Release.Namespace }}
+  namespace: {{ .Release.Namespace }}
+  {{- end }}
+  labels:
+    {{- include "hydra.janitor.labels" . | nindent 4 }}
+    {{- with .Values.cronjob.janitor.labels }}
+      {{- toYaml . | nindent 4 }}
+    {{- end }}
+  annotations:
+    {{- with .Values.cronjob.janitor.annotations }}
+      {{- toYaml . | nindent 4 }}
+    {{- end }}
+spec:
+  concurrencyPolicy: Forbid
+  schedule: {{ .Values.cronjob.janitor.schedule | quote }}
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          labels:
+            {{- include "hydra.janitor.labels" . | nindent 12 }}
+            {{- with .Values.cronjob.janitor.labels }}
+              {{- toYaml . | nindent 12 }}
+            {{- end }}
+            {{- with .Values.cronjob.janitor.podMetadata.labels }}
+              {{- toYaml . | nindent 12 }}
+            {{- end }}
+          annotations:
+            {{- include "hydra.annotations.checksum" . | nindent 12 -}}
+            {{- with .Values.cronjob.janitor.annotations }}
+              {{- toYaml . | nindent 12 }}
+            {{- end }}
+            {{- with $.Values.cronjob.janitor.podMetadata.annotations }}
+              {{- toYaml . | nindent 12 }}
+            {{- end }}
+        spec:
+          restartPolicy: OnFailure
+          {{- with .Values.imagePullSecrets }}
+          imagePullSecrets:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          serviceAccountName: {{ include "hydra.cronjob.janitor.serviceAccountName" . }}
+          automountServiceAccountToken: {{ .Values.cronjob.janitor.automountServiceAccountToken }}
+          volumes:
+            - name: {{ include "hydra.name" . }}-config-volume
+              configMap:
+                name: {{ include "hydra.fullname" . }}
+            {{- if .Values.cronjob.janitor.extraVolumes }}
+              {{- toYaml .Values.cronjob.janitor.extraVolumes | nindent 12 }}
+            {{- end }}
+          containers:
+            - name: janitor
+              image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+              imagePullPolicy: {{ .Values.image.pullPolicy }}
+              {{- with .Values.cronjob.janitor.securityContext }}
+              securityContext:
+                {{- toYaml . | nindent 16 }}
+              {{- end }}
+              {{- if .Values.cronjob.janitor.customCommand }}
+              command: {{- toYaml .Values.cronjob.janitor.customCommand | nindent 14 }}
+              {{- else }}
+              command: ["hydra"]
+              {{- end }}
+              {{- if .Values.cronjob.janitor.customArgs }}
+              args: {{- toYaml .Values.cronjob.janitor.customArgs | nindent 14 }}
+              {{- else }}
+              args:
+                - janitor
+                {{- if .Values.janitor.cleanupGrants }}
+                - --grants
+                {{- end }}
+                {{- if .Values.janitor.cleanupRequests }}
+                - --requests
+                {{- end }}
+                {{- if .Values.janitor.cleanupTokens }}
+                - --tokens
+                {{- end }}
+                - --batch-size
+                - {{ .Values.janitor.batchSize | quote }}
+                - --limit
+                - {{ .Values.janitor.limit | quote }}
+                - --config
+                - /etc/config/hydra.yaml
+              {{- end }}
+              env:
+              {{- if not (empty ( include "hydra.dsn" . )) }}
+                {{- if not (include "ory.extraEnvContainsEnvName" (list $janitorExtraEnv "DSN")) }}
+                - name: DSN
+                  valueFrom:
+                    secretKeyRef:
+                      name: {{ include "hydra.secretname" . }}
+                      key: dsn
+                {{- end }}
+              {{- end }}
+                {{- with $janitorExtraEnv }}
+                  {{- toYaml . | nindent 16 }}
+                {{- end }}
+              resources:
+                {{- toYaml .Values.cronjob.janitor.resources | nindent 16 }}
+              volumeMounts:
+                - name: {{ include "hydra.name" . }}-config-volume
+                  mountPath: /etc/config
+                  readOnly: true
+                {{- if .Values.cronjob.janitor.extraVolumeMounts }}
+                  {{- toYaml .Values.cronjob.janitor.extraVolumeMounts | nindent 16 }}
+                {{- end }}
+            {{- if .Values.cronjob.janitor.extraContainers }}
+              {{- tpl .Values.cronjob.janitor.extraContainers . | nindent 12 }}
+            {{- end }}
+          {{- if .Values.cronjob.janitor.extraInitContainers }}
+          initContainers:
+            {{- tpl .Values.cronjob.janitor.extraInitContainers . | nindent 10 }}
+          {{- end }}
+          {{- with .Values.cronjob.janitor.nodeSelector }}
+          nodeSelector:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with .Values.cronjob.janitor.podSecurityContext }}
+          securityContext:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with .Values.cronjob.janitor.tolerations }}
+          tolerations:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with .Values.cronjob.janitor.affinity }}
+          affinity:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+{{- end }}

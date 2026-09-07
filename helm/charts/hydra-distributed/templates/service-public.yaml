@@ -1,0 +1,35 @@
+{{- if .Values.service.public.enabled -}}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "hydra.fullname" . }}-public
+  {{- if .Release.Namespace }}
+  namespace: {{ .Release.Namespace }}
+  {{- end }}
+  labels:
+    {{- include "hydra.labels" . | nindent 4 }}
+    {{- with .Values.service.public.labels }}
+      {{- toYaml . | nindent 4 }}
+    {{- end }}
+    app.kubernetes.io/component: public
+  annotations:
+    {{- with .Values.service.public.annotations }}
+      {{- toYaml . | nindent 4 }}
+    {{- end }}
+spec:
+  type: {{ .Values.service.public.type }}
+  {{- if eq .Values.service.public.type "LoadBalancer" }}
+  {{- with .Values.service.public.loadBalancerIP }}
+  loadBalancerIP: {{ . }}
+  {{- end }}
+  {{- end }}
+  ports:
+    - port: {{ .Values.service.public.port }}
+      targetPort: http-public
+      protocol: TCP
+      name: {{ .Values.service.public.name }}
+  selector:
+    app.kubernetes.io/name: {{ include "hydra.name" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/component: public
+{{- end }}
