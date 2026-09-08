@@ -1,6 +1,6 @@
 # hydra
 
-![Version: 0.62.1](https://img.shields.io/badge/Version-0.62.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v26.2.0](https://img.shields.io/badge/AppVersion-v26.2.0-informational?style=flat-square)
+![Version: 0.64.0](https://img.shields.io/badge/Version-0.64.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v26.2.0](https://img.shields.io/badge/AppVersion-v26.2.0-informational?style=flat-square)
 
 A Helm chart for deploying ORY Hydra in Kubernetes
 
@@ -21,7 +21,7 @@ A Helm chart for deploying ORY Hydra in Kubernetes
 
 | Repository | Name | Version |
 |------------|------|---------|
-| file://../hydra-maester | hydra-maester(hydra-maester) | 0.62.1 |
+| file://../hydra-maester | hydra-maester(hydra-maester) | 0.64.0 |
 | file://../ory-commons | ory(ory-commons) | 0.1.0 |
 
 ## Values
@@ -121,7 +121,7 @@ A Helm chart for deploying ORY Hydra in Kubernetes
 | hydra.automigration.resources | object | `{}` | resource requests and limits for the automigration initcontainer |
 | hydra.automigration.type | string | `"job"` | Configure the way to execute database migration. Possible values: job, initContainer When set to job, the migration will be executed as a job on release or upgrade. When set to initContainer, the migration will be executed when kratos pod is created Defaults to job |
 | hydra.command | list | `["hydra"]` | Ability to override the entrypoint of hydra container (e.g. to source dynamic secrets or export environment dynamic variables) |
-| hydra.config | object | `{"secrets":{},"serve":{"admin":{"port":4445},"public":{"port":4444},"tls":{"allow_termination_from":["10.0.0.0/8","172.16.0.0/12","192.168.0.0/16"]}},"urls":{"self":{}}}` | The ORY Hydra configuration. For a full list of available settings, check:  https://www.ory.sh/docs/hydra/reference/configuration |
+| hydra.config | object | `{"secrets":{},"serve":{"admin":{"port":4445},"public":{"port":4444}},"urls":{"self":{}}}` | The ORY Hydra configuration. For a full list of available settings, check:  https://www.ory.sh/docs/hydra/reference/configuration |
 | hydra.config.secrets | object | `{}` | The secrets have to be provided as a string slice, example: system:   - "OG5XbmxXa3dYeGplQXpQanYxeEFuRUFa"   - "foo bar 123 456 lorem"   - "foo bar 123 456 lorem 1"   - "foo bar 123 456 lorem 2"   - "foo bar 123 456 lorem 3" |
 | hydra.config.urls | object | `{"self":{}}` | Configure the urls used by hydra itself, such as the issuer. Note: some values are required for hydra to start, please refer to https://www.ory.sh/docs/hydra/self-hosted/kubernetes-helm-chart self:   issuer: "https://public.hydra.localhost:4444/" |
 | hydra.customArgs | list | `[]` | Ability to override arguments of the entrypoint. Can be used in-depended of customCommand |

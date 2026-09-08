@@ -19,9 +19,9 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v7
-      - uses: actions/setup-go@v6
+      - uses: actions/setup-go@v7
         with:
-          go-version: "1.26"
+          go-version: "1.27"
       - name: Setup dependencies
         uses: ./.github/actions/deps-setup
 
@@ -69,6 +69,7 @@ jobs:
             cicd-definitions:
               - '.github/workflows/**'
               - '.github/actions/**'
+              - '.github/kubescape-*.json'
             cicd-scripts:
               - 'hacks/*.sh'
       # This step will take output from paths-filter and then process it in order to get what helm charts have been updated
