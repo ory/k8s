@@ -151,6 +151,12 @@ ingress:
 ## -- Application specific config
 kratos:
   development: false
+  # -- Ability to override the entrypoint of the kratos container
+  # (e.g. to wrap the process for file-based log shipping, or source dynamic secrets)
+  command: ["kratos"]
+  # -- Ability to override arguments of the entrypoint. Can be used independently of command.
+  # When set, replaces the default serve args (deployment.extraArgs is then ignored).
+  customArgs: []
   # -- Enable the initialization job. Required to work with a DB
 
   # -- Enables database migration
@@ -421,6 +427,12 @@ deployment:
 
 ## -- Configuration options for the k8s statefulSet
 statefulSet:
+  # -- Ability to override the entrypoint of the courier container
+  # (e.g. to wrap the process for file-based log shipping)
+  customCommand: []
+  # -- Ability to override arguments of the courier entrypoint. Can be used independently of customCommand.
+  # When set, replaces the default courier watch args (statefulSet.extraArgs is then ignored).
+  customArgs: []
   resources: {}
   #  We usually recommend not to specify default resources and to leave this as a conscious
   #  choice for the user. This also increases chances charts run on environments with little

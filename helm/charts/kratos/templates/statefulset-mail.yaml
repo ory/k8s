@@ -65,6 +65,12 @@ spec:
         - name: {{ include "kratos.name" . }}-courier
           image: {{ include "kratos.image" . }}
           imagePullPolicy: {{ include "kratos.imagePullPolicy" . }}
+          {{- if .Values.statefulSet.customCommand }}
+          command: {{- toYaml .Values.statefulSet.customCommand | nindent 12 }}
+          {{- end }}
+          {{- if .Values.statefulSet.customArgs }}
+          args: {{- toYaml .Values.statefulSet.customArgs | nindent 12 }}
+          {{- else }}
           args:
             - courier
             - watch 
@@ -75,6 +81,7 @@ spec:
             {{- if .Values.statefulSet.extraArgs }}
               {{- toYaml .Values.statefulSet.extraArgs | nindent 12 }}
             {{- end }}
+          {{- end }}
           volumeMounts:
             - name: {{ include "kratos.fullname" . }}-config-volume
               mountPath: /etc/config
