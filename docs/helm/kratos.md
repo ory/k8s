@@ -181,7 +181,7 @@ cronjob:
 
 ### Custom Secrets
 
-```
+```yaml
 secret:
   # -- switch to false to prevent creating the secret
   enabled: false
@@ -193,6 +193,38 @@ secret:
 > which need to be in the same format that the created secret uses. For more
 > details please take a look
 > [here](https://github.com/ory/k8s/blob/master/helm/charts/kratos/templates/secrets.yaml#L15).
+
+### Automatic Secret Generation
+
+If you want to avoid providing your own secrets and also prevent them from
+regenerating on every `helm upgrade`, you can enable automatic secret generation
+using a Kubernetes Job:
+
+```yaml
+secret:
+  generate: true
+```
+
+This will create a `pre-install, pre-upgrade` Job that:
+
+1.  Generates random values for `secretsDefault`, `secretsCookie`, and
+    `secretsCipher` if the secret does not exist.
+2.  Creates the secret with these random values and the provided `dsn`.
+3.  If the secret already exists, it will only patch the `dsn` and
+    `smtpConnectionURI` if they have changed in your values, preserving the
+    existing random secrets.
+
+You can customize the image used for this job:
+
+```yaml
+secret:
+  image:
+    repository: alpine/kubectl
+    tag: 1.35.0
+```
+
+Note: This requires RBAC permissions to get, create, and patch secrets in the
+namespace, which are automatically created when `secret.generate` is `true`.
 
 ### Identity Schemas
 

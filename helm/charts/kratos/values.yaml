@@ -112,6 +112,13 @@ secret:
     helm.sh/resource-policy: "keep"
   # -- extraAnnotations to be added to secret.
   extraAnnotations: {}
+  # -- Whether to generate random secrets using a Kubernetes Job.
+  # This is useful if you don't want to provide your own secrets and want to avoid regenerating them on every upgrade.
+  generate: false
+  # -- The image to use for the secret generation job.
+  image:
+    repository: alpine/kubectl
+    tag: 1.35.0
   # -- switch to false to prevent checksum annotations being maintained and propogated to the pods
   hashSumEnabled: true
 
