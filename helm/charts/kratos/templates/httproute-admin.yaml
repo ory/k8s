@@ -1,0 +1,54 @@
+{{- if .Values.httproute.admin.enabled -}}
+{{- $fullName := include "kratos.fullname" . -}}
+apiVersion: {{ default "gateway.networking.k8s.io/v1" .Values.httproute.admin.apiVersion }}
+kind: HTTPRoute
+metadata:
+  name: {{ default (printf "%s-admin" $fullName) .Values.httproute.admin.nameOverride }}
+  {{- if .Release.Namespace }}
+  namespace: {{ .Release.Namespace }}
+  {{- end }}
+  labels:
+    {{- include "kratos.labels" . | nindent 4 }}
+    {{- with .Values.httproute.admin.labels }}
+      {{- toYaml . | nindent 4 }}
+    {{- end }}
+  {{- with .Values.httproute.admin.annotations }}
+  annotations:
+    {{- tpl (toYaml .) $ | nindent 4 }}
+  {{- end }}
+spec:
+  {{- with .Values.httproute.admin.parentRefs }}
+  parentRefs:
+    {{- tpl (toYaml .) $ | nindent 4 }}
+  {{- end }}
+  {{- with .Values.httproute.admin.hostnames }}
+  hostnames:
+    {{- range . }}
+    - {{ tpl . $ | quote }}
+    {{- end }}
+  {{- end }}
+  rules:
+  {{- if .Values.httproute.admin.rules }}
+    {{- tpl (toYaml .Values.httproute.admin.rules) $ | nindent 4 }}
+  {{- else }}
+    - backendRefs:
+        - name: {{ $fullName }}-admin
+          port: {{ default $.Values.service.admin.port .Values.httproute.admin.servicePort }}
+          {{- if not (kindIs "invalid" .Values.httproute.admin.weight) }}
+          weight: {{ .Values.httproute.admin.weight }}
+          {{- end }}
+      {{- if .Values.httproute.admin.matches }}
+      matches:
+        {{- tpl (toYaml .Values.httproute.admin.matches) $ | nindent 8 }}
+      {{- else }}
+      matches:
+        - path:
+            type: PathPrefix
+            value: /
+      {{- end }}
+      {{- with .Values.httproute.admin.filters }}
+      filters:
+        {{- tpl (toYaml .) $ | nindent 8 }}
+      {{- end }}
+  {{- end }}
+{{- end }}

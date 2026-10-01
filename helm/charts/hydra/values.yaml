@@ -147,6 +147,76 @@ ingress:
 #        - api.hydra.local
 #      - secretName: hydra-api-example-tls
 
+## -- HTTPRoute definition (Kubernetes Gateway API)
+httproute:
+  admin:
+    # -- Enable/disable the HTTPRoute resource for admin service
+    enabled: false
+    # -- Override the HTTPRoute API version (defaults to gateway.networking.k8s.io/v1)
+    apiVersion: ""
+    # -- Override the HTTPRoute metadata name
+    nameOverride: ""
+    # -- Provide custom annotations for the HTTPRoute
+    annotations: {}
+    # -- Provide custom labels for the HTTPRoute
+    labels: {}
+    # -- References to parent Gateway resources
+    parentRefs: []
+    #  - name: my-gateway
+    #    namespace: default
+    #    sectionName: https
+    # -- Hostnames matching the rule
+    hostnames: []
+    #  - hydra.admin.local.com
+    # -- Custom routing rules. If not provided, a default rule routing to the admin service will be used
+    rules: []
+    # -- Path matches for the default rule if rules is empty
+    matches:
+      - path:
+          type: PathPrefix
+          value: /
+    # -- Filters for the default rule if rules is empty
+    filters: []
+    # -- Override the service port in the default backend rule
+    servicePort: null
+    # -- Weight for the default backend rule
+    weight: null
+  public:
+    # -- Enable/disable the HTTPRoute resource for public service
+    enabled: false
+    # -- Override the HTTPRoute API version (defaults to gateway.networking.k8s.io/v1)
+    apiVersion: ""
+    # -- Override the HTTPRoute metadata name
+    nameOverride: ""
+    # -- Provide custom annotations for the HTTPRoute
+    annotations: {}
+    # -- Provide custom labels for the HTTPRoute
+    labels: {}
+    # -- References to parent Gateway resources
+    parentRefs: []
+    #  - name: my-gateway
+    #    namespace: default
+    #    sectionName: https
+    # -- Hostnames matching the rule
+    hostnames: []
+    #  - hydra.public.local.com
+    # -- Custom routing rules. If not provided, a default rule routing to the public service will be used
+    rules: []
+    # -- Path matches for the default rule if rules is empty
+    matches:
+      - path:
+          type: PathPrefix
+          value: /
+    # -- Filters for the default rule if rules is empty
+    filters: []
+    # -- Override the service port in the default backend rule
+    servicePort: null
+    # -- Weight for the default backend rule
+    weight: null
+
+# -- Array of extra resources to deploy with the chart
+extraDeploy: []
+
 ## -- Configure ORY Hydra itself
 hydra:
   # -- Ability to override the entrypoint of hydra container
