@@ -56,6 +56,9 @@ spec:
             - name: {{ include "kratos.name" . }}-config-volume
               configMap:
                 name: {{ include "kratos.fullname" . }}-config
+          {{- if .Values.cronjob.cleanup.extraVolumes }}
+            {{- toYaml .Values.cronjob.cleanup.extraVolumes | nindent 12 }}
+          {{- end }}
           {{- if .Values.cronjob.cleanup.extraInitContainers }}
           initContainers:
             {{- tpl .Values.cronjob.cleanup.extraInitContainers . | nindent 12 }}
@@ -99,6 +102,9 @@ spec:
                 - name: {{ include "kratos.name" . }}-config-volume
                   mountPath: /etc/config
                   readOnly: true
+              {{- if .Values.cronjob.cleanup.extraVolumeMounts }}
+                {{- toYaml .Values.cronjob.cleanup.extraVolumeMounts | nindent 16 }}
+              {{- end }}
             {{- if .Values.cronjob.cleanup.extraContainers }}
               {{- tpl .Values.cronjob.cleanup.extraContainers . | nindent 12 }}
             {{- end }}

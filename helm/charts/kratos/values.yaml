@@ -752,6 +752,19 @@ cronjob:
     #  - name: ...
     #    image: ...
 
+    # -- If you want to mount external volume.
+    # For example, mount a secret containing Certificate root CA to verify database
+    # TLS connection.
+    extraVolumes: []
+    # - name: my-volume
+    #   secret:
+    #     secretName: my-secret
+    # -- Mounts for the volumes above in the cleanup container, as Kubernetes volumeMount objects.
+    extraVolumeMounts: []
+    # - name: my-volume
+    #   mountPath: /etc/secrets/my-secret
+    #   readOnly: true
+
     # -- Set automounting of the SA token in job's pod
     automountServiceAccountToken: true
 
