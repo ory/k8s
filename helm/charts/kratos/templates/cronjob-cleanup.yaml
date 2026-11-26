@@ -62,8 +62,8 @@ spec:
           {{- end }}
           containers:
             - name: {{ include "kratos.name" . }}-cleanup
-              image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
-              imagePullPolicy: {{ .Values.image.pullPolicy }}
+              image: {{ include "kratos.image" . }}
+              imagePullPolicy: {{ include "kratos.imagePullPolicy" . }}
               {{- with .Values.securityContext }}
               securityContext:
                 {{- toYaml . | nindent 16 }}

@@ -31,7 +31,7 @@ spec:
   {{- end }}
   ports:
     - port: {{ .Values.service.public.port }}
-      targetPort: http-public
+      targetPort: {{ .Values.service.public.targetPort | default "http-public" }}
       protocol: TCP
       name: {{ .Values.service.public.name }}
       {{- if eq .Values.service.public.type "NodePort" }}

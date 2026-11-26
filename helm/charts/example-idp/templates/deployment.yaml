@@ -51,6 +51,10 @@ spec:
               port: http
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
+          {{- if .Values.securityContext }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
@@ -65,6 +69,10 @@ spec:
     {{- end }}
     {{- with .Values.topologySpreadConstraints }}
       topologySpreadConstraints:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+    {{- with .Values.podSecurityContext }}
+      securityContext:
         {{- toYaml . | nindent 8 }}
     {{- end }}
     {{- with .Values.dnsConfig }}

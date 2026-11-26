@@ -32,7 +32,7 @@ spec:
   {{- end }}
   ports:
     - port: {{ .Values.service.admin.port }}
-      targetPort: http-admin
+      targetPort: {{ .Values.service.admin.targetPort | default "http-admin" }}
       protocol: TCP
       name: {{ .Values.service.admin.name }}
       {{- if eq .Values.service.admin.type "NodePort" }}
@@ -84,5 +84,9 @@ spec:
       app.kubernetes.io/name: {{ include "kratos.name" . }}
       app.kubernetes.io/instance: {{ .Release.Name }}
       app.kubernetes.io/component: admin
+  {{- with .Values.serviceMonitor.targetLabels }}
+  targetLabels:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
 {{- end -}}
 {{- end }}

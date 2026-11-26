@@ -1,6 +1,6 @@
 # example-idp
 
-![Version: 0.61.0](https://img.shields.io/badge/Version-0.61.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 26.2.0](https://img.shields.io/badge/AppVersion-26.2.0-informational?style=flat-square)
+![Version: 0.64.0](https://img.shields.io/badge/Version-0.64.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 26.2.0](https://img.shields.io/badge/AppVersion-26.2.0-informational?style=flat-square)
 
 A Helm chart for deploying the reference implementation for the User Login and Consent Flow in Kubernetes
 
@@ -28,12 +28,14 @@ A Helm chart for deploying the reference implementation for the User Login and C
 | ingress.tls | list | `[]` |  |
 | nameOverride | string | `""` |  |
 | nodeSelector | object | `{}` |  |
+| podSecurityContext | object | `{"fsGroup":65534,"fsGroupChangePolicy":"OnRootMismatch","runAsGroup":65534,"runAsNonRoot":true,"runAsUser":65534,"seccompProfile":{"type":"RuntimeDefault"}}` | Pod level securityContext |
 | resources | object | `{}` | We usually recommend not to specify default resources and to leave this as a conscious choice for the user. This also increases chances charts run on environments with little resources, such as Minikube. If you do want to specify resources, uncomment the following lines, adjust them as necessary, and remove the curly braces after 'resources:'. limits:   cpu: 100m   memory: 128Mi requests:   cpu: 100m   memory: 128Mi |
 | revisionHistoryLimit | int | `5` | Number of revisions kept in history |
+| securityContext | object | `{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"privileged":false,"readOnlyRootFilesystem":true,"runAsGroup":65534,"runAsNonRoot":true,"runAsUser":65534,"seLinuxOptions":{"level":"s0:c123,c456"},"seccompProfile":{"type":"RuntimeDefault"}}` | Container securityContext |
 | service.annotations | object | `{}` | If you do want to specify annotations, uncomment the following lines, adjust them as necessary, and remove the curly braces after 'annotations:'. |
 | service.port | int | `3000` |  |
 | service.type | string | `"ClusterIP"` |  |
-| test.busybox | object | `{"repository":"busybox","tag":"stable"}` | use a busybox image from another repository |
+| test.busybox | object | `{"registry":"docker.io","repository":"busybox","tag":"stable"}` | use a busybox image from another repository |
 | tolerations | list | `[]` |  |
 | topologySpreadConstraints | list | `[]` | Configure pod topologySpreadConstraints. |
 

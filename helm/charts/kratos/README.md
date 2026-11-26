@@ -1,6 +1,6 @@
 # kratos
 
-![Version: 0.61.0](https://img.shields.io/badge/Version-0.61.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v26.2.0](https://img.shields.io/badge/AppVersion-v26.2.0-informational?style=flat-square)
+![Version: 0.64.0](https://img.shields.io/badge/Version-0.64.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v26.2.0](https://img.shields.io/badge/AppVersion-v26.2.0-informational?style=flat-square)
 
 A ORY Kratos Helm chart for Kubernetes
 
@@ -56,8 +56,8 @@ A ORY Kratos Helm chart for Kubernetes
 | deployment.automigration.extraEnv | list | `[]` | Array of extra envs to be passed to the initContainer. Kubernetes format is expected. Value is processed with Helm `tpl` - name: FOO   value: BAR |
 | deployment.automountServiceAccountToken | bool | `false` |  |
 | deployment.customLivenessProbe | object | `{}` | Configure a custom livenessProbe. This overwrites the default object |
-| deployment.customReadinessProbe | object | `{}` | Configure a custom readinessProbe. This overwrites the default object |
-| deployment.customStartupProbe | object | `{}` | Configure a custom startupProbe. This overwrites the default object |
+| deployment.customReadinessProbe | object | `{}` | Configure a custom readinessProbe. This overwrites the default object. The default probe sends an HTTP GET to kratos.config.serve.admin.port on the pod IP, so it fails when serve.admin.host binds the admin API to 127.0.0.1 (e.g. behind a sidecar). Set this probe in that case. |
+| deployment.customStartupProbe | object | `{}` | Configure a custom startupProbe. This overwrites the default object. The default probe sends an HTTP GET to kratos.config.serve.admin.port on the pod IP, so it fails when serve.admin.host binds the admin API to 127.0.0.1 (e.g. behind a sidecar). Set this probe in that case. |
 | deployment.dnsConfig | object | `{}` | Configure pod dnsConfig. |
 | deployment.extraArgs | list | `[]` | Array of extra arguments to be passed down to the deployment. Kubernetes args format is expected - --foo - --sqa-opt-out |
 | deployment.extraContainers | string | `""` | If you want to add extra sidecar containers. |
@@ -137,10 +137,12 @@ A ORY Kratos Helm chart for Kubernetes
 | kratos.automigration.customCommand | list | `[]` | Ability to override the entrypoint of the automigration container (e.g. to source dynamic secrets or export environment dynamic variables) |
 | kratos.automigration.resources | object | `{}` | resource requests and limits for the automigration initcontainer |
 | kratos.automigration.type | string | `"job"` | Configure the way to execute database migration. Possible values: job, initContainer When set to job, the migration will be executed as a job on release or upgrade. When set to initContainer, the migration will be executed when Kratos pod is created Defaults to job |
+| kratos.command | list | `["kratos"]` | Ability to override the entrypoint of the kratos container (e.g. to wrap the process for file-based log shipping, or source dynamic secrets) |
 | kratos.config.courier.smtp | object | `{}` |  |
 | kratos.config.secrets | object | `{}` |  |
 | kratos.config.serve.admin.port | int | `4434` |  |
 | kratos.config.serve.public.port | int | `4433` |  |
+| kratos.customArgs | list | `[]` | Ability to override arguments of the entrypoint. Can be used independently of command. When set, replaces the default serve args (deployment.extraArgs is then ignored). |
 | kratos.customMigrations.jobs.example-job.customArgs[0] | string | `"migrate"` |  |
 | kratos.customMigrations.jobs.example-job.customArgs[1] | string | `"sql"` |  |
 | kratos.customMigrations.jobs.example-job.customArgs[2] | string | `"-e"` |  |
@@ -184,6 +186,7 @@ A ORY Kratos Helm chart for Kubernetes
 | service.admin.name | string | `"http"` | The service port name. Useful to set a custom service port name if it must follow a scheme (e.g. Istio) |
 | service.admin.nodePort | string | `""` |  |
 | service.admin.port | int | `80` |  |
+| service.admin.targetPort | string | `"http-admin"` | The pod port the Service forwards to, as a port name or number. Set it to a port declared by a container in deployment.extraContainers to put a sidecar (e.g. an authenticating proxy) in front of this API. The admin ServiceMonitor then scrapes metricsPath through that sidecar too. |
 | service.admin.type | string | `"ClusterIP"` |  |
 | service.courier.annotations | object | `{}` | Provide custom annotations. |
 | service.courier.containerPort | int | `4434` | Container Port |
@@ -202,6 +205,7 @@ A ORY Kratos Helm chart for Kubernetes
 | service.public.name | string | `"http"` | The service port name. Useful to set a custom service port name if it must follow a scheme (e.g. Istio) |
 | service.public.nodePort | string | `""` |  |
 | service.public.port | int | `80` |  |
+| service.public.targetPort | string | `"http-public"` | The pod port the Service forwards to, as a port name or number. Set it to a port declared by a container in deployment.extraContainers to put a sidecar (e.g. an authenticating proxy) in front of this API. |
 | service.public.type | string | `"ClusterIP"` |  |
 | serviceMonitor.enabled | bool | `false` | switch to true to enable creating the ServiceMonitor |
 | serviceMonitor.labels | object | `{}` | Provide additional labels to the ServiceMonitor ressource metadata |
@@ -210,9 +214,12 @@ A ORY Kratos Helm chart for Kubernetes
 | serviceMonitor.scheme | string | `"http"` | HTTP scheme to use for scraping. |
 | serviceMonitor.scrapeInterval | string | `"60s"` | Interval at which metrics should be scraped |
 | serviceMonitor.scrapeTimeout | string | `"30s"` | Timeout after which the scrape is ended |
+| serviceMonitor.targetLabels | list | `[]` | Additional metric labels |
 | serviceMonitor.tlsConfig | object | `{}` | TLS configuration to use when scraping the endpoint |
 | statefulSet.affinity | object | `{}` | Configure node affinity |
 | statefulSet.annotations | object | `{}` |  |
+| statefulSet.customArgs | list | `[]` | Ability to override arguments of the courier entrypoint. Can be used independently of customCommand. When set, replaces the default courier watch args (statefulSet.extraArgs is then ignored). |
+| statefulSet.customCommand | list | `[]` | Ability to override the entrypoint of the courier container (e.g. to wrap the process for file-based log shipping) |
 | statefulSet.dnsConfig | object | `{}` | Configure pod dnsConfig. |
 | statefulSet.extraArgs | list | `[]` | Array of extra arguments to be passed down to the StatefulSet. Kubernetes args format is expected |
 | statefulSet.extraContainers | string | `""` | If you want to add extra sidecar containers. |
@@ -241,7 +248,7 @@ A ORY Kratos Helm chart for Kubernetes
 | strategy.rollingUpdate.maxSurge | string | `"25%"` |  |
 | strategy.rollingUpdate.maxUnavailable | string | `"25%"` |  |
 | strategy.type | string | `"RollingUpdate"` |  |
-| test.busybox | object | `{"repository":"busybox","tag":"stable"}` | use a busybox image from another repository |
+| test.busybox | object | `{"registry":"docker.io","repository":"busybox","tag":"stable"}` | use a busybox image from another repository |
 | watcher.automountServiceAccountToken | bool | `true` |  |
 | watcher.enabled | bool | `false` |  |
 | watcher.image | string | `"oryd/k8s-toolbox:v0.0.10"` |  |
@@ -255,3 +262,4 @@ A ORY Kratos Helm chart for Kubernetes
 
 ----------------------------------------------
 Autogenerated from chart metadata using [helm-docs v1.14.2](https://github.com/norwoodj/helm-docs/releases/v1.14.2)
+

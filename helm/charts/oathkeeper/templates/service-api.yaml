@@ -31,7 +31,7 @@ spec:
   {{- end }}
   ports:
     - port: {{ .Values.service.api.port }}
-      targetPort: http-api
+      targetPort: {{ .Values.service.api.targetPort | default "http-api" }}
       protocol: TCP
       name: {{ .Values.service.api.name }} 
   selector:

@@ -1,6 +1,6 @@
 # oathkeeper
 
-![Version: 0.61.0](https://img.shields.io/badge/Version-0.61.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v26.2.0](https://img.shields.io/badge/AppVersion-v26.2.0-informational?style=flat-square)
+![Version: 0.64.0](https://img.shields.io/badge/Version-0.64.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v26.2.0](https://img.shields.io/badge/AppVersion-v26.2.0-informational?style=flat-square)
 
 A Helm chart for deploying ORY Oathkeeper in Kubernetes
 
@@ -21,7 +21,7 @@ A Helm chart for deploying ORY Oathkeeper in Kubernetes
 
 | Repository | Name | Version |
 |------------|------|---------|
-| file://../oathkeeper-maester | oathkeeper-maester(oathkeeper-maester) | 0.61.0 |
+| file://../oathkeeper-maester | oathkeeper-maester(oathkeeper-maester) | 0.64.0 |
 
 ## Values
 
@@ -125,7 +125,7 @@ A Helm chart for deploying ORY Oathkeeper in Kubernetes
 | securityContext.runAsUser | int | `65534` |  |
 | securityContext.seLinuxOptions.level | string | `"s0:c123,c456"` |  |
 | securityContext.seccompProfile.type | string | `"RuntimeDefault"` |  |
-| service.api | object | `{"annotations":{},"enabled":true,"externalTrafficPolicy":"","internalTrafficPolicy":"","labels":{},"loadBalancerIP":"","name":"http","port":4456,"type":"ClusterIP"}` | Configures the Kubernetes service for the api port. |
+| service.api | object | `{"annotations":{},"enabled":true,"externalTrafficPolicy":"","internalTrafficPolicy":"","labels":{},"loadBalancerIP":"","name":"http","port":4456,"targetPort":"http-api","type":"ClusterIP"}` | Configures the Kubernetes service for the api port. |
 | service.api.annotations | object | `{}` | If you do want to specify annotations, uncomment the following lines, adjust them as necessary, and remove the curly braces after 'annotations:'. kubernetes.io/ingress.class: nginx kubernetes.io/tls-acme: "true" |
 | service.api.enabled | bool | `true` | En-/disable the service |
 | service.api.externalTrafficPolicy | string | `""` | https://kubernetes.io/docs/reference/networking/virtual-ips/#traffic-policies |
@@ -134,6 +134,7 @@ A Helm chart for deploying ORY Oathkeeper in Kubernetes
 | service.api.loadBalancerIP | string | `""` | The load balancer IP |
 | service.api.name | string | `"http"` | The service port name. Useful to set a custom service port name if it must follow a scheme (e.g. Istio) |
 | service.api.port | int | `4456` | The service port |
+| service.api.targetPort | string | `"http-api"` | The pod port the Service forwards to, as a port name or number. Set it to a port declared by a container in deployment.extraContainers to put a sidecar (e.g. an authenticating proxy) in front of this API. |
 | service.api.type | string | `"ClusterIP"` | The service type |
 | service.metrics | object | `{"annotations":{},"enabled":true,"labels":{},"loadBalancerIP":"","name":"http","port":80,"type":"ClusterIP"}` | Configures the Kubernetes service for the metrics port. |
 | service.metrics.annotations | object | `{}` | If you do want to specify annotations, uncomment the following lines, adjust them as necessary, and remove the curly braces after 'annotations:'. kubernetes.io/ingress.class: nginx kubernetes.io/tls-acme: "true" |
@@ -143,7 +144,7 @@ A Helm chart for deploying ORY Oathkeeper in Kubernetes
 | service.metrics.name | string | `"http"` | The service port name. Useful to set a custom service port name if it must follow a scheme (e.g. Istio) |
 | service.metrics.port | int | `80` | The service port |
 | service.metrics.type | string | `"ClusterIP"` | The service type |
-| service.proxy | object | `{"annotations":{},"enabled":true,"externalTrafficPolicy":"","internalTrafficPolicy":"","labels":{},"loadBalancerIP":"","name":"http","port":4455,"type":"ClusterIP"}` | Configures the Kubernetes service for the proxy port. |
+| service.proxy | object | `{"annotations":{},"enabled":true,"externalTrafficPolicy":"","internalTrafficPolicy":"","labels":{},"loadBalancerIP":"","name":"http","port":4455,"targetPort":"http-proxy","type":"ClusterIP"}` | Configures the Kubernetes service for the proxy port. |
 | service.proxy.annotations | object | `{}` | If you do want to specify annotations, uncomment the following lines, adjust them as necessary, and remove the curly braces after 'annotations:'. kubernetes.io/ingress.class: nginx kubernetes.io/tls-acme: "true" |
 | service.proxy.enabled | bool | `true` | En-/disable the service |
 | service.proxy.externalTrafficPolicy | string | `""` | https://kubernetes.io/docs/reference/networking/virtual-ips/#traffic-policies |
@@ -152,6 +153,7 @@ A Helm chart for deploying ORY Oathkeeper in Kubernetes
 | service.proxy.loadBalancerIP | string | `""` | The load balancer IP |
 | service.proxy.name | string | `"http"` | The service port name. Useful to set a custom service port name if it must follow a scheme (e.g. Istio) |
 | service.proxy.port | int | `4455` | The service port |
+| service.proxy.targetPort | string | `"http-proxy"` | The pod port the Service forwards to, as a port name or number. Set it to a port declared by a container in deployment.extraContainers to put a sidecar (e.g. an authenticating proxy) in front of this API. |
 | service.proxy.type | string | `"ClusterIP"` | The service type |
 | serviceMonitor.enabled | bool | `false` | switch to true to enable creating the ServiceMonitor |
 | serviceMonitor.labels | object | `{}` | Provide additional labels to the ServiceMonitor resource metadata |
@@ -164,8 +166,8 @@ A Helm chart for deploying ORY Oathkeeper in Kubernetes
 | serviceMonitor.tlsConfig | object | `{}` | TLS configuration to use when scraping the endpoint |
 | sidecar.envs | object | `{}` |  |
 | sidecar.image.repository | string | `"oryd/oathkeeper-maester"` |  |
-| sidecar.image.tag | string | `"v0.1.13"` |  |
-| test.busybox | object | `{"repository":"busybox","tag":"stable"}` | use a busybox image from another repository |
+| sidecar.image.tag | string | `"v0.1.14"` |  |
+| test.busybox | object | `{"registry":"docker.io","repository":"busybox","tag":"stable"}` | use a busybox image from another repository |
 | test.labels | object | `{}` | Provide additional labels to the test pod |
 
 ----------------------------------------------

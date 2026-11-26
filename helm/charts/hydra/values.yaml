@@ -47,6 +47,10 @@ service:
     port: 4444
     # -- The service port name. Useful to set a custom service port name if it must follow a scheme (e.g. Istio)
     name: http
+    # -- The pod port the Service forwards to, as a port name or number. Set it to a port
+    # declared by a container in deployment.extraContainers to put a sidecar (e.g. an
+    # authenticating proxy) in front of this API.
+    targetPort: http-public
     # -- If you do want to specify annotations, uncomment the following lines, adjust them as necessary, and remove the curly braces after 'annotations:'.
     annotations: {}
     # kubernetes.io/ingress.class: nginx
@@ -71,6 +75,11 @@ service:
     port: 4445
     # -- The service port name. Useful to set a custom service port name if it must follow a scheme (e.g. Istio)
     name: http
+    # -- The pod port the Service forwards to, as a port name or number. Set it to a port
+    # declared by a container in deployment.extraContainers to put a sidecar (e.g. an
+    # authenticating proxy) in front of this API. The admin ServiceMonitor then scrapes
+    # metricsPath through that sidecar too.
+    targetPort: http-admin
     # -- If you do want to specify annotations, uncomment the following lines, adjust them as necessary, and remove the curly braces after 'annotations:'.
     annotations: {}
     # kubernetes.io/ingress.class: nginx
@@ -162,11 +171,6 @@ hydra:
         port: 4444
       admin:
         port: 4445
-      tls:
-        allow_termination_from:
-          - 10.0.0.0/8
-          - 172.16.0.0/12
-          - 192.168.0.0/16
     # -- The secrets have to be provided as a string slice, example:
     # system:
     #   - "OG5XbmxXa3dYeGplQXpQanYxeEFuRUFa"
@@ -413,9 +417,15 @@ deployment:
 
   # -- Configure a custom livenessProbe. This overwrites the default object
   customLivenessProbe: {}
-  # -- Configure a custom readinessProbe. This overwrites the default object
+  # -- Configure a custom readinessProbe. This overwrites the default object.
+  # The default probe sends an HTTP GET to hydra.config.serve.admin.port on the pod IP, so it
+  # fails when serve.admin.host binds the admin API to 127.0.0.1 (e.g. behind a sidecar).
+  # Set this probe in that case.
   customReadinessProbe: {}
-  # -- Configure a custom startupProbe. This overwrites the default object
+  # -- Configure a custom startupProbe. This overwrites the default object.
+  # The default probe sends an HTTP GET to hydra.config.serve.admin.port on the pod IP, so it
+  # fails when serve.admin.host binds the admin API to 127.0.0.1 (e.g. behind a sidecar).
+  # Set this probe in that case.
   customStartupProbe: {}
   # -- Number of revisions kept in history
   revisionHistoryLimit: 5
@@ -452,6 +462,20 @@ job:
   # - name: FOO
   #   value: BAR
   extraEnv: []
+
+  # -- Array of extra volumes to be mounted on the job. This takes precedence over `deployment.extraVolumes` when set,
+  # otherwise the deployment's volumes are used.
+  extraVolumes: []
+  # - name: my-volume
+  #   secret:
+  #     secretName: my-secret
+
+  # -- Array of extra volume mounts to be mounted on the job. This takes precedence over `deployment.extraVolumeMounts`
+  # when set, otherwise the deployment's volume mounts are used.
+  extraVolumeMounts: []
+  # - name: my-volume
+  #   mountPath: /etc/secrets/my-secret
+  #   readOnly: true
 
   # -- Specify pod metadata, this metadata is added directly to the pod, and not higher objects
   podMetadata:
@@ -528,7 +552,7 @@ hydra-maester:
 ## -- Sidecar watcher configuration
 watcher:
   enabled: false
-  image: oryd/k8s-toolbox:v0.0.10
+  image: oryd/k8s-toolbox:v0.0.11
   # -- Path to mounted file, which wil be monitored for changes. eg: /etc/secrets/my-secret/foo
   mountFile: ""
   # -- Specify pod metadata, this metadata is added directly to the pod, and not higher objects
@@ -721,6 +745,8 @@ serviceMonitor:
   labels: {}
   # -- TLS configuration to use when scraping the endpoint
   tlsConfig: {}
+  # -- Additional metric labels
+  targetLabels: []
 
 configmap:
   # -- switch to false to prevent checksum annotations being maintained and propogated to the pods
@@ -731,5 +757,6 @@ test:
   labels: {}
   # -- use a busybox image from another repository
   busybox:
+    registry: "docker.io"
     repository: busybox
     tag: stable

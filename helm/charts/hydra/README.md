@@ -1,6 +1,6 @@
 # hydra
 
-![Version: 0.61.0](https://img.shields.io/badge/Version-0.61.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v26.2.0](https://img.shields.io/badge/AppVersion-v26.2.0-informational?style=flat-square)
+![Version: 0.64.0](https://img.shields.io/badge/Version-0.64.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v26.2.0](https://img.shields.io/badge/AppVersion-v26.2.0-informational?style=flat-square)
 
 A Helm chart for deploying ORY Hydra in Kubernetes
 
@@ -21,7 +21,7 @@ A Helm chart for deploying ORY Hydra in Kubernetes
 
 | Repository | Name | Version |
 |------------|------|---------|
-| file://../hydra-maester | hydra-maester(hydra-maester) | 0.61.0 |
+| file://../hydra-maester | hydra-maester(hydra-maester) | 0.64.0 |
 | file://../ory-commons | ory(ory-commons) | 0.1.0 |
 
 ## Values
@@ -64,8 +64,8 @@ A Helm chart for deploying ORY Hydra in Kubernetes
 | deployment.autoscaling.behavior | object | `{}` | Set custom behavior https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/#configurable-scaling-behavior |
 | deployment.autoscaling.extraMetrics | list | `[]` | Add extraContainer container resource metrics https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/#container-resource-metrics |
 | deployment.customLivenessProbe | object | `{}` | Configure a custom livenessProbe. This overwrites the default object |
-| deployment.customReadinessProbe | object | `{}` | Configure a custom readinessProbe. This overwrites the default object |
-| deployment.customStartupProbe | object | `{}` | Configure a custom startupProbe. This overwrites the default object |
+| deployment.customReadinessProbe | object | `{}` | Configure a custom readinessProbe. This overwrites the default object. The default probe sends an HTTP GET to hydra.config.serve.admin.port on the pod IP, so it fails when serve.admin.host binds the admin API to 127.0.0.1 (e.g. behind a sidecar). Set this probe in that case. |
+| deployment.customStartupProbe | object | `{}` | Configure a custom startupProbe. This overwrites the default object. The default probe sends an HTTP GET to hydra.config.serve.admin.port on the pod IP, so it fails when serve.admin.host binds the admin API to 127.0.0.1 (e.g. behind a sidecar). Set this probe in that case. |
 | deployment.dnsConfig | object | `{}` | Configure pod dnsConfig. |
 | deployment.extraContainers | string | `""` | If you want to add extra sidecar containers. |
 | deployment.extraEnv | list | `[]` | Array of extra envs to be passed to the deployment. Kubernetes format is expected. Value is processed with Helm `tpl` - name: FOO   value: BAR |
@@ -121,7 +121,7 @@ A Helm chart for deploying ORY Hydra in Kubernetes
 | hydra.automigration.resources | object | `{}` | resource requests and limits for the automigration initcontainer |
 | hydra.automigration.type | string | `"job"` | Configure the way to execute database migration. Possible values: job, initContainer When set to job, the migration will be executed as a job on release or upgrade. When set to initContainer, the migration will be executed when kratos pod is created Defaults to job |
 | hydra.command | list | `["hydra"]` | Ability to override the entrypoint of hydra container (e.g. to source dynamic secrets or export environment dynamic variables) |
-| hydra.config | object | `{"secrets":{},"serve":{"admin":{"port":4445},"public":{"port":4444},"tls":{"allow_termination_from":["10.0.0.0/8","172.16.0.0/12","192.168.0.0/16"]}},"urls":{"self":{}}}` | The ORY Hydra configuration. For a full list of available settings, check:  https://www.ory.sh/docs/hydra/reference/configuration |
+| hydra.config | object | `{"secrets":{},"serve":{"admin":{"port":4445},"public":{"port":4444}},"urls":{"self":{}}}` | The ORY Hydra configuration. For a full list of available settings, check:  https://www.ory.sh/docs/hydra/reference/configuration |
 | hydra.config.secrets | object | `{}` | The secrets have to be provided as a string slice, example: system:   - "OG5XbmxXa3dYeGplQXpQanYxeEFuRUFa"   - "foo bar 123 456 lorem"   - "foo bar 123 456 lorem 1"   - "foo bar 123 456 lorem 2"   - "foo bar 123 456 lorem 3" |
 | hydra.config.urls | object | `{"self":{}}` | Configure the urls used by hydra itself, such as the issuer. Note: some values are required for hydra to start, please refer to https://www.ory.sh/docs/hydra/self-hosted/kubernetes-helm-chart self:   issuer: "https://public.hydra.localhost:4444/" |
 | hydra.customArgs | list | `[]` | Ability to override arguments of the entrypoint. Can be used in-depended of customCommand |
@@ -161,6 +161,8 @@ A Helm chart for deploying ORY Hydra in Kubernetes
 | job.extraContainers | string | `""` | If you want to add extra sidecar containers. |
 | job.extraEnv | list | `[]` | Array of extra envs to be passed to the job. This takes precedence over deployment variables. Kubernetes format is expected. Value is processed with Helm `tpl` - name: FOO   value: BAR |
 | job.extraInitContainers | string | `""` | If you want to add extra init containers. extraInitContainers: |  - name: ...    image: ... |
+| job.extraVolumeMounts | list | `[]` | Array of extra volume mounts to be mounted on the job. This takes precedence over `deployment.extraVolumeMounts` when set, otherwise the deployment's volume mounts are used. |
+| job.extraVolumes | list | `[]` | Array of extra volumes to be mounted on the job. This takes precedence over `deployment.extraVolumes` when set, otherwise the deployment's volumes are used. |
 | job.labels | object | `{}` | Set custom deployment level labels |
 | job.lifecycle | string | `""` | If you want to add lifecycle hooks. |
 | job.nodeSelector | object | `{}` | Node labels for pod assignment. |
@@ -188,7 +190,7 @@ A Helm chart for deploying ORY Hydra in Kubernetes
 | secret.hashSumEnabled | bool | `true` | switch to false to prevent checksum annotations being maintained and propogated to the pods |
 | secret.nameOverride | string | `""` | Provide custom name of existing secret, or custom name of secret to be created |
 | secret.secretAnnotations | object | `{"helm.sh/hook":"pre-install, pre-upgrade","helm.sh/hook-delete-policy":"before-hook-creation","helm.sh/hook-weight":"0","helm.sh/resource-policy":"keep"}` | Annotations to be added to secret. Annotations are added only when secret is being created. Existing secret will not be modified. |
-| service.admin | object | `{"annotations":{},"enabled":true,"externalTrafficPolicy":"","internalTrafficPolicy":"","labels":{},"loadBalancerIP":"","metricsPath":"/admin/metrics/prometheus","name":"http","port":4445,"type":"ClusterIP"}` | Configures the Kubernetes service for the api port. |
+| service.admin | object | `{"annotations":{},"enabled":true,"externalTrafficPolicy":"","internalTrafficPolicy":"","labels":{},"loadBalancerIP":"","metricsPath":"/admin/metrics/prometheus","name":"http","port":4445,"targetPort":"http-admin","type":"ClusterIP"}` | Configures the Kubernetes service for the api port. |
 | service.admin.annotations | object | `{}` | If you do want to specify annotations, uncomment the following lines, adjust them as necessary, and remove the curly braces after 'annotations:'. |
 | service.admin.enabled | bool | `true` | En-/disable the service |
 | service.admin.externalTrafficPolicy | string | `""` | https://kubernetes.io/docs/reference/networking/virtual-ips/#traffic-policies |
@@ -197,8 +199,9 @@ A Helm chart for deploying ORY Hydra in Kubernetes
 | service.admin.metricsPath | string | `"/admin/metrics/prometheus"` | Path to the metrics endpoint |
 | service.admin.name | string | `"http"` | The service port name. Useful to set a custom service port name if it must follow a scheme (e.g. Istio) |
 | service.admin.port | int | `4445` | The service port |
+| service.admin.targetPort | string | `"http-admin"` | The pod port the Service forwards to, as a port name or number. Set it to a port declared by a container in deployment.extraContainers to put a sidecar (e.g. an authenticating proxy) in front of this API. The admin ServiceMonitor then scrapes metricsPath through that sidecar too. |
 | service.admin.type | string | `"ClusterIP"` | The service type |
-| service.public | object | `{"annotations":{},"enabled":true,"externalTrafficPolicy":"","internalTrafficPolicy":"","labels":{},"loadBalancerIP":"","name":"http","port":4444,"type":"ClusterIP"}` | Configures the Kubernetes service for the proxy port. |
+| service.public | object | `{"annotations":{},"enabled":true,"externalTrafficPolicy":"","internalTrafficPolicy":"","labels":{},"loadBalancerIP":"","name":"http","port":4444,"targetPort":"http-public","type":"ClusterIP"}` | Configures the Kubernetes service for the proxy port. |
 | service.public.annotations | object | `{}` | If you do want to specify annotations, uncomment the following lines, adjust them as necessary, and remove the curly braces after 'annotations:'. |
 | service.public.enabled | bool | `true` | En-/disable the service |
 | service.public.externalTrafficPolicy | string | `""` | https://kubernetes.io/docs/reference/networking/virtual-ips/#traffic-policies |
@@ -206,6 +209,7 @@ A Helm chart for deploying ORY Hydra in Kubernetes
 | service.public.loadBalancerIP | string | `""` | The load balancer IP |
 | service.public.name | string | `"http"` | The service port name. Useful to set a custom service port name if it must follow a scheme (e.g. Istio) |
 | service.public.port | int | `4444` | The service port |
+| service.public.targetPort | string | `"http-public"` | The pod port the Service forwards to, as a port name or number. Set it to a port declared by a container in deployment.extraContainers to put a sidecar (e.g. an authenticating proxy) in front of this API. |
 | service.public.type | string | `"ClusterIP"` | The service type |
 | serviceMonitor.enabled | bool | `false` | switch to true to enable creating the ServiceMonitor |
 | serviceMonitor.labels | object | `{}` | Provide additionnal labels to the ServiceMonitor ressource metadata |
@@ -214,8 +218,9 @@ A Helm chart for deploying ORY Hydra in Kubernetes
 | serviceMonitor.scheme | string | `"http"` | HTTP scheme to use for scraping. |
 | serviceMonitor.scrapeInterval | string | `"60s"` | Interval at which metrics should be scraped |
 | serviceMonitor.scrapeTimeout | string | `"30s"` | Timeout after which the scrape is ended |
+| serviceMonitor.targetLabels | list | `[]` | Additional metric labels |
 | serviceMonitor.tlsConfig | object | `{}` | TLS configuration to use when scraping the endpoint |
-| test.busybox | object | `{"repository":"busybox","tag":"stable"}` | use a busybox image from another repository |
+| test.busybox | object | `{"registry":"docker.io","repository":"busybox","tag":"stable"}` | use a busybox image from another repository |
 | test.labels | object | `{}` | Provide additional labels to the test pod |
 | watcher.automountServiceAccountToken | bool | `true` |  |
 | watcher.enabled | bool | `false` |  |
