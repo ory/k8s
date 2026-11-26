@@ -1,0 +1,5 @@
+self-hosted-runner:
+  # ubuntu-26.04 is a GitHub-hosted runner, but no actionlint release knows the
+  # label yet (rhysd/actionlint#682). Drop this once actionlint ships it.
+  labels:
+    - ubuntu-26.04
