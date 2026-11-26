@@ -721,6 +721,9 @@ cronjob:
 
     # -- If you want to add extra init containers.
     extraInitContainers: ""
+    # extraInitContainers: |
+    #  - name: ...
+    #    image: ...
 
     # -- If you want to mount external volume.
     # For example, mount a secret containing Certificate root CA to verify database
@@ -734,9 +737,6 @@ cronjob:
     # - name: my-volume
     #   mountPath: /etc/secrets/my-secret
     #   readOnly: true
-    # extraInitContainers: |
-    #  - name: ...
-    #    image: ...
 
     # -- Set automounting of the SA token in job's pod
     automountServiceAccountToken: true
