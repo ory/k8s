@@ -44,6 +44,11 @@ service:
     port: 80
     # -- The service port name. Useful to set a custom service port name if it must follow a scheme (e.g. Istio)
     name: http
+    # -- The pod port the Service forwards to, as a port name or number. Set it to a port
+    # declared by a container in deployment.extraContainers to put a sidecar (e.g. an
+    # authenticating proxy) in front of this API. The admin ServiceMonitor then scrapes
+    # metricsPath through that sidecar too.
+    targetPort: http-admin
     # -- Provide custom labels. Use the same syntax as for annotations.
     labels: {}
     # -- If you do want to specify annotations, uncomment the following
@@ -66,6 +71,10 @@ service:
     port: 80
     # -- The service port name. Useful to set a custom service port name if it must follow a scheme (e.g. Istio)
     name: http
+    # -- The pod port the Service forwards to, as a port name or number. Set it to a port
+    # declared by a container in deployment.extraContainers to put a sidecar (e.g. an
+    # authenticating proxy) in front of this API.
+    targetPort: http-public
     # -- Provide custom labels. Use the same syntax as for annotations.
     labels: {}
     # -- If you do want to specify annotations, uncomment the following
@@ -266,9 +275,15 @@ deployment:
 
   # -- Configure a custom livenessProbe. This overwrites the default object
   customLivenessProbe: {}
-  # -- Configure a custom readinessProbe. This overwrites the default object
+  # -- Configure a custom readinessProbe. This overwrites the default object.
+  # The default probe sends an HTTP GET to kratos.config.serve.admin.port on the pod IP, so it
+  # fails when serve.admin.host binds the admin API to 127.0.0.1 (e.g. behind a sidecar).
+  # Set this probe in that case.
   customReadinessProbe: {}
-  # -- Configure a custom startupProbe. This overwrites the default object
+  # -- Configure a custom startupProbe. This overwrites the default object.
+  # The default probe sends an HTTP GET to kratos.config.serve.admin.port on the pod IP, so it
+  # fails when serve.admin.host binds the admin API to 127.0.0.1 (e.g. behind a sidecar).
+  # Set this probe in that case.
   customStartupProbe: {}
 
   # -- Array of extra arguments to be passed down to the deployment. Kubernetes args format is expected

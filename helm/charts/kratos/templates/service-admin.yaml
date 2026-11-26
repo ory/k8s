@@ -32,7 +32,7 @@ spec:
   {{- end }}
   ports:
     - port: {{ .Values.service.admin.port }}
-      targetPort: http-admin
+      targetPort: {{ .Values.service.admin.targetPort | default "http-admin" }}
       protocol: TCP
       name: {{ .Values.service.admin.name }}
       {{- if eq .Values.service.admin.type "NodePort" }}

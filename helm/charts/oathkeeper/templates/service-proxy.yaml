@@ -31,7 +31,7 @@ spec:
   {{- end }}
   ports:
     - port: {{ .Values.service.proxy.port }}
-      targetPort: http-proxy
+      targetPort: {{ .Values.service.proxy.targetPort | default "http-proxy" }}
       protocol: TCP
       name: {{ .Values.service.proxy.name }} 
   selector:
