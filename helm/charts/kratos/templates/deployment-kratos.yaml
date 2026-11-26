@@ -132,8 +132,10 @@ spec:
         - name: {{ include "kratos.name" . }}
           image: {{ include "kratos.image" . }}
           imagePullPolicy: {{ include "kratos.imagePullPolicy" . }}
-          command:
-            - kratos
+          command: {{- toYaml .Values.kratos.command | nindent 12 }}
+          {{- if .Values.kratos.customArgs }}
+          args: {{- toYaml .Values.kratos.customArgs | nindent 12 }}
+          {{- else }}
           args:
             - serve
             - all
@@ -145,6 +147,7 @@ spec:
             {{- if .Values.deployment.extraArgs }}
               {{- toYaml .Values.deployment.extraArgs | nindent 12 }}
             {{- end }}
+          {{- end }}
           volumeMounts:
             {{- if .Values.deployment.extraVolumeMounts }}
               {{- toYaml .Values.deployment.extraVolumeMounts | nindent 12 }}
