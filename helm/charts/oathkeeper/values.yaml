@@ -94,6 +94,10 @@ service:
     port: 4455
     # -- The service port name. Useful to set a custom service port name if it must follow a scheme (e.g. Istio)
     name: http
+    # -- The pod port the Service forwards to, as a port name or number. Set it to a port
+    # declared by a container in deployment.extraContainers to put a sidecar (e.g. an
+    # authenticating proxy) in front of this API.
+    targetPort: http-proxy
     # -- If you do want to specify annotations, uncomment the following
     # lines, adjust them as necessary, and remove the curly braces after 'annotations:'.
     # kubernetes.io/ingress.class: nginx
@@ -119,6 +123,10 @@ service:
     port: 4456
     # -- The service port name. Useful to set a custom service port name if it must follow a scheme (e.g. Istio)
     name: http
+    # -- The pod port the Service forwards to, as a port name or number. Set it to a port
+    # declared by a container in deployment.extraContainers to put a sidecar (e.g. an
+    # authenticating proxy) in front of this API.
+    targetPort: http-api
     # -- If you do want to specify annotations, uncomment the following
     # lines, adjust them as necessary, and remove the curly braces after 'annotations:'.
     # kubernetes.io/ingress.class: nginx

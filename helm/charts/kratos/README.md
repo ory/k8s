@@ -56,8 +56,8 @@ A ORY Kratos Helm chart for Kubernetes
 | deployment.automigration.extraEnv | list | `[]` | Array of extra envs to be passed to the initContainer. Kubernetes format is expected. Value is processed with Helm `tpl` - name: FOO   value: BAR |
 | deployment.automountServiceAccountToken | bool | `false` |  |
 | deployment.customLivenessProbe | object | `{}` | Configure a custom livenessProbe. This overwrites the default object |
-| deployment.customReadinessProbe | object | `{}` | Configure a custom readinessProbe. This overwrites the default object |
-| deployment.customStartupProbe | object | `{}` | Configure a custom startupProbe. This overwrites the default object |
+| deployment.customReadinessProbe | object | `{}` | Configure a custom readinessProbe. This overwrites the default object. The default probe sends an HTTP GET to kratos.config.serve.admin.port on the pod IP, so it fails when serve.admin.host binds the admin API to 127.0.0.1 (e.g. behind a sidecar). Set this probe in that case. |
+| deployment.customStartupProbe | object | `{}` | Configure a custom startupProbe. This overwrites the default object. The default probe sends an HTTP GET to kratos.config.serve.admin.port on the pod IP, so it fails when serve.admin.host binds the admin API to 127.0.0.1 (e.g. behind a sidecar). Set this probe in that case. |
 | deployment.dnsConfig | object | `{}` | Configure pod dnsConfig. |
 | deployment.extraArgs | list | `[]` | Array of extra arguments to be passed down to the deployment. Kubernetes args format is expected - --foo - --sqa-opt-out |
 | deployment.extraContainers | string | `""` | If you want to add extra sidecar containers. |
@@ -184,6 +184,7 @@ A ORY Kratos Helm chart for Kubernetes
 | service.admin.name | string | `"http"` | The service port name. Useful to set a custom service port name if it must follow a scheme (e.g. Istio) |
 | service.admin.nodePort | string | `""` |  |
 | service.admin.port | int | `80` |  |
+| service.admin.targetPort | string | `"http-admin"` | The pod port the Service forwards to, as a port name or number. Set it to a port declared by a container in deployment.extraContainers to put a sidecar (e.g. an authenticating proxy) in front of this API. The admin ServiceMonitor then scrapes metricsPath through that sidecar too. |
 | service.admin.type | string | `"ClusterIP"` |  |
 | service.courier.annotations | object | `{}` | Provide custom annotations. |
 | service.courier.containerPort | int | `4434` | Container Port |
@@ -202,6 +203,7 @@ A ORY Kratos Helm chart for Kubernetes
 | service.public.name | string | `"http"` | The service port name. Useful to set a custom service port name if it must follow a scheme (e.g. Istio) |
 | service.public.nodePort | string | `""` |  |
 | service.public.port | int | `80` |  |
+| service.public.targetPort | string | `"http-public"` | The pod port the Service forwards to, as a port name or number. Set it to a port declared by a container in deployment.extraContainers to put a sidecar (e.g. an authenticating proxy) in front of this API. |
 | service.public.type | string | `"ClusterIP"` |  |
 | serviceMonitor.enabled | bool | `false` | switch to true to enable creating the ServiceMonitor |
 | serviceMonitor.labels | object | `{}` | Provide additional labels to the ServiceMonitor ressource metadata |
