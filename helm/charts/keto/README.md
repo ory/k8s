@@ -1,6 +1,6 @@
 # keto
 
-![Version: 0.64.0](https://img.shields.io/badge/Version-0.64.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v26.2.0](https://img.shields.io/badge/AppVersion-v26.2.0-informational?style=flat-square)
+![Version: 0.65.0](https://img.shields.io/badge/Version-0.65.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v26.2.0](https://img.shields.io/badge/AppVersion-v26.2.0-informational?style=flat-square)
 
 Access Control Policies as a Server
 
@@ -201,7 +201,7 @@ Access Control Policies as a Server
 | test.labels | object | `{}` | Provide additional labels to the test pod |
 | watcher.automountServiceAccountToken | bool | `true` |  |
 | watcher.enabled | bool | `false` |  |
-| watcher.image | string | `"oryd/k8s-toolbox:v0.0.10"` |  |
+| watcher.image | string | `"oryd/k8s-toolbox:v0.0.11"` |  |
 | watcher.mountFile | string | `""` | Path to mounted file, which wil be monitored for changes. eg: /etc/secrets/my-secret/foo |
 | watcher.podMetadata | object | `{"annotations":{},"labels":{}}` | Specify pod metadata, this metadata is added directly to the pod, and not higher objects |
 | watcher.podMetadata.annotations | object | `{}` | Extra pod level annotations |
