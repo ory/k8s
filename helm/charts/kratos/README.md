@@ -89,12 +89,37 @@ A ORY Kratos Helm chart for Kubernetes
 | deployment.terminationGracePeriodSeconds | int | `60` |  |
 | deployment.tolerations | list | `[]` | Configure node tolerations. |
 | deployment.topologySpreadConstraints | list | `[]` | Configure pod topologySpreadConstraints. |
+| extraDeploy | list | `[]` | Array of extra resources to deploy with the chart |
 | fullnameOverride | string | `""` |  |
 | global | object | `{"imageRegistry":null,"podMetadata":{"annotations":{},"labels":{}}}` | Global setting, passed down to all pods |
 | global.imageRegistry | string | `nil` | Overrides the Docker registry globally for all images |
 | global.podMetadata | object | `{"annotations":{},"labels":{}}` | Specify pod metadata, this metadata is added directly to the pod, and not higher objects |
 | global.podMetadata.annotations | object | `{}` | Extra pod level annotations |
 | global.podMetadata.labels | object | `{}` | Extra pod level labels |
+| httproute.admin.annotations | object | `{}` | Provide custom annotations for the HTTPRoute |
+| httproute.admin.apiVersion | string | `""` | Override the HTTPRoute API version (defaults to gateway.networking.k8s.io/v1) |
+| httproute.admin.enabled | bool | `false` | Enable/disable the HTTPRoute resource for admin service |
+| httproute.admin.filters | list | `[]` | Filters for the default rule if rules is empty |
+| httproute.admin.hostnames | list | `[]` | Hostnames matching the rule |
+| httproute.admin.labels | object | `{}` | Provide custom labels for the HTTPRoute |
+| httproute.admin.matches | list | `[{"path":{"type":"PathPrefix","value":"/"}}]` | Path matches for the default rule if rules is empty |
+| httproute.admin.nameOverride | string | `""` | Override the HTTPRoute metadata name |
+| httproute.admin.parentRefs | list | `[]` | References to parent Gateway resources |
+| httproute.admin.rules | list | `[]` | Custom routing rules. If not provided, a default rule routing to the admin service will be used |
+| httproute.admin.servicePort | string | `nil` | Override the service port in the default backend rule |
+| httproute.admin.weight | string | `nil` | Weight for the default backend rule |
+| httproute.public.annotations | object | `{}` | Provide custom annotations for the HTTPRoute |
+| httproute.public.apiVersion | string | `""` | Override the HTTPRoute API version (defaults to gateway.networking.k8s.io/v1) |
+| httproute.public.enabled | bool | `false` | Enable/disable the HTTPRoute resource for public service |
+| httproute.public.filters | list | `[]` | Filters for the default rule if rules is empty |
+| httproute.public.hostnames | list | `[]` | Hostnames matching the rule |
+| httproute.public.labels | object | `{}` | Provide custom labels for the HTTPRoute |
+| httproute.public.matches | list | `[{"path":{"type":"PathPrefix","value":"/"}}]` | Path matches for the default rule if rules is empty |
+| httproute.public.nameOverride | string | `""` | Override the HTTPRoute metadata name |
+| httproute.public.parentRefs | list | `[]` | References to parent Gateway resources |
+| httproute.public.rules | list | `[]` | Custom routing rules. If not provided, a default rule routing to the public service will be used |
+| httproute.public.servicePort | string | `nil` | Override the service port in the default backend rule |
+| httproute.public.weight | string | `nil` | Weight for the default backend rule |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.registry | string | `"docker.io"` | ORY KRATOS image registry |
 | image.repository | string | `"oryd/kratos"` | ORY KRATOS image |

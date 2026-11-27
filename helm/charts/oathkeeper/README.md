@@ -63,12 +63,37 @@ A Helm chart for deploying ORY Oathkeeper in Kubernetes
 | deployment.terminationGracePeriodSeconds | int | `60` |  |
 | deployment.tolerations | list | `[]` | Configure node tolerations. |
 | deployment.topologySpreadConstraints | list | `[]` | Configure pod topologySpreadConstraints. |
+| extraDeploy | list | `[]` | Array of extra resources to deploy with the chart |
 | fullnameOverride | string | `""` | Full chart name override |
 | global | object | `{"imageRegistry":null,"ory":{"oathkeeper":{"maester":{"mode":"controller"}}},"podMetadata":{"annotations":{},"labels":{}}}` | Global setting, passed down to all pods |
 | global.imageRegistry | string | `nil` | Overrides the Docker registry globally for all images |
 | global.podMetadata | object | `{"annotations":{},"labels":{}}` | Specify pod metadata, this metadata is added directly to the pod, and not higher objects |
 | global.podMetadata.annotations | object | `{}` | Extra pod level annotations |
 | global.podMetadata.labels | object | `{}` | Extra pod level labels |
+| httproute.api.annotations | object | `{}` | Provide custom annotations for the HTTPRoute |
+| httproute.api.apiVersion | string | `""` | Override the HTTPRoute API version (defaults to gateway.networking.k8s.io/v1) |
+| httproute.api.enabled | bool | `false` | Enable/disable the HTTPRoute resource for api service |
+| httproute.api.filters | list | `[]` | Filters for the default rule if rules is empty |
+| httproute.api.hostnames | list | `[]` | Hostnames matching the rule |
+| httproute.api.labels | object | `{}` | Provide custom labels for the HTTPRoute |
+| httproute.api.matches | list | `[{"path":{"type":"PathPrefix","value":"/"}}]` | Path matches for the default rule if rules is empty |
+| httproute.api.nameOverride | string | `""` | Override the HTTPRoute metadata name |
+| httproute.api.parentRefs | list | `[]` | References to parent Gateway resources |
+| httproute.api.rules | list | `[]` | Custom routing rules. If not provided, a default rule routing to the api service will be used |
+| httproute.api.servicePort | string | `nil` | Override the service port in the default backend rule |
+| httproute.api.weight | string | `nil` | Weight for the default backend rule |
+| httproute.proxy.annotations | object | `{}` | Provide custom annotations for the HTTPRoute |
+| httproute.proxy.apiVersion | string | `""` | Override the HTTPRoute API version (defaults to gateway.networking.k8s.io/v1) |
+| httproute.proxy.enabled | bool | `false` | Enable/disable the HTTPRoute resource for proxy service |
+| httproute.proxy.filters | list | `[]` | Filters for the default rule if rules is empty |
+| httproute.proxy.hostnames | list | `[]` | Hostnames matching the rule |
+| httproute.proxy.labels | object | `{}` | Provide custom labels for the HTTPRoute |
+| httproute.proxy.matches | list | `[{"path":{"type":"PathPrefix","value":"/"}}]` | Path matches for the default rule if rules is empty |
+| httproute.proxy.nameOverride | string | `""` | Override the HTTPRoute metadata name |
+| httproute.proxy.parentRefs | list | `[]` | References to parent Gateway resources |
+| httproute.proxy.rules | list | `[]` | Custom routing rules. If not provided, a default rule routing to the proxy service will be used |
+| httproute.proxy.servicePort | string | `nil` | Override the service port in the default backend rule |
+| httproute.proxy.weight | string | `nil` | Weight for the default backend rule |
 | image.initContainer | object | `{"repository":"busybox","tag":"stable"}` | use a busybox image from another repository |
 | image.pullPolicy | string | `"IfNotPresent"` | Image pull policy |
 | image.registry | string | `"docker.io"` | ORY Oathkeeper image registry |
