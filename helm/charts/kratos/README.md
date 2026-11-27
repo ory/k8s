@@ -164,7 +164,10 @@ A ORY Kratos Helm chart for Kubernetes
 | secret.enableDefaultAnnotations | bool | `true` | enableDefaultAnnotations set to `true` will add default annotations to the secret. As such the Secret will be managed by helm hooks. |
 | secret.enabled | bool | `true` | switch to false to prevent creating the secret |
 | secret.extraAnnotations | object | `{}` | extraAnnotations to be added to secret. |
+| secret.generate | bool | `false` | Whether to generate random secrets using a Kubernetes Job. This is useful if you don't want to provide your own secrets and want to avoid regenerating them on every upgrade. |
 | secret.hashSumEnabled | bool | `true` | switch to false to prevent checksum annotations being maintained and propogated to the pods |
+| secret.image.repository | string | `"alpine/kubectl"` | The image to use for the secret generation job. |
+| secret.image.tag | string | `"1.35.0"` | The image tag to use for the secret generation job. |
 | secret.nameOverride | string | `""` | Provide custom name of existing secret, or custom name of secret to be created |
 | secret.secretAnnotations | object | `{"helm.sh/hook":"pre-install, pre-upgrade","helm.sh/hook-delete-policy":"before-hook-creation","helm.sh/hook-weight":"0","helm.sh/resource-policy":"keep"}` | Annotations to be added to secret. Annotations are added only when secret is being created. Existing secret will not be modified. |
 | securityContext.allowPrivilegeEscalation | bool | `false` |  |
